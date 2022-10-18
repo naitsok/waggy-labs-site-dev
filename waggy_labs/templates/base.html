@@ -1,0 +1,131 @@
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailuserbar %}
+{% load menu_tags %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        {# Required Boostrap meta tags #}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        {# Bootstrap CSS #}
+        <!-- CSS only -->
+        {% if settings.waggy_labs.WaggyLabsSettings.site_theme %}
+        <link href="{{ settings.waggy_labs.WaggyLabsSettings.site_theme.url }}" rel="stylesheet">
+        {% else %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        {% endif %}
+        {# Font awesome icons #}
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+        {# Waggy Labs stylesheets #}
+        {% comment "" %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/scientific_wagtail.css' %}">
+        {% endcomment %}
+        {% block extra_css %}
+        {# Overwrite this in templates to add extra stylesheets #}
+        {% endblock %}
+        {# browser tab icon #}
+        {% image settings.waggy_labs.WaggyLabsSettings.site_icon max-40x40 as icon %}
+        <link rel="icon" href="{{ icon.url }}">
+        {% wagtail_site as current_site %}
+        <title>
+        {# Page title block. Overwrite in the page template if needed. #}
+        {% block title %}
+        {% if current_site.site_name and settings.waggy_labs.WaggyLabsSettings.show_site_name and settings.waggy_labs.WaggyLabsSettings.site_name_alignment == "L" %}
+            {{ current_site.site_name }} {{ settings.waggy_labs.WaggyLabsSettings.site_name_separator }} {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% elif current_site.site_name and settings.waggy_labs.WaggyLabsSettings.show_site_name and settings.waggy_labs.WaggyLabsSettings.site_name_alignment == "R" %}
+            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %} {{ settings.waggy_labs.WaggyLabsSettings.site_name_separator }} {{ current_site.site_name }}
+        {% else %}
+            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% endif %}
+        {% endblock %}
+        </title>
+    </head>
+    <body>
+        {% wagtailuserbar 'bottom-right' %}
+
+        <header class="navbar navbar-expand-lg {% if settings.waggy_labs.WaggyLabsSettings.navbar_theme %}navbar-dark bg-{{ settings.waggy_labs.WaggyLabsSettings.navbar_theme }}{% endif %} {{ settings.waggy_labs.WaggyLabsSettings.navbar_placement }}">
+            <nav class="container">
+                <a class="navbar-brand" href="/">
+                    {% image settings.waggy_labs.WaggyLabsSettings.site_icon max-40x40 %}
+                </a>
+                <a class="navbar-brand p-0" href="/">
+                    {% if settings.waggy_labs.WaggyLabsSettings.show_site_name %}{{ current_site.site_name }}{% endif %}
+                    {% if settings.waggy_labs.WaggyLabsSettings.site_slogan %}<br /><span class="navbar-text fs-6 fst-italic px-4 py-0 my-0"><small>{{ settings.waggy_labs.WaggyLabsSettings.site_slogan }}</small></span>{% endif %}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-{{ settings.waggy_labs.WaggyLabsSettings.navbar_theme }}" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        {# <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5> #}
+                        <button type="button" class="btn-close {% if settings.waggy_labs.WaggyLabsSettings.navbar_theme != '' %}btn-close-white{% endif %}" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>     
+                    <div class="offcanvas-body">           
+                        <ul class="navbar-nav {{ settings.waggy_labs.WaggyLabsSettings.navbar_menu_alignment }}">
+                            {% main_menu template="waggy_labs/menus/main_menu.html" %}
+                        </ul>
+                        <ul class="navbar-nav auto" id="socialLinksSearch">
+                            {% for social_link in settings.waggy_labs.WaggyLabsSettings.social_links.all %}
+                            <li class="nav-item">
+                                <a class="btn btn-link nav-link active" target="_blank" href="https://www.{{ social_link.title|lower }}.{% if social_link.domain %}{{ social_link.domain }}{% else %}com{% endif %}/{{ social_link.username }}">
+                                    <i class="fa-brands fa-{% if social_link.icon %}{{ social_link.icon|lower }}{% else %}{{ social_link.title|lower }}{% endif %}"></i>
+                                    {% if social_link.link_text == 'title' %}{{ social_link.title }}{% endif %}{% if social_link.link_text == 'username' %}{{ social_link.username_prefix }}{{ social_link.username }}{% endif %}
+                                </a>
+                            </li>
+                            {% endfor %}
+                            <li class="nav-item py-1 col-12 col-lg-auto">
+                                <div class="vr d-none d-lg-flex h-100 mx-lg-2 {% if settings.waggy_labs.WaggyLabsSettings.navbar_theme != '' %}text-white{% endif %}"></div>
+                                <hr class="d-lg-none {% if settings.waggy_labs.WaggyLabsSettings.navbar_theme != '' %}text-white-50{% endif %}">
+                            </li>
+                            <li class="nav-item dropdown position-static">
+                                <a class="btn btn-link nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end w-100">
+                                    <form role="search" method="get" action="" method="get" class="px-3">
+                                        {% csrf_token %}
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
+                                            <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <div class="container">    
+            <div class="row" role="main">
+                <main class="col-md-12">
+                    {% block content %}
+                    {# Overwrite this in the page template to display page content #}
+                    {% endblock %}
+                </main>
+            </div>
+        </div>
+
+        {# Bootstrap javascript files #}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+        <script>
+            MathJax =   { 
+                tex: { 
+                    inlineMath: [['\\[', '\\]'], ['\\(', '\\)']] 
+                } 
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        {% block extra_js %}
+        {# Overwrite this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>

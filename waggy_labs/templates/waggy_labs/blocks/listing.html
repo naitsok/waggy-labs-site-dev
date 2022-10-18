@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+{% load wagtailmarkdown %}
+
+<figure id="{{ value.anchor }}">
+    {% include_block value.code %}
+    {% if value.caption %}
+    <figcaption>{% include_block value.caption %}</figcaption>
+    {% endif %}
+</figure>

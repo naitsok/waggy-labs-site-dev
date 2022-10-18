@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Django stuff:
+*.log
+*.pot
+/media
+/static
+
+# Local files
+*.sqlite3
+/obj
+/waggy_labs_site/settings/local.py
+local.py
+robots.txt
+
+
+/.git
+
+# Visual Studio stuff
+*.pyproj
+*.pyproj.user
+/.vs
+*.sln
+
+# Visual Studio Code stuff
+/.vscode
+
+# https://blog.michaelyin.info/wagtail-tutorials/
+# https://simpleisbetterthancomplex.com/
+# github.com/awesome-wagtail
+# django-taggit
+# django-hitcount

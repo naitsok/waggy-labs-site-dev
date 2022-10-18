@@ -1,0 +1,11 @@
+<figure id="{{ value.anchor }}">
+    <blockquote class="blockquote">
+        <p class="mb-0"><i class="fas fa-quote-left"></i></p>
+        <p class="px-3">{{ value.quote }}</p>
+        {% if value.author %}
+            <figcaption class="blockquote-footer px-3">
+                {{ value.author }} {% if value.source %}in <cite title="Source Title">{{ value.source }}</cite>{% endif %}
+            </figcaption>
+        {% endif %}
+    </blockquote>
+</figure>
