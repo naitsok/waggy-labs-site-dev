@@ -22,7 +22,7 @@ from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
 # from waggy_labs.admin.panels import ReadOnlyPanel
-from waggy_labs.blocks import BlockQuoteBlock, MathJaxMarkdownBlock, FigureBlock, ListingBlock
+from waggy_labs.blocks import BlockQuoteBlock, MathJaxMarkdownBlock, FigureBlock, ListingBlock, EquationBlock
 
 
 class SitePage(Page, MenuPageMixin, HitCountMixin):
@@ -60,6 +60,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         ('markdown', MathJaxMarkdownBlock(required=True, icon='doc-full')),
         ('code', ListingBlock()),
         ('figure', FigureBlock()),
+        ('equation', EquationBlock()),
         # ('image', CaptionedImageBlock()),
         # ('markdown', MarkdownxBlock()),
         # ('columns', TwoColumnBlock()),

@@ -1,5 +1,6 @@
-from .blockquote_block import BlockQuoteBlock
-from .code_block import CodeBlock, DEFAULT_CODEBLOCK_LANGS
-from .figure_block import FigureBlock
-from .listing_block import ListingBlock
-from .mathjax_markdown_block import MathJaxMarkdownBlock
+from .blockquote import BlockQuoteBlock
+from .code import CodeBlock, DEFAULT_CODEBLOCK_LANGS
+from .equation import EquationBlock
+from .figure import FigureBlock
+from .listing import ListingBlock
+from .mathjax_markdown import MathJaxMarkdownBlock

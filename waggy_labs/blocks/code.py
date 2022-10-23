@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import ChoiceBlock, TextBlock, StructBlock, CharBlock
+from wagtail.core.blocks import ChoiceBlock, TextBlock, StructBlock
 
 from wagtailmarkdown.blocks import render_markdown
 

@@ -194,7 +194,10 @@ WAGTAILMENUS_ACTIVE_ANCESTOR_CLASS = "active"
 # Wagtail markdown settings
 WAGTAILMARKDOWN = {
     # ...
-    "extension_configs": {"codehilite": {"linenums": True}}
+    "allowed_tags": ["s"],
+    "extensions": ["waggy_labs.extensions.markdown"],
+    "extension_configs": {"codehilite": {"linenums": True}},
+    "extensions_settings_mode": "extend",
 }
 
 # Hit Count settings

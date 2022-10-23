@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.core.blocks import CharBlock, StructBlock
 from wagtail.images.blocks import ImageChooserBlock
 
-from .mathjax_markdown_block import MathJaxMarkdownBlock
+from .mathjax_markdown import MathJaxMarkdownBlock
 
 
 class FigureBlock(StructBlock):

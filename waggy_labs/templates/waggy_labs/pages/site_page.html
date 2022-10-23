@@ -24,5 +24,13 @@
 
 {% endblock content %}
 
+{% block extra_js %}
+<script>
+    window.MathJax = { 
+        tex: { tags: 'ams' } 
+    };
+</script>
+{% endblock %}
+
 
 

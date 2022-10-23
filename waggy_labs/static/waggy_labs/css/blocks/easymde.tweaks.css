@@ -2,3 +2,4 @@
 .EasyMDEContainer .CodeMirror-fullscreen {
     z-index: 999 !important;
 }
+.EasyMDEContainer .CodeMirror-scroll { font-family: monospace; font-size: 13px; }

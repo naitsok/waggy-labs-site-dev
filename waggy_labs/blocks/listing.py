@@ -1,11 +1,9 @@
-from cProfile import label
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import CharBlock, StructBlock
 
-from .code_block import CodeBlock
-from .mathjax_markdown_block import MathJaxMarkdownBlock
+from .code import CodeBlock
+from .mathjax_markdown import MathJaxMarkdownBlock
 
 
 class ListingBlock(StructBlock):

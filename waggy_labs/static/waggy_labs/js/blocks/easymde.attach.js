@@ -21,6 +21,7 @@ function easymdeAttach(id) { //, autoDownloadFontAwesome) {
         element: textArea,
         autofocus: false,
         autoDownloadFontAwesome: true, // autoDownloadFontAwesome,
+        lineNumbers: true,
         minHeight: textArea.getAttribute("easymde-min-height") || undefined,
         maxHeight: textArea.getAttribute("easymde-max-height") || undefined,
         overlayMode: {
@@ -42,6 +43,7 @@ function easymdeAttach(id) { //, autoDownloadFontAwesome) {
             if (!preview.classList.contains('editor-preview-active-side')) {
                 preview = wrapper.lastChild;
             }
+            MathJax.texReset();
             MathJax.typesetClear([preview]);
             MathJax.typeset([preview]);
         }, 500);

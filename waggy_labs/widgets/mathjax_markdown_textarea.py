@@ -33,15 +33,15 @@ class MathJaxMarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
         return forms.Media(
             css={
                 "all": (
-                    "waggy_labs/css/mathjax_markdown_block/easymde.tweaks.css",
-                    "waggy_labs/css/mathjax_markdown_block/easymde.min.css",
-                    "waggy_labs/css/mathjax_markdown_block/easymde.hl.css",
+                    "waggy_labs/css/blocks/easymde.tweaks.css",
+                    "waggy_labs/css/blocks/easymde.min.css",
+                    "waggy_labs/css/blocks/easymde.hl.css",
                     "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css", # for code highlighting
                 )
             },
             js=(
-                "waggy_labs/js/mathjax_markdown_block/easymde.min.js",
-                "waggy_labs/js/mathjax_markdown_block/easymde.attach.js",
+                "waggy_labs/js/blocks/easymde.min.js",
+                "waggy_labs/js/blocks/easymde.attach.js",
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/codemirror.min.js", # For latex highlighting
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/mode/stex/stex.min.js", # For latex highlighting
@@ -65,7 +65,7 @@ class MathJaxMarkdownTextareaAdapter(WidgetAdapter):
     js_constructor = "waggy_labs.widgets.MarkdownTextarea"
 
     class Media:
-        js = ["waggy_labs/js/mathjax_markdown_block/markdown-textarea-adapter.js"]
+        js = ["waggy_labs/js/blocks/markdown-textarea-adapter.js"]
 
 
 register(MathJaxMarkdownTextareaAdapter(), MathJaxMarkdownTextarea)

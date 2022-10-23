@@ -1,0 +1,6 @@
+{# If the page is preprocessed to collect all the references and set its numbers, then uses the numbers #}
+{% if value.number %}
+<p>(<a href="{{ value.anchor }}">{{ value.number }}</a>) {{ value.reference }}</p>
+{% else %}
+<p id="{{ value.anchor }}">{{ value.reference }}</p>
+{% endif %}
