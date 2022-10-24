@@ -1,3 +1,3 @@
 from .code_block_adapter import CodeBlockAdapter
-from .equation_block_adapter import EquationBlockAdapter
+from .math_textarea import MathTextareaAdapter, MathTextarea
 from .mathjax_markdown_textarea import MathJaxMarkdownTextareaAdapter, MathJaxMarkdownTextarea

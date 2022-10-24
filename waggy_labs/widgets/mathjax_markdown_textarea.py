@@ -9,23 +9,10 @@ from wagtail.utils.widgets import WidgetWithScript
 DEFAULT_CODEMIRROR_VER = '5.65.9'
 
 class MathJaxMarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
-    """Replaces wagtail-markdown MarkdownTextarea with the one that is able to render MathJax"""
+    """Replaces wagtail-markdown MarkdownTextarea with the one that is able to render MathJax."""
     
     codemirror_ver = settings.WAGGYLABS_CODEMIRROR_VER if hasattr(settings, 'WAGGYLABS_CODEMIRROR_VER') else DEFAULT_CODEMIRROR_VER
     
-    """def render_js_init(self, id_, name, value):
-        if (
-            hasattr(settings, "WAGTAILMARKDOWN")
-            and "autodownload_fontawesome" in settings.WAGTAILMARKDOWN
-        ):
-            autodownload = (
-                "true"
-                if settings.WAGTAILMARKDOWN["autodownload_fontawesome"]
-                else "false"
-            )
-            return f'easymdeAttach("{id_}", {autodownload});'
-
-        return f'easymdeAttach("{id_}");'"""
     @property
     def media(self):
         """Adds static files nessary for work"""
