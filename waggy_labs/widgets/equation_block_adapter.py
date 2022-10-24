@@ -5,7 +5,7 @@ from django.utils.functional import cached_property
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.telepath import register
 
-from waggy_labs.blocks.equation import EquationBlock
+from waggy_labs.blocks import EquationBlock
 
 
 DEFAULT_CODEMIRROR_VER = '5.65.9'
