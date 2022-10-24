@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "taggit",
     # "taggit_templatetags",
     "el_pagination",
-    "markdownx",
+    # "markdownx",
     "wagtailmenus",
     "wagtailmarkdown",
     "hitcount",
