@@ -195,7 +195,10 @@ WAGTAILMENUS_ACTIVE_ANCESTOR_CLASS = "active"
 WAGTAILMARKDOWN = {
     # ...
     "allowed_tags": ["s"],
-    "extensions": ["waggy_labs.extensions.markdown"],
+    "extensions": [
+        "waggy_labs.extensions.markdown.strikethrough",
+        "waggy_labs.extensions.markdown.mathjax"
+        ],
     "extension_configs": {"codehilite": {"linenums": True}},
     "extensions_settings_mode": "extend",
 }

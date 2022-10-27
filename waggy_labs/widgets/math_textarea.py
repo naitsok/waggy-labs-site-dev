@@ -33,7 +33,7 @@ class MathTextareaAdapter(WidgetAdapter):
     js_constructor = "waggy_labs.widgets.MathTextarea"
 
     class Media:
-        js = ["waggy_labs/js/blocks/math-textarea-adapter.js"]
+        js = ["waggy_labs/js/blocks/math-adapter.js"]
 
 
 register(MathTextareaAdapter(), MathTextarea)

@@ -47,7 +47,7 @@ function easymdeAttach(id) { //, autoDownloadFontAwesome) {
             MathJax.typesetClear([preview]);
             MathJax.typeset([preview]);
         }, 500);
-        return mde.markdown(plainText);
+        return mathjaxMarkdown(plainText, mde.options);
     };
     mde.render();
 

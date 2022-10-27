@@ -29,7 +29,9 @@ class MathJaxMarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
             js=(
                 "waggy_labs/js/blocks/easymde.min.js",
                 "waggy_labs/js/blocks/easymde.attach.js",
+                "waggy_labs/js/blocks/mathjax-markdown.js",
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
+                "https://cdn.jsdelivr.net/npm/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/codemirror.min.js", # For latex highlighting
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/mode/stex/stex.min.js", # For latex highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/clike/clike.min.js", # For C++/C/C#/Java/Kotlin highlighting
@@ -52,7 +54,7 @@ class MathJaxMarkdownTextareaAdapter(WidgetAdapter):
     js_constructor = "waggy_labs.widgets.MarkdownTextarea"
 
     class Media:
-        js = ["waggy_labs/js/blocks/markdown-textarea-adapter.js"]
+        js = ["waggy_labs/js/blocks/mathjax-markdown-adapter.js"]
 
 
 register(MathJaxMarkdownTextareaAdapter(), MathJaxMarkdownTextarea)

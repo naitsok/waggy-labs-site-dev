@@ -9,7 +9,7 @@ __pycache__/
 /static
 
 # Local files
-*.sqlite3
+# *.sqlite3
 /obj
 /waggy_labs_site/settings/local.py
 local.py
