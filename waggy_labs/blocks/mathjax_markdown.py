@@ -43,7 +43,8 @@ class MathJaxMarkdownBlock(TextBlock):
 
     def render_basic(self, value, context=None):
         # making LateX backslashes compatible with markdown escaping
-        # value = value.replace('\\\\', '\\\\\\\\').replace('\\[', '\\\\[').replace('\\]', '\\\\]').replace('\\)', '\\\\)').replace('\\(', '\\\\(')
+        # value = value.replace('\\\\', '\\\\\\\\') # .replace('\\[', '\\\\[').replace('\\]', '\\\\]').replace('\\)', '\\\\)').replace('\\(', '\\\\(')
+        value = value.replace('\r', '')
         return render_markdown(value, context)
     
     class Meta:
