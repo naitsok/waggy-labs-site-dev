@@ -20,20 +20,28 @@
             matchBrackets: true
         });
 
+        const updatePreviewDiv = () => {
+            var cmValue = cm.getValue().toLowerCase();
+            if (cmValue.length !== 0) {
+                if (cmValue.startsWith("\\begin") || cmValue.startsWith("$$")) {
+                    previewDiv.innerHTML = cm.getValue();
+                }
+                else {
+                    previewDiv.innerHTML = "\\begin{equation}" + cm.getValue() + "\\end{equation}";
+                }
+            }
+        }
+
         cm.on("change", function() {
             cm.save();
-            var cmValue = cm.getValue().toLowerCase();
-            if (cmValue.startsWith("\\begin") || cmValue.startsWith("$$")) {
-                previewDiv.innerHTML = cm.getValue();
-            }
-            else {
-                previewDiv.innerHTML = "\\begin{equation}" + cm.getValue() + "\\end{equation}";
-            }
+            updatePreviewDiv();
 
             MathJax.texReset();
             MathJax.typesetClear([previewDiv]);
             MathJax.typeset([previewDiv]);
         });
+
+        updatePreviewDiv();
 
 
         // define public API functions for the widget:

@@ -12,7 +12,7 @@ class EquationBlock(StructBlock):
     """
     equation = MathBlock(
         required=True,
-        help_text=_('Write or paste LaTeX style equation. If no \\begin{...} command is provided, \\begin{equation} and \\end{equation} will be added automatically.'),
+        help_text=_('Write or paste LaTeX style equation (equation, matrix, align, etc. environments are supported).'),
         rows=4
     )
     caption = MathJaxMarkdownBlock(

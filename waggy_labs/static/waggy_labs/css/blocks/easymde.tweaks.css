@@ -2,4 +2,5 @@
 .EasyMDEContainer .CodeMirror-fullscreen {
     z-index: 999 !important;
 }
+.EasyMDEContainer .CodeMirror { border-top-right-radius: 0px; border-top-left-radius: 0px; padding: 0px !important; }
 .EasyMDEContainer .CodeMirror-scroll { font-family: monospace; font-size: 13px; }

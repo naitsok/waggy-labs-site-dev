@@ -14,7 +14,29 @@
 /*
  * Used to initialize Easy MDE when Markdown blocks are used in StreamFields
  */
-function easymdeAttach(id) { //, autoDownloadFontAwesome) {
+function easymdeAttach(id) {
+
+    // First prepare menu if there is "equation", "matrix", "align", etc. present in the toolbar settings
+    const createMathButton = (pattern) => {
+        return {
+            name: pattern,
+            action: (editor) => {
+                
+            },
+            className: () => {
+                switch (pattern) {
+                    case "equation": return "fa fa-superscript";
+                    case "matrix": return "fa fa-brackets";
+                    case "align": return "fa fa-align-left";
+                    case "split": return "fa fa-align-left";
+                    case "multiline": return "fa fa-align-center";
+                    default: return "";
+                }
+            },
+            text: pattern.charAt(0).toUpperCase() + pattern.slice(1),
+            title: pattern.charAt(0).toUpperCase() + pattern.slice(1)
+        }
+    }
 
     var textArea = document.getElementById(id);
     var mde = new EasyMDE({
@@ -53,7 +75,6 @@ function easymdeAttach(id) { //, autoDownloadFontAwesome) {
 
     // Save the codemirror instance on the original html element for later use.
     mde.element.codemirror = mde.codemirror;
-    // mde.codemirror.setOption("mode", "python");
 
     mde.codemirror.on("change", function() {
         document.getElementById(id).value = mde.value();
