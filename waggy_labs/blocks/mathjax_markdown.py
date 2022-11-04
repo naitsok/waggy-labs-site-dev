@@ -19,12 +19,16 @@ class MathJaxMarkdownBlock(TextBlock):
                  max_length=None,
                  min_length=None,
                  validators=(),
-                 easymde_min_height="", # e.g. 300px, valid CSS string
-                 easymde_max_height="", # e.g. 500px, valid CSS string
-                 easymde_toolbar_config="", # valid string that contains list of valid EasyMDE icons seprated by comma
+                 easymde_min_height="300px", # e.g. 300px, valid CSS string
+                 easymde_max_height="500px", # e.g. 500px, valid CSS string
+                 easymde_combine="true", # combine or not stex mode with markdown mode
+                 # valid string that contains list of valid EasyMDE buttons + math patterns seprated by comma
+                 easymde_toolbar_config="bold,italic,strikethrough,heading,|,unordered-list,ordered-list,link,|,code,"
+                    "subscript,superscript,equation,matrix,align,|,preview,side-by-side,fullscreen,guide",
                  **kwargs):
         self.easymde_min_height = easymde_min_height
         self.easymde_max_height = easymde_max_height
+        self.easymde_combine = easymde_combine
         self.easymde_toolbar_config = easymde_toolbar_config
         super().__init__(required, help_text, rows, max_length, min_length, validators, **kwargs)
     
@@ -35,6 +39,7 @@ class MathJaxMarkdownBlock(TextBlock):
                 "rows": self.rows,
                 "easymde-min-height": self.easymde_min_height,
                 "easymde-max-height": self.easymde_max_height,
+                "easymde-combine": self.easymde_combine,
                 "easymde-toolbar": self.easymde_toolbar_config,
                 })
             }

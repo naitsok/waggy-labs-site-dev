@@ -12,9 +12,10 @@ class ListingBlock(StructBlock):
     caption = MathJaxMarkdownBlock(
         required=False,
         help_text=_('Listing caption'),
-        easymde_min_height='200px',
-        easymde_max_height='200px',
-        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,preview,side-by-side,fullscreen,guide',
+        easymde_min_height='150px',
+        easymde_max_height='150px',
+        easymde_combine='true',
+        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide',
     )
     anchor = CharBlock(
         max_length=50,

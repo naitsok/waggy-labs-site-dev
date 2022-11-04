@@ -152,6 +152,13 @@ function removeListStyleWhenCheckbox(htmlText) {
  * @return {string} The modified HTML text.
 */
 function mathjaxMarkdown(text, easymdeOptions) {
+    // First check if the editor is in LaTeX or not, then \begin{equation} needs to be added if it is absent
+    if (!easymdeOptions.overlayMode.combine) {
+        if (!text.trim().startsWith("\\begin{")) {
+            text = "\\begin{equation}\n" + text.trim().replace(/^\$+|\$+$/gm,'') + "\n\\end{equation}";
+        }
+    }
+
     /* Similar to EasyMDE markdown(text) function but with addtional makedjs extensions */
     if (marked) {
         // Initialize

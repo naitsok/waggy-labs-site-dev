@@ -2,7 +2,6 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import CharBlock, StructBlock
 
-from .math import MathBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 
 
@@ -10,17 +9,21 @@ class EquationBlock(StructBlock):
     """A standalone equation block with (skippable) caption. Edit equation via CodeMirror with LaTeX mode. According to 
     https://docs.wagtail.org/en/stable/advanced_topics/customisation/streamfield_blocks.html#additional-javascript-on-structblock-forms.
     """
-    equation = MathBlock(
+    equation = MathJaxMarkdownBlock(
         required=True,
         help_text=_('Write or paste LaTeX style equation (equation, matrix, align, etc. environments are supported).'),
-        rows=4
+        easymde_min_height='200px',
+        easymde_max_height='200px',
+        easymde_combine='true',
+        easymde_toolbar_config='subscript,superscript,equation,matrix,align,multiline,split,gather,alignat,flalign,|,preview,side-by-side,fullscreen',
     )
     caption = MathJaxMarkdownBlock(
         required=False,
         help_text=_('Equation caption that will be displayed when the equation is shown in the dialog box.'),
-        easymde_min_height='200px',
-        easymde_max_height='200px',
-        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,preview,side-by-side,fullscreen,guide',
+        easymde_min_height='150px',
+        easymde_max_height='150px',
+        easymde_combine='true',
+        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide',
     )
     anchor = CharBlock(
         max_length=50,
