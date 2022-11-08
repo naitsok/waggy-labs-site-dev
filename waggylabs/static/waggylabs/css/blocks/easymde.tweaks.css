@@ -4,3 +4,7 @@
 }
 .EasyMDEContainer .CodeMirror { border-top-right-radius: 0px; border-top-left-radius: 0px; padding: 0px !important; }
 .EasyMDEContainer .CodeMirror-scroll { font-family: monospace; font-size: 13px; }
+.EasyMDEContainer .editor-preview ul { padding-left: 20px; }
+.EasyMDEContainer .editor-preview ul > li { list-style-type: disc; padding-left: 5px; }
+.EasyMDEContainer .editor-preview ol { padding-left: 20px; }
+.EasyMDEContainer .editor-preview ol > li { list-style-type: decimal; padding-left: 5px; }

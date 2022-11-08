@@ -16,9 +16,9 @@ function inlineMath() {
     return {
         name: 'inlineMath',
         level: 'inline',
-        start(src) { src.indexOf('\\\\('); }, // return src.indexOf('$'); }, // 
+        start(src) { src.indexOf('\\\\('); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\\\\(+([^$\n]+?)\\\\\)+/); // src.match(/^\$+([^$\n]+?)\$+/); //
+            const match = src.match(/^\\\\\(+([^$\n]+?)\\\\\)+/);
             if (match) {
                 return {
                     type: 'inlineMath',
@@ -29,6 +29,27 @@ function inlineMath() {
         },
         renderer(token) {
             return token.raw.replace("\\\\(", "\\(").replace("\\\\)", "\\)");
+        }
+    };
+}
+
+function inlineMath2() {
+    return {
+        name: 'inlineMath2',
+        level: 'inline',
+        start(src) { return src.indexOf('$'); },
+        tokenizer(src, tokens) {
+            const match = src.match(/^\$+([^$\n]+?)\$+/);
+            if (match) {
+                return {
+                    type: 'inlineMath2',
+                    raw: match[0], // do not use $ for MathJax rendering to avoid collisions with $
+                    text: match[1].trim()
+                };
+            }
+        },
+        renderer(token) {
+            return token.raw.replace("$", "\\(").replace("$", "\\)");
         }
     };
 }
@@ -193,15 +214,20 @@ function mathjaxMarkdown(text, easymdeOptions) {
             }
         }
 
+        // Replace \$ signs in order to avoid collisions with $...$ equations processing
+        text = text.replace(/\\\$/g, "{{DOLLAR}}");
+
         // Set options
         marked.setOptions(markedOptions);
 
         // Set extensions
-        // marked.use(blockMath());
-        marked.use({ extensions: [inlineMath(), blockMath(), blockMath2(), beginMath()] });
+        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath()] });
 
         // Convert the markdown to HTML
         var htmlText = marked.parse(text);
+
+        // Replace $ back after parsing (there $...$ is replaced to \\(...\\))
+        htmlText = htmlText.replace(/{{DOLLAR}}/g, "$");
 
         // Sanitize HTML
         if (easymdeOptions.renderingConfig && typeof easymdeOptions.renderingConfig.sanitizerFunction === 'function') {

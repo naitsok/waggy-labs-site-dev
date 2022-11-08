@@ -84,9 +84,9 @@ function createToolbar(toolbarConfig) {
                     if (selection.length !== 0) {
                         data = "\\text{" + selection + "}"; 
                     }
-                    data = (pattern === "subscript") ? "\\\\("+ data + "_{}\\\\)" : "\\\\("+ data + "^{}\\\\)";
+                    data = (pattern === "subscript") ? "$"+ data + "_{}$" : "$"+ data + "^{}$";
                     doc.replaceRange(data, startCursor, endCursor);
-                    doc.setCursor(startCursor.line, startCursor.ch + data.length - 4);
+                    doc.setCursor(startCursor.line, startCursor.ch + data.length - 2);
                 }
                 else {
                     var addLine = 0;
@@ -151,7 +151,7 @@ function easymdeAttach(id) {
         maxHeight: textArea.getAttribute("easymde-max-height") || undefined,
         overlayMode: {
             mode: CodeMirror.getMode({}, "stex"),
-            combine: textArea.getAttribute("easymde-min-height").toLowerCase() === "true",
+            combine: textArea.getAttribute("easymde-combine").toLowerCase() === "true",
         },
         renderingConfig: {
             codeSyntaxHighlighting: true,
@@ -160,6 +160,7 @@ function easymdeAttach(id) {
         showIcons: (textArea.getAttribute("easymde-toolbar")) ? undefined : ["strikethrough", "code", "table"],
         toolbar: (textArea.getAttribute("easymde-toolbar")) ? toolbar : undefined,
         shortcuts: (textArea.getAttribute("easymde-toolbar")) ? shortcuts : undefined,
+        unorderedListStyle: "-",
     });
     
     mde.options.previewRender = (plainText) => {

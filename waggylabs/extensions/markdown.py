@@ -4,7 +4,24 @@ import xml.etree.ElementTree as etree
 
 from markdown.extensions import Extension
 from markdown.inlinepatterns import InlineProcessor, SimpleTagInlineProcessor
+from markdown.postprocessors import Postprocessor
+from markdown.preprocessors import Preprocessor
 from markdown.util import AtomicString
+
+
+class DollarSignPreprocessor(Preprocessor):
+    """Preprocessor to replace \$ symbol with '{{DOLLAR}}' to avoid its determination as LaTeX equation."""
+    def run(self, lines):
+        new_lines = []
+        for line in lines:
+            new_lines.append(line.replace('\\$', '{{DOLLAR}}'))
+        return new_lines
+
+
+class DollarSignPostprocessor(Postprocessor):
+    """Posprocessor to return $ signs back from {{DOLLAR}}."""
+    def run(self, text):
+        return text.replace('{{DOLLAR}}', '$')
 
 
 class StrikethroughExtension(Extension):
@@ -14,6 +31,7 @@ class StrikethroughExtension(Extension):
 
 
 RE_INLINE = r'()\\\\\(+([^$\n]+?)\\\\\)+'
+RE_INLINE2 = r'()\$+([^$\n]+?)\$+'
 class MathJaxInlineProcessor(InlineProcessor):
     """Processor for MathJax inline equations in Python-Markdown."""
     def handleMatch(self, m, data):
@@ -49,12 +67,17 @@ class MathJaxBeginProcessor(InlineProcessor):
 class WaggyLabsMarkdownExtenstion(Extension):
     """Registers all the extensions for Python-Markdown."""
     def extendMarkdown(self, md):
+        # Prepocessors
+        md.preprocessors.register(DollarSignPreprocessor(), 'dollar-pre', 19)
         # MathJax equations, must go before escaping.
-        md.inlinePatterns.register(MathJaxInlineProcessor(RE_INLINE), 'math-inline', 186)
+        md.inlinePatterns.register(MathJaxInlineProcessor(RE_INLINE), 'math-inline', 185)
+        md.inlinePatterns.register(MathJaxInlineProcessor(RE_INLINE2), 'math-inline', 186)
         md.inlinePatterns.register(MathJaxBlockProcessor(RE_BLOCK), 'math-block', 187)
         md.inlinePatterns.register(MathJaxBeginProcessor(RE_BEGIN), 'math-begin', 189)
         # ~~strikethrough~~ pattern.
         md.inlinePatterns.register(SimpleTagInlineProcessor(r'()~~(.*?)~~', 's'), 's', 171)
+        # Postprocessors
+        md.postprocessors.register(DollarSignPostprocessor(), 'dollar-post', 19)
         
         
 def makeExtension(configs={}):
