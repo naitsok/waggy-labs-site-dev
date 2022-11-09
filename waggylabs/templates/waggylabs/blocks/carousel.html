@@ -1,9 +1,7 @@
 {% load wagtailimages_tags %}
 {% load wagtailmarkdown %}
-{% load waggylabs_helpers %}
 
-{% with carousel_id as random_uuid %}
-<div id="{{ id }}" class="carousel slide" data-bs-ride="false">
+<div id="{{ id }}" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-indicators">
       {% for item in value %}
       <button type="button" data-bs-target="#{{ id }}" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter0 }}"></button>
@@ -12,7 +10,7 @@
     <div class="carousel-inner">
       {% for item in value %}
       <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-        {% image item.image original class='d-block w-100' %}
+        {% image item.image original class='d-block w-100 img-fluid' %}
         <div class="carousel-caption d-none d-md-block">
           {{ item.caption|markdown|safe }}
         </div>
@@ -27,5 +25,4 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
-  {% endwith %}
+</div>
