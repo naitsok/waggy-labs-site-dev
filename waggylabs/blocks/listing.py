@@ -20,7 +20,7 @@ class ListingBlock(StructBlock):
     anchor = CharBlock(
         max_length=50,
         required=False,
-        help_text=_('Anchor link id for referencing in a Markdown block using #anchor.')
+        help_text=_('Anchor link id for referencing in a Markdown block using #anchor.'),
     )
     
     class Meta:
