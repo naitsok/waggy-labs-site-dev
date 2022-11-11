@@ -4,6 +4,7 @@ from wagtail.core.blocks import CharBlock, StructBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from .mathjax_markdown import MathJaxMarkdownBlock
+from .label import LabelBlock
 
 
 class FigureBlock(StructBlock):
@@ -20,10 +21,9 @@ class FigureBlock(StructBlock):
         easymde_combine='true',
         easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide'
     )
-    anchor = CharBlock(
+    label = LabelBlock(
         max_length=50,
         required=False,
-        help_text=_('Anchor link id for referencing in a Markdown block using #anchor.')
     )
     
     class Meta:

@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailmarkdown %}
 
-<figure id="{{ value.anchor }}">
+<figure id="{{ value.label }}">
     {% include_block value.code %}
     {% if value.caption %}
     <figcaption>{{ value.caption|markdown|safe }}</figcaption>

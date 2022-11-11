@@ -14,9 +14,9 @@ class LabelBlock(CharBlock):
                  required=False,
                  help_text=_('Label for the current entity (figure, table, equation) '
                              'to be used in the markdown block for referencing using '
-                             'standard LaTeX \\ref{...} syntax. The final reference '
+                             'standard LaTeX \\\u3164ref{...} syntax. The final reference '
                              'processing is happening on the published page, which can '
-                             'be checked using "Prevew" functionality.'),
+                             'be checked using "Preview" functionality.'),
                  max_length=50,
                  min_length=None,
                  validators=(),

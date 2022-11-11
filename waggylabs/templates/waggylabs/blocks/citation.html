@@ -1,6 +1,6 @@
 {# If the page is preprocessed to collect all the references and set its numbers, then uses the numbers #}
 {% if value.number %}
-<p>(<a href="{{ value.anchor }}">{{ value.number }}</a>) {{ value.reference }}</p>
+<p>(<a href="{{ value.label }}">{{ value.number }}</a>) {{ value.citation }}</p>
 {% else %}
-<p id="{{ value.anchor }}">{{ value.reference }}</p>
+<p id="{{ value.label }}">{{ value.citation }}</p>
 {% endif %}

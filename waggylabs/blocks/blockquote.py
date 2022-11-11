@@ -1,6 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import CharBlock, TextBlock, StructBlock
+from .label import LabelBlock
 
 
 class BlockQuoteBlock(StructBlock):
@@ -18,10 +19,9 @@ class BlockQuoteBlock(StructBlock):
         required=False,
         help_text=_('Source of the quoted text.')
     )
-    anchor = CharBlock(
+    label = LabelBlock(
         max_length=50,
-        required=False,
-        help_text=_('Anchor link id for referencing in a Markdown block using #anchor.')
+        required=False
     )
     
     class Meta:

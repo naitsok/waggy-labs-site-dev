@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.core.blocks import CharBlock, StructBlock
 
 from .mathjax_markdown import MathJaxMarkdownBlock
+from .label import LabelBlock
 
 
 class EquationBlock(StructBlock):
@@ -25,10 +26,9 @@ class EquationBlock(StructBlock):
         easymde_combine='true',
         easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide',
     )
-    anchor = CharBlock(
+    label = LabelBlock(
         max_length=50,
         required=False,
-        help_text=_('Anchor link id for referencing in a Markdown block using #anchor. Ignored if \\label{...} is present.')
     )
     
     def render(self, value, context=None):
