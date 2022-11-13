@@ -53,6 +53,9 @@ function getText(pattern) {
  * @returns toolbar and shortcuts for EasyMDE
  */
 function createToolbar(toolbarConfig) {
+    if (toolbarConfig === 'false') {
+        return false;
+    }
     // Math patterns from the AMS Math LaTeX package
     var allMathPatterns = ["subscript", "superscript", "equation", "matrix", "split", "multiline", "gather", "align", "alignat", "flalign"];
     // Shortcuts for the math patterns

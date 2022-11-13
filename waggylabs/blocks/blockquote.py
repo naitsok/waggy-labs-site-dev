@@ -21,7 +21,8 @@ class BlockQuoteBlock(StructBlock):
     )
     label = LabelBlock(
         max_length=50,
-        required=False
+        required=False,
+        form_classname='waggylabs-label-blockquote',
     )
     
     class Meta:

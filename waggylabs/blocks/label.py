@@ -1,9 +1,9 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import CharBlock
+from wagtail.core.blocks import RegexBlock
 
 
-class LabelBlock(CharBlock):
+class LabelBlock(RegexBlock):
     """LabelBlock to add labels to figures, tables, references, etc,
     for referencing them in e.g. Markdown text using standard LaTex
     \ref{...} syntax. LabelBlock adds the specific CSS class to the
@@ -11,6 +11,7 @@ class LabelBlock(CharBlock):
     all the LabelBlocks by javascript selector for reference processing
     for the final view of the page."""
     def __init__(self,
+                 regex=r'^[^\s\S\\\/\{\}\[\]\(\)]$',
                  required=False,
                  help_text=_('Label for the current entity (figure, table, equation) '
                              'to be used in the markdown block for referencing using '
@@ -20,6 +21,18 @@ class LabelBlock(CharBlock):
                  max_length=50,
                  min_length=None,
                  validators=(),
-                 form_classname='waggylabs-label',
+                 error_messages={
+                     'invalid': _('Label must not contain spaces, slashes, and any type of brackets.')
+                     },
+                 form_classname='',
                  **kwargs):
-        super().__init__(required, help_text, max_length, min_length, validators, form_classname=form_classname, **kwargs)
+        # A specific waggylabs-label class is added to make these label not processable by MathJax
+        super().__init__(regex,
+                         required,
+                         help_text,
+                         max_length,
+                         min_length,
+                         error_messages,
+                         validators,
+                         form_classname=form_classname + ' waggylabs-label',
+                         **kwargs)

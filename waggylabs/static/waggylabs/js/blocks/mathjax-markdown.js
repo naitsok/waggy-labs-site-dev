@@ -12,6 +12,11 @@
  * Replaces standard EasyMDE markdown function to avoid parsing LaTeX math expressions according to the markdown rules.
  */
 
+/**
+ * Skip processing contents of \\(...\\) inline LaTeX equation, 
+ * so that MathJax can render equations correctly.
+ * @returns marked.js extenstion object
+ */
 function inlineMath() {
     return {
         name: 'inlineMath',
@@ -33,6 +38,11 @@ function inlineMath() {
     };
 }
 
+/**
+ * Skip processing contents of $...$ inline LaTeX equation, 
+ * so that MathJax can render equations correctly.
+ * @returns marked.js extenstion object
+ */
 function inlineMath2() {
     return {
         name: 'inlineMath2',
@@ -43,17 +53,23 @@ function inlineMath2() {
             if (match) {
                 return {
                     type: 'inlineMath2',
-                    raw: match[0], // do not use $ for MathJax rendering to avoid collisions with $
+                    raw: match[0],
                     text: match[1].trim()
                 };
             }
         },
         renderer(token) {
+            // do not use $ for MathJax rendering to avoid collisions with $
             return token.raw.replace("$", "\\(").replace("$", "\\)");
         }
     };
 }
 
+/**
+ * Skip processing contents of $$...$$ block LaTeX equation, so
+ * that MathJax can render equations correctly.
+ * @returns marked.js extenstion object
+ */
 function blockMath() {
     return {
         name: 'blockMath',
@@ -75,6 +91,11 @@ function blockMath() {
     };
 }
 
+/**
+ * Skip processing contents of \\[...\\] block LaTeX equation, so
+ * that MathJax can render equations correctly.
+ * @returns marked.js extenstion object
+ */
 function blockMath2() {
     return {
         name: 'blockMath',
@@ -96,6 +117,11 @@ function blockMath2() {
     };
 }
 
+/**
+ * Skip processing contents of \begin{...}...\end{...} LaTeX equation, so
+ * that MathJax can render equations correctly.
+ * @returns marked.js extenstion object
+ */
 function beginMath() {
     return {
       name: 'beginMath',
@@ -115,6 +141,69 @@ function beginMath() {
         return token.raw;
       }
     };
+}
+
+/**
+ * Processes figure, table, listing, blockquote labels before 
+ * MathJax does the same for equations.
+ * @returns marked.js extension object
+ */
+function refLabel() {
+    return {
+        name: 'refLabel',
+        level: 'inline',
+        start(src) {return src.indexOf('\\ref{'); },
+        tokenizer(src, tokens) {
+            const match = src.match(/^\\ref{(.*?)}/);
+            if (match) {
+                return {
+                    type: 'refLabel',
+                    raw: match[0],
+                    text: match[1]
+                }
+            }
+        },
+        renderer(token) {
+            var processedRef = processRef(token.text);
+            if (processedRef) {
+                return processedRef;
+            }
+            else {
+                return token.raw;
+            }
+        }
+    }
+}
+
+/**
+ * Processes figure, table, listing, blockquote references before 
+ * MathJax does the same for equations.
+ * @param {string} ref - reference to be processed, e.g. content inside curly brackets of  \ref{...}
+ * @returns - span element if the reference id was found or undefined if not
+ */
+ function processRef(ref) {
+    const types = ['blockquote', 'figure', 'listing', 'table'];
+    for (let i in types) {
+        var processedRef = processRefbyType(ref, 'waggylabs-label-' + types[i]);
+        if (processedRef) { return processedRef; }
+    }
+}
+
+/**
+ * Processe a ref by one type
+ * @param {*} ref - reference to be processed, e.g. content inside curly brackets of  \ref{...}
+ * @param {*} className - CSS class that defines the reference element in the editor
+ * @returns - span element if the reference id was found or undefined if not
+ */
+function processRefbyType(ref, className) {
+    var labelElements = document.getElementsByClassName(className);
+    for(var i = 0; i < labelElements.length; i++) {
+        var el = labelElements[i].getElementsByTagName('input')[0];
+        if (el.value === ref) {
+            return '<span class="MJX-TEX"><a href="#' + el.getAttribute('id') +'">'+
+                (i + 1) + '</a></span>';
+        }
+    }
 }
 
 var anchorToExternalRegex = new RegExp(/(<a.*?https?:\/\/.*?[^a]>)+?/g);
@@ -221,7 +310,7 @@ function mathjaxMarkdown(text, easymdeOptions) {
         marked.setOptions(markedOptions);
 
         // Set extensions
-        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath()] });
+        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath(), refLabel()] });
 
         // Convert the markdown to HTML
         var htmlText = marked.parse(text);

@@ -2,7 +2,7 @@
 {% load wagtailimages_tags %}
 {% load wagtailmarkdown %}
 
-<figure class="figure" id="{{ value.label }}">
+<figure class="figure waggylabs-label-figure" id="{{ value.label }}">
     {% image value.image original class='img-fluid' %}
     {% if value.caption %}
         <figcaption class="figure-caption">

@@ -7,15 +7,15 @@ from .mathjax_markdown import MathJaxMarkdownBlock
 from .label import LabelBlock
 
 
-class FigureBlock(StructBlock):
-    """Image with caption for StreamField."""
+class TableFigureBlock(StructBlock):
+    """Add Table as picture."""
     image = ImageChooserBlock(
         required=True,
         help_text=_('Choose an image'),
         )
     caption = MathJaxMarkdownBlock(
         required=False,
-        help_text=_('Figure caption'),
+        help_text=_('Table caption'),
         easymde_min_height='150px',
         easymde_max_height='150px',
         easymde_combine='true',
@@ -24,10 +24,10 @@ class FigureBlock(StructBlock):
     label = LabelBlock(
         max_length=50,
         required=False,
-        form_classname='waggylabs-label-figure', # needed to render figure numbers
+        form_classname='waggylabs-label-table', # needed to render references to tables
     )
     
     class Meta:
-        template = 'waggylabs/blocks/figure.html'
-        icon = 'image'
-        label = 'Figure'
+        template = 'waggylabs/blocks/table_figure.html'
+        icon = 'table'
+        label = 'Table as picture'

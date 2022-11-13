@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import CharBlock, StructBlock
+from wagtail.core.blocks import StructBlock
 
 from .code import CodeBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
@@ -21,6 +21,7 @@ class ListingBlock(StructBlock):
     label = LabelBlock(
         max_length=50,
         required=False,
+        form_classname='waggylabs-label-listing', # needed to render references to listings
         )
     
     class Meta:

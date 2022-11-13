@@ -1,6 +1,2 @@
-{# If the page is preprocessed to collect all the references and set its numbers, then uses the numbers #}
-{% if value.number %}
-<p>(<a href="{{ value.label }}">{{ value.number }}</a>) {{ value.citation }}</p>
-{% else %}
-<p id="{{ value.label }}">{{ value.citation }}</p>
-{% endif %}
+{# Citation number will be generated after final javascript page processing. #}
+<p>(<a href="{{ value.label }}" class="waggylabs-cite">**</a>) {{ value.citation }}</p>
