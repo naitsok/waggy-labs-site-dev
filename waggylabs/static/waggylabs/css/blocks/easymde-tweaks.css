@@ -9,3 +9,5 @@
 .EasyMDEContainer .editor-preview ul > li { list-style-type: disc; padding-left: 5px; }
 .EasyMDEContainer .editor-preview ol { padding-left: 20px; }
 .EasyMDEContainer .editor-preview ol > li { list-style-type: decimal; padding-left: 5px; }
+.EasyMDEContainer span.reference { font-family: 'Courier New', Courier; font-size: 115%; font-weight: bold; }
+.EasyMDEContainer .MathJax_ref { font-family: 'Courier New', Courier !important; font-size: 105% !important; font-weight: bold !important; }

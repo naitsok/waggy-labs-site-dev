@@ -200,8 +200,9 @@ function processRefbyType(ref, className) {
     for(var i = 0; i < labelElements.length; i++) {
         var el = labelElements[i].getElementsByTagName('input')[0];
         if (el.value === ref) {
-            return '<span class="MJX-TEX"><a href="#' + el.getAttribute('id') +'">'+
-                (i + 1) + '</a></span>';
+            return `<span class="reference"><a href="#${el.getAttribute('id')}">${i + 1}</a></span>`;
+            // '<span class="reference"><a href="#' + el.getAttribute('id') +'">'+
+            //    (i + 1) + '</a></span>';
         }
     }
 }

@@ -33,7 +33,7 @@ class CodeBlockAdapter(StructBlockAdapter):
             css = {
                 "all": (
                     f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{codemirror_ver}/codemirror.min.css',
-                    'waggylabs/css/blocks/codemirror.tweaks.css',
+                    'waggylabs/css/blocks/codemirror-tweaks.css',
                 )
             }
         )

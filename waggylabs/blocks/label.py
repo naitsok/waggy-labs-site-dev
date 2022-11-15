@@ -11,7 +11,7 @@ class LabelBlock(RegexBlock):
     all the LabelBlocks by javascript selector for reference processing
     for the final view of the page."""
     def __init__(self,
-                 regex=r'^[^\s\S\\\/\{\}\[\]\(\)]$',
+                 regex=r'^[a-zA-Z][^\s\\\/\{\}\[\]\(\)]*$',
                  required=False,
                  help_text=_('Label for the current entity (figure, table, equation) '
                              'to be used in the markdown block for referencing using '
@@ -22,7 +22,7 @@ class LabelBlock(RegexBlock):
                  min_length=None,
                  validators=(),
                  error_messages={
-                     'invalid': _('Label must not contain spaces, slashes, and any type of brackets.')
+                     'invalid': _('Label must not start with a number or contain spaces, slashes, and any type of brackets.')
                      },
                  form_classname='',
                  **kwargs):

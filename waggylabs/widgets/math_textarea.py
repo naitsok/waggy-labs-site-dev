@@ -19,7 +19,7 @@ class MathTextarea(WidgetWithScript, forms.widgets.Textarea):
         return forms.Media(
             css={
                 "all": (
-                    "waggylabs/css/blocks/codemirror.tweaks.css",
+                    "waggylabs/css/blocks/codemirror-tweaks.css",
                 )
             },
             js=(
