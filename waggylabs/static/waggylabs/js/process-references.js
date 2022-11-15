@@ -14,7 +14,7 @@ function processRefs(el) {
             var label = labelElements[i].getAttribute('id');
             var regex = new RegExp('\\\\ref\{' + label + '\}', 'g');
             el.innerHTML = el.innerHTML.replace(regex, 
-               `<span><a href="#${label}">${i + 1}</a></span>`);
+               `<span class="reference"><a href="#${label}">${i + 1}</a></span>`);
         }
     }
 }
