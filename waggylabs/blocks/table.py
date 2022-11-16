@@ -9,10 +9,6 @@ from .label import LabelBlock
 
 class TableFigureBlock(StructBlock):
     """Add Table as picture."""
-    image = ImageChooserBlock(
-        required=True,
-        help_text=_('Choose an image'),
-        )
     caption = MathJaxMarkdownBlock(
         required=False,
         help_text=_('Table caption'),
@@ -21,6 +17,10 @@ class TableFigureBlock(StructBlock):
         easymde_combine='true',
         easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide'
     )
+    image = ImageChooserBlock(
+        required=True,
+        help_text=_('Choose an image'),
+        )
     label = LabelBlock(
         max_length=50,
         required=False,
