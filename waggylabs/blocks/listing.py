@@ -12,11 +12,14 @@ class ListingBlock(StructBlock):
     code = CodeBlock()
     caption = MathJaxMarkdownBlock(
         required=False,
-        help_text=_('Listing caption'),
-        easymde_min_height='150px',
-        easymde_max_height='150px',
+        label=_('Listing caption'),
+        easymde_min_height='100px',
+        easymde_max_height='100px',
         easymde_combine='true',
-        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide',
+        easymde_toolbar_config=('bold,italic,strikethrough,|,unordered-list,'
+                                'ordered-list,link,|,code,subscript,superscript,|,'
+                                'preview,side-by-side,fullscreen,guide'),
+        easymde_status='false',
     )
     label = LabelBlock(
         max_length=50,

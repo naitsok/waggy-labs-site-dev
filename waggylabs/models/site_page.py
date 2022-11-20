@@ -24,7 +24,8 @@ from hitcount.views import HitCountMixin as ViewHitCountMixin
 # from waggylabs.admin.panels import ReadOnlyPanel
 from waggylabs.blocks import (BlockQuoteBlock, MathJaxMarkdownBlock, 
                               FigureBlock, ListingBlock, EquationBlock,
-                              ImageCarouselBlock)
+                              ImageCarouselBlock, TableFigureBlock,
+                              TableBlock)
 
 
 class SitePage(Page, MenuPageMixin, HitCountMixin):
@@ -64,6 +65,8 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         ('figure', FigureBlock()),
         ('equation', EquationBlock()),
         ('carousel', ImageCarouselBlock()),
+        ('table_figure', TableFigureBlock()),
+        ('table', TableBlock()),
         # ('image', CaptionedImageBlock()),
         # ('markdown', MarkdownxBlock()),
         # ('columns', TwoColumnBlock()),

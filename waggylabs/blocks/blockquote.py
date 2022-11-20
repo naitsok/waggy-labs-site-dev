@@ -8,16 +8,16 @@ class BlockQuoteBlock(StructBlock):
     """Quote block with text, author and source."""
     quote = TextBlock(
         required=True,
-        help_text=_('Quote text.'),
+        label=_('Quote text.'),
         rows=3
     )
     author = CharBlock(
         required=False,
-        help_text=_('Author of the quoted text.')
+        label=_('Author of the quoted text.')
     )
     source = CharBlock(
         required=False,
-        help_text=_('Source of the quoted text.')
+        label=_('Source of the quoted text.')
     )
     label = LabelBlock(
         max_length=50,

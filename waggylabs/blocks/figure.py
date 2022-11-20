@@ -11,15 +11,18 @@ class FigureBlock(StructBlock):
     """Image with caption for StreamField."""
     image = ImageChooserBlock(
         required=True,
-        help_text=_('Choose an image'),
+        label=_('Graphic'),
         )
     caption = MathJaxMarkdownBlock(
         required=False,
-        help_text=_('Figure caption'),
-        easymde_min_height='150px',
-        easymde_max_height='150px',
+        label=_('Figure caption'),
+        easymde_min_height='100px',
+        easymde_max_height='100px',
         easymde_combine='true',
-        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide'
+        easymde_toolbar_config=('bold,italic,strikethrough,|,unordered-list,'
+                                'ordered-list,link,|,code,subscript,superscript,|,'
+                                'preview,side-by-side,fullscreen,guide'),
+        easymde_status='false',
     )
     label = LabelBlock(
         max_length=50,

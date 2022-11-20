@@ -23,13 +23,20 @@ class MathJaxMarkdownBlock(TextBlock):
                  easymde_max_height="500px", # e.g. 500px, valid CSS string
                  easymde_combine="true", # combine or not stex mode with markdown mode
                  # valid string that contains list of valid EasyMDE buttons + math patterns seprated by comma
-                 easymde_toolbar_config="bold,italic,strikethrough,heading,|,unordered-list,ordered-list,link,|,code,"
-                    "subscript,superscript,equation,matrix,align,|,preview,side-by-side,fullscreen,guide",
+                 # see the easymde-attach.js for availabe math patterns
+                 easymde_toolbar_config=("bold,italic,strikethrough,heading,|,"
+                                         "unordered-list,ordered-list,link,|,code,"
+                                         "subscript,superscript,equation,matrix,"
+                                         "align,|,preview,side-by-side,fullscreen,guide"),
+                # status bar: true for default status bar, false for no status bar, 
+                # string of comma-separated names for custom status bar
+                easymde_status="true",
                  **kwargs):
         self.easymde_min_height = easymde_min_height
         self.easymde_max_height = easymde_max_height
         self.easymde_combine = easymde_combine
         self.easymde_toolbar_config = easymde_toolbar_config
+        self.easymde_status = easymde_status
         super().__init__(required, help_text, rows, max_length, min_length, validators, **kwargs)
     
     @cached_property
@@ -41,6 +48,7 @@ class MathJaxMarkdownBlock(TextBlock):
                 "easymde-max-height": self.easymde_max_height,
                 "easymde-combine": self.easymde_combine,
                 "easymde-toolbar": self.easymde_toolbar_config,
+                "easymde-status": self.easymde_status,
                 })
             }
         field_kwargs.update(self.field_options)

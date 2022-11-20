@@ -1,0 +1,18 @@
+{% load wagtailcore_tags %}
+{% load wagtailmarkdown %}
+
+<div class="table-responsive">
+    <table class="table caption-top align-middle">
+        {% if value.caption %}
+        <caption>{{ value.caption|markdown|safe }}</caption>
+        {% endif %}
+        {% include_block value.bound_blocks.table %}
+        <tfoot class="table-group-divider">
+            <tr>
+                {% if value.footer %}
+                <td colspan="{{ value.table.data.0|length }}">{{ value.footer|markdown|safe }}</td>
+                {% endif %}
+            </tr>
+        </tfoot>
+    </table>
+</div>

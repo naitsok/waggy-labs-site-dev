@@ -5,5 +5,6 @@ from .equation import EquationBlock
 from .figure import FigureBlock
 from .label import LabelBlock
 from .listing import ListingBlock
+from .table import TableFigureBlock, TableBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 from .carousel import ImageCarouselBlock

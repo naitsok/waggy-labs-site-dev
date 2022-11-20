@@ -8,7 +8,7 @@ class CitationBlock(StructBlock):
     """Block to add one citation with and refence it using LaTeX \cite{...} syntax."""
     citation = CharBlock(
         required=True,
-        help_text=_('Title of the citation.')
+        label=_('Title of the citation.')
     )
     label = LabelBlock(
         max_length=50,

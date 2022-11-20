@@ -22,7 +22,8 @@ class LabelBlock(RegexBlock):
                  min_length=None,
                  validators=(),
                  error_messages={
-                     'invalid': _('Label must not start with a number or contain spaces, slashes, and any type of brackets.')
+                     'invalid': _('Label must not start with a number or contain spaces, '
+                                  'slashes, and any type of brackets.')
                      },
                  form_classname='',
                  **kwargs):

@@ -136,6 +136,22 @@ function createToolbar(toolbarConfig) {
     return [toolbar, shortcuts];
 }
 
+/**
+ * 
+ * @param {string} statusConfig - true for default status bar, fals for no bar,
+ * list of comma separated values for custom toolbar
+ * 
+ */
+function createStatusBar(statusConfig){
+    if (statusConfig === "false") {
+        return false;
+    }
+    if (statusConfig === "true") {
+        return ['autosave', 'lines', 'words', 'cursor'];
+    }
+    return statusConfig.split(",");
+}
+
 
 function easymdeAttach(id) {
     var textArea = document.getElementById(id);
@@ -163,6 +179,7 @@ function easymdeAttach(id) {
         showIcons: (textArea.getAttribute("easymde-toolbar")) ? undefined : ["strikethrough", "code", "table"],
         toolbar: (textArea.getAttribute("easymde-toolbar")) ? toolbar : undefined,
         shortcuts: (textArea.getAttribute("easymde-toolbar")) ? shortcuts : undefined,
+        status: createStatusBar(textArea.getAttribute("easymde-status")),
         unorderedListStyle: "-",
     });
     

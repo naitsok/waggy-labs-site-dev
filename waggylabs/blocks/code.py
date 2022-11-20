@@ -30,19 +30,25 @@ class CodeBlock(StructBlock):
     """
     
     mode = ChoiceBlock(
-        choices=settings.WAGGYLABS_CODEBLOCK_LANGS if hasattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS') else DEFAULT_CODEBLOCK_LANGS,
+        choices=(settings.WAGGYLABS_CODEBLOCK_LANGS if 
+                 hasattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS') 
+                 else DEFAULT_CODEBLOCK_LANGS),
         required=True,
         default='python',
-        help_text=_('Choose the programming language.'),
+        label=_('Code language'),
+        # help_text=_('Choose the programming language.'),
     )
     code = TextBlock(
         required=True,
-        help_text=_('Write or paste code.'),
+        label=_('Code snippet'),
+        # help_text=_('Write or paste code.'),
         rows=4
     )
     
     def render_basic(self, value, context=None):
-        return render_markdown('```' + value['mode'] + '\n' + value['code'] + '\n```\n', context)
+        return render_markdown('```' + value['mode'] + 
+                               '\n' + value['code'] + 
+                               '\n```\n', context)
     
     class Meta:
         # template = 'waggylabs/blocks/code.html'

@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailmarkdown %}
+
+<figure class="figure caption-top waggylabs-label-table" id="{{ value.label }}">
+    {% if value.caption %}
+        <figcaption class="figure-caption">
+            {{ value.caption|markdown|safe }}
+        </figcaption>
+    {% endif %}
+    {% image value.image original class='img-fluid' %}
+</figure>

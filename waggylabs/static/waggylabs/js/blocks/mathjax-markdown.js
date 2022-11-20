@@ -263,9 +263,10 @@ function removeListStyleWhenCheckbox(htmlText) {
  * @return {string} The modified HTML text.
 */
 function mathjaxMarkdown(text, easymdeOptions) {
+
     // First check if the editor is in LaTeX or not, then \begin{equation} needs to be added if it is absent
-    if (!easymdeOptions.overlayMode.combine) {
-        if (!text.trim().startsWith("\\begin{")) {
+    if (easymdeOptions && easymdeOptions.overlayMode && easymdeOptions.overlayMode.combine) {
+        if (!easymdeOptions.overlayMode.combine && !text.trim().startsWith("\\begin{")) {
             text = "\\begin{equation}\n" + text.trim().replace(/^\$+|\$+$/gm,'') + "\n\\end{equation}";
         }
     }

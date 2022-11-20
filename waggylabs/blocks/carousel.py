@@ -1,3 +1,5 @@
+from django.utils.translation import gettext_lazy as _
+
 from wagtail.core.blocks import StructBlock, ListBlock
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -6,14 +8,25 @@ from .mathjax_markdown import MathJaxMarkdownBlock
 
 class ImageWithCaptionBlock(StructBlock):
     """Image with caption block for carousel."""
-    image = ImageChooserBlock()
+    image = ImageChooserBlock(
+        required=True,
+        label=_('Picture for carousel'),
+    )
     caption = MathJaxMarkdownBlock(
         required=False,
-        easymde_min_height='150px',
-        easymde_max_height='150px',
+        label=_('Text in front of the picture'),
+        easymde_min_height='100px',
+        easymde_max_height='100px',
         easymde_combine='true',
-        easymde_toolbar_config='bold,italic,strikethrough,|,unordered-list,ordered-list,link,|,code,subscript,superscript,|,preview,side-by-side,fullscreen,guide'
-        )
+        easymde_toolbar_config=('bold,italic,strikethrough,|,unordered-list,'
+                                'ordered-list,link,|,code,subscript,superscript,|,'
+                                'preview,side-by-side,fullscreen,guide'),
+        easymde_status='false',
+    )
+    
+    class Meta:
+        icon='image'
+        # label='Picture for carousel'
 
 
 class ImageCarouselBlock(ListBlock):
@@ -22,5 +35,5 @@ class ImageCarouselBlock(ListBlock):
         super().__init__(ImageWithCaptionBlock(), **kwargs)
     class Meta:
         icon = 'grip'
-        label = 'Image Carousel'
+        label = 'Picture Carousel'
         template = 'waggylabs/blocks/carousel.html'
