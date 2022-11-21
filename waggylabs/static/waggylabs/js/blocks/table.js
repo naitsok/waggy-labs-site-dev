@@ -85,19 +85,15 @@ function initTable(id, tableOptions) {
     return cellsClassnames;
   };
 
-  const typesetCellsData = function() {
-    var data = hot.getData();
-    for (let i in data) {
-      for (let j in data[i]) {
-        var cell = hot.getCell(i, j);
-        MathJax.typesetClear([cell]);
-        if (data[i][j]) {
-          cell.innerHTML = mathjaxMarkdown(data[i][j], {});
-          MathJax.typeset([cell]);
-        }
+  const typesetCell = function(cell, row, col, prop, value, cellProps) {
+    if (hot) {
+      MathJax.typesetClear([cell]);
+      if (value) {
+        // removal of <p></p> elemens is needed for correct display of cell data
+        cell.innerHTML = mathjaxMarkdown(value, {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
+        MathJax.typeset([cell]);
       }
     }
-    resizeHeight(getHeight());
   }
 
   const persist = function () {
@@ -114,14 +110,12 @@ function initTable(id, tableOptions) {
     if (source === 'loadData') {
       return;  // don't save this change
     }
-    typesetCellsData();
     persist();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const metaEvent = function (row, column, key, value) {
     if (isInitialized && key === 'className') {
-      typesetCellsData();
       persist();
     }
   };
@@ -132,7 +126,6 @@ function initTable(id, tableOptions) {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const structureEvent = function (index, amount) {
-    typesetCellsData();
     persist();
   };
 
@@ -156,6 +149,7 @@ function initTable(id, tableOptions) {
     afterRemoveRow: structureEvent,
     afterSetCellMeta: metaEvent,
     afterInit: initEvent,
+    afterRenderer: typesetCell,
     // contextMenu set via init, from server defaults
   };
 
@@ -178,9 +172,9 @@ function initTable(id, tableOptions) {
 
   hot = new Handsontable(document.getElementById(containerId), finalOptions);
   hot.render(); // Call to render removes 'null' literals from empty cells
-  $(document).ready(function() {
-    typesetCellsData();
-  });
+  // $(document).ready(function() {
+  //   typesetCellsData();
+  // });
   
 
   // Apply resize after document is finished loading (parent .sequence-member-inner width is set)
