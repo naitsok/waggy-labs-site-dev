@@ -67,10 +67,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         ('carousel', ImageCarouselBlock()),
         ('table_figure', TableFigureBlock()),
         ('table', TableBlock()),
-        # ('image', CaptionedImageBlock()),
-        # ('markdown', MarkdownxBlock()),
         # ('columns', TwoColumnBlock()),
-        # ('table', CaptionedTableBlock()),
         ], use_json_field=True)
 
     # Search index configuration

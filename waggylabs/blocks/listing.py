@@ -13,6 +13,7 @@ class ListingBlock(StructBlock):
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Listing caption'),
+        help_text='',
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',

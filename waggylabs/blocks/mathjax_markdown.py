@@ -17,7 +17,7 @@ class MathJaxMarkdownBlock(TextBlock):
                  required=True,
                  help_text=_('Use this general text field to write paragraphs using Markdown syntax. '
                              'The links to the pages of this website are added using the specific '
-                             'syntax described at https://github.com/torchbox/wagtail-markdown#inline-links.'
+                             'syntax described at https://github.com/torchbox/wagtail-markdown#inline-links. '
                              'Inline and block equation can be added using standard LaTeX syntax, '
                              'references to equation are supproted using \\\u3164ref{...} or '
                              '\\\u3164eqref{...} syntax. Similarly \\\u3164ref{...} and '

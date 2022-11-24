@@ -188,6 +188,7 @@ class TableBlock(StructBlock):
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Table caption'),
+        help_text='',
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',
@@ -208,6 +209,7 @@ class TableBlock(StructBlock):
     footer = MathJaxMarkdownBlock(
         required=False,
         label=_('Table footer'),
+        help_text='',
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',

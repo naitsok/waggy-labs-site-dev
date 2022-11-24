@@ -28,12 +28,14 @@ class LabelBlock(RegexBlock):
                  form_classname='',
                  **kwargs):
         # A specific waggylabs-label class is added to make these label not processable by MathJax
-        super().__init__(regex,
-                         required,
-                         help_text,
-                         max_length,
-                         min_length,
-                         error_messages,
-                         validators,
-                         form_classname=form_classname + ' waggylabs-label',
-                         **kwargs)
+        super().__init__(
+            regex,
+            required,
+            help_text,
+            max_length,
+            min_length,
+            error_messages,
+            validators,
+            form_classname=form_classname + ' waggylabs-label',
+            **kwargs
+        )

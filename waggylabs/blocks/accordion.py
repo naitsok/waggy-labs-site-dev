@@ -1,8 +1,10 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import (StreamBlock, StructBlock, CharBlock, ListBlock)
+from wagtail.core.blocks import (
+    StreamBlock, StructBlock, CharBlock, ListBlock,
+    BooleanBlock
+    )
 from wagtail.embeds.blocks import EmbedBlock
-from wagtail.images.blocks import ImageChooserBlock
 
 from .equation import EquationBlock
 from .listing import ListingBlock
@@ -13,7 +15,6 @@ from .table import TableBlock, TableFigureBlock
 
 class AccordionContentBlock(StreamBlock):
     """Content block for one accordion item."""
-    # heading = CharBlock(classname='full subtitle', required=True),
     markdown = MathJaxMarkdownBlock(
         required=False,
         help_text='',
@@ -30,5 +31,35 @@ class AccordionContentBlock(StreamBlock):
     embed = EmbedBlock(required=True)
     equation = EquationBlock()
     table_figure = TableFigureBlock()
-    table = TableBlock(),
+    table = TableBlock()
+    
+
+class AccordionItemBlock(StructBlock):
+    """One accordion item block with heading."""
+    heading = CharBlock(
+        required=True,
+        label=_('Item Heading'),
+        classname='full subtitle'
+    )
+    body = AccordionContentBlock(
+        required=True
+    )
+
+
+class AccordionBlock(StructBlock):
+    """Accordion block in which multiple accordion items can 
+    be added."""
+    keep_open = BooleanBlock(
+        required=True,
+        default=False,
+        label=_('Always open'),
+        help_text=_('If true, keeps accordion items always open, i.e. other items '
+                    'do not collapse when an new one is opened.')
+    )
+    items = ListBlock(AccordionItemBlock())
+
+    class Meta:
+        icon = 'list-ul'
+        label = 'Accordion'
+        template = 'waggylabs/blocks/accordion.html'
     
