@@ -1,9 +1,9 @@
 {% load wagtailcore_tags %}
 {% load wagtailmarkdown %}
 
-<figure id="{{ value.label }}" class="waggylabs-label-listing">
+<figure id="{{ value.label }}" class="figure waggylabs-label-listing">
     {% include_block value.code %}
     {% if value.caption %}
-    <figcaption>{{ value.caption|markdown|safe }}</figcaption>
+    <figcaption class="figure-caption">{{ value.caption|markdown|safe }}</figcaption>
     {% endif %}
 </figure>

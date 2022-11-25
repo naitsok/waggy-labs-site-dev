@@ -46,9 +46,9 @@ class CodeBlock(StructBlock):
     )
     
     def render_basic(self, value, context=None):
-        return render_markdown('```' + value['mode'] + 
-                               '\n' + value['code'] + 
-                               '\n```\n', context)
+        return render_markdown('```' + value['mode'] +
+                               '\n' + value['code'] +
+                               '\n```', context)
     
     class Meta:
         # template = 'waggylabs/blocks/code.html'

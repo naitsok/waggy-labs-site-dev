@@ -33,6 +33,9 @@ class AccordionContentBlock(StreamBlock):
     table_figure = TableFigureBlock()
     table = TableBlock()
     
+    class Meta:
+        label = 'Body of the accordion item'
+    
 
 class AccordionItemBlock(StructBlock):
     """One accordion item block with heading."""
@@ -44,13 +47,17 @@ class AccordionItemBlock(StructBlock):
     body = AccordionContentBlock(
         required=True
     )
+    
+    class Meta:
+        icon = 'arrow-down-big'
+        label = 'Item of the accordion'
 
 
 class AccordionBlock(StructBlock):
     """Accordion block in which multiple accordion items can 
     be added."""
     keep_open = BooleanBlock(
-        required=True,
+        required=False,
         default=False,
         label=_('Always open'),
         help_text=_('If true, keeps accordion items always open, i.e. other items '

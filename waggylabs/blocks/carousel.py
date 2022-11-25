@@ -26,8 +26,8 @@ class ImageWithCaptionBlock(StructBlock):
     )
     
     class Meta:
-        icon='image'
-        # label='Picture for carousel'
+        icon = 'image'
+        label = 'Item of the carousel'
 
 
 class ImageCarouselBlock(ListBlock):

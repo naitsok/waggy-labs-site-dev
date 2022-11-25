@@ -8,3 +8,4 @@ from .listing import ListingBlock
 from .table import TableFigureBlock, TableBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 from .carousel import ImageCarouselBlock
+from .accordion import AccordionBlock

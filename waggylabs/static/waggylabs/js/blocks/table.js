@@ -85,8 +85,23 @@ function initTable(id, tableOptions) {
     return cellsClassnames;
   };
 
+  const typesetOnLoad = function() {
+    var data = hot.getData();
+    for (let row in data) {
+      for (let col in data[row]) {
+        var cell = hot.getCell(row, col);
+        if (data[row][col] && cell) {
+          MathJax.typesetClear([cell]);
+          // removal of <p></p> elemens is needed for correct display of cell data
+          cell.innerHTML = mathjaxMarkdown(data[row][col], {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
+          MathJax.typeset([cell]);
+        }
+      }
+    }
+  }
+
   const typesetCell = function(cell, row, col, prop, value, cellProps) {
-    if (hot) {
+    if (hot && MathJax && MathJax.typesetClear && MathJax.typeset ) {
       MathJax.typesetClear([cell]);
       if (value) {
         // removal of <p></p> elemens is needed for correct display of cell data
@@ -173,7 +188,7 @@ function initTable(id, tableOptions) {
   hot = new Handsontable(document.getElementById(containerId), finalOptions);
   hot.render(); // Call to render removes 'null' literals from empty cells
   // $(document).ready(function() {
-  //   typesetCellsData();
+  //   typesetOnLoad();
   // });
   
 

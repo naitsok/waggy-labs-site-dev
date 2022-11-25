@@ -11,7 +11,7 @@ class LabelBlock(RegexBlock):
     all the LabelBlocks by javascript selector for reference processing
     for the final view of the page."""
     def __init__(self,
-                 regex=r'^[a-zA-Z][^\s\\\/\{\}\[\]\(\)]*$',
+                 regex=r'^[a-zA-Z\:\-\_][^\s\\\/\{\}\[\]\(\)]*$',
                  required=False,
                  help_text=_('Label for the current entity (figure, table, equation) '
                              'to be used in the markdown block for referencing using '
