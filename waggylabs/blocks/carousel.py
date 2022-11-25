@@ -27,7 +27,7 @@ class ImageWithCaptionBlock(StructBlock):
     
     class Meta:
         icon = 'image'
-        label = 'Item of the carousel'
+        label = _('Item of the carousel')
 
 
 class ImageCarouselBlock(ListBlock):
@@ -36,5 +36,5 @@ class ImageCarouselBlock(ListBlock):
         super().__init__(ImageWithCaptionBlock(), **kwargs)
     class Meta:
         icon = 'grip'
-        label = 'Picture Carousel'
+        label = _('Picture Carousel')
         template = 'waggylabs/blocks/carousel.html'

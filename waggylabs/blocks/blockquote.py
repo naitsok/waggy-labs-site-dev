@@ -27,5 +27,5 @@ class BlockQuoteBlock(StructBlock):
     
     class Meta:
         icon = 'openquote'
-        label = 'Quote'
+        label = _('Quote')
         template = 'waggylabs/blocks/blockquote.html'

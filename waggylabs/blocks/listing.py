@@ -29,6 +29,6 @@ class ListingBlock(StructBlock):
         )
     
     class Meta:
-        icon='code'
-        label='Code'
+        icon = 'code'
+        label = _('Code')
         template = 'waggylabs/blocks/listing.html'

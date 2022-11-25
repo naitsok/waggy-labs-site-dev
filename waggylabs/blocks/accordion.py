@@ -34,7 +34,7 @@ class AccordionContentBlock(StreamBlock):
     table = TableBlock()
     
     class Meta:
-        label = 'Body of the accordion item'
+        label = _('Body of the accordion item')
     
 
 class AccordionItemBlock(StructBlock):
@@ -50,7 +50,7 @@ class AccordionItemBlock(StructBlock):
     
     class Meta:
         icon = 'arrow-down-big'
-        label = 'Item of the accordion'
+        label = _('Item of the accordion')
 
 
 class AccordionBlock(StructBlock):
@@ -67,6 +67,6 @@ class AccordionBlock(StructBlock):
 
     class Meta:
         icon = 'list-ul'
-        label = 'Accordion'
+        label = _('Accordion')
         template = 'waggylabs/blocks/accordion.html'
     

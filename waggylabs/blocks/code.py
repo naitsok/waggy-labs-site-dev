@@ -53,5 +53,5 @@ class CodeBlock(StructBlock):
     class Meta:
         # template = 'waggylabs/blocks/code.html'
         icon = 'code'
-        label = 'Code'
+        label = _('Code')
     

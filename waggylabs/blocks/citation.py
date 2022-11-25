@@ -19,5 +19,5 @@ class CitationBlock(StructBlock):
     
     class Meta:
         icon = 'link'
-        label = 'Citation'
+        label = _('Citation')
         template = 'waggylabs/blocks/citation.html'
