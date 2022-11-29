@@ -1,0 +1,14 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailmarkdown %}
+
+<div class="card">
+    {% image value.image original class='card-img-top' %}
+    <div class="card-body">
+      <h5 class="card-title">{{ value.title }}</h5>
+      <p class="card-text">{{ value.text|markdown|safe }}</p>
+      {% for link in value.links %}
+      {% include_block link %}
+      {% endfor %}
+    </div>
+  </div>
