@@ -199,7 +199,11 @@ WAGTAILMARKDOWN = {
     "extensions": [
         "waggylabs.extensions.markdown",
         ],
-    "extension_configs": {"codehilite": {"linenums": True}},
+    "extension_configs": {
+        "codehilite": {
+            "linenums": True,
+            }
+        },
     "extensions_settings_mode": "extend",
 }
 

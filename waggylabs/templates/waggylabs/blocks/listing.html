@@ -1,8 +1,10 @@
 {% load wagtailcore_tags %}
 {% load wagtailmarkdown %}
 
-<figure id="{{ value.label }}" class="figure waggylabs-label-listing">
+<figure id="{{ value.label }}" class="figure waggylabs-label-listing" >
+    <div class="w-100" style="overflow-x: auto;">
     {% include_block value.code %}
+    </div>
     {% if value.caption %}
     <figcaption class="figure-caption">{{ value.caption|markdown|safe }}</figcaption>
     {% endif %}
