@@ -216,19 +216,12 @@ class TableInput {
           <div class="input">
             <input type="checkbox" id="${id}-handsontable-header" name="handsontable-header" />
             <label for="${id}-handsontable-header"> ${this.strings['Display the first row as a header.']}</label>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <div class="field boolean_field widget-checkbox_input">
-        <div class="field-content">
-          <div class="input">
+            &emsp;
             <input type="checkbox" id="${id}-handsontable-col-header" name="handsontable-col-header" />
             <label for="${id}-handsontable-col-header"> ${this.strings['Display the first column as a header.']}</label>
           </div>
         </div>
       </div>
-      <br/>
       <div class="field" style="display: none;">
           <label for="${id}-handsontable-col-caption">${this.strings['Table caption']}</label>
           <div class="field-content">

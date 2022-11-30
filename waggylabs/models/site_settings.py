@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from modelcluster.fields import ParentalKey, ForeignKey
+from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, HelpPanel, ObjectList, TabbedInterface, InlinePanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
@@ -12,14 +12,14 @@ class SocialLink(models.Model):
     title = models.CharField(
         max_length=255,
         blank=False,
-        help_text=_('Title of the social network. For example, Instagram.'),
-        verbose_name=_('Title of the social network.')
+        help_text=_('Title of the social website. For example, Instagram.'),
+        verbose_name=_('Title of the social website.')
     )
     username = models.CharField(
         max_length=255,
         blank=False,
-        help_text=_('Username for the social network.'),
-        verbose_name=_('Username for the social network')
+        help_text=_('Username for the social website.'),
+        verbose_name=_('Username for the social website')
     )
     username_prefix = models.CharField(
         max_length=10,
@@ -36,24 +36,24 @@ class SocialLink(models.Model):
     domain = models.CharField(
         max_length=10,
         blank=True,
-        help_text=_('Domain name for the social network. If left blank, "com" will be used.'),
-        verbose_name=_('Domain name for the social network')
+        help_text=_('Domain name for the social website. If left blank, "com" will be used.'),
+        verbose_name=_('Domain name for the social website')
     )
     class SocialLinkText(models.TextChoices):
-        """Defines how to show the text in for the social network links."""
+        """Defines how to show the text in for the social website links."""
         ICON = 'icon', _('Only social netwok icon')
-        TITLE = 'title', _('Title of the social network')
-        USERNAME = 'username', _('Username in the social network')
+        TITLE = 'title', _('Title of the social website')
+        USERNAME = 'username', _('Username in the social website')
     link_text = models.CharField(
         max_length=10,
         blank=False,
         choices=SocialLinkText.choices,
         default=SocialLinkText.ICON,
-        help_text=_('Choose how to display URLs to the social networks: only icons of the networks, '
-                    'icons and network titles or icons and usernames in the networks. Note that some icons may '
-                    'not be available according to the network title. Please check Font Awesome Icons for icon '
+        help_text=_('Choose how to display URLs to the social websites: only icons of the websites, '
+                    'icons and website titles or icons and usernames in the websites. Note that some icons may '
+                    'not be available according to the website title. Please check Font Awesome Icons for icon '
                     'availability.'),
-        verbose_name=_('Social network display text')
+        verbose_name=_('Social website display text')
     )
     
     panels = [

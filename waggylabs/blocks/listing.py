@@ -9,7 +9,7 @@ from .label import LabelBlock
 
 class ListingBlock(StructBlock):
     """A code block with caption."""
-    code = CodeBlock()
+    code = CodeBlock(label='')
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Listing caption'),

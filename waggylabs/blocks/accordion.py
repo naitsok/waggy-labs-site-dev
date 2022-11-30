@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import (
     StreamBlock, StructBlock, CharBlock, ListBlock,
-    BooleanBlock
+    BooleanBlock, ChoiceBlock
     )
 from wagtail.embeds.blocks import EmbedBlock
 
@@ -56,12 +56,14 @@ class AccordionItemBlock(StructBlock):
 class AccordionBlock(StructBlock):
     """Accordion block in which multiple accordion items can 
     be added."""
-    keep_open = BooleanBlock(
-        required=False,
-        default=False,
-        label=_('Always open'),
-        help_text=_('If true, keeps accordion items always open, i.e. other items '
-                    'do not collapse when an new one is opened.')
+    
+    style = ChoiceBlock(
+        choices=[
+            ('collapsible', _('Items collapse')),
+            ('stays_open', _('Items stay open'))
+        ],
+        default='collapsible',
+        label=_('Collapse items when new items opens or keep them open'),
     )
     items = ListBlock(AccordionItemBlock())
 

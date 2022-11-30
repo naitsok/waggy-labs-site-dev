@@ -8,7 +8,7 @@
             {{ item.heading }}
           </button>
         </h2>
-        <div id="id-{{ id }}-collapse-{{ forloop.counter0 }}" class="accordion-collapse collapse" aria-labelledby="id-{{ id }}-heading-{{ forloop.counter0 }}" {% if value.keep_open is not True %}data-bs-parent="#id-{{ id }}"{% endif %}>
+        <div id="id-{{ id }}-collapse-{{ forloop.counter0 }}" class="accordion-collapse collapse" aria-labelledby="id-{{ id }}-heading-{{ forloop.counter0 }}" {% if value.style == 'collapsible' %}data-bs-parent="#id-{{ id }}"{% endif %}>
           <div class="accordion-body w-100">
             {% for block in item.body %}
             {% include_block block %}

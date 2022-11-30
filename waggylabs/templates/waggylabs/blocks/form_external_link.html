@@ -1,0 +1,25 @@
+{% load wagtailadmin_tags  %}
+
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
+    {% endif %}
+    <div class="link-wrapper">
+
+    </div>
+</div>
+
+<div class="field-content">
+    <div class="input">
+      <input type="checkbox" id="${id}-handsontable-header" name="handsontable-header" />
+      <label for="${id}-handsontable-header"> ${this.strings['Display the first row as a header.']}</label>
+      &emsp;
+      <input type="checkbox" id="${id}-handsontable-col-header" name="handsontable-col-header" />
+      <label for="${id}-handsontable-col-header"> ${this.strings['Display the first column as a header.']}</label>
+    </div>
+</div>
