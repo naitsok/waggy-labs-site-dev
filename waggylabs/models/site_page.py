@@ -25,7 +25,7 @@ from hitcount.views import HitCountMixin as ViewHitCountMixin
 from waggylabs.blocks import (BlockQuoteBlock, MathJaxMarkdownBlock, 
                               FigureBlock, ListingBlock, EquationBlock,
                               ImageCarouselBlock, TableFigureBlock,
-                              TableBlock, AccordionBlock)
+                              TableBlock, AccordionBlock, CardGridBlock)
 
 
 class SitePage(Page, MenuPageMixin, HitCountMixin):
@@ -68,6 +68,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         ('table_figure', TableFigureBlock()),
         ('table', TableBlock()),
         ('accordion', AccordionBlock()),
+        ('card_grid', CardGridBlock()),
         # ('columns', TwoColumnBlock()),
         ], use_json_field=True)
 

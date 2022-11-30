@@ -9,3 +9,4 @@ from .table import TableFigureBlock, TableBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 from .carousel import ImageCarouselBlock
 from .accordion import AccordionBlock
+from .card_grid import CardGridBlock

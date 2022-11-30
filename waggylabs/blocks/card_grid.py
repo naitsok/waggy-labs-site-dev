@@ -8,54 +8,19 @@ from wagtail.core.blocks import (
     )
 from wagtail.images.blocks import ImageChooserBlock
 
+from .links import ExternalLinkBlock, InternalLinkBlock, SocialLinkBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 
+
 class LinksBlock(StreamBlock):
-    """Block to add external links and links to Wagtail pages to a card."""
-    external_link = StructBlock([
-        ('link', URLBlock(
-            required=True,
-            label=_('Link to external site'),
-        )),
-        ('text', CharBlock(
-            required=True,
-            label=_('Text of the link'),
-        )),
-        ('style', ChoiceBlock(
-            choices=[
-                ('btn btn-primary', _('Button')),
-                ('card-link', _('Link')),
-            ],
-            default='card-link',
-            label=_('Style of link'),
-        )),
-    ])
-    internal_link = StructBlock([
-        ('link', PageChooserBlock(
-            label=_('Link to this site page'),
-        )),
-        ('text', CharBlock(
-            required=True,
-            label=_('Text of the link'),
-        )),
-        ('style', ChoiceBlock(
-            choices=[
-                ('btn btn-primary', _('Button')),
-                ('card-link', _('Link')),
-            ],
-            default='card-link',
-            label=_('Style of link'),
-        )),
-    ])
-    social_link = StructBlock([
-        
-    ])
-    
+    """Block to add different links."""
+    external_link = ExternalLinkBlock()
+    # internal_link = InternalLinkBlock()
+    # social_link = SocialLinkBlock()
     
     class Meta:
         icon = 'link'
-        label = _('Card footer links')
-
+        label = _('Links for card')
 
 class CardBlock(StructBlock):
     """A one card block."""
@@ -101,12 +66,12 @@ class CardGridBlock(StructBlock):
     columns = ChoiceBlock(
         choices=[
             (i + 1, i + 1) for i in 
-            range((settings.WAGGYLABS_CARD_GRID_COLUMNS if 
-                   hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS') 
+            range((settings.WAGGYLABS_CARD_GRID_COLUMNS if
+                   hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS')
                    else DEFAULT_CARD_GRID_COLUMNS))
         ],
-        default=(settings.WAGGYLABS_CARD_GRID_COLUMN if 
-                 hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMN') 
+        default=(settings.WAGGYLABS_CARD_GRID_COLUMN if
+                 hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMN')
                  else DEFAULT_CARD_GRID_COLUMN),
         label=_('Number of columns'),
     )

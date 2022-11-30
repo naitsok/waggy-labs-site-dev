@@ -10,10 +10,21 @@
     </span>
     {% endif %}
     <div class="link-wrapper">
-
+    {% for child in children.values %}
+        <div class="w-field link-content" data-field data-contentpath="{{ child.block.name }}">
+            {% comment "" %}{% if child.block.label %}
+                <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+            {% endif %}{% endcomment %}
+            {{ child.render_form }}
+        </div>
+    {% endfor %}
     </div>
-</div>
+    {% comment "" %}
+    <div class="link-wrapper">
 
+    </div>{% endcomment %}
+</div>
+{% comment "" %}
 <div class="field-content">
     <div class="input">
       <input type="checkbox" id="${id}-handsontable-header" name="handsontable-header" />
@@ -22,4 +33,4 @@
       <input type="checkbox" id="${id}-handsontable-col-header" name="handsontable-col-header" />
       <label for="${id}-handsontable-col-header"> ${this.strings['Display the first column as a header.']}</label>
     </div>
-</div>
+</div>{% endcomment %}

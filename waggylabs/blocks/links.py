@@ -13,15 +13,16 @@ class StyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
+            ('', _('Choose style')),
             ('btn btn-primary', _('Button')),
             ('card-link', _('Link')),
         ],
-        default='card-link',
-        label=_('Style of link'),
+        default='',
+        label=_('Style of the link'),
         required=True,
         help_text=None,
         widget=None,
-        validators=...,
+        validators=(),
         **kwargs):
         super().__init__(
             choices,
@@ -46,6 +47,17 @@ class ExternalLinkBlock(StructBlock):
     )
     style = StyleChoiceBlock()
     
+    def render_form_template(self):
+        self.child_blocks['link'].field.widget.attrs.update({
+            'placeholder': 'https://example.com',
+        })
+        self.child_blocks['text'].field.widget.attrs.update({
+            'placeholder': 'Text of the link',
+        })
+        # self.child_blocks['style'].field.widget.template_name = 'waggylabs/blocks/select.html'
+        self.child_blocks['style'].field.widget.option_template_name = 'waggylabs/blocks/select_option.html'
+        return super().render_form_template()
+    
     class Meta:
         icon = 'link'
         label = _('External link')
@@ -66,7 +78,7 @@ class InternalLinkBlock(StructBlock):
     class Meta:
         icon = 'link'
         label = _('Internal link')
-        form_template = 'waggylabs/blocks/form_internal_link.html'
+        # form_template = 'waggylabs/blocks/form_internal_link.html'
     
     
 class SocialLinkBlock(StructBlock):
@@ -115,4 +127,4 @@ class SocialLinkBlock(StructBlock):
     class Meta:
         icon = 'link'
         label = _('Social link')
-        form_template = 'waggylabs/blocks/form_social_link.html'
+        # form_template = 'waggylabs/blocks/form_social_link.html'
