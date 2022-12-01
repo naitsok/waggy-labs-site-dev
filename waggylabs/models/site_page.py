@@ -22,10 +22,16 @@ from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
 # from waggylabs.admin.panels import ReadOnlyPanel
-from waggylabs.blocks import (BlockQuoteBlock, MathJaxMarkdownBlock, 
-                              FigureBlock, ListingBlock, EquationBlock,
-                              ImageCarouselBlock, TableFigureBlock,
-                              TableBlock, AccordionBlock, CardGridBlock)
+from waggylabs.blocks.accordion import AccordionBlock
+from waggylabs.blocks.blockquote import BlockQuoteBlock
+from waggylabs.blocks.card_grid import CardGridBlock
+from waggylabs.blocks.carousel import ImageCarouselBlock
+# from waggylabs.blocks.citation import CitationBlock
+from waggylabs.blocks.equation import EquationBlock
+from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.listing import ListingBlock
+from waggylabs.blocks.mathjax_markdown import MathJaxMarkdownBlock
+from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
 class SitePage(Page, MenuPageMixin, HitCountMixin):

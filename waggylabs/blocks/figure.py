@@ -16,7 +16,7 @@ class FigureBlock(StructBlock):
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Figure caption'),
-        help_text='',
+        help_text=None,
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',

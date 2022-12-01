@@ -5,7 +5,7 @@ from django.utils.functional import cached_property
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.telepath import register
 
-from waggylabs.blocks import CodeBlock, DEFAULT_CODEBLOCK_LANGS
+from waggylabs.blocks.code import CodeBlock, DEFAULT_CODEBLOCK_LANGS
 
 
 DEFAULT_CODEMIRROR_VER = '5.65.9'

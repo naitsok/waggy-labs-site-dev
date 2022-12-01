@@ -18,7 +18,8 @@ class TableFigureBlock(StructBlock):
     """Add Table as picture."""
     caption = MathJaxMarkdownBlock(
         required=False,
-        help_text=_('Table caption'),
+        label=_('Table caption'),
+        help_text=None,
         easymde_min_height='150px',
         easymde_max_height='150px',
         easymde_combine='true',
@@ -34,7 +35,8 @@ class TableFigureBlock(StructBlock):
         )
     footer = MathJaxMarkdownBlock(
         required=False,
-        help_text=_('Table footer'),
+        label=_('Table footer'),
+        help_text=None,
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',
@@ -188,7 +190,7 @@ class TableBlock(StructBlock):
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Table caption'),
-        help_text='',
+        help_text=None,
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',
@@ -209,7 +211,7 @@ class TableBlock(StructBlock):
     footer = MathJaxMarkdownBlock(
         required=False,
         label=_('Table footer'),
-        help_text='',
+        help_text=None,
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',

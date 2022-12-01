@@ -6,6 +6,8 @@ from wagtail.core.blocks import (
     ChoiceBlock
     )
 
+from waggylabs.widgets.editor import DisabledOptionSelect
+
 
 class StyleChoiceBlock(ChoiceBlock):
     """Block to choose link style (button or link) from 
@@ -21,7 +23,7 @@ class StyleChoiceBlock(ChoiceBlock):
         label=_('Style of the link'),
         required=True,
         help_text=None,
-        widget=None,
+        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
         super().__init__(
@@ -54,14 +56,12 @@ class ExternalLinkBlock(StructBlock):
         self.child_blocks['text'].field.widget.attrs.update({
             'placeholder': 'Text of the link',
         })
-        # self.child_blocks['style'].field.widget.template_name = 'waggylabs/blocks/select.html'
-        self.child_blocks['style'].field.widget.option_template_name = 'waggylabs/blocks/select_option.html'
         return super().render_form_template()
     
     class Meta:
         icon = 'link'
         label = _('External link')
-        form_template = 'waggylabs/blocks/form_external_link.html'
+        form_template = 'waggylabs/editor_blocks/external_link.html'
     
     
 class InternalLinkBlock(StructBlock):
@@ -75,10 +75,16 @@ class InternalLinkBlock(StructBlock):
     )
     style = StyleChoiceBlock()
     
+    def render_form_template(self):
+        self.child_blocks['text'].field.widget.attrs.update({
+            'placeholder': 'Text of the link',
+        })
+        return super().render_form_template()
+    
     class Meta:
         icon = 'link'
         label = _('Internal link')
-        # form_template = 'waggylabs/blocks/form_internal_link.html'
+        form_template = 'waggylabs/editor_blocks/internal_link.html'
     
     
 class SocialLinkBlock(StructBlock):
@@ -127,4 +133,4 @@ class SocialLinkBlock(StructBlock):
     class Meta:
         icon = 'link'
         label = _('Social link')
-        # form_template = 'waggylabs/blocks/form_social_link.html'
+        # form_template = 'waggylabs/editor_blocks/social_link.html'

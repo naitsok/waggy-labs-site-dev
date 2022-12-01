@@ -9,11 +9,11 @@ from .label import LabelBlock
 
 class ListingBlock(StructBlock):
     """A code block with caption."""
-    code = CodeBlock(label='')
+    code = CodeBlock(label=None)
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Listing caption'),
-        help_text='',
+        help_text=None,
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',
@@ -32,3 +32,4 @@ class ListingBlock(StructBlock):
         icon = 'code'
         label = _('Code')
         template = 'waggylabs/blocks/listing.html'
+        # form_template = 'waggylabs/editor_blocks/listing.html'

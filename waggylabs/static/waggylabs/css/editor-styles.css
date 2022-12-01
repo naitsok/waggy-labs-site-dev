@@ -1,2 +1,5 @@
-div.link-wrapper { display: flex; }
-div.link-content { width: 50%; }
+div.waggylabs-link-wrapper { display: flex; }
+div.waggylabs-link-wrapper div.w-field__input { padding-inline-end: 0.1rem !important; }
+/* div.waggylabs-link-wrapper div.w-field__input select { width: 90%; }
+div.waggylabs-link-wrapper div.w-field__input input { width: 90%; } */
+div.waggylabs-link-content { width: 50%; }
