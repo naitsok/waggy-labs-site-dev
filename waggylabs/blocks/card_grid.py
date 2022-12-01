@@ -49,7 +49,7 @@ class CardBlock(StructBlock):
 DEFAULT_CARD_GRID_COLUMNS = 4
 class CardGridBlock(StructBlock):
     """Card grid block for StreamField."""
-    equal_height = ChoiceBlock(
+    height_style = ChoiceBlock(
         choices=[
             ('', _('Choose height style')),
             ('equal', _('Equal height')),
@@ -59,7 +59,7 @@ class CardGridBlock(StructBlock):
         label=_('Height'),
         widget=DisabledOptionSelect,
     )
-    style = ChoiceBlock(
+    grouping_style = ChoiceBlock(
         choices=[
             ('', _('Choose grouping style')),
             ('separate', _('Separate')),
@@ -69,7 +69,7 @@ class CardGridBlock(StructBlock):
         label=_('Grouping'),
         widget=DisabledOptionSelect,
     )
-    orientation = ChoiceBlock(
+    orientation_style = ChoiceBlock(
         choices=[
             ('', _('Choose orientation')),
             ('vertical', _('Vertical')),
@@ -97,4 +97,4 @@ class CardGridBlock(StructBlock):
         icon = 'form'
         label = _('Card grid')
         template = 'waggylabs/blocks/card_grid.html'
-        # form_template = 'waggylabs/editor_blocks/card_grid.html'
+        form_template = 'waggylabs/editor_blocks/card_grid.html'

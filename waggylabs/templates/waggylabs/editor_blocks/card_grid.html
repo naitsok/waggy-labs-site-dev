@@ -9,15 +9,23 @@
         </div>
     </span>
     {% endif %}
-    <div class="w-field waggylabs-link-wrapper" data-field data-contentpath="{{ children.link.block.name }}">
-        {{ children.link.render_form }}{% if children.link.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
+    <div class="waggylabs-link-wrapper">
+        <div class="w-field waggylabs-link-wrapper" data-contentpath="{{ children.height_style.block.name }}">
+            {{ children.height_style.render_form }}{% if children.height_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>&emsp;
+        <div class="w-field waggylabs-link-wrapper" data-contentpath="{{ children.grouping_style.block.name }}">
+            {{ children.grouping_style.render_form }}{% if children.grouping_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
     </div>
     <div class="waggylabs-link-wrapper">
-        <div class="w-field waggylabs-link-wrapper" data-field data-contentpath="{{ children.text.block.name }}">
-            {{ children.text.render_form }}{% if children.text.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
+        <div class="w-field waggylabs-link-wrapper" data-contentpath="{{ children.orientation_style.block.name }}">
+            {{ children.orientation_style.render_form }}{% if children.orientation_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>&emsp;
+        <div class="w-field waggylabs-link-wrapper" data-contentpath="{{ children.columns.block.name }}">
+            {{ children.columns.render_form }}{% if children.columns.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
         </div>
-        <div class="w-field waggylabs-link-wrapper" data-field data-contentpath="{{ children.style.block.name }}">
-            {{ children.style.render_form }}{% if children.style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
-        </div>
+    </div>
+    <div data-contentpath="{{ children.cards.block.name }}">
+        {{ children.cards.render_form }}
     </div>
 </div>

@@ -55,4 +55,5 @@ class CodeBlock(StructBlock):
     
     class Meta:
         icon = 'code'
+        label = None
     

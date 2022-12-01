@@ -101,12 +101,6 @@ class SocialLinkBlock(StructBlock):
         help_text=_('Username for the social website.'),
         label=_('Username for the social website')
     )
-    username_prefix = CharBlock(
-        max_length=10,
-        required=False,
-        help_text=_('Additional prefix before the username if display username is selects. For example "@" for Twitter.'),
-        label=_('Prefix for the username')
-    )
     icon = CharBlock(
         max_length=255,
         required=False,

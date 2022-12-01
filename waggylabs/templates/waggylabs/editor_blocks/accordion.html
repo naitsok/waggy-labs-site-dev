@@ -1,0 +1,18 @@
+{% load wagtailadmin_tags  %}
+
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
+    {% endif %}
+    <div data-contentpath="{{ children.style.block.name }}">
+        {{ children.style.render_form }}
+    </div>
+    <div data-contentpath="{{ children.items.block.name }}">
+        {{ children.items.render_form }}
+    </div>
+</div>

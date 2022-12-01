@@ -6,6 +6,8 @@ from wagtail.core.blocks import (
     )
 from wagtail.embeds.blocks import EmbedBlock
 
+from waggylabs.widgets.editor import DisabledOptionSelect
+
 from .equation import EquationBlock
 from .listing import ListingBlock
 from .figure import FigureBlock
@@ -59,10 +61,11 @@ class AccordionBlock(StructBlock):
     
     style = ChoiceBlock(
         choices=[
+            ('', _('Choose item collapse style')),
             ('collapsible', _('Items collapse')),
-            ('stays_open', _('Items stay open'))
+            ('stays_open', _('Items stay open')),
         ],
-        default='collapsible',
+        default='',
         label=_('Collapse items when new items opens or keep them open'),
     )
     items = ListBlock(AccordionItemBlock())
@@ -71,4 +74,5 @@ class AccordionBlock(StructBlock):
         icon = 'list-ul'
         label = _('Accordion')
         template = 'waggylabs/blocks/accordion.html'
+        form_template = 'waggylabs/editor_blocks/accordion.html'
     

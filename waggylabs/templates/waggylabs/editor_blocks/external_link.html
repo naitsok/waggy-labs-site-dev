@@ -11,7 +11,7 @@
     {% endif %}
     <div class="waggylabs-link-wrapper">
     {% for child in children.values %}
-        <div class="w-field waggylabs-link-wrapper" data-field data-contentpath="{{ child.block.name }}">
+        <div class="w-field waggylabs-link-wrapper" data-contentpath="{{ child.block.name }}">
             {% comment "" %}{% if child.block.label %}
                 <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
             {% endif %}{% endcomment %}
