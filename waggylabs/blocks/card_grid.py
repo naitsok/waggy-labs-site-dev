@@ -82,11 +82,12 @@ class CardGridBlock(StructBlock):
     columns = ChoiceBlock(
         choices=[
             ('', _('Choose columns')),
+            (1, _('1 column')),
         ] + [
-            (i + 1, i + 1) for i in
-            range((settings.WAGGYLABS_CARD_GRID_COLUMNS if
-                   hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS')
-                   else DEFAULT_CARD_GRID_COLUMNS))
+            (i + 1, str(i + 1) + _(' columns')) for i in
+            range(1, (settings.WAGGYLABS_CARD_GRID_COLUMNS if
+                      hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS')
+                      else DEFAULT_CARD_GRID_COLUMNS))
         ],
         default='',
         label=_('Number of columns'),

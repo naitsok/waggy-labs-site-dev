@@ -89,10 +89,10 @@ class InternalLinkBlock(StructBlock):
     
 class SocialLinkBlock(StructBlock):
     """Block to add links to social websites."""
-    title = CharBlock(
+    link = URLBlock(
         max_length=255,
         required=True,
-        help_text=_('Title of the social website. For example, Instagram.'),
+        help_text=_('Link to the social website. For example, Instagram.'),
         label=_('Title of the social website.')
     )
     username = CharBlock(
@@ -107,24 +107,21 @@ class SocialLinkBlock(StructBlock):
         help_text=_('Icon name from Font Awesome website. If left blank, title will used.'),
         label=_('Icon name from Font Awesome website')
     )
-    domain = CharBlock(
-        max_length=10,
-        required=False,
-        help_text=_('Domain name for the social website. If left blank, "com" will be used.'),
-        label=_('Domain name for the social website')
-    )
     view_style = ChoiceBlock(
         choices=[
+            ('', _('Choose display type')),
             ('icon', _('Only social netwok icon')),
             ('title', _('Title of the social website')),
             ('username', _('Username in the social website')),
         ],
-        default='username',
-        label=_('Text of the link')
+        default='',
+        label=_('Text of the link'),
+        widget=DisabledOptionSelect,
     )
     style = StyleChoiceBlock()
     
     class Meta:
         icon = 'link'
         label = _('Social link')
-        # form_template = 'waggylabs/editor_blocks/social_link.html'
+        form_template = 'waggylabs/editor_blocks/social_link.html'
+        
