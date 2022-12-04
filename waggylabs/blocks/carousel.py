@@ -37,4 +37,4 @@ class ImageCarouselBlock(ListBlock):
     class Meta:
         icon = 'grip'
         label = _('Picture Carousel')
-        template = 'waggylabs/blocks/carousel.html'
+        template = 'waggylabs/frontend_blocks/carousel.html'

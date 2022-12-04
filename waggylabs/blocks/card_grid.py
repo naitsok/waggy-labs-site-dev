@@ -10,7 +10,10 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets.editor import DisabledOptionSelect
 
-from .links import ExternalLinkBlock, InternalLinkBlock, SocialLinkBlock
+from .links import (
+    ExternalLinkBlock, InternalLinkBlock, IconEmailBlock,
+    InfoTextBlock
+    )
 from .mathjax_markdown import MathJaxMarkdownBlock
 
 
@@ -18,16 +21,18 @@ class LinksBlock(StreamBlock):
     """Block to add different links."""
     external_link = ExternalLinkBlock()
     internal_link = InternalLinkBlock()
-    # social_link = SocialLinkBlock()
+    email = IconEmailBlock()
+    info_text = InfoTextBlock()
     
     class Meta:
         icon = 'link'
-        label = _('Links for card')
+        label = _('Links for the card')
 
 class CardBlock(StructBlock):
     """A one card block."""
-    image = ImageChooserBlock(required=False)
-    title = CharBlock(required=True)
+    image = ImageChooserBlock(required=False, label=_('Image'))
+    title = CharBlock(required=True, label=_('Title'))
+    subtitle = CharBlock(required=False, label=_('Subtitle'))
     text = MathJaxMarkdownBlock(
         required=False,
         help_text=None,
@@ -43,7 +48,7 @@ class CardBlock(StructBlock):
     class Meta:
         icon = 'form'
         label = _('Item of the card grid')
-        template = 'waggylabs/blocks/card.html'
+        template = 'waggylabs/frontend_blocks/card.html'
         
 
 DEFAULT_CARD_GRID_COLUMNS = 4
@@ -97,5 +102,5 @@ class CardGridBlock(StructBlock):
     class Meta:
         icon = 'form'
         label = _('Card grid')
-        template = 'waggylabs/blocks/card_grid.html'
-        form_template = 'waggylabs/editor_blocks/card_grid.html'
+        template = 'waggylabs/frontend_blocks/card_grid.html'
+        form_template = 'waggylabs/blocks/card_grid.html'

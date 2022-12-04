@@ -1,4 +1,3 @@
-from atexit import register
 import uuid
 
 from django import template

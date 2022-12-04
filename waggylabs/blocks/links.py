@@ -1,12 +1,16 @@
+from django.forms import CharField
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import (
     StructBlock, CharBlock, ListBlock,
     PageChooserBlock, StreamBlock, URLBlock,
-    ChoiceBlock
+    ChoiceBlock, FieldBlock, EmailBlock
     )
 
-from waggylabs.widgets.editor import DisabledOptionSelect
+from waggylabs.widgets.editor import (
+    DisabledOptionSelect, IconInput
+)
 
 
 class StyleChoiceBlock(ChoiceBlock):
@@ -35,6 +39,33 @@ class StyleChoiceBlock(ChoiceBlock):
             validators,
             label=label,
             **kwargs)
+        
+        
+class IconBlock(FieldBlock):
+    """Icon block with the IconInput widget."""
+    def __init__(
+        self,
+        required=True,
+        help_text=None,
+        max_length=None,
+        min_length=None,
+        validators=(),
+        **kwargs,
+    ):
+        self.field_options = {
+            "required": required,
+            "help_text": help_text,
+            "max_length": max_length,
+            "min_length": min_length,
+            "validators": validators,
+        }
+        super().__init__(**kwargs)
+    
+    @cached_property
+    def field(self):
+        field_kwargs = { 'widget': IconInput() }
+        field_kwargs.update(self.field_options)
+        return CharField(**field_kwargs)
 
 
 class ExternalLinkBlock(StructBlock):
@@ -47,21 +78,26 @@ class ExternalLinkBlock(StructBlock):
         required=True,
         label=_('Text of the link'),
     )
+    icon = IconBlock(
+        required=False,
+        label=_('Icon'),
+    )
     style = StyleChoiceBlock()
     
     def render_form_template(self):
         self.child_blocks['link'].field.widget.attrs.update({
-            'placeholder': 'https://example.com',
+            'placeholder': 'twitter.com/username',
         })
         self.child_blocks['text'].field.widget.attrs.update({
-            'placeholder': 'Text of the link',
+            'placeholder': _('Text of the link'),
         })
         return super().render_form_template()
     
     class Meta:
-        icon = 'link'
+        icon = 'link-external'
         label = _('External link')
-        form_template = 'waggylabs/editor_blocks/external_link.html'
+        form_template = 'waggylabs/blocks/external_link.html'
+        template = 'waggylabs/frontend_blocks/external_link.html'
     
     
 class InternalLinkBlock(StructBlock):
@@ -73,55 +109,69 @@ class InternalLinkBlock(StructBlock):
         required=True,
         label=_('Text of the link'),
     )
+    icon = IconBlock(required=False)
     style = StyleChoiceBlock()
     
     def render_form_template(self):
         self.child_blocks['text'].field.widget.attrs.update({
-            'placeholder': 'Text of the link',
+            'placeholder': _('Text of the link'),
         })
         return super().render_form_template()
     
     class Meta:
         icon = 'link'
         label = _('Internal link')
-        form_template = 'waggylabs/editor_blocks/internal_link.html'
-    
-    
-class SocialLinkBlock(StructBlock):
-    """Block to add links to social websites."""
-    link = URLBlock(
-        max_length=255,
+        form_template = 'waggylabs/blocks/internal_link.html'
+        template = 'waggylabs/frontend_blocks/internal_link.html'
+
+
+class IconEmailBlock(StructBlock):
+    """Block to add email with a possible icon."""
+    email = PageChooserBlock(
+        label=_('Email address')
+    )
+    text = CharBlock(
         required=True,
-        help_text=_('Link to the social website. For example, Instagram.'),
-        label=_('Title of the social website.')
-    )
-    username = CharBlock(
-        max_length=255,
-        required=True,
-        help_text=_('Username for the social website.'),
-        label=_('Username for the social website')
-    )
-    icon = CharBlock(
-        max_length=255,
-        required=False,
-        help_text=_('Icon name from Font Awesome website. If left blank, title will used.'),
-        label=_('Icon name from Font Awesome website')
-    )
-    view_style = ChoiceBlock(
-        choices=[
-            ('', _('Choose display type')),
-            ('icon', _('Only social netwok icon')),
-            ('title', _('Title of the social website')),
-            ('username', _('Username in the social website')),
-        ],
-        default='',
         label=_('Text of the link'),
-        widget=DisabledOptionSelect,
     )
+    icon = IconBlock(required=False)
     style = StyleChoiceBlock()
     
+    def render_form_template(self):
+        self.child_blocks['email'].field.widget.attrs.update({
+            'placeholder': 'email@example.com',
+        })
+        self.child_blocks['text'].field.widget.attrs.update({
+            'placeholder': _('Text of the link'),
+        })
+        return super().render_form_template()
+    
     class Meta:
-        icon = 'link'
-        label = _('Social link')
-        form_template = 'waggylabs/editor_blocks/social_link.html'
+        icon = 'mail'
+        label = _('Email')
+        form_template = 'waggylabs/blocks/email.html'
+        template = 'waggylabs/frontend_blocks/email.html'
+        
+        
+
+class InfoTextBlock(StructBlock):
+    """Block to add any type of text such as location or phone."""
+    text = CharBlock(
+        required=True,
+        label=_('Text of the link'),
+    )
+    icon = IconBlock(required=False)
+    style = StyleChoiceBlock()
+    
+    def render_form_template(self):
+        self.child_blocks['text'].field.widget.attrs.update({
+            'placeholder': _('phone, address, etc.'),
+        })
+        return super().render_form_template()
+    
+    class Meta:
+        icon = 'clipboard-list'
+        label = _('Phone, address, etc.')
+        form_template = 'waggylabs/blocks/info_text.html'
+        template = 'waggylabs/frontend_blocks/info_text.html'
         

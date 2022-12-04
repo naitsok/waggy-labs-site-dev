@@ -1,5 +1,8 @@
-div.waggylabs-link-wrapper { display: flex; }
-div.waggylabs-link-wrapper div.w-field__input { padding-inline-end: 0.1rem !important; }
+div.waggylabs-flex-container { display: flex; }
+div.waggylabs-flex-container div.w-field__input { padding-inline-end: 0.1rem !important; }
 /* div.waggylabs-link-wrapper div.w-field__input select { width: 90%; }
 div.waggylabs-link-wrapper div.w-field__input input { width: 90%; } */
 div.waggylabs-link-content { width: 50%; }
+div.waggylabs-grid-container-2 { display: grid; gap: 0rem 1rem; grid-template-columns: repeat(2, 1fr); }
+div.waggylabs-grid-container-3 { display: grid; gap: 0rem 1rem; grid-template-columns: repeat(3, 1fr); }
+div.waggylabs-grid-item div.w-field__input { padding-inline-end: 0px !important; }

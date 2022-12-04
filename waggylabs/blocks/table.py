@@ -52,7 +52,7 @@ class TableFigureBlock(StructBlock):
     )
     
     class Meta:
-        template = 'waggylabs/blocks/table_figure.html'
+        template = 'waggylabs/frontend_blocks/table_figure.html'
         icon = 'table'
         label = _('Table as picture')
 
@@ -181,7 +181,7 @@ class BareTableBlock(WagtailTableBlock):
     
     class Meta:
         default = None
-        template = 'waggylabs/blocks/bare_table.html'
+        template = 'waggylabs/frontend_blocks/bare_table.html'
         icon = 'table'
 
 
@@ -227,6 +227,6 @@ class TableBlock(StructBlock):
     )
     
     class Meta:
-        template = 'waggylabs/blocks/table.html'
+        template = 'waggylabs/frontend_blocks/table.html'
         icon = 'table'
         label = _('Table')

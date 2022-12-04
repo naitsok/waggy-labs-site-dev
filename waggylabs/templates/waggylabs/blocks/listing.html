@@ -1,11 +1,23 @@
-{% load wagtailcore_tags %}
-{% load wagtailmarkdown %}
+{% load wagtailadmin_tags  %}
 
-<figure id="{{ value.label }}" class="figure w-100 waggylabs-label-listing">
-    <div class="w-100" style="overflow-x: auto;">
-    {% include_block value.code %}
-    </div>
-    {% if value.caption %}
-    <figcaption class="figure-caption">{{ value.caption|markdown|safe }}</figcaption>
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
     {% endif %}
-</figure>
+    <div data-contentpath="{{ children.code.block.name }}">
+        {{ children.code.render_form }}
+    </div>
+    <div data-contentpath="{{ children.caption.block.name }}">
+        <label class="w-field__label" {% if children.caption.id_for_label %}for="{{ children.caption.id_for_label }}"{% endif %}>{{ children.caption.block.label }}{% if children.caption.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+        {{ children.caption.render_form }}
+    </div>
+    <div data-contentpath="{{ children.label.block.name }}">
+        <label class="w-field__label" {% if children.label.id_for_label %}for="{{ children.label.id_for_label }}"{% endif %}>{{ children.label.block.label }}{% if children.label.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+        {{ children.label.render_form }}
+    </div>
+</div>

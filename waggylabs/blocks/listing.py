@@ -31,5 +31,5 @@ class ListingBlock(StructBlock):
     class Meta:
         icon = 'code'
         label = _('Listing')
-        template = 'waggylabs/blocks/listing.html'
-        form_template = 'waggylabs/editor_blocks/listing.html'
+        template = 'waggylabs/frontend_blocks/listing.html'
+        form_template = 'waggylabs/blocks/listing.html'

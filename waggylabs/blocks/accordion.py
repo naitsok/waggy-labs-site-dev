@@ -73,6 +73,6 @@ class AccordionBlock(StructBlock):
     class Meta:
         icon = 'list-ul'
         label = _('Accordion')
-        template = 'waggylabs/blocks/accordion.html'
-        form_template = 'waggylabs/editor_blocks/accordion.html'
+        template = 'waggylabs/frontend_blocks/accordion.html'
+        form_template = 'waggylabs/blocks/accordion.html'
     

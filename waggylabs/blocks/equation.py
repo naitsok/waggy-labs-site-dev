@@ -60,4 +60,4 @@ class EquationBlock(StructBlock):
     class Meta:
         icon = 'superscript'
         label = _('Equation')
-        template = 'waggylabs/blocks/equation.html'
+        template = 'waggylabs/frontend_blocks/equation.html'

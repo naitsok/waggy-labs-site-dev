@@ -7,7 +7,7 @@ from wagtail.admin import widgets
 from wagtail.admin.panels import FieldPanel, HelpPanel, MultiFieldPanel
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
-from wagtail.core.blocks import BooleanBlock, CharBlock, DateBlock, PageChooserBlock, RichTextBlock
+from wagtail.core.blocks import CharBlock, PageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
