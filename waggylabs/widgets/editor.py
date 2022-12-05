@@ -55,6 +55,7 @@ class IconInput(WidgetWithScript, forms.widgets.Input):
                     "fontawesomefree/css/fontawesome.css",
                     "fontawesomefree/css/brands.css",
                     "fontawesomefree/css/regular.css",
+                    "fontawesomefree/css/solid.css",
                     )
             },
             js=(

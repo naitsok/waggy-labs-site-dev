@@ -1,0 +1,3 @@
+{% load waggylabs_filters %}
+
+<span class="{{ value.style }}">{% if value.icon|is_icon %}<i class={{ value.icon|icon_class }}></i>{% endif %}{{ value.text }}</span>

@@ -1,0 +1,5 @@
+{% load waggylabs_filters %}
+
+{% load waggylabs_filters %}
+
+<a href="mailto:{{ value.emails }}" class="{{ value.style }}">{% if value.icon|is_icon %}<i class={{ value.icon|icon_class }}></i>{% endif %}{% if value.text %}{{ value.text }}{% else %}{{ value.email }}{% endif %}</a>

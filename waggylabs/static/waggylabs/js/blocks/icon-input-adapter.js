@@ -8,11 +8,13 @@
 
         var element = document.getElementById(id);
         element.value = initialState;
+        var icons = JSON.parse(document.getElementById(element.getAttribute("iconsjson")).innerText);
+
         if (initialState) {
-            $(`<i class="w-field__icon ${icons[initialState]}"></i>`).appendBefore($(element));
+            $(`<i class="w-field__icon ${icons[initialState]}"></i>`).insertBefore($(element));
         }
 
-        var icons = JSON.parse(document.getElementById(element.getAttribute("iconsjson")).innerText);
+        
 
         $(element).autocomplete({
             source: Object.keys(icons),

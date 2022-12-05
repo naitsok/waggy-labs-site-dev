@@ -45,7 +45,7 @@ class IconBlock(FieldBlock):
     """Icon block with the IconInput widget."""
     def __init__(
         self,
-        required=True,
+        required=False,
         help_text=None,
         max_length=None,
         min_length=None,
@@ -75,13 +75,10 @@ class ExternalLinkBlock(StructBlock):
         label=_('Link to external site'),
     )
     text = CharBlock(
-        required=True,
+        required=False,
         label=_('Text of the link'),
     )
-    icon = IconBlock(
-        required=False,
-        label=_('Icon'),
-    )
+    icon = IconBlock(label=_('Icon'))
     style = StyleChoiceBlock()
     
     def render_form_template(self):
@@ -103,18 +100,18 @@ class ExternalLinkBlock(StructBlock):
 class InternalLinkBlock(StructBlock):
     """Block to add links to this website."""
     link = PageChooserBlock(
-        label=_('Link to this site page')
+        label=_('Link to a page of this site')
     )
     text = CharBlock(
-        required=True,
-        label=_('Text of the link'),
+        required=False,
+        label=_('Text instead of page title'),
     )
-    icon = IconBlock(required=False)
+    icon = IconBlock(label=_('Icon'))
     style = StyleChoiceBlock()
     
     def render_form_template(self):
         self.child_blocks['text'].field.widget.attrs.update({
-            'placeholder': _('Text of the link'),
+            'placeholder': _('Text instead of page title'),
         })
         return super().render_form_template()
     
@@ -127,12 +124,13 @@ class InternalLinkBlock(StructBlock):
 
 class IconEmailBlock(StructBlock):
     """Block to add email with a possible icon."""
-    email = PageChooserBlock(
-        label=_('Email address')
+    email = EmailBlock(
+        required=True,
+        label=_('Email address'),
     )
     text = CharBlock(
-        required=True,
-        label=_('Text of the link'),
+        required=False,
+        label=_('Text to be displayed instead of address'),
     )
     icon = IconBlock(required=False)
     style = StyleChoiceBlock()
@@ -142,7 +140,7 @@ class IconEmailBlock(StructBlock):
             'placeholder': 'email@example.com',
         })
         self.child_blocks['text'].field.widget.attrs.update({
-            'placeholder': _('Text of the link'),
+            'placeholder': _('Text to be displayed'),
         })
         return super().render_form_template()
     
@@ -153,19 +151,18 @@ class IconEmailBlock(StructBlock):
         template = 'waggylabs/frontend_blocks/email.html'
         
         
-
 class InfoTextBlock(StructBlock):
     """Block to add any type of text such as location or phone."""
     text = CharBlock(
         required=True,
-        label=_('Text of the link'),
+        label=_('Phone, address, etc.'),
     )
     icon = IconBlock(required=False)
     style = StyleChoiceBlock()
     
     def render_form_template(self):
         self.child_blocks['text'].field.widget.attrs.update({
-            'placeholder': _('phone, address, etc.'),
+            'placeholder': _('Phone, address, etc.'),
         })
         return super().render_form_template()
     

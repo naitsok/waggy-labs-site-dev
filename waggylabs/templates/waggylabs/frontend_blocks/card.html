@@ -2,13 +2,44 @@
 {% load wagtailimages_tags %}
 {% load wagtailmarkdown %}
 
-<div class="card">
+{% if orientation == 'vertical' %}
+<div class="card {% if height_style == 'equal' %}h-100{% endif %}">
     {% image value.image original class='card-img-top' %}
     <div class="card-body">
       <h5 class="card-title">{{ value.title }}</h5>
+      {% if value.subtitle %}<h6 class="card-subtitle mb-2 text-muted">{{ value.subtitle }}</h6>{% endif %}
       <p class="card-text">{{ value.text|markdown|safe }}</p>
       {% for link in value.links %}
       {% include_block link %}
       {% endfor %}
     </div>
+    {% if value.links %}
+    <div class="card-footer">
+      {% for link in value.links %}{% include_block link %}{% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% else %}
+<div class="card mb-3 {% if height_style == 'equal' %}h-100{% endif %}">
+  <div class="row g-0">
+    <div class="col-md-4">
+      {% image value.image original class='img-fluid rounded-start' %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ value.title }}</h5>
+        {% if value.subtitle %}<h6 class="card-subtitle mb-2 text-muted">{{ value.subtitle }}</h6>{% endif %}
+        <p class="card-text">{{ value.text|markdown|safe }}</p>
+        {% for link in value.links %}
+        {% include_block link %}
+        {% endfor %}
+      </div>
+      {% if value.links %}
+      <div class="card-footer">
+        {% for link in value.links %}{% include_block link %}{% endfor %}
+      </div>
+      {% endif %}
+    </div>
   </div>
+</div>
+{% endif %}

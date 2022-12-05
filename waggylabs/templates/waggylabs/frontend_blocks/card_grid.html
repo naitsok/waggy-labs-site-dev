@@ -1,0 +1,16 @@
+{% load wagtailcore_tags %}
+
+{% if value.grouping_style == 'grouped' %}
+<div class="card-group">
+{% comment "" %}Number of cards per row is regulated by Bootstrap, horizontal orientation not possible.{% endcomment %}
+{% for card in value.cards %}
+{% include_block card with orientation='vertical' height_style=height_style %}
+{% endfor %}
+</div>
+{% else %} {% comment %}cards are displayed separately.{% endcomment %}
+<div class="row row-cols-1 row-cols-md-{{ value.columns }} g-4">
+    {% for card in value.cards %}
+    {% include_block card with orientation=value.orientation height_style=height_style %}
+    {% endfor %}
+</div>
+{% endif %}
