@@ -51,7 +51,7 @@ class CardBlock(StructBlock):
         template = 'waggylabs/frontend_blocks/card.html'
         
 
-DEFAULT_CARD_GRID_COLUMNS = 4
+DEFAULT_CARD_GRID_COLUMNS = 5
 class CardGridBlock(StructBlock):
     """Card grid block for StreamField."""
     height_style = ChoiceBlock(

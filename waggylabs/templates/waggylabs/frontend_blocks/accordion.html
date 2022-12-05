@@ -1,20 +1,22 @@
 {% load wagtailcore_tags %}
 
-<div class="accordion" id="id-{{ id }}">
-    {% for item in value.items %}
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="id-{{ id }}-heading-{{ forloop.counter0 }}">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#id-{{ id }}-collapse-{{ forloop.counter0 }}" aria-expanded="true" aria-controls="collapseOne">
-            {{ item.heading }}
-          </button>
-        </h2>
-        <div id="id-{{ id }}-collapse-{{ forloop.counter0 }}" class="accordion-collapse collapse" aria-labelledby="id-{{ id }}-heading-{{ forloop.counter0 }}" {% if value.style == 'collapsible' %}data-bs-parent="#id-{{ id }}"{% endif %}>
-          <div class="accordion-body w-100">
-            {% for block in item.body %}
-            {% include_block block %}
-            {% endfor %}
+<div class="block-margin">
+  <div class="accordion" id="id-{{ id }}">
+      {% for item in value.items %}
+      <div class="accordion-item">
+          <h2 class="accordion-header" id="id-{{ id }}-heading-{{ forloop.counter0 }}">
+            <button class="accordion-button{% if not item.is_open %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#id-{{ id }}-collapse-{{ forloop.counter0 }}" aria-expanded="{% if item.is_open %}true{% else %}false{% endif %}" aria-controls="id-{{ id }}-collapse-{{ forloop.counter0 }}">
+              {{ item.heading }}
+            </button>
+          </h2>
+          <div id="id-{{ id }}-collapse-{{ forloop.counter0 }}" class="accordion-collapse collapse{% if item.is_open %} show{% endif %}" aria-labelledby="id-{{ id }}-heading-{{ forloop.counter0 }}" {% if value.style == 'collapsible' %}data-bs-parent="#id-{{ id }}"{% endif %}>
+            <div class="accordion-body w-100">
+              {% for block in item.body %}
+              {% include_block block %}
+              {% endfor %}
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+  </div>
 </div>

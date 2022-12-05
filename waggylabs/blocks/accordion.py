@@ -46,13 +46,24 @@ class AccordionItemBlock(StructBlock):
         label=_('Item Heading'),
         classname='full subtitle'
     )
-    body = AccordionContentBlock(
-        required=True
+    is_open = BooleanBlock(
+        required=False,
+        label=_('Check if the item is displayed expanded')
     )
+    body = AccordionContentBlock(
+        required=True,
+    )
+    
+    def render_form_template(self):
+        self.child_blocks['heading'].field.widget.attrs.update({
+            'placeholder': _('Heading of the item'),
+        })
+        return super().render_form_template()
     
     class Meta:
         icon = 'arrow-down-big'
         label = _('Item of the accordion')
+        form_template = 'waggylabs/blocks/accordion_item.html'
 
 
 class AccordionBlock(StructBlock):
@@ -67,6 +78,7 @@ class AccordionBlock(StructBlock):
         ],
         default='',
         label=_('Collapse items when new items opens or keep them open'),
+        widget=DisabledOptionSelect
     )
     items = ListBlock(AccordionItemBlock())
 
