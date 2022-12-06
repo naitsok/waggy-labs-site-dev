@@ -28,13 +28,16 @@ class ImageWithCaptionBlock(StructBlock):
     class Meta:
         icon = 'image'
         label = _('Item of the carousel')
+        label_format = _('{image}')
 
 
-class ImageCarouselBlock(ListBlock):
+class ImageCarouselBlock(StructBlock):
     """Carousel Block with images with possible caption."""
-    def __init__(self, **kwargs):
-        super().__init__(ImageWithCaptionBlock(), **kwargs)
+    images = ListBlock(ImageWithCaptionBlock(), min_num=1)
+        
     class Meta:
         icon = 'grip'
         label = _('Picture Carousel')
         template = 'waggylabs/frontend_blocks/carousel.html'
+        form_template = 'waggylabs/blocks/carousel.html'
+        label_format = _('Carousel: {images}')

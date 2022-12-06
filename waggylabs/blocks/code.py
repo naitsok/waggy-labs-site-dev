@@ -55,5 +55,6 @@ class CodeBlock(StructBlock):
     
     class Meta:
         icon = 'code'
-        label = None
+        label = _('Code')
+        label_format = _('{mode}')
     

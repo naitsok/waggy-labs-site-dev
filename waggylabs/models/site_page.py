@@ -9,7 +9,6 @@ from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
 from wagtail.core.blocks import CharBlock, PageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.search import index
 
@@ -26,6 +25,7 @@ from waggylabs.blocks.accordion import AccordionBlock
 from waggylabs.blocks.blockquote import BlockQuoteBlock
 from waggylabs.blocks.card_grid import CardGridBlock
 from waggylabs.blocks.carousel import ImageCarouselBlock
+from waggylabs.blocks.columns import ColumnsBlock
 # from waggylabs.blocks.citation import CitationBlock
 from waggylabs.blocks.equation import EquationBlock
 from waggylabs.blocks.figure import FigureBlock
@@ -75,7 +75,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         ('table', TableBlock()),
         ('accordion', AccordionBlock()),
         ('card_grid', CardGridBlock()),
-        # ('columns', TwoColumnBlock()),
+        ('columns', ColumnsBlock()),
         ], use_json_field=True)
 
     # Search index configuration
@@ -99,9 +99,12 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         HelpPanel(content=_('The Body field allows to build a complex page with different content. '
                             'Editing, however, does show the final look of the page on the site. '
                             'To see the final version, use the "Preview" functionality below. '
-                            'There are different blocks of the Body that can be used. Heading block allows to set a heading of the certain level. '
-                            'Paragraph is a simple rich text block that allows to interactively make links to other site Pages, upload images and documents. '
-                            'Note that images added in the block will not show in side panel and will have nor caption nor reference. '),
+                            'There are different blocks of the Body that can be used. '
+                            'Heading block allows to set a heading of the certain level. '
+                            'Paragraph is a simple rich text block that allows to interactively '
+                            'make links to other site Pages, upload images and documents. '
+                            'Note that images added in the block will not show in side panel '
+                            'and will have nor caption nor reference. '),
                   heading=_('Tips for editing the Body field'),
                   classname='title'),
         FieldPanel('body'),

@@ -35,3 +35,4 @@ class FigureBlock(StructBlock):
         template = 'waggylabs/frontend_blocks/figure.html'
         icon = 'image'
         label = _('Figure')
+        label_format = _('Figure: {image}')

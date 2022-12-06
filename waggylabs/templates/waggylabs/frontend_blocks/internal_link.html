@@ -1,3 +1,3 @@
 {% load waggylabs_filters %}
 
-<a href="{{ value.link.url }}" target="_blank" class="{{ value.style }}">{% if value.icon|is_icon %}<i class="{{ value.icon|icon_class }}"></i>&nbsp;{% endif %}{% if value.text %}{{ value.text }}{% else %}{{ value.link.title }}{% endif %}</a>
+<a href="{{ value.link.url }}" target="_blank" class="{{ value.style }}">{% if value.icon|is_icon %}<i class="{{ value.icon|icon_class }}{% if value.text %} icon-margin{% endif %}"></i>{% endif %}{% if value.text %}{{ value.text }}{% else %}{{ value.link.title }}{% endif %}</a>

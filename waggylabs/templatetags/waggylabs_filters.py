@@ -35,3 +35,10 @@ def link_https(value):
     if not (value.startswith('http://') or value.startwith('https://')):
         value = 'https://' + value
     return value
+
+@register.filter(name='col_class')
+def col_class(value):
+    """Calulates the correct value for Bootstrap CSS
+    column width class."""
+    return int(12 / len(value.bound_blocks))
+    

@@ -33,3 +33,4 @@ class ListingBlock(StructBlock):
         label = _('Listing')
         template = 'waggylabs/frontend_blocks/listing.html'
         form_template = 'waggylabs/blocks/listing.html'
+        label_format = _('Listing')

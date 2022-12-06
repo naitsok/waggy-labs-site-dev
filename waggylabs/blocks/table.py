@@ -55,6 +55,7 @@ class TableFigureBlock(StructBlock):
         template = 'waggylabs/frontend_blocks/table_figure.html'
         icon = 'table'
         label = _('Table as picture')
+        label_format = _('Table: {image}')
 
 
 DEFAULT_TABLE_OPTIONS = {
@@ -230,3 +231,4 @@ class TableBlock(StructBlock):
         template = 'waggylabs/frontend_blocks/table.html'
         icon = 'table'
         label = _('Table')
+        label_format = _('Table')

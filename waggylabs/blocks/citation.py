@@ -21,3 +21,4 @@ class CitationBlock(StructBlock):
         icon = 'link'
         label = _('Citation')
         template = 'waggylabs/frontend_blocks/citation.html'
+        label_format = _('{citation}')

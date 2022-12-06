@@ -1,2 +1,15 @@
-.img-fluid-h { max-width: 100%; }
+/* General tweaks for Bootstrap */
+/* Some Bootstrap blocks do not have bottom margin */
 .block-margin { margin-bottom: 1rem; }
+/* Image fit for the Card horizontal layout: waggylabs/frontend_blocks/card.html */
+.img-fluid-h { max-width: 100%; }
+/* Adds margin between link icon and link text for links on navbar and in cards of card grid */
+.icon-margin { margin-right: 0.5rem; }
+
+/* Styles for references to figures, tables, listings */
+span.reference { font-family: 'Courier New', Courier; font-size: 100%; font-weight: bold; }
+span.reference a { text-decoration: none; }
+
+/* MathJax tweaks */
+.MathJax_ref { font-family: 'Courier New', Courier !important; font-size: 88.4% !important; font-weight: bold !important; }
+.MJX-TEX mjx-mtd { scroll-margin-top: 80px; }

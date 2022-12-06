@@ -71,3 +71,4 @@ class MathJaxMarkdownBlock(TextBlock):
     
     class Meta:
         icon = 'doc-full'
+        label_format = _('Markdown')

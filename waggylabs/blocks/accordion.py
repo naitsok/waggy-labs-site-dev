@@ -64,6 +64,7 @@ class AccordionItemBlock(StructBlock):
         icon = 'arrow-down-big'
         label = _('Item of the accordion')
         form_template = 'waggylabs/blocks/accordion_item.html'
+        label_format = '{heading}'
 
 
 class AccordionBlock(StructBlock):
@@ -87,4 +88,5 @@ class AccordionBlock(StructBlock):
         label = _('Accordion')
         template = 'waggylabs/frontend_blocks/accordion.html'
         form_template = 'waggylabs/blocks/accordion.html'
+        label_format = _('Accordion: {items}')
     
