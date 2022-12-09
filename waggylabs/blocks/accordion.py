@@ -9,15 +9,22 @@ from wagtail.embeds.blocks import EmbedBlock
 from waggylabs.widgets.editor import DisabledOptionSelect
 
 from .equation import EquationBlock
-from .listing import ListingBlock
 from .figure import FigureBlock
+from .listing import ListingBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 from .table import TableBlock, TableFigureBlock
 
 
 class AccordionContentBlock(StreamBlock):
     """Content block for one accordion item."""
-    markdown = MathJaxMarkdownBlock(
+    
+    embed = EmbedBlock()
+    equation = EquationBlock()
+    figure = FigureBlock()
+    listing = ListingBlock()
+    table = TableBlock()
+    table_figure = TableFigureBlock()
+    text = MathJaxMarkdownBlock(
         required=False,
         help_text='',
         easymde_combine='true',
@@ -27,13 +34,7 @@ class AccordionContentBlock(StreamBlock):
                                 'ordered-list,link,|,code,subscript,superscript,|,'
                                 'preview,side-by-side,fullscreen,guide'),
         easymde_status='false'
-        )
-    code = ListingBlock()
-    figure = FigureBlock()
-    embed = EmbedBlock(required=True)
-    equation = EquationBlock()
-    table_figure = TableFigureBlock()
-    table = TableBlock()
+    )
     
     class Meta:
         label = _('Body of the accordion item')

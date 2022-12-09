@@ -11,10 +11,9 @@ class CitationBlock(StructBlock):
         label=_('Title of the citation.')
     )
     label = LabelBlock(
-        max_length=50,
         required=False,
         from_classname='waggylabs-cite',
-        help_text=_('Cite literature using LaTeX \\cite{...} syntax in markdown block.')
+        help_text=_('Cite literature using LaTeX \\cite{...} syntax in text markdown block.')
     )
     
     class Meta:
