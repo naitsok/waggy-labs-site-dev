@@ -16,10 +16,10 @@ from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
 class BodyBlock(StreamBlock):
-    """General body field to add content to site pages and 
-    post pages."""
+    """General body field to add content to site pages and
+     post pages."""
     accordion = AccordionBlock()
-    quote = BlockQuoteBlock()
+    blockquote = BlockQuoteBlock()
     card_grid = CardGridBlock()
     columns = ColumnsBlock()
     citation = CitationBlock()

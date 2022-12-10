@@ -45,7 +45,6 @@ class CodeBlock(StructBlock):
         required=True,
         label=_('Code snippet'),
         # help_text=_('Write or paste code.'),
-        rows=4
     )
     
     def render_basic(self, value, context=None):

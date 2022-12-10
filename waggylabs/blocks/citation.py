@@ -12,7 +12,7 @@ class CitationBlock(StructBlock):
     )
     label = LabelBlock(
         required=False,
-        from_classname='waggylabs-cite',
+        form_classname='waggylabs-cite',
         help_text=_('Cite literature using LaTeX \\cite{...} syntax in text markdown block.')
     )
     

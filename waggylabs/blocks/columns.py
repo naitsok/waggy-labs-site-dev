@@ -18,14 +18,14 @@ from .table import TableBlock, TableFigureBlock
 class ColumnBlock(StreamBlock):
     """Block to for one column."""
     accordion = AccordionBlock()
-    quote = BlockQuoteBlock()
     carousel = ImageCarouselBlock()
     equation = EquationBlock()
     figure = FigureBlock()
     listing = ListingBlock()
-    markdown = MathJaxMarkdownBlock()
+    quote = BlockQuoteBlock()
     table = TableBlock()
     table_figure = TableBlock()
+    text = MathJaxMarkdownBlock(help_text='')
     
     class Meta:
         icon = 'doc-empty'

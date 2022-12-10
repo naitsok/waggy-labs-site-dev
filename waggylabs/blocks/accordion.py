@@ -8,6 +8,9 @@ from wagtail.embeds.blocks import EmbedBlock
 
 from waggylabs.widgets.editor import DisabledOptionSelect
 
+from .blockquote import BlockQuoteBlock
+from .carousel import ImageCarouselBlock
+from .citation import CitationBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
@@ -17,7 +20,9 @@ from .table import TableBlock, TableFigureBlock
 
 class AccordionContentBlock(StreamBlock):
     """Content block for one accordion item."""
-    
+    blockquote = BlockQuoteBlock()
+    carousel = ImageCarouselBlock()
+    citation = CitationBlock()
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()
