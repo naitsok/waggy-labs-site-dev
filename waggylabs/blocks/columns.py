@@ -8,6 +8,8 @@ from wagtail.embeds.blocks import EmbedBlock
 from .accordion import AccordionBlock
 from .blockquote import BlockQuoteBlock
 from .carousel import ImageCarouselBlock
+from .citation import CitationBlock
+from .document import DocumentBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
@@ -18,11 +20,14 @@ from .table import TableBlock, TableFigureBlock
 class ColumnBlock(StreamBlock):
     """Block to for one column."""
     accordion = AccordionBlock()
+    blockquote = BlockQuoteBlock()
     carousel = ImageCarouselBlock()
+    citation = CitationBlock()
+    document = DocumentBlock()
+    embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()
     listing = ListingBlock()
-    quote = BlockQuoteBlock()
     table = TableBlock()
     table_figure = TableBlock()
     text = MathJaxMarkdownBlock(help_text='')

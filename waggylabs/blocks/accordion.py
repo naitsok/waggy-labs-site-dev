@@ -11,6 +11,7 @@ from waggylabs.widgets.editor import DisabledOptionSelect
 from .blockquote import BlockQuoteBlock
 from .carousel import ImageCarouselBlock
 from .citation import CitationBlock
+from .document import DocumentBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
@@ -23,6 +24,7 @@ class AccordionContentBlock(StreamBlock):
     blockquote = BlockQuoteBlock()
     carousel = ImageCarouselBlock()
     citation = CitationBlock()
+    document = DocumentBlock()
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()

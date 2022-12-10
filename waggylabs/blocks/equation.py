@@ -25,8 +25,8 @@ class EquationBlock(StructBlock):
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Equation caption'),
-        help_text=None,
-        # help_text=_('Equation caption that will be displayed when the equation is shown in the dialog box.'),
+        help_text=_('Caption that will be displayed when the equation is shown '
+                    'in the dialog box or in the sidebar.'),
         easymde_min_height='100px',
         easymde_max_height='100px',
         easymde_combine='true',

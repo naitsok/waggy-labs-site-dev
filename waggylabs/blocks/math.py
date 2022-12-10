@@ -7,7 +7,8 @@ from waggylabs.widgets import MathTextarea
 
 
 class MathBlock(TextBlock):
-    """A standalone math block with CodeMirror editor and MathJax math preview."""
+    """A standalone math block with CodeMirror editor and MathJax math preview.
+    Currently not in use."""
     
     def __init__(self,
                  required=True,

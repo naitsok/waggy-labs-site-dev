@@ -2,17 +2,18 @@
 from wagtail.blocks import StreamBlock
 from wagtail.embeds.blocks import EmbedBlock
 
-from waggylabs.blocks.accordion import AccordionBlock
-from waggylabs.blocks.blockquote import BlockQuoteBlock
-from waggylabs.blocks.card_grid import CardGridBlock
-from waggylabs.blocks.carousel import ImageCarouselBlock
-from waggylabs.blocks.columns import ColumnsBlock
-from waggylabs.blocks.citation import CitationBlock
-from waggylabs.blocks.equation import EquationBlock
-from waggylabs.blocks.figure import FigureBlock
-from waggylabs.blocks.listing import ListingBlock
-from waggylabs.blocks.mathjax_markdown import MathJaxMarkdownBlock
-from waggylabs.blocks.table import TableBlock, TableFigureBlock
+from .accordion import AccordionBlock
+from .blockquote import BlockQuoteBlock
+from .card_grid import CardGridBlock
+from .carousel import ImageCarouselBlock
+from .columns import ColumnsBlock
+from .document import DocumentBlock
+from .citation import CitationBlock
+from .equation import EquationBlock
+from .figure import FigureBlock
+from .listing import ListingBlock
+from .mathjax_markdown import MathJaxMarkdownBlock
+from .table import TableBlock, TableFigureBlock
 
 
 class BodyBlock(StreamBlock):
@@ -21,8 +22,10 @@ class BodyBlock(StreamBlock):
     accordion = AccordionBlock()
     blockquote = BlockQuoteBlock()
     card_grid = CardGridBlock()
+    carousel = ImageCarouselBlock()
     columns = ColumnsBlock()
     citation = CitationBlock()
+    document = DocumentBlock()
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()

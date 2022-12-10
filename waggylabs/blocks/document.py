@@ -10,7 +10,7 @@ class DocumentBlock():
     document = DocumentChooserBlock()
     label = LabelBlock(
         required=False,
-        from_classname='waggylabs-cite',
+        form_classname='waggylabs-label-cite',
         help_text=_('Cite documents using LaTeX \\cite{...} syntax in text markdown block.')
     )
     

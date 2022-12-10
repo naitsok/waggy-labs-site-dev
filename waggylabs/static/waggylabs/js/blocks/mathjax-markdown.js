@@ -164,7 +164,41 @@ function refLabel() {
             }
         },
         renderer(token) {
-            var processedRef = processRef(token.text);
+            const refTypes = ['blockquote', 'figure', 'listing', 'table'];
+            var processedRef = processRef(token.text, refTypes);
+            if (processedRef) {
+                return processedRef;
+            }
+            else {
+                return token.raw;
+            }
+        }
+    }
+}
+
+/**
+ * Processes figure, table, listing, blockquote labels before 
+ * MathJax does the same for equations.
+ * @returns marked.js extension object
+ */
+function citeLabel() {
+    return {
+        name: 'citeLabel',
+        level: 'inline',
+        start(src) {return src.indexOf('\\cite{'); },
+        tokenizer(src, tokens) {
+            const match = src.match(/^\\cite{(.*?)}/);
+            if (match) {
+                return {
+                    type: 'citeLabel',
+                    raw: match[0],
+                    text: match[1]
+                }
+            }
+        },
+        renderer(token) {
+            const refTypes = ['cite'];
+            var processedRef = processRef(token.text, refTypes);
             if (processedRef) {
                 return processedRef;
             }
@@ -178,12 +212,12 @@ function refLabel() {
 /**
  * Processes figure, table, listing, blockquote references before 
  * MathJax does the same for equations.
- * @param {string} ref - reference to be processed, e.g. content inside curly brackets of  \ref{...}
+ * @param {string} ref - reference to be processed, e.g. content inside curly brackets of \ref{...}
+ * @param {array of strings} refTypes - reference types to be processed
  * @returns - span element if the reference id was found or undefined if not
  */
- function processRef(ref) {
-    const types = ['blockquote', 'figure', 'listing', 'table'];
-    for (let i in types) {
+ function processRef(ref, refTypes) {
+    for (let i in refTypes) {
         var processedRef = processRefbyType(ref, 'waggylabs-label-' + types[i]);
         if (processedRef) { return processedRef; }
     }
@@ -312,7 +346,7 @@ function mathjaxMarkdown(text, easymdeOptions) {
         marked.setOptions(markedOptions);
 
         // Set extensions
-        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath(), refLabel()] });
+        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath(), refLabel(), citeLabel()] });
 
         // Convert the markdown to HTML
         var htmlText = marked.parse(text);
