@@ -1,77 +1,74 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+
 from wagtail.admin.panels import FieldPanel, HelpPanel, ObjectList, TabbedInterface, InlinePanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Orderable
 
+from waggylabs.widgets import IconInput
 
-class SocialLink(models.Model):
-    """Class to contain all the information for one social link."""
-    title = models.CharField(
+
+class SiteLink(models.Model):
+    """Class to add links on the navbar. For example, links
+    to social websites."""
+    link = models.URLField(
         max_length=255,
         blank=False,
-        help_text=_('Title of the social website. For example, Instagram.'),
-        verbose_name=_('Title of the social website.')
+        help_text=_('Full URL to the website'),
+        verbose_name=_('Link to the website'),
     )
-    username = models.CharField(
+    text = models.CharField(
         max_length=255,
-        blank=False,
-        help_text=_('Username for the social website.'),
-        verbose_name=_('Username for the social website')
-    )
-    username_prefix = models.CharField(
-        max_length=10,
         blank=True,
-        help_text=_('Additional prefix before the username if display username is selects. For example "@" for Twitter.'),
-        verbose_name=_('Prefix for the username')
+        help_text=_('Text for the link to be displayed. Can be empty '
+                    ' if only the icon to be displayed,'),
+        verbose_name=_('Text of the link'),
     )
     icon = models.CharField(
-        max_length=255,
+        max_length=50,
         blank=True,
-        help_text=_('Icon name from Font Awesome website. If left blank, title will used.'),
-        verbose_name=_('Icon name from Font Awesome website')
+        help_text=_('Icon for the link. Can be empty if no icon '
+                    'to be displayed.'),
+        verbose_name=_('Link icon'),
     )
-    domain = models.CharField(
-        max_length=10,
-        blank=True,
-        help_text=_('Domain name for the social website. If left blank, "com" will be used.'),
-        verbose_name=_('Domain name for the social website')
-    )
-    class SocialLinkText(models.TextChoices):
-        """Defines how to show the text in for the social website links."""
-        ICON = 'icon', _('Only social netwok icon')
-        TITLE = 'title', _('Title of the social website')
-        USERNAME = 'username', _('Username in the social website')
-    link_text = models.CharField(
-        max_length=10,
+    style = models.CharField(
+        max_length=50,
         blank=False,
-        choices=SocialLinkText.choices,
-        default=SocialLinkText.ICON,
-        help_text=_('Choose how to display URLs to the social websites: only icons of the websites, '
-                    'icons and website titles or icons and usernames in the websites. Note that some icons may '
-                    'not be available according to the website title. Please check Font Awesome Icons for icon '
-                    'availability.'),
-        verbose_name=_('Social website display text')
+        choices=[
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-light', _('Button light')),
+            ('btn btn-dark', _('Button dark')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-light', _('Button outline light')),
+            ('btn btn-outline-dark', _('Button outline dark')),
+            ('nav-link', _('Link')),
+            ('nav-link active', _('Link active')),
+        ],
+        help_text=_('Select the style for the link. See '
+                    'https://getbootstrap.com/docs/5.2/components/buttons/'
+                    ' for examples.'),
+        verbose_name=_('Link style'),
     )
     
     panels = [
-        FieldPanel('title'),
-        FieldPanel('username'),
-        FieldPanel('username_prefix'),
-        FieldPanel('icon'),
-        FieldPanel('domain'),
-        FieldPanel('link_text')
+        FieldPanel('link'),
+        FieldPanel('text'),
+        FieldPanel('icon', widget=IconInput),
+        FieldPanel('style'),
     ]
     
     class Meta:
         abstract = True
     
     
-class WaggyLabsSettingsSocialLinks(Orderable, SocialLink):
-    """Class that connects SocialLink with Waggy Labs Settings model."""
-    page = ParentalKey('waggylabs.WaggyLabsSettings', on_delete=models.CASCADE, related_name='social_links')
+class WaggyLabsSettingsSiteLinks(Orderable, SiteLink):
+    """Class that connects SiteLink with Waggy Labs Settings model."""
+    page = ParentalKey('waggylabs.WaggyLabsSettings', on_delete=models.CASCADE, related_name='site_links')
 
 
 @register_setting
@@ -172,9 +169,11 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     ]
     
     theme_panels = [
-        HelpPanel(content=_('Choose the Bootstrap theme for your site and upload the Bootstrap CSS file to be used '
-                            'istead of default one. Select the correct navigation bar theme according to the chosen CSS file. '
-                            'Select the desired placement of the navigation bar. See Bootstrap documentation.'),
+        HelpPanel(content=_('Choose the Bootstrap theme for your site and upload the '
+                            'Bootstrap CSS file to be used istead of default one. Select '
+                            'the correct navigation bar theme according to the '
+                            'chosen CSS file. Select the desired placement of the '
+                            'navigation bar. See Bootstrap documentation.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
         FieldPanel('site_theme'),

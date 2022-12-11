@@ -20,18 +20,7 @@ from wagtailmenus.panels import menupage_panel
 from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
-# from waggylabs.admin.panels import ReadOnlyPanel
-from waggylabs.blocks.accordion import AccordionBlock
-from waggylabs.blocks.blockquote import BlockQuoteBlock
-from waggylabs.blocks.card_grid import CardGridBlock
-from waggylabs.blocks.carousel import ImageCarouselBlock
-from waggylabs.blocks.columns import ColumnsBlock
-# from waggylabs.blocks.citation import CitationBlock
-from waggylabs.blocks.equation import EquationBlock
-from waggylabs.blocks.figure import FigureBlock
-from waggylabs.blocks.listing import ListingBlock
-from waggylabs.blocks.mathjax_markdown import MathJaxMarkdownBlock
-from waggylabs.blocks.table import TableBlock, TableFigureBlock
+from waggylabs.blocks.body import BodyBlock
 
 
 class SitePage(Page, MenuPageMixin, HitCountMixin):
@@ -59,24 +48,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         related_name='+',
         help_text=_('Image, that appears right after the title.')
         )
-    body = StreamField([
-        ('heading', CharBlock(classname='full subtitle', required=True)),
-        # ('paragraph', RichTextBlock(required=True)),
-        ('blockquote', BlockQuoteBlock()),
-        ('pages', PageChooserBlock(required=True, can_choose_root=True)),
-        ('embed', EmbedBlock(required=True)),
-        ('document', DocumentChooserBlock(required=True)),
-        ('markdown', MathJaxMarkdownBlock(required=True, icon='doc-full')),
-        ('code', ListingBlock()),
-        ('figure', FigureBlock()),
-        ('equation', EquationBlock()),
-        ('carousel', ImageCarouselBlock()),
-        ('table_figure', TableFigureBlock()),
-        ('table', TableBlock()),
-        ('accordion', AccordionBlock()),
-        ('card_grid', CardGridBlock()),
-        ('columns', ColumnsBlock()),
-        ], use_json_field=True)
+    body = StreamField(BodyBlock(), use_json_field=True)
 
     # Search index configuration
 

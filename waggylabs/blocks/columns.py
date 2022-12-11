@@ -29,7 +29,7 @@ class ColumnBlock(StreamBlock):
     figure = FigureBlock()
     listing = ListingBlock()
     table = TableBlock()
-    table_figure = TableBlock()
+    table_figure = TableFigureBlock()
     text = MathJaxMarkdownBlock(help_text='')
     
     class Meta:

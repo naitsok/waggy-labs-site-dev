@@ -39,3 +39,6 @@ class LabelBlock(RegexBlock):
             form_classname=form_classname + ' waggylabs-label',
             **kwargs
         )
+        self.field.widget.attrs.update({
+            'placeholder': 'e.g. fig1, tbl2, or lst3',
+        })

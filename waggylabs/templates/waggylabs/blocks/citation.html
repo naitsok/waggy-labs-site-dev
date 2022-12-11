@@ -1,0 +1,26 @@
+{% load wagtailadmin_tags  %}
+
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
+    {% endif %}
+    <div class="waggylabs-grid-container-3">
+        <div class="w-field waggylabs-grid-item-col-2 waggylabs-flex-container" data-contentpath="{{ children.citation.block.name }}">
+            {{ children.citation.render_form }}{% if children.citation.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+        <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.label.block.name }}">
+            {{ children.label.render_form }}{% if children.label.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+        {% if children.label.block.help_text %}
+        <div class="help waggylabs-grid-item-col-all">
+            {{ children.label.block.help_text }}
+        </div>
+        {% endif %}
+    </div>
+    
+</div>

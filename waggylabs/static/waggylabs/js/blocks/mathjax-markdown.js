@@ -9,7 +9,8 @@
  */
 
 /*
- * Replaces standard EasyMDE markdown function to avoid parsing LaTeX math expressions according to the markdown rules.
+ * Replaces standard EasyMDE markdown function to avoid parsing LaTeX 
+ * math expressions according to the markdown rules.
  */
 
 /**
@@ -203,7 +204,7 @@ function citeLabel() {
                 return processedRef;
             }
             else {
-                return token.raw;
+                return '???';
             }
         }
     }

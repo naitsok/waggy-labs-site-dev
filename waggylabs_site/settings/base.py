@@ -192,6 +192,8 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 
 WAGTAILMENUS_ACTIVE_ANCESTOR_CLASS = "active"
 
+WAGTAILMENUS_SECTION_ROOT_DEPTH = 2
+
 # Wagtail markdown settings
 WAGTAILMARKDOWN = {
     # ...

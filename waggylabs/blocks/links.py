@@ -3,14 +3,12 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import (
-    StructBlock, CharBlock, ListBlock,
-    PageChooserBlock, StreamBlock, URLBlock,
+    StructBlock, CharBlock,
+    PageChooserBlock, URLBlock,
     ChoiceBlock, FieldBlock, EmailBlock
     )
 
-from waggylabs.widgets.editor import (
-    DisabledOptionSelect, IconInput
-)
+from waggylabs.widgets import IconInput, DisabledOptionSelect
 
 
 class StyleChoiceBlock(ChoiceBlock):
@@ -20,7 +18,22 @@ class StyleChoiceBlock(ChoiceBlock):
         self,
         choices=[
             ('', _('Choose style')),
-            ('btn btn-primary', _('Button')),
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-light', _('Button light')),
+            ('btn btn-dark', _('Button dark')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-light', _('Button outline light')),
+            ('btn btn-outline-dark', _('Button outline dark')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
             ('card-link', _('Link')),
         ],
         default='',
@@ -81,14 +94,14 @@ class ExternalLinkBlock(StructBlock):
     icon = IconBlock(label=_('Icon'))
     style = StyleChoiceBlock()
     
-    def render_form_template(self):
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
         self.child_blocks['link'].field.widget.attrs.update({
-            'placeholder': 'twitter.com/username',
+            'placeholder': 'example.com/username',
         })
         self.child_blocks['text'].field.widget.attrs.update({
             'placeholder': _('Text of the link'),
         })
-        return super().render_form_template()
     
     class Meta:
         icon = 'link-external'
@@ -110,11 +123,11 @@ class InternalLinkBlock(StructBlock):
     icon = IconBlock(label=_('Icon'))
     style = StyleChoiceBlock()
     
-    def render_form_template(self):
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
         self.child_blocks['text'].field.widget.attrs.update({
             'placeholder': _('Text instead of page title'),
         })
-        return super().render_form_template()
     
     class Meta:
         icon = 'link'
@@ -137,14 +150,14 @@ class IconEmailBlock(StructBlock):
     icon = IconBlock(required=False)
     style = StyleChoiceBlock()
     
-    def render_form_template(self):
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
         self.child_blocks['email'].field.widget.attrs.update({
             'placeholder': 'email@example.com',
         })
         self.child_blocks['text'].field.widget.attrs.update({
             'placeholder': _('Text to be displayed'),
         })
-        return super().render_form_template()
     
     class Meta:
         icon = 'mail'
@@ -163,11 +176,11 @@ class InfoTextBlock(StructBlock):
     icon = IconBlock(required=False)
     style = StyleChoiceBlock()
     
-    def render_form_template(self):
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
         self.child_blocks['text'].field.widget.attrs.update({
             'placeholder': _('Phone, address, etc.'),
         })
-        return super().render_form_template()
     
     class Meta:
         icon = 'clipboard-list'

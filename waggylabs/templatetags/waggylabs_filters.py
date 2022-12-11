@@ -3,7 +3,9 @@ from django import template
 from django.conf import settings
 from django.template.defaultfilters import stringfilter
 
-from waggylabs.widgets.editor import DEFAULT_FONTAWESOME_ICONS
+from urllib.parse import urlparse
+
+from waggylabs.widgets import DEFAULT_FONTAWESOME_ICONS
 
 
 register = template.Library()
@@ -35,6 +37,14 @@ def link_https(value):
     if not (value.startswith('http://') or value.startwith('https://')):
         value = 'https://' + value
     return value
+
+@register.filter(name='link_domain')
+@stringfilter
+def link_domain(value):
+    """Gets domain name from URL."""
+    domain = urlparse(value).netloc.lower()
+    return domain.split('.')[-2:-1].title()
+    
 
 @register.filter(name='col_class')
 def col_class(value):

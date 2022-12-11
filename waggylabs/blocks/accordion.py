@@ -6,7 +6,7 @@ from wagtail.core.blocks import (
     )
 from wagtail.embeds.blocks import EmbedBlock
 
-from waggylabs.widgets.editor import DisabledOptionSelect
+from waggylabs.widgets import DisabledOptionSelect
 
 from .blockquote import BlockQuoteBlock
 from .carousel import ImageCarouselBlock
@@ -62,11 +62,11 @@ class AccordionItemBlock(StructBlock):
         required=True,
     )
     
-    def render_form_template(self):
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
         self.child_blocks['heading'].field.widget.attrs.update({
             'placeholder': _('Heading of the item'),
         })
-        return super().render_form_template()
     
     class Meta:
         icon = 'arrow-down-big'

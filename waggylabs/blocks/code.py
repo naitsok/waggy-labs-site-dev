@@ -5,8 +5,6 @@ from wagtail.core.blocks import ChoiceBlock, TextBlock, StructBlock
 
 from wagtailmarkdown.blocks import render_markdown
 
-from waggylabs.widgets.editor import DisabledOptionSelect
-
 # list of pairs for code block; first value must indicate the valid
 # codemirror mode file (e.g., stex, clike, etc), https://codemirror.net/5/mode/;
 # second value is the display text
@@ -38,13 +36,12 @@ class CodeBlock(StructBlock):
         required=True,
         default='python',
         label=_('Code language'),
-        widget=DisabledOptionSelect,
-        # help_text=_('Choose the programming language.'),
+        help_text=_('Choose the programming language.'),
     )
     code = TextBlock(
         required=True,
         label=_('Code snippet'),
-        # help_text=_('Write or paste code.'),
+        help_text=_('Write or paste code.'),
     )
     
     def render_basic(self, value, context=None):

@@ -3,6 +3,7 @@
 {% load wagtailimages_tags %}
 {% load wagtailuserbar %}
 {% load menu_tags %}
+{% load waggylabs_filters %}
 
 <!doctype html>
 <html lang="en">
@@ -74,12 +75,9 @@
                             {% main_menu template="waggylabs/menus/main_menu.html" %}
                         </ul>
                         <ul class="navbar-nav auto" id="socialLinksSearch">
-                            {% for social_link in settings.waggylabs.WaggyLabsSettings.social_links.all %}
+                            {% for site_link in settings.waggylabs.WaggyLabsSettings.site_links.all %}
                             <li class="nav-item">
-                                <a class="btn btn-link nav-link active" target="_blank" href="https://www.{{ social_link.title|lower }}.{% if social_link.domain %}{{ social_link.domain }}{% else %}com{% endif %}/{{ social_link.username }}">
-                                    <i class="fa-brands fa-{% if social_link.icon %}{{ social_link.icon|lower }}{% else %}{{ social_link.title|lower }}{% endif %}"></i>
-                                    {% if social_link.link_text == 'title' %}{{ social_link.title }}{% endif %}{% if social_link.link_text == 'username' %}{{ social_link.username_prefix }}{{ social_link.username }}{% endif %}
-                                </a>
+                                <a href="{{ site_link|link_https }}" target="_blank" class="{{ site_link.style }}">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
                             </li>
                             {% endfor %}
                             <li class="nav-item py-1 col-12 col-lg-auto">

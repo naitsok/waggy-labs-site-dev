@@ -1,3 +1,3 @@
 {% load waggylabs_filters %}
 
-<a href="{{ value.link|link_https }}" target="_blank" class="{{ value.style }}">{% if value.icon|is_icon %}<i class="{{ value.icon|icon_class }}{% if value.text %} icon-margin{% endif %}"></i>{% endif %}{% if value.text or value.icon|is_icon %}{{ value.text }}{% else %}{{ value.link|cut:'https://'|cut:'http://' }}{% endif %}</a>
+<a href="{{ value.link|link_https }}" target="_blank" class="{{ value.style }}">{% if value.icon|is_icon %}<i class="{{ value.icon|icon_class }}{% if value.text %} icon-margin{% endif %}"></i>{% endif %}{% if value.text or value.icon|is_icon %}{{ value.text }}{% else %}{{ value.link|link_domain }}{% endif %}</a>
