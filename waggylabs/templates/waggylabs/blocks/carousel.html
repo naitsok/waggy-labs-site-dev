@@ -1,3 +1,5 @@
+{% load wagtailadmin_tags  %}
+
 <div class="{{ classname }}">
     {% if help_text %}
     <span>
@@ -7,9 +9,18 @@
         </div>
     </span>
     {% endif %}
-    {% for child in children.values %}
-        <div data-contentpath="{{ child.block.name }}">
-            {{ child.render_form }}
+    <div class="waggylabs-grid-container-3">
+        <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.color.block.name }}">
+            {{ children.color.render_form }}{% if children.color.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
         </div>
-    {% endfor %}
+        <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.switch.block.name }}">
+            {{ children.switch.render_form }}{% if children.switch.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+        <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.controls.block.name }}">
+            {{ children.controls.render_form }}{% if children.controls.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+    </div>
+    <div data-contentpath="{{ children.items.name }}">
+        {{ children.items.render_form }}
+    </div>
 </div>

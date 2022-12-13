@@ -1,6 +1,11 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import CharBlock, TextBlock, StructBlock
+from wagtail.core.blocks import (
+    CharBlock, TextBlock, StructBlock, ChoiceBlock
+)
+
+from waggylabs.widgets import DisabledOptionSelect
+
 from .label import LabelBlock
 
 
@@ -23,6 +28,17 @@ class BlockQuoteBlock(StructBlock):
         max_length=50,
         required=False,
         form_classname='waggylabs-label-blockquote',
+    )
+    text_justify = ChoiceBlock(
+        choices=[
+            ('', _('Choose text alignment')),
+            ('text-start', _('Left')),
+            ('text-center', _('Center')),
+            ('text-end', _('Right')),
+        ],
+        default='',
+        label=_('Text alignment'),
+        widget=DisabledOptionSelect,
     )
     
     class Meta:

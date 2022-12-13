@@ -1,0 +1,29 @@
+{% load wagtailadmin_tags  %}
+
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
+    {% endif %}
+    <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.image.block.name }}">
+        {{ children.image.render_form }}{% if children.image.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+    </div>
+    <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.caption.block.name }}">
+        {{ children.caption.render_form }}{% if children.caption.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+    </div>
+    <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.interval.block.name }}">
+        {{ children.interval.render_form }}{% if children.interval.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+    </div>
+    <div class="waggylabs-grid-container-2">
+        <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.text_justify.block.name }}">
+            {{ children.text_justify.render_form }}{% if children.text_justify.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+        <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.text_color.block.name }}">
+            {{ children.text_color.render_form }}{% if children.text_color.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+    </div>
+</div>

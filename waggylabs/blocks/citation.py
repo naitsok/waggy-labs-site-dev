@@ -19,7 +19,7 @@ class CitationBlock(StructBlock):
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
         self.child_blocks['citation'].field.widget.attrs.update({
-            'placeholder': 'Author A, Author B, Title, Year, Journal.',
+            'placeholder': 'e.g. Author A, Author B, Title, Year, Journal.',
         })
     
     class Meta:

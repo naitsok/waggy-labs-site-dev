@@ -168,7 +168,7 @@ function refLabel() {
             const refTypes = ['blockquote', 'figure', 'listing', 'table'];
             var processedRef = processRef(token.text, refTypes);
             if (processedRef) {
-                return processedRef;
+                return '(' + processedRef + ')';
             }
             else {
                 return token.raw;
@@ -201,10 +201,10 @@ function citeLabel() {
             const refTypes = ['cite'];
             var processedRef = processRef(token.text, refTypes);
             if (processedRef) {
-                return processedRef;
+                return '[' + processedRef + ']';
             }
             else {
-                return '???';
+                return '[???]';
             }
         }
     }
@@ -219,7 +219,7 @@ function citeLabel() {
  */
  function processRef(ref, refTypes) {
     for (let i in refTypes) {
-        var processedRef = processRefbyType(ref, 'waggylabs-label-' + types[i]);
+        var processedRef = processRefbyType(ref, 'waggylabs-label-' + refTypes[i]);
         if (processedRef) { return processedRef; }
     }
 }

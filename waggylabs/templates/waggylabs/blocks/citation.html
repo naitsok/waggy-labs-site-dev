@@ -9,6 +9,15 @@
         </div>
     </span>
     {% endif %}
+    {% for child in children.values %}
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ child.block.name }}">
+            {% comment "" %}{% if child.block.label %}
+                <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+            {% endif %}{% endcomment %}
+            {{ child.render_form }}{% if child.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        </div>
+    {% endfor %}
+    {% comment %}
     <div class="waggylabs-grid-container-3">
         <div class="w-field waggylabs-grid-item-col-2 waggylabs-flex-container" data-contentpath="{{ children.citation.block.name }}">
             {{ children.citation.render_form }}{% if children.citation.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
@@ -22,5 +31,5 @@
         </div>
         {% endif %}
     </div>
-    
+    {% endcomment %}
 </div>

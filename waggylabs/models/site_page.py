@@ -21,6 +21,7 @@ from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
 from waggylabs.blocks.body import BodyBlock
+from waggylabs.panels import ReadOnlyPanel
 
 
 class SitePage(Page, MenuPageMixin, HitCountMixin):
@@ -98,9 +99,9 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         # ),
         MultiFieldPanel(
             [
-                # ReadOnlyPanel('first_published_at', heading='First published at'),
-                # ReadOnlyPanel('last_published_at', heading='Last published at'),
-                # FieldPanel('hit_counts', heading='Number of views'),
+                ReadOnlyPanel('first_published_at', heading='First published at'),
+                ReadOnlyPanel('last_published_at', heading='Last published at'),
+                ReadOnlyPanel('hit_counts', heading='Number of views'),
             ],
             heading=_('General information')
         ),
