@@ -12,7 +12,7 @@
     <div class="waggylabs-grid-container-2">
         {% for child in children.values %}
         {% if child.block.name != 'cards' %}
-        <div class="waggylabs-flex-container" data-contentpath="{{ child.block.name }}">
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ child.block.name }}">
             {{ child.render_form }}{% if child.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
         </div>
         {% endif %}

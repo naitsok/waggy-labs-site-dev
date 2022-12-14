@@ -30,7 +30,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     It can also list and filter posts if the site is used as a blog.
     """
 
-    page_description = ('A generic site page to contain content pages, '
+    page_description = ('A generic site page to contain content, '
                         'such as Home, About, Research, Publications, etc. '
                         'It can also list and filter posts if the site is used as a blog.')
     template = 'waggylabs/pages/site_page.html'
@@ -48,7 +48,15 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         on_delete=models.SET_NULL,
         related_name='+',
         help_text=_('Image, that appears right after the title.')
-        )
+    )
+    show_header_image_on_page = models.BooleanField(
+        blank=True,
+        verbose_name=_('Show header image on page'),
+        help_text=_('If true, the header image appears on top of the page '
+                    'after the title. If false, header image is used only '
+                    'situatively, e.g. when it appears in a list or a card '
+                    'grid.')
+    )
     body = StreamField(BodyBlock(), use_json_field=True)
 
     # Search index configuration
@@ -84,8 +92,14 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         ]
 
     promote_panels = Page.promote_panels + [
-        FieldPanel('header_image'),
-        ]
+        MultiFieldPanel(
+            [
+                FieldPanel('header_image'),
+                FieldPanel('show_header_image_on_page'),
+            ],
+            heading=_('Header image')
+        ),  
+    ]
 
     settings_panels = Page.settings_panels + [
         menupage_panel,

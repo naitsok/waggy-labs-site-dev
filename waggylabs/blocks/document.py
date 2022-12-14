@@ -1,11 +1,12 @@
 
 from django.utils.translation import gettext_lazy as _
 
+from wagtail.blocks import StructBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 
 from .label import LabelBlock
 
-class DocumentBlock():
+class DocumentBlock(StructBlock):
     """Block to add documents and cite them using \cite{...} syntax."""
     document = DocumentChooserBlock()
     label = LabelBlock(
@@ -15,6 +16,6 @@ class DocumentBlock():
     )
     
     class Meta:
-        icon = 'document'
+        icon = 'doc-full-inverse'
         label = _('Document')
         template = 'waggylabs/frontend_blocks/document.html'

@@ -37,6 +37,7 @@ class CarouselItem(StructBlock):
         default=1000,
     )
     text_justify = ChoiceBlock(
+        required=False,
         choices=[
             ('', _('Choose text alignment')),
             ('text-start', _('Left')),
@@ -48,6 +49,7 @@ class CarouselItem(StructBlock):
         widget=DisabledOptionSelect,
     )
     text_color = ChoiceBlock(
+        required=False,
         choices=[
             ('', _('Choose text color')),
             ('text-light', _('Light')),
@@ -55,6 +57,20 @@ class CarouselItem(StructBlock):
         ],
         default='',
         label=_('Text color'),
+        widget=DisabledOptionSelect,
+    )
+    text_size = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Choose text size')),
+            ('fs-6', _('Normal')),
+            ('fs-5', _('Bigger')),
+            ('fs-4', _('Big')),
+            ('fs-3', _('Larger')),
+            ('fs-2', _('Large')),
+        ],
+        default='',
+        label=_('Text size'),
         widget=DisabledOptionSelect,
     )
     
@@ -80,7 +96,8 @@ class ImageCarouselBlock(StructBlock):
     switch = ChoiceBlock(
         choices=[
             ('', _('Choose switching style')),
-            ('false', _('No switching')),
+            ('false', _('Change on button')),
+            ('false-fade', _('Fade on button')),
             ('carousel', _('Change after interval')),
             ('carousel-fade', _('Fade after interval'))
         ],

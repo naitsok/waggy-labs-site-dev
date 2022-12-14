@@ -1,9 +1,13 @@
-<figure id="{{ value.label }}" class="{{ value.text_justify }} waggylabs-label-blockquote">
+{% load wagtailmarkdown %}
+
+<figure id="{{ value.label }}" class="mb-3 waggylabs-label-blockquote">
     <blockquote class="blockquote">
-        <p class="mb-0"><i class="fas fa-quote-left"></i></p>
-        <p class="px-3">{{ value.quote }}</p>
+        <div class="d-flex">
+            {% if value.show_icon %}<div class="me-3"><i class="fas fa-quote-left"></i></div>{% endif %}
+            <div class="{{ value.text_justify }} w-100">{{ value.quote|markdown|safe }}</div>
+        </div>       
         {% if value.author %}
-            <figcaption class="blockquote-footer px-3">
+            <figcaption class="{{ value.text_justify }} blockquote-footer ps-5">
                 {{ value.author }} {% if value.source %}in <cite title="Source Title">{{ value.source }}</cite>{% endif %}
             </figcaption>
         {% endif %}
