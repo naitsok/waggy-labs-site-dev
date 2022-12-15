@@ -31,7 +31,7 @@ class MathJaxMarkdownBlock(TextBlock):
                  min_length=None,
                  validators=(),
                  easymde_min_height='300px', # e.g. 300px, valid CSS string
-                 easymde_max_height='500px', # e.g. 500px, valid CSS string
+                 easymde_max_height='300px', # e.g. 500px, valid CSS string
                  easymde_combine='true', # combine or not stex mode with markdown mode
                  # valid string that contains list of valid EasyMDE buttons + math patterns seprated by comma
                  # see the easymde-attach.js for availabe math patterns
@@ -71,4 +71,4 @@ class MathJaxMarkdownBlock(TextBlock):
     
     class Meta:
         icon = 'doc-full'
-        label_format = _('Markdown')
+        label_format = _('Text: {value}')

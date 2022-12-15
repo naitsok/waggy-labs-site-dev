@@ -5,6 +5,8 @@
 .img-fluid-h { max-width: 100%; }
 /* Adds margin between link icon and link text for links on navbar and in cards of card grid */
 .icon-margin { margin-right: 0.5rem; }
+/* Additional viewport based height classes */
+.max-vh-50 { height: 50vh; }
 
 /* Styles for references to figures, tables, listings */
 span.reference { font-family: 'Courier New', Courier; font-size: 100%; font-weight: bold; }

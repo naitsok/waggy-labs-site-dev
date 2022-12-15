@@ -57,7 +57,10 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
                     'situatively, e.g. when it appears in a list or a card '
                     'grid.')
     )
-    body = StreamField(BodyBlock(), use_json_field=True)
+    body = StreamField(
+        BodyBlock(),
+        use_json_field=True,
+    )
 
     # Search index configuration
 

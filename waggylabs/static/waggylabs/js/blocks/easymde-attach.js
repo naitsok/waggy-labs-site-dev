@@ -204,6 +204,7 @@ function easymdeAttach(id) {
     mde.codemirror.on("change", function() {
         document.getElementById(id).value = mde.value();
     });
+    refreshCodeMirror(mde);
 }
 
 /*
@@ -213,20 +214,21 @@ function refreshCodeMirror(e) {
     setTimeout(
         function() {
             e.CodeMirror.refresh();
-        }, 100
+            e.CodeMirror.focus();
+        }, 200
     );
 }
 
 // Wagtail < 3.0
 document.addEventListener('shown.bs.tab', function() {
     document.querySelectorAll('.CodeMirror').forEach(function(e) {
-        refreshCodeMirror(e)
+        refreshCodeMirror(e);
     });
 });
 
 // Wagtail >= 3.0
 document.addEventListener('wagtail:tab-changed', function() {
     document.querySelectorAll('.CodeMirror').forEach(function(e) {
-        refreshCodeMirror(e)
+        refreshCodeMirror(e);
     });
 });

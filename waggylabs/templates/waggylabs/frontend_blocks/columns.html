@@ -3,7 +3,7 @@
 
 <div class="row">
     {% for item in value.columns %}
-    <div class="col-md-{{ value|col_class }}">
+    <div class="col-md-{{ value.columns|col_class }}">
         {% include_block item %}
     </div>
     {% endfor %}

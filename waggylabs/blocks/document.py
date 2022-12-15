@@ -19,3 +19,4 @@ class DocumentBlock(StructBlock):
         icon = 'doc-full-inverse'
         label = _('Document')
         template = 'waggylabs/frontend_blocks/document.html'
+        label_format = _('Document: {document}')

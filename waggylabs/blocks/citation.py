@@ -27,4 +27,4 @@ class CitationBlock(StructBlock):
         label = _('Citation')
         template = 'waggylabs/frontend_blocks/citation.html'
         form_template = 'waggylabs/blocks/citation.html'
-        label_format = _('{citation}')
+        label_format = _('Cite: {citation}')
