@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     StructBlock, ListBlock, ChoiceBlock, IntegerBlock
 )
 from wagtail.images.blocks import ImageChooserBlock

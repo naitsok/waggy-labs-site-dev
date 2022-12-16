@@ -1,11 +1,10 @@
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     StructBlock, CharBlock, ListBlock,
-    PageChooserBlock, StreamBlock, URLBlock,
-    ChoiceBlock
-    )
+    StreamBlock, ChoiceBlock
+)
 from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets import DisabledOptionSelect
@@ -13,7 +12,7 @@ from waggylabs.widgets import DisabledOptionSelect
 from .links import (
     ExternalLinkBlock, InternalLinkBlock, IconEmailBlock,
     InfoTextBlock
-    )
+)
 from .mathjax_markdown import MathJaxMarkdownBlock
 
 

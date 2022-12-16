@@ -1,15 +1,17 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StructBlock
-from wagtail.embeds.blocks import EmbedBlock
+from wagtail.embeds.blocks import EmbedBlock as WagtailEmbedBlock
 
 from .label import LabelBlock
 from .mathjax_markdown import MathJaxMarkdownBlock
 
 
-class EmbeddingBlock(StructBlock):
+class EmbedBlock(StructBlock):
     """An embed block with caption and label."""
-    embed = EmbedBlock()
+    embed = WagtailEmbedBlock(
+        label=_('URL of embedding')
+    )
     caption = MathJaxMarkdownBlock(
         required=False,
         label=_('Embed caption'),
@@ -30,6 +32,6 @@ class EmbeddingBlock(StructBlock):
     
     class Meta:
         icon = 'media'
-        template = 'waggylabs/frontend_blocks/embedding.html'
+        template = 'waggylabs/frontend_blocks/embed.html'
         label = _('Embed')
         label_format = _('Embed: {image}')

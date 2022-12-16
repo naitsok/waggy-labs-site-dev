@@ -40,7 +40,8 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     show_in_menus_default = True
 
     # Database fields
-
+    
+    # Header image fields
     header_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -57,9 +58,48 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
                     'situatively, e.g. when it appears in a list or a card '
                     'grid.')
     )
+    # Content fields
     body = StreamField(
         BodyBlock(),
         use_json_field=True,
+    )
+    # Settings fields
+    embed_caption_label = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_('Label for embeds'),
+        help_text=_('For example, Embed. The label will be used to create '
+                    'embed labels before caption. Leave empty for no label.'),
+    )
+    equation_caption_label = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_('Label for equations'),
+        help_text=_('For example, Eqn. The label will be used to create '
+                    'equatoion labels before caption. Note, that equation '
+                    'labels are displayed only in preview dialogs. '
+                    'Leave empty for no label.'),
+    )
+    figure_caption_label = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_('Label for figures'),
+        help_text=_('For example, Figure. The label will be used to create '
+                    'figure labels before caption. Leave empty for no label.'),
+    )
+    listing_caption_label = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_('Label for listings'),
+        help_text=_('For example, Listing. The label will be used to create '
+                    'listing labels before caption. Leave empty for no label.'),
+    )
+    table_caption_label = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_('Label for tables'),
+        help_text=_('For example, Table. The label will be used to create '
+                    'table labels before caption. Leave empty for no label.'),
     )
 
     # Search index configuration
@@ -116,11 +156,21 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         # ),
         MultiFieldPanel(
             [
+                FieldPanel('embed_caption_label'),
+                FieldPanel('equation_caption_label'),
+                FieldPanel('figure_caption_label'),
+                FieldPanel('listing_caption_label'),
+                FieldPanel('table_caption_label'),
+            ],
+            heading=_('Label settings'),
+        ),
+        MultiFieldPanel(
+            [
                 ReadOnlyPanel('first_published_at', heading='First published at'),
                 ReadOnlyPanel('last_published_at', heading='Last published at'),
                 ReadOnlyPanel('hit_counts', heading='Number of views'),
             ],
-            heading=_('General information')
+            heading=_('General information'),
         ),
     ]
     

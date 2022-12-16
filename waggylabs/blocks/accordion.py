@@ -1,10 +1,9 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     StreamBlock, StructBlock, CharBlock, ListBlock,
     BooleanBlock, ChoiceBlock
     )
-from wagtail.embeds.blocks import EmbedBlock
 
 from waggylabs.widgets import DisabledOptionSelect
 
@@ -12,6 +11,7 @@ from .blockquote import BlockQuoteBlock
 from .carousel import ImageCarouselBlock
 from .citation import CitationBlock
 from .document import DocumentBlock
+from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock

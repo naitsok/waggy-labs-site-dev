@@ -1,10 +1,12 @@
 {% load wagtailcore_tags %}
 {% load wagtailmarkdown %}
 
-<div class="table-responsive">
+<div class="table-responsive waggylabs-label-table" {% if value.label %}id="{{ value.label }}"{% endif %}>
     <table class="table caption-top align-middle">
         {% if value.caption %}
-        <caption>{{ value.caption|markdown|safe }}</caption>
+        <caption class="figure-caption">
+            {% if page.table_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        </caption>
         {% endif %}
         {% include_block value.bound_blocks.table %}
         <tfoot class="table-group-divider">

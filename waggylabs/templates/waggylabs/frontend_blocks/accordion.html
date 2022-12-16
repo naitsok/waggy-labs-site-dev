@@ -12,7 +12,7 @@
           <div id="id-{{ id }}-collapse-{{ forloop.counter0 }}" class="accordion-collapse collapse{% if item.is_open %} show{% endif %}" aria-labelledby="id-{{ id }}-heading-{{ forloop.counter0 }}" {% if value.style == 'collapsible' %}data-bs-parent="#id-{{ id }}"{% endif %}>
             <div class="accordion-body w-100">
               {% for block in item.body %}
-              {% include_block block %}
+              {% include_block block with id=block.id page=page %}
               {% endfor %}
             </div>
           </div>

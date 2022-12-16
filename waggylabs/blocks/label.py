@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import RegexBlock
+from wagtail.blocks import RegexBlock
 
 
 class LabelBlock(RegexBlock):

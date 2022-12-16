@@ -1,11 +1,13 @@
 {% load wagtailcore_tags %}
 {% load wagtailmarkdown %}
 
-<figure id="{{ value.label }}" class="figure w-100 waggylabs-label-listing">
+<figure class="figure w-100 waggylabs-label-listing" {% if value.label %}id="{{ value.label }}"{% endif %}>
     <div class="max-vh-50 w-100" style="overflow: auto;">
     {% include_block value.code %}
     </div>
     {% if value.caption %}
-    <figcaption class="figure-caption">{{ value.caption|markdown|safe }}</figcaption>
+    <figcaption class="figure-caption">
+        {% if page.listing_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.listing_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+    </figcaption>
     {% endif %}
 </figure>

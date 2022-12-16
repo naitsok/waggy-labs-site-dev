@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import StructBlock
+from wagtail.blocks import StructBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from .mathjax_markdown import MathJaxMarkdownBlock

@@ -1,6 +1,5 @@
 
 from wagtail.blocks import StreamBlock
-from wagtail.embeds.blocks import EmbedBlock
 
 from .accordion import AccordionBlock
 from .blockquote import BlockQuoteBlock
@@ -9,6 +8,7 @@ from .carousel import ImageCarouselBlock
 from .columns import ColumnsBlock
 from .document import DocumentBlock
 from .citation import CitationBlock
+from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock

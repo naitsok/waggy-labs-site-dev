@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+
+<figure class="mb-3 waggylabs-label-embed" {% if value.label %}id="{{ value.label }}"{% endif %}>
+    {% include_block value.embed %}
+    {% if value.caption %}
+        <figcaption class="figure-caption">
+            {% if page.embed_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.embed_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        </figcaption>
+    {% endif %}
+</figure>

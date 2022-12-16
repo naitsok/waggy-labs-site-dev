@@ -4,7 +4,7 @@
 <div class="row">
     {% for item in value.columns %}
     <div class="col-md-{{ value.columns|col_class }}">
-        {% include_block item %}
+        {% include_block item with id=block.id page=page %}
     </div>
     {% endfor %}
 </div>

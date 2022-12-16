@@ -2,7 +2,7 @@ from django.forms import CharField
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     StructBlock, CharBlock,
     PageChooserBlock, URLBlock,
     ChoiceBlock, FieldBlock, EmailBlock

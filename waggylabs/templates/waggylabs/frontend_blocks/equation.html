@@ -1,1 +1,9 @@
-<p>{{ value.equation }}</p>
+<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
+    <p>{{ value.equation }}</p>
+    {% if value.caption %}
+    <div class="figure-caption" style="display: none;">
+        {% if page.equation_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+    </div>
+    {% endif %}
+</div>
+

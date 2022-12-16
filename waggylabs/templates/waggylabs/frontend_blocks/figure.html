@@ -2,11 +2,11 @@
 {% load wagtailimages_tags %}
 {% load wagtailmarkdown %}
 
-<figure class="figure waggylabs-label-figure" id="{{ value.label }}">
+<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %}>
     {% image value.image original class='img-fluid' %}
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {{ value.caption|markdown|safe }}
+            {% if page.figure_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
         </figcaption>
     {% endif %}
 </figure>

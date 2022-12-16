@@ -3,13 +3,13 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StreamBlock, StructBlock, ListBlock
-from wagtail.embeds.blocks import EmbedBlock
 
 from .accordion import AccordionBlock
 from .blockquote import BlockQuoteBlock
 from .carousel import ImageCarouselBlock
 from .citation import CitationBlock
 from .document import DocumentBlock
+from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
