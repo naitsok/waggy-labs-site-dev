@@ -1,7 +1,11 @@
 {% load wagtailcore_tags %}
+{% load wagtailembeds_tags %}
+{% load wagtailmarkdown %}
 
 <figure class="mb-3 waggylabs-label-embed" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    {% include_block value.embed %}
+    <div class="ratio ratio-16x9">
+        {% embed value.embed.url %}
+    </div>
     {% if value.caption %}
         <figcaption class="figure-caption">
             {% if page.embed_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.embed_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}

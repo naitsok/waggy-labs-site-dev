@@ -165,10 +165,10 @@ function refLabel() {
             }
         },
         renderer(token) {
-            const refTypes = ['blockquote', 'figure', 'listing', 'table'];
+            const refTypes = ['blockquote', 'figure', 'listing', 'table', 'embed'];
             var processedRef = processRef(token.text, refTypes);
             if (processedRef) {
-                return '(' + processedRef + ')';
+                return processedRef;
             }
             else {
                 return token.raw;
@@ -294,15 +294,27 @@ function removeListStyleWhenCheckbox(htmlText) {
 /**
  * Modify HTML to remove the list-style when rendering checkboxes. Same as in EasyMDE.
  * @param {string} text - raw text from the EasyMDE
- * @param {object} easymdeOptions - EasyMDE options object
+ * @param {EasyMDE} mde - EasyMDE object
  * @return {string} The modified HTML text.
 */
-function mathjaxMarkdown(text, easymdeOptions) {
-
-    // First check if the editor is in LaTeX or not, then \begin{equation} needs to be added if it is absent
-    if (easymdeOptions && easymdeOptions.overlayMode && easymdeOptions.overlayMode.combine) {
-        if (!easymdeOptions.overlayMode.combine && !text.trim().startsWith("\\begin{")) {
-            text = "\\begin{equation}\n" + text.trim().replace(/^\$+|\$+$/gm,'') + "\n\\end{equation}";
+function mathjaxMarkdown(text, mde) {
+    var easymdeOptions = {};
+    if (mde) { easymdeOptions = mde.options; }
+    // First check if the editor is in LaTeX or not, it means that we are in the Equation block.
+    // Then \begin{equation} and \label{...} needs to be added if they are absent
+    if (easymdeOptions && easymdeOptions.overlayMode && !easymdeOptions.overlayMode.combine) {
+        text = text.trim().replace(/^\$+|\$+$/, '');
+        // add \begin{equation}, \end{equation} if not present
+        if (text.search(/\\begin\{/i) === -1) {
+            text = "\\begin{equation}\n" + text + "\\end{equation}";
+        }
+        if (text.search(/\\label\{/i) === -1) {
+            // label not found, we have to add it from the neighbour Label block
+            const label = mde.element.closest(".struct-block").getElementsByTagName("input")[0];
+            if (label.value) {
+                const idx = text.search(/\\end\{/i);
+                text = text.slice(0, idx) + "\\label{" + label.value + "}\n" + text.slice(idx);
+            }
         }
     }
 
@@ -356,7 +368,7 @@ function mathjaxMarkdown(text, easymdeOptions) {
         htmlText = htmlText.replace(/{{DOLLAR}}/g, "$");
 
         // Sanitize HTML
-        if (easymdeOptions.renderingConfig && typeof easymdeOptions.renderingConfig.sanitizerFunction === 'function') {
+        if (easymdeOptions && easymdeOptions.renderingConfig && typeof easymdeOptions.renderingConfig.sanitizerFunction === 'function') {
             htmlText = easymdeOptions.renderingConfig.sanitizerFunction.call(this, htmlText);
         }
 

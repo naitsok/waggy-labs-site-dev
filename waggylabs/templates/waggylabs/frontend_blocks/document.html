@@ -1,0 +1,4 @@
+{% load wagtailcore_tags %}
+
+{# Document citation number will be generated after final javascript page processing. #}
+<p>(<a href="{{ value.label }}" class="waggylabs-cite">**</a>) {% include_block value.document %}</p>

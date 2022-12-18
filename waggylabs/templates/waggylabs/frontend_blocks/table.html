@@ -12,7 +12,7 @@
         <tfoot class="table-group-divider">
             <tr>
                 {% if value.footer %}
-                <td colspan="{{ value.table.data.0|length }}">{{ value.footer|markdown|safe }}</td>
+                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{{ value.footer|markdown|safe }}</td>
                 {% endif %}
             </tr>
         </tfoot>

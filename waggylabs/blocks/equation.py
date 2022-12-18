@@ -16,7 +16,7 @@ class EquationBlock(StructBlock):
                     'matrix, align, etc. environments are supported).'),
         easymde_min_height='150px',
         easymde_max_height='150px',
-        easymde_combine='true',
+        easymde_combine='false',
         easymde_toolbar_config=('subscript,superscript,equation,matrix,'
                                 'align,multiline,split,gather,alignat,'
                                 'flalign,|,preview,side-by-side,fullscreen'),
@@ -38,23 +38,31 @@ class EquationBlock(StructBlock):
     label = LabelBlock(
         max_length=50,
         required=False,
+        form_classname='waggylabs-label-equation',
+        help_text=_('Label for the current equation to be used in the markdown block '
+                    'for referencing using standard LaTeX \\\u3164ref{...} syntax. '
+                    'This label will be added only if no \\\u3164label{...} is found '
+                    'within the \\\u3164begin{...}...\\\u3164end{...} statement.'
+                    'The final reference processing is happening on the published page, '
+                    'which can be checked using "Preview" functionality.'),
     )
     
     def render(self, value, context=None):
         equation_string = value['equation'].lower()
-        if not equation_string.startswith('\\begin'):
-            label = '\n'
-            if value['anchor']:
-                label = label + '\\label{' + value['anchor'] + '}\n'
+        # First add LaTeX \begin{equation} and \end{equation}
+        # if no \begin{...} and \end{...} statements are present
+        if not equation_string.startswith('\\begin{'):
             value['equation'] = ('\\begin{equation}\n' + 
-                                 value['equation'].trim('$') + 
-                                 label + '\\end{equation}\n')
-        else:
-            if (not '\\label' in equation_string) and value['anchor']:
-                idx = equation_string.find('\\end')
-                value['equation'] = (value['equation'][:idx] + 
-                                     '\n\\label{' + value['anchor'] + 
-                                     '}\n' + value['equation'][idx:])
+                                 value['equation'].trim('$') +
+                                 '\\end{equation}\n')
+        # then check and add label if no \label{...} is found
+        # within begin{...} and \end{...} statements
+        equation_string = value['equation'].lower()
+        if (not '\\label{' in equation_string) and value['label']:
+            idx = equation_string.find('\\end{')
+            value['equation'] = (value['equation'][:idx] +
+                                    '\n\\label{' + value['label'] +
+                                    '}\n' + value['equation'][idx:])
         return super().render(value, context)
     
     class Meta:

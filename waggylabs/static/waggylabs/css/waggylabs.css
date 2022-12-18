@@ -9,6 +9,11 @@
 .max-vh-50 { height: 50vh; }
 /* Inline pargarphs of markdown within captions. */
 .figure-caption p { display: inline; }
+/* Classes for columns block */
+.c-flex { display: flex; flex-flow: row wrap; }
+.c-flex-fill { flex: 1; min-width: 0; }
+/* Tables */
+.table p { margin-bottom: 0px; }
 
 /* Styles for references to figures, tables, listings */
 span.reference { font-family: 'Courier New', Courier; font-size: 100%; font-weight: bold; }

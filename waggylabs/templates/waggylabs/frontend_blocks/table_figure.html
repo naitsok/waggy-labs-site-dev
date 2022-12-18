@@ -9,4 +9,7 @@
         </figcaption>
     {% endif %}
     {% image value.image original class='img-fluid' %}
+    {% if value.footer %}
+    <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
+    {% endif %}
 </figure>

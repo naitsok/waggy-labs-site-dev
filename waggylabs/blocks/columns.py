@@ -2,7 +2,11 @@
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.blocks import StreamBlock, StructBlock, ListBlock
+from wagtail.blocks import (
+    StreamBlock, StructBlock, ListBlock, ChoiceBlock
+)
+
+from waggylabs.widgets import DisabledOptionSelect
 
 from .accordion import AccordionBlock
 from .blockquote import BlockQuoteBlock
@@ -17,8 +21,8 @@ from .mathjax_markdown import MathJaxMarkdownBlock
 from .table import TableBlock, TableFigureBlock
 
 
-class ColumnBlock(StreamBlock):
-    """Block to for one column."""
+class ColumnContentBlock(StreamBlock):
+    """Block to for one column content."""
     accordion = AccordionBlock()
     blockquote = BlockQuoteBlock()
     carousel = ImageCarouselBlock()
@@ -31,10 +35,25 @@ class ColumnBlock(StreamBlock):
     table = TableBlock()
     table_figure = TableFigureBlock()
     text = MathJaxMarkdownBlock(help_text='')
+        
+
+class ColumnBlock(StructBlock):
+    """Block for one column content and settings."""
+    vertical_align = ChoiceBlock(
+        required=True,
+        choices=[
+            ('', _('Choose vertical alignment')),
+            ('align-self-start', _('Top')),
+            ('align-self-center', _('Center')),
+            ('align-self-end', _('Bottom')),
+        ]
+    )
+    content = ColumnContentBlock(required=True)
     
     class Meta:
         icon = 'doc-empty'
         label = _('Column')
+        label_format = _('Column: {content}')
         
 
 DEFAULT_MAX_COLUMNS = 3

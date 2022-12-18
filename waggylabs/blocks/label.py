@@ -13,7 +13,7 @@ class LabelBlock(RegexBlock):
     def __init__(self,
                  regex=r'^[a-zA-Z\:\-\_][^\s\\\/\{\}\[\]\(\)]*$',
                  required=False,
-                 help_text=_('Label for the current entity (figure, table, equation) '
+                 help_text=_('Label for the current entity (embed, figure, table, equation) '
                              'to be used in the markdown block for referencing using '
                              'standard LaTeX \\\u3164ref{...} syntax. The final reference '
                              'processing is happening on the published page, which can '

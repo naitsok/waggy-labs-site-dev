@@ -94,7 +94,12 @@ function initTable(id, tableOptions) {
           MathJax.typesetClear([cell]);
           // removal of <p></p> elemens is needed for correct display of cell data
           cell.innerHTML = mathjaxMarkdown(data[row][col], {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
-          MathJax.typeset([cell]);
+          try {
+            MathJax.typeset([cell]);
+          }
+          catch (error) {
+            console.error("MathJax error in table cell which does not prevent functioning\n" + error);
+          }
         }
       }
     }
@@ -106,7 +111,12 @@ function initTable(id, tableOptions) {
       if (value) {
         // removal of <p></p> elemens is needed for correct display of cell data
         cell.innerHTML = mathjaxMarkdown(value, {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
-        MathJax.typeset([cell]);
+        try {
+          MathJax.typeset([cell]);
+        }
+        catch (error) {
+          console.error("MathJax error in table cell which does not prevent functioning\n" + error);
+        }
       }
     }
   }

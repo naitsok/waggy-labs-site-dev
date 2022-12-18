@@ -128,8 +128,28 @@ function createToolbar(toolbarConfig) {
         if (allMathPatterns.indexOf(toolbarButtons[i]) >= 0) {
             toolbar.push(createMathButton(toolbarButtons[i]));
             shortcuts[toolbarButtons[i]] = allShortcuts[toolbarButtons[i]];
-        }
-        else {
+        } else if (toolbarButtons[i] === "preview") {
+            toolbar.push({
+                name: "preview",
+                action: togglePreviewAll,
+                className: "fa fa-eye",
+                noDisable: true,
+                title: "Toggle Preview",
+                default: true,
+            });
+            shortcuts[toolbarButtons[i]] = "Cmd-P";
+        } else if (toolbarButtons[i] === "side-by-side") {
+            toolbar.push({
+                name: "side-by-side",
+                action: toggleSideBySide,
+                className: "fa fa-columns",
+                noDisable: true,
+                noMobile: true,
+                title: "Toggle Side by Side",
+                default: true,
+            });
+            shortcuts[toolbarButtons[i]] = "F9";
+        } else {
             toolbar.push(toolbarButtons[i]);
         }
     }
@@ -137,10 +157,9 @@ function createToolbar(toolbarConfig) {
 }
 
 /**
- * 
  * @param {string} statusConfig - true for default status bar, fals for no bar,
  * list of comma separated values for custom toolbar
- * 
+ * @returns - configuration of the status bar
  */
 function createStatusBar(statusConfig){
     if (statusConfig === "false") {
@@ -152,6 +171,144 @@ function createStatusBar(statusConfig){
     return statusConfig.split(",");
 }
 
+/**
+ * Toggles side-by-side mode with correct handling of other EasyMDEs
+ * on the page to correctly render MathJax equations.
+ * @param {EaseMDE} editor - EasyMDE object
+ */
+function toggleSideBySide(editor) {
+    // We need to keep other editors in preview mode
+    // in order to correctly render MathJax refs in the
+    // side by side mode
+    if (!editor.isSideBySideActive() && !editor.isFullscreenActive()) {
+        togglePreviewAll(editor, true);
+        // EasyMDE.togglePreview(editor);
+    } else {
+        resetPreviewAll(editor);
+    }
+    //EasyMDE.togglePreview(editor);
+    // Timeout is needed beacuse there is timeout in togglePreview functions.
+    // Without this timeout, toggleSideBySite will happen earlier than
+    // togglePreviewAll finishes.
+    setTimeout(function() {
+        EasyMDE.toggleSideBySide(editor);
+        setTimeout(function() {
+            resetPreviewAll(editor);
+        }, 10);
+    }, 50);
+}
+
+/**
+ * Toggles preview mode for the specified editor
+ * @param {EasyMDE} editor - EasyMDE editor object
+ * @param {boolean} isPreview - the preview mode to set for the editor
+ */
+function togglePreview(editor, isPreview) {
+    var cm = editor.codemirror;
+    var wrapper = cm.getWrapperElement();
+    var toolbar_div = editor.toolbar_div;
+    var toolbar = editor.options.toolbar ? editor.toolbarElements.preview : false;
+    var preview = wrapper.lastChild;
+
+    // Turn off side by side if needed
+    var sidebyside = cm.getWrapperElement().nextSibling;
+    if (sidebyside.classList.contains('editor-preview-active-side'))
+        EasyMDE.toggleSideBySide(editor);
+
+    if (!preview || !preview.classList.contains('editor-preview-full')) {
+
+        preview = document.createElement('div');
+        preview.className = 'editor-preview-full';
+
+        if (editor.options.previewClass) {
+
+            if (Array.isArray(editor.options.previewClass)) {
+                for (var i = 0; i < editor.options.previewClass.length; i++) {
+                    preview.classList.add(editor.options.previewClass[i]);
+                }
+
+            } else if (typeof editor.options.previewClass === 'string') {
+                preview.classList.add(editor.options.previewClass);
+            }
+        }
+
+        wrapper.appendChild(preview);
+    }
+
+    var editorPreviewMode = preview.classList.contains('editor-preview-active');
+
+    if (editorPreviewMode !== isPreview) {
+        // Editor is not in the same preview state as others, 
+        // preview mode must be changed
+        if (editorPreviewMode) {
+            preview.classList.remove('editor-preview-active');
+            if (toolbar) {
+                toolbar.classList.remove('active');
+                toolbar_div.classList.remove('disabled-for-preview');
+            }
+        } else {
+            // When the preview button is clicked for the first time,
+            // give some time for the transition from editor.css to fire and the view to slide from right to left,
+            // instead of just appearing.
+            setTimeout(function () {
+                preview.classList.add('editor-preview-active');
+            }, 1);
+            if (toolbar) {
+                toolbar.classList.add('active');
+                toolbar_div.classList.add('disabled-for-preview');
+            }
+        }
+    }
+
+    var preview_result = editor.options.previewRender(editor.value(), preview);
+    if (preview_result !== null) {
+        preview.innerHTML = preview_result;
+    }
+}
+
+/**
+ * Toggles the preview mode of all the EasyMDE editors
+ * on the page depending on the preview mode of this 
+ * editor (editor that toggled preview mode)
+ * @param {EasyMDE} editor -  EasyMDE editor object
+ * @param {boolean} isPreview - if present, forces the specified preview mode
+ * @param {boolean} skipMathJax - when going into side-by-side mode MathJax
+ * typeset is not needed right after going into preview mode; it is needed
+ * only after going into side-by-side mode.
+ */
+function togglePreviewAll(editor, isPreview, skipMathJax) {
+    if (isPreview === undefined) {
+        isPreview = !editor.isPreviewActive();
+    }
+    var textAreas = document.getElementsByTagName("textarea");
+    for (let i in textAreas) {
+        if(textAreas[i].easyMDE) {
+            togglePreview(textAreas[i].easyMDE, isPreview);
+        }
+    }
+    if (isPreview && skipMathJax === undefined) {
+        MathJax.texReset();
+        MathJax.typesetClear([document.getElementById("main")]);
+        MathJax.typeset([document.getElementById("main")]);
+    }
+}
+
+/**
+ * Resets all the other EasyMDEs on the page for correct MathJax processing
+ * @param {EasyMDE} editor - EasyMDE object
+ */
+function resetPreviewAll(editor) {
+    var textAreas = document.getElementsByTagName("textarea");
+    for (let i in textAreas) {
+        if(textAreas[i].easyMDE && textAreas[i].easyMDE.element.id !== editor.element.id) {
+            var preview = textAreas[i].easyMDE.codemirror.getWrapperElement().lastChild;
+            preview.innerHTML = mathjaxMarkdown(textAreas[i].easyMDE.value(), textAreas[i].easyMDE);
+        }
+    }
+    MathJax.texReset();
+    MathJax.typesetClear([document.getElementById("main")]);
+    MathJax.typeset([document.getElementById("main")]);
+}
 
 function easymdeAttach(id) {
     var textArea = document.getElementById(id);
@@ -159,7 +316,7 @@ function easymdeAttach(id) {
     var shortcuts = undefined;
     if (textArea.getAttribute("easymde-toolbar")) {
         [toolbar, shortcuts] = createToolbar(textArea.getAttribute("easymde-toolbar"));
-    }
+    } 
 
     var mde = new EasyMDE({
         element: textArea,
@@ -183,18 +340,13 @@ function easymdeAttach(id) {
         unorderedListStyle: "-",
     });
     
-    mde.options.previewRender = (plainText) => {
-        setTimeout(() => {
-            var wrapper = mde.codemirror.getWrapperElement();
-            var preview = wrapper.nextSibling;
-            if (!preview.classList.contains('editor-preview-active-side')) {
-                preview = wrapper.lastChild;
-            }
-            MathJax.texReset();
-            MathJax.typesetClear([preview]);
-            MathJax.typeset([preview]);
-        }, 500);
-        return mathjaxMarkdown(plainText, mde.options);
+    mde.options.previewRender = (plainText, preview) => {
+        if (mde.isSideBySideActive()) {
+            setTimeout(() => {
+                resetPreviewAll(mde);
+            }, 500);
+        }
+        return mathjaxMarkdown(plainText, mde);
     };
     mde.render();
 
@@ -204,7 +356,13 @@ function easymdeAttach(id) {
     mde.codemirror.on("change", function() {
         document.getElementById(id).value = mde.value();
     });
-    refreshCodeMirror(mde);
+
+    // Attach the mde object to the text area.
+    // It is needed for the new togglePreview function,
+    // which toggles preview of all the EasyMDEs on the page.
+    // It is in turn needed for correct rendering of MathJax
+    // equation references.
+    textArea.easyMDE = mde;
 }
 
 /*

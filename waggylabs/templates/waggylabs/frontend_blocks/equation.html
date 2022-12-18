@@ -1,3 +1,5 @@
+{% load wagtailmarkdown %}
+
 <div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
     <p>{{ value.equation }}</p>
     {% if value.caption %}
