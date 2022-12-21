@@ -53,7 +53,7 @@ class ColumnsItemBlock(StructBlock):
     class Meta:
         icon = 'doc-empty'
         label = _('Column')
-        label_format = _('Column: {content}')
+        label_format = _('Column: {body}')
         
 
 DEFAULT_MAX_COLUMNS = 3
@@ -72,4 +72,4 @@ class ColumnsBlock(StructBlock):
         label = _('Multiple columns')
         template = 'waggylabs/frontend_blocks/columns.html'
         form_template = 'waggylabs/blocks/columns.html'
-        label_format = _('Columns')
+        label_format = _('Columns: {items}')

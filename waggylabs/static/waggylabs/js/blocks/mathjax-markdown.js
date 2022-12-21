@@ -214,14 +214,21 @@ function citeLabel() {
  * Processes figure, table, listing, blockquote references before 
  * MathJax does the same for equations.
  * @param {string} ref - reference to be processed, e.g. content inside curly brackets of \ref{...}
+ * ref can contain several refs separated by commas => must be split
  * @param {array of strings} refTypes - reference types to be processed
  * @returns - span element if the reference id was found or undefined if not
  */
  function processRef(ref, refTypes) {
-    for (let i in refTypes) {
-        var processedRef = processRefbyType(ref, 'waggylabs-label-' + refTypes[i]);
-        if (processedRef) { return processedRef; }
+    // there can be several refs separated by comma
+    var refHTML = "";
+    var refs = ref.split(",");
+    for (let j in refs) {
+        for (let i in refTypes) {
+            var processedRef = processRefbyType(refs[j], 'waggylabs-label-' + refTypes[i]);
+            if (processedRef) { refHTML = refHTML + processedRef + ","; }
+        }
     }
+    if (refHTML) { return refHTML.slice(0, -1); }
 }
 
 /**
