@@ -23,7 +23,15 @@
 {% endif %}
 
 {% for block in page.body %}
-{% include_block block with id=block.id page=page %}
+    {% if block.block_type != 'citation' and block.block_type != 'document' %}
+    {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
+    {% include_block block with id=block.id page=page %}
+    {% endif %}
+{% endfor %}
+
+
+{% for block in page.cite_blocks %}
+    {% include_block block with id=block.id page=page %}
 {% endfor %}
 
 {% endblock content %}

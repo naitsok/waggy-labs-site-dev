@@ -34,3 +34,4 @@ class BodyBlock(StreamBlock):
     table_figure = TableFigureBlock()
     text = MathJaxMarkdownBlock()
     
+    

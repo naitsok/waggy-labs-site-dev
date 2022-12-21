@@ -21,7 +21,7 @@ from .mathjax_markdown import MathJaxMarkdownBlock
 from .table import TableBlock, TableFigureBlock
 
 
-class ColumnContentBlock(StreamBlock):
+class ColumnsContentBlock(StreamBlock):
     """Block to for one column content."""
     accordion = AccordionBlock()
     blockquote = BlockQuoteBlock()
@@ -37,7 +37,7 @@ class ColumnContentBlock(StreamBlock):
     text = MathJaxMarkdownBlock(help_text='')
         
 
-class ColumnBlock(StructBlock):
+class ColumnsItemBlock(StructBlock):
     """Block for one column content and settings."""
     vertical_align = ChoiceBlock(
         required=True,
@@ -48,7 +48,7 @@ class ColumnBlock(StructBlock):
             ('align-self-end', _('Bottom')),
         ]
     )
-    content = ColumnContentBlock(required=True)
+    body = ColumnsContentBlock(required=True)
     
     class Meta:
         icon = 'doc-empty'
@@ -59,8 +59,8 @@ class ColumnBlock(StructBlock):
 DEFAULT_MAX_COLUMNS = 3
 class ColumnsBlock(StructBlock):
     """Block to add multiple columns."""
-    columns = ListBlock(
-        ColumnBlock(),
+    items = ListBlock(
+        ColumnsItemBlock(),
         min_num=1,
         max_num=(settings.WAGGYLABS_MAX_COLUMNS if
                  hasattr(settings, 'WAGGYLABS_MAX_COLUMNS')
