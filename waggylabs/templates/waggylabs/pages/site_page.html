@@ -22,17 +22,20 @@
 </figure>
 {% endif %}
 
+<div id="page_body">
 {% for block in page.body %}
     {% if block.block_type != 'citation' and block.block_type != 'document' %}
     {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
     {% include_block block with id=block.id page=page %}
     {% endif %}
 {% endfor %}
+</div>
 
-
+<div id="literature">
 {% for block in page.cite_blocks %}
     {% include_block block with id=block.id page=page %}
 {% endfor %}
+</div>
 
 {% endblock content %}
 
@@ -43,7 +46,9 @@
         tex: { tags: "ams" },
         startup: {
             ready: () => {
-                processRefs(document.getElementsByTagName("main")[0]);
+                var el = document.getElementById("page_body");
+                processRefs(el);
+                processCites(el);
                 MathJax.startup.defaultReady();
             }
         }

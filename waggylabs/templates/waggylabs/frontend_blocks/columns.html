@@ -2,10 +2,9 @@
 {% load waggylabs_filters %}
 
 <div class="c-flex">
-    {% for item in value.columns %}
+    {% for item in value.items %}
     <div class="c-flex-fill mx-1 {{ item.vertical_align }}">
-        {% include_block item.content with id=block.id page=page %}
-        {% for block in item.content %}
+        {% for block in item.body %}
             {% if block.block_type != 'citation' and block.block_type != 'document' %}
             {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
             {% include_block block with id=block.id page=page %}

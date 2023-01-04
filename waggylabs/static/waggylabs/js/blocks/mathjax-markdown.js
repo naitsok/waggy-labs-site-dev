@@ -165,8 +165,7 @@ function refLabel() {
             }
         },
         renderer(token) {
-            const refTypes = ['blockquote', 'figure', 'listing', 'table', 'embed'];
-            var processedRef = processRef(token.text, refTypes);
+            var processedRef = processRef(token.text);
             if (processedRef) {
                 return processedRef;
             }
@@ -198,10 +197,9 @@ function citeLabel() {
             }
         },
         renderer(token) {
-            const refTypes = ['cite'];
-            var processedRef = processRef(token.text, refTypes);
-            if (processedRef) {
-                return '[' + processedRef + ']';
+            var processedCite = processCite(token.text);
+            if (processedCite) {
+                return '[' + processedCite + ']';
             }
             else {
                 return '[???]';
@@ -214,39 +212,67 @@ function citeLabel() {
  * Processes figure, table, listing, blockquote references before 
  * MathJax does the same for equations.
  * @param {string} ref - reference to be processed, e.g. content inside curly brackets of \ref{...}
- * ref can contain several refs separated by commas => must be split
- * @param {array of strings} refTypes - reference types to be processed
+ * ref can contain only one reference to the certain type of an item to be referenced
  * @returns - span element if the reference id was found or undefined if not
  */
- function processRef(ref, refTypes) {
-    // there can be several refs separated by comma
-    var refHTML = "";
-    var refs = ref.split(",");
-    for (let j in refs) {
-        for (let i in refTypes) {
-            var processedRef = processRefbyType(refs[j], 'waggylabs-label-' + refTypes[i]);
-            if (processedRef) { refHTML = refHTML + processedRef + ","; }
-        }
+ function processRef(ref) {
+    const refTypes = ['blockquote', 'figure', 'listing', 'table', 'embed'];
+    for (let i in refTypes) {
+        var processedRef = processRefbyType(ref, refTypes[i]);
+        if (processedRef) { return processedRef; }
     }
-    if (refHTML) { return refHTML.slice(0, -1); }
 }
 
 /**
- * Processe a ref by one type
- * @param {*} ref - reference to be processed, e.g. content inside curly brackets of  \ref{...}
- * @param {*} className - CSS class that defines the reference element in the editor
+ * Processes one ref by one type
+ * @param {string} ref - reference to be processed, e.g. content inside curly brackets of  \ref{...}
+ * @param {string} refType - type of reference to be processed: ['blockquote', 'figure', 'listing', 'table', 'embed']
  * @returns - span element if the reference id was found or undefined if not
  */
-function processRefbyType(ref, className) {
-    var labelElements = document.getElementsByClassName(className);
+function processRefbyType(ref, refType) {
+    var labelElements = document.getElementsByClassName('waggylabs-label-' + refType);
+    // there can be several refs separated by comma, then we need to collect their
+    // numbers and if needed make them in order of appearance
+    // var refs =  ref.split(",");
+    // var labelIds = [];
     for(var i = 0; i < labelElements.length; i++) {
         var el = labelElements[i].getElementsByTagName('input')[0];
         if (el.value === ref) {
             return `<span class="reference"><a href="#${el.getAttribute('id')}">${i + 1}</a></span>`;
-            // '<span class="reference"><a href="#' + el.getAttribute('id') +'">'+
-            //    (i + 1) + '</a></span>';
         }
     }
+}
+
+/**
+ * Processes citations from \cite{...} block
+ * @param {string} cite - inner text inside the curly brackets
+ * @returns - HTML string with links to the literature
+ */
+function processCite(cite) {
+    var labelElements = document.getElementsByClassName('waggylabs-label-cite');
+    var labelIds = []; // needed to collect the ids of the elements containing citations
+    var labelVals = []; // needed to collect values that define citations
+    for (var i = 0; i < labelElements.length; i++) {
+        var el = labelElements[i].getElementsByTagName('input')[0];
+        labelIds.push(el.id);
+        labelVals.push(el.value);
+    }
+    var cites = cite.split(","); // there can be more than one citation
+    var citeIds = []; // keeps the ids of for the current \cite{...}
+    for (let i in cites) {
+        citeIds.push(labelVals.indexOf(cites[i]));
+    }
+    citeIds.sort();
+    var citeHTML = "";
+    for (let i in citeIds) {
+        if (citeIds[i] === -1) {
+            citeHTML = citeHTML + `<span class="reference"><a href="#">???</a></span>,`;
+        }
+        else {
+            citeHTML = citeHTML + `<span class="reference"><a href="#${labelIds[citeIds[i]]}">${citeIds[i] + 1}</a></span>,`;
+        }
+    }
+    return citeHTML.slice(0, -1);
 }
 
 var anchorToExternalRegex = new RegExp(/(<a.*?https?:\/\/.*?[^a]>)+?/g);
