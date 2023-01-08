@@ -3,7 +3,8 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    StreamBlock, StructBlock, ListBlock, ChoiceBlock
+    StreamBlock, StructBlock, ListBlock, ChoiceBlock,
+    StructValue
 )
 
 from waggylabs.widgets import DisabledOptionSelect
@@ -12,6 +13,7 @@ from .accordion import AccordionBlock
 from .blockquote import BlockQuoteBlock
 from .carousel import ImageCarouselBlock
 from .citation import CitationBlock
+from .collapse import CollapseBlock
 from .document import DocumentBlock
 from .embed import EmbedBlock
 from .equation import EquationBlock
@@ -27,6 +29,7 @@ class ColumnsContentBlock(StreamBlock):
     blockquote = BlockQuoteBlock()
     carousel = ImageCarouselBlock()
     citation = CitationBlock()
+    collapse = CollapseBlock()
     document = DocumentBlock()
     embed = EmbedBlock()
     equation = EquationBlock()
@@ -51,7 +54,7 @@ class ColumnsItemBlock(StructBlock):
     body = ColumnsContentBlock(required=True)
     
     class Meta:
-        icon = 'doc-empty'
+        icon = 'doc-full'
         label = _('Column')
         label_format = _('Column: {body}')
         
@@ -66,6 +69,26 @@ class ColumnsBlock(StructBlock):
                  hasattr(settings, 'WAGGYLABS_MAX_COLUMNS')
                  else DEFAULT_MAX_COLUMNS),
     )
+    
+    @classmethod
+    def citation_blocks(cls, columns: StructValue):
+        """Returns citation blocks (= citation and document)
+         ordered by the appearance in the ColumnsBlock
+         StructValue.
+        """
+        citation_blocks = []
+        for columns_item in columns.value['items']:
+            for col_item_block in columns_item['body']:
+                if (col_item_block == 'citation'
+                    or col_item_block == 'document'):
+                    citation_blocks.append(col_item_block)
+                if col_item_block.block_type == 'accordion':
+                    citation_blocks = (citation_blocks +
+                                       AccordionBlock.citation_blocks(col_item_block))
+                if col_item_block.block_type == 'collapse':
+                    citation_blocks = (citation_blocks +
+                                       CollapseBlock.citation_blocks(col_item_block))
+        return citation_blocks
         
     class Meta:
         icon = 'duplicate'

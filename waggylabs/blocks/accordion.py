@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
     StreamBlock, StructBlock, CharBlock, ListBlock,
-    BooleanBlock, ChoiceBlock
+    BooleanBlock, ChoiceBlock, StructValue
     )
 
 from waggylabs.widgets import DisabledOptionSelect
@@ -69,7 +69,7 @@ class AccordionItemBlock(StructBlock):
         })
     
     class Meta:
-        icon = 'arrow-down-big'
+        icon = 'doc-full'
         label = _('Item of the accordion')
         form_template = 'waggylabs/blocks/accordion_item.html'
         label_format = '{heading}'
@@ -90,6 +90,19 @@ class AccordionBlock(StructBlock):
         widget=DisabledOptionSelect
     )
     items = ListBlock(AccordionItemBlock())
+    
+    @classmethod
+    def citation_blocks(cls, accordion: StructValue):
+        """Returns citation blocks (= citation and document)
+         ordered by the appearance in the AccordionBlock
+         StructValue."""
+        citation_blocks = []
+        for accordion_item in accordion.value['items']:
+            for acc_item_block in accordion_item['body']:
+                if (acc_item_block.block_type == 'citation'
+                    or acc_item_block.block_type == 'document'):
+                    citation_blocks.append(acc_item_block)
+        return citation_blocks
 
     class Meta:
         icon = 'list-ul'

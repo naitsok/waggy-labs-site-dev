@@ -1,5 +1,5 @@
 from .code_block_adapter import CodeBlockAdapter
-from .icon_input import IconInput, DEFAULT_FONTAWESOME_ICONS
+from .icon_input import IconInputAdapter, IconInput, DEFAULT_BOOTSTRAP_ICONS
 from .math_textarea import MathTextareaAdapter, MathTextarea
 from .mathjax_markdown_textarea import MathJaxMarkdownTextareaAdapter, MathJaxMarkdownTextarea
 from .select_input import DisabledOptionSelect

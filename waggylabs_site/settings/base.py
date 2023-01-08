@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail",
     
-    "fontawesomefree",
+    # "fontawesomefree",
     "modelcluster",
     "taggit",
     # "taggit_templatetags",

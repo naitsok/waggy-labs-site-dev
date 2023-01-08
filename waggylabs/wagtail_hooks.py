@@ -5,6 +5,14 @@ from django.utils.safestring import mark_safe
 from wagtail import hooks
 
 
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    return format_html(
+        '<link rel="stylesheet" href="{}">',
+        static('waggylabs/css/admin-styles.css')
+    )
+
+
 @hooks.register('insert_editor_css')
 def editor_css():
     return format_html(

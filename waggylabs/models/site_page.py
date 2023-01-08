@@ -220,34 +220,15 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
                 if SitePage._check_cite_block(col_item_block):
                     cite_blocks.append(col_item_block)
                 if col_item_block.block_type == 'accordion':
-                    cite_blocks = (cite_blocks + 
+                    cite_blocks = (cite_blocks +
                                    SitePage._get_cite_blocks_from_accordion(col_item_block))
         return cite_blocks
     
     
-    
-    def cite_blocks(self):
+    def citation_blocks(self):
         """Returns citations and documents found in body StreamField and
-        its sub blocks."""
-        cite_blocks = []
-        for block in self.body:
-            # Append all citation and document blocks
-            if SitePage._check_cite_block(block):
-                cite_blocks.append(block)
-            
-            # If block is accordion - loop through its child blocks
-            # and append chitation and document blocks
-            if block.block_type == 'accordion':
-                cite_blocks = (cite_blocks +
-                               SitePage._get_cite_blocks_from_accordion(block))
-            
-            # If block is columns - loop through its child blocks
-            # and append citation and document blocks
-            if block.block_type == 'columns':
-                cite_blocks = (cite_blocks +
-                               SitePage._get_cite_blocks_from_columns(block))
-                
-        return cite_blocks
+        its sub blocks."""   
+        return BodyBlock.citation_blocks(self.body)
             
 
     def hit_counts(self):

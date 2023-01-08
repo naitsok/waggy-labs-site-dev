@@ -40,18 +40,21 @@ class SiteLink(models.Model):
         choices=[
             ('btn btn-primary', _('Button primary')),
             ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-light', _('Button light')),
-            ('btn btn-dark', _('Button dark')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
             ('btn btn-outline-primary', _('Button outline primary')),
             ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-light', _('Button outline light')),
-            ('btn btn-outline-dark', _('Button outline dark')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
             ('nav-link', _('Link')),
             ('nav-link active', _('Link active')),
         ],
         help_text=_('Select the style for the link. See '
-                    'https://getbootstrap.com/docs/5.2/components/buttons/'
-                    ' for examples.'),
+                    'Bootstrap documentation.'),
         verbose_name=_('Link style'),
     )
     
@@ -118,13 +121,19 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     # Settings related to themes and navigation bar customization
     site_theme = models.FileField(
         blank=True,
-        help_text=_('CSS file with theme to be used instead of default Bootstrap theme. See Bootstrap documentation.'),
+        help_text=_('CSS file with theme to be used instead of default Bootstrap theme.'),
         verbose_name=_('Bootstrap CSS theme'),
     )
+    # theme_supports_color_modes = models.BooleanField(
+    #     blank=True,
+    #     help_text=_('If the CSS theme file suppots Bootstrap dark and light modes.'),
+    #     verbose_name=_('CSS theme supporst dark and light modes'),
+    # )
     class NavbarPlacement(models.TextChoices):
         """Navbar placement choices from the Bootstrap documentation: default, sticky-top or fixed-top"""
         DEFAULT = '', _('Default')
         STICKY_TOP = 'sticky-top', _('Sticky top')
+        FIXED_TOP = 'fixed-top', _('Fixed top')
     navbar_placement = models.CharField(
         max_length=10,
         choices=NavbarPlacement.choices,
@@ -186,13 +195,13 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         HelpPanel(content=_('Enter your social network account usernames. Do not enter full URLs.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
-        InlinePanel('social_links', label='Social links')
+        InlinePanel('site_links', label='Links to external sites')
     ]
     
     edit_handler = TabbedInterface([
         ObjectList(site_name_panels, heading=_('Site name settings')),
         ObjectList(theme_panels, heading=_('Theme settings')),
-        ObjectList(social_panels, heading=_('Social links'))
+        ObjectList(social_panels, heading=_('External links'))
     ])
     
     class Meta:

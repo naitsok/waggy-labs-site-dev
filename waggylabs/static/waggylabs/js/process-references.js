@@ -1,6 +1,12 @@
 /**
 
  */
+
+function processLabels(el) {
+    const classNames = ['blockquote', 'embed', 'figure', 'listing', 'table'];
+
+}
+
 /**
  * Processes figure, table, listing, blockquote references before 
  * MathJax does the same for equations.
@@ -11,7 +17,13 @@ function processRefs(el) {
     for (let j in classNames) {
         var labelElements = document.getElementsByClassName('waggylabs-label-' + classNames[j]);
         for(var i = 0; i < labelElements.length; i++) {
-            var label = labelElements[i].getAttribute('id');
+            // Add numbers to the elements if caption is present
+            var entityLabel = labelElements[i].getElementsByClassName('waggylabs-entity-label');
+            if (entityLabel[0]) {
+                entityLabel[0].innerHTML = entityLabel[0].innerHTML + ' ' + String(i + 1) + '.';
+            }
+            // Replace \ref{...} blocks with numbers of corresponding blocks
+            var label = labelElements[i].id;
             var regex = new RegExp('\\\\ref\{' + label + '\}', 'g');
             el.innerHTML = el.innerHTML.replace(regex, 
                `<span class="reference"><a href="#${label}">${i + 1}</a></span>`);
@@ -20,6 +32,10 @@ function processRefs(el) {
     }
 }
 
+/**
+ * Processes literature citations and gererates references
+ * @param {DOM element} el - element which innterHTML needs processing 
+ */
 function processCites(el) {
     var labelElements = document.getElementsByClassName('waggylabs-label-cite');
     var labelIds = []; // needed to collect the ids of the elements containing citations

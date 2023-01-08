@@ -32,7 +32,10 @@
 </div>
 
 <div id="literature">
-{% for block in page.cite_blocks %}
+{% if page.cite_blocks %}
+<h5>References</h5>
+{% endif %}
+{% for block in page.citation_blocks %}
     {% include_block block with id=block.id page=page %}
 {% endfor %}
 </div>

@@ -9,9 +9,6 @@
 .max-vh-50 { height: 50vh; }
 /* Inline pargarphs of markdown within captions. */
 .figure-caption p { display: inline; }
-/* Classes for columns block */
-.c-flex { display: flex; flex-flow: row wrap; }
-.c-flex-fill { flex: 1; min-width: 0; }
 /* Tables */
 .table p { margin-bottom: 0px; }
 
@@ -22,3 +19,10 @@ span.reference a { text-decoration: none; }
 /* MathJax tweaks */
 .MathJax_ref { font-family: 'Courier New', Courier !important; font-size: 88.4% !important; font-weight: bold !important; }
 .MJX-TEX mjx-mtd { scroll-margin-top: 80px; }
+
+/* WaggyLabs classes */
+/* Bold figure, table, embed, etc labels */
+.waggylabs-entity-label { font-weight: bold; }
+/* Classes for columns block */
+.c-flex { display: flex; flex-flow: row wrap; }
+.c-flex-fill { flex: 1; min-width: 0; }

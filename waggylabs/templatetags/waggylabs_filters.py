@@ -5,7 +5,7 @@ from django.template.defaultfilters import stringfilter
 
 from urllib.parse import urlparse
 
-from waggylabs.widgets import DEFAULT_FONTAWESOME_ICONS
+from waggylabs.widgets import DEFAULT_BOOTSTRAP_ICONS
 
 
 register = template.Library()
@@ -13,7 +13,7 @@ register = template.Library()
 
 ICONS = (settings.WAGGYLABS_FONTAWESOME_ICONS if
          hasattr(settings, 'WAGGYLABS_FONTAWESOME_ICONS')
-         else DEFAULT_FONTAWESOME_ICONS)
+         else DEFAULT_BOOTSTRAP_ICONS)
 
 @register.filter(name='is_icon')
 @stringfilter

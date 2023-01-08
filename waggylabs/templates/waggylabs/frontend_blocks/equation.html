@@ -4,7 +4,7 @@
     <p>{{ value.equation }}</p>
     {% if value.caption %}
     <div class="figure-caption" style="display: none;">
-        {% if page.equation_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
     </div>
     {% endif %}
 </div>

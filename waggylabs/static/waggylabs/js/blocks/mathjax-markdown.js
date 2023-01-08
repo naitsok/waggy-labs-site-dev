@@ -197,13 +197,7 @@ function citeLabel() {
             }
         },
         renderer(token) {
-            var processedCite = processCite(token.text);
-            if (processedCite) {
-                return '[' + processedCite + ']';
-            }
-            else {
-                return '[???]';
-            }
+            return '[' + processCite(token.text) + ']';
         }
     }
 }

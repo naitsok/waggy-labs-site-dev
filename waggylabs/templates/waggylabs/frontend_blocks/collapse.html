@@ -1,0 +1,17 @@
+{% load wagtailcore_tags%}
+
+<p>
+    <button class="{{ value.style }}" type="button" data-bs-toggle="collapse" data-bs-target="#id-{{ id }}" aria-expanded="false" aria-controls="id-{{ id }}">
+        {{ value.text }}
+    </button>
+</p>
+<div class="collapse" id="id-{{ id }}">
+    <div class="card card-body">
+    {% for block in value.body %}
+        {% if block.block_type != 'citation' and block.block_type != 'document' %}
+        {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
+        {% include_block block with id=block.id page=page %}
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>

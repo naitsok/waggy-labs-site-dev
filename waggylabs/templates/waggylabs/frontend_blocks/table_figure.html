@@ -5,7 +5,7 @@
 <figure class="figure caption-top waggylabs-label-table" {% if value.label %}id="{{ value.label }}"{% endif %}>
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.table_caption_label %}<p class="me-3 waggylabs-entity-label">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+            {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
         </figcaption>
     {% endif %}
     {% image value.image original class='img-fluid' %}
