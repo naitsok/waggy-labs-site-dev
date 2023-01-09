@@ -14,8 +14,6 @@
             $(`<i class="w-field__icon ${icons[initialState]}"></i>`).insertBefore($(element));
         }
 
-        
-
         $(element).autocomplete({
             source: Object.keys(icons),
             select: function (event, ui) {

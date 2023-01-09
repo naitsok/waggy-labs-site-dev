@@ -1,2 +1,2 @@
-<input type="text" iconsjson="{{ widget.icons_json_id }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+<input type="text" class="waggylabs-icon-input" iconsjson="{{ widget.icons_json_id }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
 <div style="display: none;" id="{{ widget.icons_json_id }}">{{ widget.icons_json }}</div>

@@ -34,7 +34,7 @@ def icon_class(value):
 def link_https(value):
     """Checks the presence of http and https."""
     value = value.lower()
-    if not (value.startswith('http://') or value.startwith('https://')):
+    if not (value.startswith('http://') or value.startswith('https://')):
         value = 'https://' + value
     return value
 

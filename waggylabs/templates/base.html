@@ -81,7 +81,7 @@
                             <li class="nav-item dropdown">
                                 {% for site_link in settings.waggylabs.WaggyLabsSettings.site_links.all %}
                                 <li class="nav-item">
-                                    <a href="{{ site_link|link_https }}" target="_blank" class="{{ site_link.style }}">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
+                                    <a href="{{ site_link.link|link_https }}" target="_blank" class="{{ site_link.style }}">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
                                 </li>
                                 {% endfor %}
                                 <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"

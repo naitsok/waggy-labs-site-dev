@@ -71,7 +71,7 @@ class IconInput(WidgetWithScript, forms.widgets.Input):
             },
             js=(
                 # Wagtail already uses jquery-ui.js so no need to add here
-                # "waggylabs/js/blocks/icon-input-adapter.js",
+                "waggylabs/js/widgets/icon-input.js",
             )
         )
         
