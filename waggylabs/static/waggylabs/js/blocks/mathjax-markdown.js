@@ -369,7 +369,7 @@ function mathjaxMarkdown(text, mde) {
 
             /* Check if HLJS loaded */
             if (hljs) {
-                markedOptions.highlight = function (code, language) {
+                markedOptions.highlight = (code, language) => {
                     if (language && hljs.getLanguage(language)) {
                         return hljs.highlight(language, code).value;
                     } else {

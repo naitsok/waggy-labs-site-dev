@@ -1,4 +1,4 @@
-(function() {
+(() => {
     function IconInput(html, config) {
         this.html = html;
         this.baseConfig = config;
@@ -8,41 +8,22 @@
 
         var element = document.getElementById(id);
         element.value = initialState;
-        var icons = JSON.parse(document.getElementById(element.getAttribute("iconsjson")).innerText);
-
-        if (initialState) {
-            $(`<i class="w-field__icon ${icons[initialState]}"></i>`).insertBefore($(element));
-        }
-
-        $(element).autocomplete({
-            source: Object.keys(icons),
-            select: function (event, ui) {
-                $(element).val(ui.item.label);
-                $(element).parent().find("i").remove();
-                $(`<i class="w-field__icon ${icons[ui.item.label]}"></i>`).insertBefore($(element));
-                return false;
-            },
-        }).data("ui-autocomplete")._renderItem = function (ul, item) {
-            return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append(`<i class="${icons[item.label]}"></i>&nbsp;${item.label}`)
-                .appendTo(ul);
-        };
+        autocompleteAttach(element);
 
         // define public API functions for the widget:
         // https://docs.wagtail.io/en/latest/reference/streamfield/widget_api.html
         return {
             idForLabel: null,
-            getValue: function() {
+            getValue: () =>  {
                 return element.value;
             },
-            getState: function() {
+            getState: () =>  {
                 return element.value;
             },
-            setState: function() {
+            setState: () =>  {
                 throw new Error('IconInput.setState is not implemented');
             },
-            getTextLabel: function(opts) {
+            getTextLabel: (opts) => {
                 if (!element.value) return '';
                 var maxLength = opts && opts.maxLength,
                     result = element.value;
@@ -51,8 +32,8 @@
                 }
                 return result;
             },
-            focus: function() {
-                setTimeout(function() {
+            focus: () =>  {
+                setTimeout(() =>  {
                     element.focus();
                 }, 50);
             },

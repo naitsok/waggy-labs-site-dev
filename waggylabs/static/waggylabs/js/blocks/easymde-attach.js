@@ -190,9 +190,9 @@ function toggleSideBySide(editor) {
     // Timeout is needed beacuse there is timeout in togglePreview functions.
     // Without this timeout, toggleSideBySite will happen earlier than
     // togglePreviewAll finishes.
-    setTimeout(function() {
+    setTimeout(() => {
         EasyMDE.toggleSideBySide(editor);
-        setTimeout(function() {
+        setTimeout(() => {
             resetPreviewAll(editor);
         }, 10);
     }, 50);
@@ -250,7 +250,7 @@ function togglePreview(editor, isPreview) {
             // When the preview button is clicked for the first time,
             // give some time for the transition from editor.css to fire and the view to slide from right to left,
             // instead of just appearing.
-            setTimeout(function () {
+            setTimeout(() => {
                 preview.classList.add('editor-preview-active');
             }, 1);
             if (toolbar) {
@@ -353,7 +353,7 @@ function easymdeAttach(id) {
     // Save the codemirror instance on the original html element for later use.
     mde.element.codemirror = mde.codemirror;
 
-    mde.codemirror.on("change", function() {
+    mde.codemirror.on("change", () => {
         document.getElementById(id).value = mde.value();
     });
 
@@ -369,8 +369,7 @@ function easymdeAttach(id) {
 * Used to initialize content when MarkdownFields are used in admin panels.
 */
 function refreshCodeMirror(e) {
-    setTimeout(
-        function() {
+    setTimeout(() => {
             e.CodeMirror.refresh();
             e.CodeMirror.focus();
         }, 200
@@ -378,15 +377,15 @@ function refreshCodeMirror(e) {
 }
 
 // Wagtail < 3.0
-document.addEventListener('shown.bs.tab', function() {
-    document.querySelectorAll('.CodeMirror').forEach(function(e) {
+document.addEventListener('shown.bs.tab', () => {
+    document.querySelectorAll('.CodeMirror').forEach((e) => {
         refreshCodeMirror(e);
     });
 });
 
 // Wagtail >= 3.0
-document.addEventListener('wagtail:tab-changed', function() {
-    document.querySelectorAll('.CodeMirror').forEach(function(e) {
+document.addEventListener('wagtail:tab-changed', () => {
+    document.querySelectorAll('.CodeMirror').forEach((e) => {
         refreshCodeMirror(e);
     });
 });

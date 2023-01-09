@@ -192,7 +192,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     ]
     
     social_panels = [
-        HelpPanel(content=_('Enter your social network account usernames. Do not enter full URLs.'),
+        HelpPanel(content=_('Links to the external websites can contain icon, text, or icon and text.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
         InlinePanel('site_links', label='Links to external sites')

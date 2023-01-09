@@ -1,4 +1,4 @@
-(function() {
+(() => {
     function MarkdownTextarea(html, config) {
         this.html = html;
         this.baseConfig = config;
@@ -15,16 +15,16 @@
         // https://docs.wagtail.io/en/latest/reference/streamfield/widget_api.html
         return {
             idForLabel: null,
-            getValue: function() {
+            getValue: () => {
                 return element.value;
             },
-            getState: function() {
+            getState: () => {
                 return element.value;
             },
-            setState: function() {
+            setState: () => {
                 throw new Error('MarkdownTextarea.setState is not implemented');
             },
-            getTextLabel: function(opts) {
+            getTextLabel: (opts) =>  {
                 if (!element.value) return '';
                 var maxLength = opts && opts.maxLength,
                     result = element.value;
@@ -33,8 +33,8 @@
                 }
                 return result;
             },
-            focus: function() {
-                setTimeout(function() {
+            focus: () =>  {
+                setTimeout(() => {
                     element.codemirror.focus();
                 }, 50);
             },

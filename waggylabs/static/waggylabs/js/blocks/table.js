@@ -18,22 +18,22 @@ function initTable(id, tableOptions) {
   let dataForForm = null;
   let isInitialized = false;
 
-  const getWidth = function () {
+  const getWidth = () => {
     return $('.widget-table_input').closest('.sequence-member-inner').width();
   };
-  const getHeight = function () {
+  const getHeight = () => {
     const tableParent = $('#' + id).parent();
     return tableParent.find('.htCore').height() + (tableParent.find('.input').height() * 2);
   };
   const resizeTargets = ['.input > .handsontable', '.wtHider', '.wtHolder'];
-  const resizeHeight = function (height) {
+  const resizeHeight = (height) => {
     const currTable = $('#' + id);
-    $.each(resizeTargets, function () {
+    $.each(resizeTargets, () => {
       currTable.closest('.field-content').find(this).height(height);
     });
   };
   function resizeWidth(width) {
-    $.each(resizeTargets, function () {
+    $.each(resizeTargets, () => {
       $(this).width(width);
     });
     const parentDiv = $('.widget-table_input').parent();
@@ -70,7 +70,7 @@ function initTable(id, tableOptions) {
     });
   }
 
-  const getCellsClassnames = function () {
+  const getCellsClassnames = () => {
     const meta = hot.getCellsMeta();
     const cellsClassnames = [];
     for (let i = 0; i < meta.length; i++) {
@@ -85,7 +85,7 @@ function initTable(id, tableOptions) {
     return cellsClassnames;
   };
 
-  const typesetOnLoad = function() {
+  const typesetOnLoad = () => {
     var data = hot.getData();
     for (let row in data) {
       for (let col in data[row]) {
@@ -105,7 +105,7 @@ function initTable(id, tableOptions) {
     }
   }
 
-  const typesetCell = function(cell, row, col, prop, value, cellProps) {
+  const typesetCell = (cell, row, col, prop, value, cellProps) => {
     if (hot && MathJax && MathJax.typesetClear && MathJax.typeset ) {
       MathJax.typesetClear([cell]);
       if (value) {
@@ -121,7 +121,7 @@ function initTable(id, tableOptions) {
     }
   }
 
-  const persist = function () {
+  const persist = () => {
     hiddenStreamInput.val(JSON.stringify({
       data: hot.getData(),
       cell: getCellsClassnames(),
@@ -131,7 +131,7 @@ function initTable(id, tableOptions) {
     }));
   };
 
-  const cellEvent = function (change, source) {
+  const cellEvent = (change, source) => {
     if (source === 'loadData') {
       return;  // don't save this change
     }
@@ -139,18 +139,18 @@ function initTable(id, tableOptions) {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const metaEvent = function (row, column, key, value) {
+  const metaEvent = (row, column, key, value) => {
     if (isInitialized && key === 'className') {
       persist();
     }
   };
 
-  const initEvent = function () {
+  const initEvent = () => {
     isInitialized = true;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const structureEvent = function (index, amount) {
+  const structureEvent = (index, amount) => {
     persist();
   };
 
