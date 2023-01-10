@@ -53,11 +53,11 @@
     <body>
         {% wagtailuserbar 'bottom-right' %}
         <header class="navbar navbar-expand-lg bg-body-tertiary">
-            <nav class="container-xxl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
-                <div class="navbar-toggler">
-                </div>
+            <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
                     {% image settings.waggylabs.WaggyLabsSettings.site_icon max-40x40 class='d-inline-block align-text-top' %}
+                </a>
+                <a class="navbar-brand" href="/">
                     {{ current_site.site_name }}
                     {% if settings.waggylabs.WaggyLabsSettings.site_slogan %}<br /><span class="navbar-text fs-6 fst-italic px-4 py-0 my-0"><small>{{ settings.waggylabs.WaggyLabsSettings.site_slogan }}</small></span>{% endif %}
                 </a>
@@ -74,16 +74,37 @@
                             {% main_menu template="waggylabs/menus/main_menu.html" %}
                         </ul>
                         <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                            <li class="nav-item dropdown">
+                                <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
+                                    id="bd-search" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                                    <i class="bi-search"></i>
+                                    <span class="d-lg-none ms-2">Search</span>
+                                </button>
+                                <form class="dropdown-menu dropdown-menu-end p-4" style="--bs-dropdown-min-width: 20rem;"
+                                    role="search" method="get" action="" method="get">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
+                                    </div>
+                                    <button class="btn btn-primary" type="submit" id="button-search">Search</button>                                 
+                                </form>
+                            </li>
+                            {% for site_link in settings.waggylabs.WaggyLabsSettings.site_links.all %}
+                                {% if forloop.counter0 == 0 %}
+                                <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                                    <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
+                                    <hr class="d-lg-none my-2">
+                                </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    <a href="{{ site_link.link|link_https }}" target="_blank" class="{{ site_link.style }} px-2">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
+                                </li>
+                            {% endfor %}
                             <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                 <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
                                 <hr class="d-lg-none my-2">
                             </li>
                             <li class="nav-item dropdown">
-                                {% for site_link in settings.waggylabs.WaggyLabsSettings.site_links.all %}
-                                <li class="nav-item">
-                                    <a href="{{ site_link.link|link_https }}" target="_blank" class="{{ site_link.style }}">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
-                                </li>
-                                {% endfor %}
                                 <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
                                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
                                     <span class="theme-icon-active"><i class="bi-circle-half"></i></span>
