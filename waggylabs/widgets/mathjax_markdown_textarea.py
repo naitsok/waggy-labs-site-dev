@@ -20,16 +20,16 @@ class MathJaxMarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
         return forms.Media(
             css={
                 "all": (
-                    "waggylabs/css/blocks/easymde-tweaks.css",
-                    "waggylabs/css/blocks/easymde-min.css",
-                    "waggylabs/css/blocks/easymde-highlight.css",
+                    "waggylabs/css/widgets/easymde-tweaks.css",
+                    "waggylabs/css/widgets/easymde-min.css",
+                    "waggylabs/css/widgets/easymde-highlight.css",
                     "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css", # for code highlighting
                 )
             },
             js=(
-                "waggylabs/js/blocks/easymde-min.js",
-                "waggylabs/js/blocks/easymde-attach.js",
-                "waggylabs/js/blocks/mathjax-markdown.js",
+                "waggylabs/js/widgets/easymde-min.js",
+                "waggylabs/js/widgets/easymde-attach.js",
+                "waggylabs/js/widgets/mathjax-markdown.js",
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
                 "https://cdn.jsdelivr.net/npm/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/codemirror.min.js", # For latex highlighting

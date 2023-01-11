@@ -1,3 +1,6 @@
+/**
+ * Telepath adapter for the incon input block.
+*/
 (() => {
     function IconInput(html, config) {
         this.html = html;

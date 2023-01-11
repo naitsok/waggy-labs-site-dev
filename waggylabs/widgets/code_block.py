@@ -27,7 +27,7 @@ class CodeBlockAdapter(StructBlockAdapter):
         codemirror_modes = list([f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{codemirror_ver}/mode/{mode[0]}/{mode[0]}.min.js' for mode in codemirror_langs])
         return forms.Media(
             js = structblock_media._js + [
-                'waggylabs/js/blocks/code-block.js',
+                'waggylabs/js/blocks/code-adapter.js',
                 codemirror_js,
                 ] + codemirror_modes,
             css = {

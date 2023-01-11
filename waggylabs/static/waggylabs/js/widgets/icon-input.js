@@ -1,3 +1,12 @@
+/**
+ * Initializes icon input widgets on any admin page and monitors
+ * for the DOM content changes and initalizes newly added icon
+ * input widgets.
+ * 
+ * When icon input widget is used as a standalone widget, it needs to be
+ * initialized when DOM is loaded, because telepath in this case is not
+ * available. 
+ */
 (() => {
     function createAutocompleteWidgets() {
         $(".waggylabs-icon-input").each((idx, element) => {
@@ -19,10 +28,13 @@
 
 })();
 
-
+/**
+ * Function to attach the JQuery UI autocomplete widget
+ * @param {object} element - text input for the widget attachment
+ */
 function autocompleteAttach(element) {
     if (!$(element).hasClass("ui-autocomplete-input")) {
-        var icons = JSON.parse($("#" + $(element).attr("iconsjson")).text());
+        var icons = JSON.parse($(element).attr("iconsjson"));
         if ($(element).val()) {
             $(`<i class="w-field__icon ${icons[$(element).val()]}"></i>`).insertBefore($(element));
         }

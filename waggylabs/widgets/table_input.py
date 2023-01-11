@@ -19,12 +19,12 @@ class TableInput(forms.HiddenInput):
         return forms.Media(
             css={'all': [
                 versioned_static('table_block/css/vendor/handsontable-6.2.2.full.min.css'),
-                'waggylabs/css/blocks/handsontable-tweaks.css',
+                'waggylabs/css/widgets/handsontable-tweaks.css',
             ]},
             js=[
                 versioned_static('table_block/js/vendor/handsontable-6.2.2.full.min.js'),
-                'waggylabs/js/blocks/table.js',
-                'waggylabs/js/blocks/mathjax-markdown.js',
+                'waggylabs/js/widgets/table-input.js',
+                'waggylabs/js/widgets/mathjax-markdown.js',
                 'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
             ]
         )
@@ -32,6 +32,9 @@ class TableInput(forms.HiddenInput):
 
 class TableInputAdapter(WidgetAdapter):
     js_constructor = 'waggylabs.widgets.TableInput'
+    
+    class Media:
+        js = ["waggylabs/js/blocks/table-input-adapter.js"]
 
     def js_args(self, widget):
         strings = {

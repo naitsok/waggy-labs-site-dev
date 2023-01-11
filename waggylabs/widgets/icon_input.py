@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 from django import forms
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.telepath import register
 from wagtail.core.widget_adapters import WidgetAdapter
@@ -40,9 +41,8 @@ DEFAULT_BOOTSTRAP_ICONS = OrderedDict([('activity', 'bi-activity'), ('airplane',
 'bi-virus'), ('voicemail', 'bi-voicemail'), ('volume down', 'bi-volume-down'), ('volume down fill', 'bi-volume-down-fill'), ('volume mute', 'bi-volume-mute'), ('volume mute fill', 'bi-volume-mute-fill'), ('volume off', 'bi-volume-off'), ('volume off fill', 'bi-volume-off-fill'), ('volume up', 'bi-volume-up'), ('volume up fill', 'bi-volume-up-fill'), ('vr', 'bi-vr'), ('wallet', 'bi-wallet'), ('wallet fill', 'bi-wallet-fill'), ('watch', 'bi-watch'), ('water', 'bi-water'), ('webcam', 'bi-webcam'), ('webcam fill', 'bi-webcam-fill'), ('wechat', 'bi-wechat'), ('whatsapp', 'bi-whatsapp'), ('wifi', 'bi-wifi'), ('wifi off', 'bi-wifi-off'), ('wikipedia', 'bi-wikipedia'), ('wind', 'bi-wind'), ('window', 'bi-window'), ('window dash', 'bi-window-dash'), ('window desktop', 'bi-window-desktop'), ('window dock', 'bi-window-dock'), ('window fullscreen', 'bi-window-fullscreen'), ('window plus', 'bi-window-plus'), ('window sidebar', 'bi-window-sidebar'), ('window split', 'bi-window-split'), ('window stack', 'bi-window-stack'), ('window x', 'bi-window-x'), ('windows', 'bi-windows'), ('wordpress', 'bi-wordpress'), ('wrench', 'bi-wrench'), ('wrench adjustable', 'bi-wrench-adjustable'), ('wrench adjustable circle', 'bi-wrench-adjustable-circle'), ('wrench adjustable circle fill', 'bi-wrench-adjustable-circle-fill'), ('x', 'bi-x'), ('x circle', 'bi-x-circle'), ('x circle fill', 'bi-x-circle-fill'), ('x diamond', 'bi-x-diamond'), ('x diamond fill', 'bi-x-diamond-fill'), ('x lg', 'bi-x-lg'), ('x octagon', 'bi-x-octagon'), ('x octagon fill', 'bi-x-octagon-fill'), ('x square', 'bi-x-square'), ('x square fill', 'bi-x-square-fill'), ('xbox', 'bi-xbox'), ('yelp', 'bi-yelp'), ('yin yang', 'bi-yin-yang'), ('youtube', 'bi-youtube'), ('zoom in', 'bi-zoom-in'), ('zoom out', 'bi-zoom-out')])
 
 
-class IconInput(WidgetWithScript, forms.widgets.Input):
+class IconInput(WidgetWithScript, forms.widgets.TextInput):
     """Widget to select Font Awesome icon."""
-    template_name = 'waggylabs/widgets/icon_input.html'
     
     def __init__(
         self,
@@ -50,16 +50,11 @@ class IconInput(WidgetWithScript, forms.widgets.Input):
                hasattr(settings, 'WAGGYLABS_BOOTSTRAP_ICONS')
                else DEFAULT_BOOTSTRAP_ICONS),
         attrs={
-            'placeholder': 'Icon - start typing'
+            'placeholder': _('Icon - start typing'),
+            'class': 'waggylabs-icon-input',
         }):
-        self.icons_json = json.dumps(icons)
         super().__init__(attrs)
-        
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        context['widget']['icons_json'] = self.icons_json
-        context['widget']['icons_json_id'] = 'id-' + random_uuid()
-        return context
+        self.attrs['iconsjson'] = json.dumps(icons)
     
     @property
     def media(self):

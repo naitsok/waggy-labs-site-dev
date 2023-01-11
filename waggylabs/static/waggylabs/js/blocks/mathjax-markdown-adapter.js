@@ -1,3 +1,6 @@
+/**
+ * Telepath adapter for the Markdown textarea block.
+*/
 (() => {
     function MarkdownTextarea(html, config) {
         this.html = html;
