@@ -34,32 +34,37 @@
         {# Overwrite this in templates to add extra stylesheets #}
         {% endblock %}
         {# browser tab icon #}
+        {% wagtail_site as current_site %}
+        {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
         {% image settings.waggylabs.WaggyLabsSettings.site_icon max-40x40 as icon %}
         <link rel="icon" href="{{ icon.url }}">
-        {% wagtail_site as current_site %}
         <title>
         {# Page title block. Overwrite in the page template if needed. #}
         {% block title %}
-        {% if current_site.site_name and settings.waggylabs.WaggyLabsSettings.show_site_name and settings.waggylabs.WaggyLabsSettings.site_name_alignment == "L" %}
-            {{ current_site.site_name }} {{ settings.waggylabs.WaggyLabsSettings.site_name_separator }} {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-        {% elif current_site.site_name and settings.waggylabs.WaggyLabsSettings.show_site_name and settings.waggylabs.WaggyLabsSettings.site_name_alignment == "R" %}
-            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %} {{ settings.waggylabs.WaggyLabsSettings.site_name_separator }} {{ current_site.site_name }}
+        {% if current_site.site_name and site_settings.show_site_name and site_settings.site_name_alignment == 'L' %}
+            {{ current_site.site_name }} {{ site_settings.site_name_separator }} {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% elif current_site.site_name and site_settings.show_site_name and site_settings.site_name_alignment == "R" %}
+            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %} {{ site_settings.site_name_separator }} {{ current_site.site_name }}
         {% else %}
             {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
         {% endif %}
         {% endblock %}
         </title>
+        {% endwith %}
     </head>
     <body>
         {% wagtailuserbar 'bottom-right' %}
-        <header class="navbar navbar-expand-lg bg-body-tertiary">
+        {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
+        <header class="navbar navbar-expand-lg {% if site_settings.navbar_color == '' %}bg-body-tertiary{% endif %} {{ site_settings.navbar_placement }}" 
+            {% if site_settings.theme_supports_color_mode and site_settings.navbar_theme %}data-bs-theme="{{ site_settings.navbar_theme }}"{% endif %}
+            {% if site_settings.navbar_color %}style="background: {{ site_settings.navbar_color }};"{% endif %}>
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
-                    {% image settings.waggylabs.WaggyLabsSettings.site_icon max-40x40 class='d-inline-block align-text-top' %}
+                    {% image site_settings.site_icon max-40x40 class='d-inline-block align-text-top' %}
                 </a>
                 <a class="navbar-brand" href="/">
-                    {{ current_site.site_name }}
-                    {% if settings.waggylabs.WaggyLabsSettings.site_slogan %}<br /><span class="navbar-text fs-6 fst-italic px-4 py-0 my-0"><small>{{ settings.waggylabs.WaggyLabsSettings.site_slogan }}</small></span>{% endif %}
+                    {% if site_settings.show_site_name %}{{ current_site.site_name }}{% endif %}
+                    {% if site_settings.site_slogan %}<br /><span class="navbar-text fs-6 fst-italic px-4 py-0 my-0"><small>{{ site_settings.site_slogan }}</small></span>{% endif %}
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -89,7 +94,7 @@
                                     <button class="btn btn-primary" type="submit" id="button-search">Search</button>                                 
                                 </form>
                             </li>
-                            {% for site_link in settings.waggylabs.WaggyLabsSettings.site_links.all %}
+                            {% for site_link in site_settings.site_links.all %}
                                 {% if forloop.counter0 == 0 %}
                                 <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                     <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
@@ -100,6 +105,7 @@
                                     <a href="{{ site_link.link|link_https }}" target="_blank" class="{{ site_link.style }} px-2">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
                                 </li>
                             {% endfor %}
+                            {% if site_settings.theme_supports_color_mode %}
                             <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                 <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
                                 <hr class="d-lg-none my-2">
@@ -110,7 +116,8 @@
                                     <span class="theme-icon-active"><i class="bi-circle-half"></i></span>
                                     <span class="d-lg-none ms-2">Toggle theme</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end" style="--bs-dropdown-min-width: 8rem;">
+                                <ul class="dropdown-menu dropdown-menu-end" 
+                                    style="--bs-dropdown-min-width: 8rem; {% if site_settings.navbar_color %}--bs-dropdown-link-active-bg: {{site_settings.navbar_color }};{% endif %}">
                                     <li>
                                         <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
                                             <span class="me-2 opacity-50 theme-icon"><i class="bi-sun-fill"></i></span>
@@ -134,11 +141,13 @@
                                     </li>
                                 </ul>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
+        {% endwith %}
         {% comment %}
         <header class="navbar {{ settings.waggylabs.WaggyLabsSettings.navbar_placement }} bg-body-tertiary">
             <nav class="contatiner-fluid">

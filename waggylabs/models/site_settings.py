@@ -8,7 +8,7 @@ from wagtail.admin.panels import FieldPanel, HelpPanel, ObjectList, TabbedInterf
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Orderable
 
-from waggylabs.widgets import IconInput
+from waggylabs.widgets import IconInput, ColorInput
 
 
 class SiteLink(models.Model):
@@ -98,17 +98,20 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     )
     show_site_name = models.BooleanField(
         default=True,
-        help_text=_('Indicates if title of the Waggy Labs site appears in navigation bar and in browser tab e.g., Page Title - Site Name.'),
+        help_text=_('Indicates if title of the Waggy Labs site appears in '
+                    'navigation bar and in browser tab e.g., Page Title - Site Name.'),
         verbose_name=_('Show site name in navigation bar and browser tab'),
     )
     site_name_separator = models.CharField(
         max_length=10,
         blank=True,
-        help_text=_('Separator for site name e.g., Page Title - Site Name or Page Title : Site Name.'),
+        help_text=_('Separator for site name e.g., Page Title - '
+                    'Site Name or Page Title : Site Name.'),
         verbose_name=_('Separator for the site name'),
     )
     class SiteNameAlignment(models.TextChoices):
-        """Alignment choices for the site name in navbar: before page title or after page title."""
+        """Alignment choices for the site name in navbar: 
+        before page title or after page title."""
         LEFT = 'L', _('Before page title')
         RIGHT = 'R', _('After page title')
     site_name_alignment = models.CharField(
@@ -116,6 +119,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         choices=SiteNameAlignment.choices,
         default=SiteNameAlignment.RIGHT,
         help_text=_('The alignment of site name: before or after page title.'),
+        verbose_name=_('Site name alignment'),
     )
     
     # Settings related to themes and navigation bar customization
@@ -124,13 +128,42 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('CSS file with theme to be used instead of default Bootstrap theme.'),
         verbose_name=_('Bootstrap CSS theme'),
     )
-    # theme_supports_color_modes = models.BooleanField(
-    #     blank=True,
-    #     help_text=_('If the CSS theme file suppots Bootstrap dark and light modes.'),
-    #     verbose_name=_('CSS theme supporst dark and light modes'),
-    # )
+    theme_supports_color_mode = models.BooleanField(
+        blank=True,
+        default=True,
+        help_text=_('If the CSS theme file suppots Bootstrap dark and light modes.'),
+        verbose_name=_('CSS theme supports dark and light modes'),
+    )
+    class NavbarTheme(models.TextChoices):
+        """Navigation bar theme: dark or light. Correct choice needs to be 
+        selected based on the selected CSS Bootstrap theme."""
+        AUTO = '', _('Auto')
+        LIGHT = 'light', _('Light')
+        DARK = 'dark', _('Dark')
+    navbar_theme = models.CharField(
+        max_length=25,
+        choices=NavbarTheme.choices,
+        default=NavbarTheme.AUTO,
+        blank=True,
+        help_text=_('Navigation bar color mode: auto, light or dark. '
+                    'Auto mode changes according to the global color mode '
+                    'selection. Light or dark mode keep the selected mode, '
+                    'especially useful if CSS does not support color modes, '
+                    'or specific color for the navigation bar was selected. '
+                    'Ignored if the uploaded CSS does not support color modes.'),
+        verbose_name=_('Navigation bar color mode')
+    )
+    navbar_color = models.CharField(
+        max_length=25,
+        default='',
+        blank=True,
+        help_text=_('Choose a specific color and opacity for the navigation bar. '
+                    'The color does not work if navigation bar color mode is '
+                    'selected to be Auto.'),
+    )
     class NavbarPlacement(models.TextChoices):
-        """Navbar placement choices from the Bootstrap documentation: default, sticky-top or fixed-top"""
+        """Navbar placement choices from the Bootstrap documentation: 
+        default, sticky-top or fixed-top."""
         DEFAULT = '', _('Default')
         STICKY_TOP = 'sticky-top', _('Sticky top')
         FIXED_TOP = 'fixed-top', _('Fixed top')
@@ -139,19 +172,8 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         choices=NavbarPlacement.choices,
         default=NavbarPlacement.DEFAULT,
         blank=True,
-        help_text=_('Navigation bar placement options: default, sticky-top or fixed-top. See Bootstrap documentation.')
-    )
-    class NavbarTheme(models.TextChoices):
-        """Navigation bar theme: dark or light. Correct choice needs to be selected based on the selected CSS Bootstrap theme."""
-        LIGHT = '', _('Light')
-        PRIMARY = 'primary', _('Primary')
-        DARK = 'dark', _('Dark')
-    navbar_theme = models.CharField(
-        max_length=25,
-        choices=NavbarTheme.choices,
-        default=NavbarTheme.LIGHT,
-        blank=True,
-        help_text=_('Navigation bar theme: dark or light. Choice depends on the choice of the CSS Bootstrap theme.')
+        help_text=_('Navigation bar placement options: default, '
+                    'sticky-top or fixed-top. See Bootstrap documentation.'),
     )
     class NavbarMenuAlignment(models.TextChoices):
         """Alignment of the menu in the navigation bar."""
@@ -186,7 +208,9 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                   heading=_('Explanation of the settings'),
                   classname='title'),
         FieldPanel('site_theme'),
+        FieldPanel('theme_supports_color_mode'),
         FieldPanel('navbar_theme'),
+        FieldPanel('navbar_color', widget=ColorInput),
         FieldPanel('navbar_placement'),
         FieldPanel('navbar_menu_alignment')
     ]

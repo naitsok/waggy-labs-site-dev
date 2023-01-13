@@ -6,7 +6,7 @@ from wagtail.utils.widgets import WidgetWithScript
 
 class ColorInput(WidgetWithScript, forms.widgets.HiddenInput):
     """Widget to select color."""
-    # template_name = 'waggylabs/widgets/color_input.html'
+    template_name = 'waggylabs/widgets/color_input.html'
     
     def __init__(
         self,

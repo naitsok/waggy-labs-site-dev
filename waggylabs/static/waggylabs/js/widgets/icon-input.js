@@ -18,10 +18,14 @@
         // Check we are not inside a StreamField - then icon-input-adapter.js inits the autocompletes
         if (document.querySelector("[data-streamfield-stream-container]") === null) {
             createAutocompleteWidgets();
-            document.addEventListener("DOMSubtreeModified", (e) => {
+            let observer = new MutationObserver(() => {
                 setTimeout(() => { 
                     createAutocompleteWidgets(); 
                 }, 50);
+            });
+            observer.observe(document.getElementById("main"), { 
+                childList: true,
+                subtree: true, 
             });
         }
     });
