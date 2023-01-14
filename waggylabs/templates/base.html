@@ -57,7 +57,7 @@
         {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
         <header class="navbar navbar-expand-lg {% if site_settings.navbar_color == '' %}bg-body-tertiary{% endif %} {{ site_settings.navbar_placement }}" 
             {% if site_settings.theme_supports_color_mode and site_settings.navbar_theme %}data-bs-theme="{{ site_settings.navbar_theme }}"{% endif %}
-            {% if site_settings.navbar_color %}style="background: {{ site_settings.navbar_color }};"{% endif %}>
+            {% if site_settings.navbar_colorand and site_settings.theme_supports_color_mode %}style="background: {{ site_settings.navbar_color }};"{% endif %}>
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
                     {% image site_settings.site_icon max-40x40 class='d-inline-block align-text-top' %}
@@ -85,13 +85,23 @@
                                     <i class="bi-search"></i>
                                     <span class="d-lg-none ms-2">Search</span>
                                 </button>
-                                <form class="dropdown-menu dropdown-menu-end p-4" style="--bs-dropdown-min-width: 20rem;"
+                                <form class="dropdown-menu dropdown-menu-end p-4" 
+                                    style="--bs-dropdown-min-width: 20rem;"
                                     role="search" method="get" action="" method="get">
                                     {% csrf_token %}
                                     <div class="mb-3">
                                         <input type="text" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
                                     </div>
-                                    <button class="btn btn-primary" type="submit" id="button-search">Search</button>                                 
+                                    <button class="btn btn-outline-primary" type="submit" id="button-search" {% if site_settings.theme_supports_color_mode %}
+                                    style="
+                                    --bs-btn-color:  {{ site_settings.navbar_color }};
+                                    --bs-btn-border-color: {{ site_settings.navbar_color }};
+                                    --bs-btn-hover-bg: {{ site_settings.navbar_color }};
+                                    --bs-btn-hover-border-color: {{ site_settings.navbar_color }};
+                                    --bs-btn-active-bg: {{ site_settings.navbar_color }};
+                                    --bs-btn-active-border-color: {{ site_settings.navbar_color }};
+                                    --bs-btn-disabled-color: {{ site_settings.navbar_color }};
+                                    --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %} >Search</button>                                 
                                 </form>
                             </li>
                             {% for site_link in site_settings.site_links.all %}

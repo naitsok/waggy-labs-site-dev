@@ -63,9 +63,16 @@ function colorAttach(id) {
 
         if (hidden.value) {
             let vals = hidden.value.replace(/rgba\(/g, '').replace(/\)/g, '').split(',');
-            color.value = '#' + Number(vals[0]).toString(16) + Number(vals[1]).toString(16) + Number(vals[2]).toString(16);
+            text.value = '#';
+            for (let i = 0; i < 3; i++) {
+                let hex = Number(vals[i]).toString(16);
+                if (hex.length == 1) {
+                    hex = '0' + hex;
+                }
+                text.value = text.value + hex;
+            }
             opacity.value = vals[3];
-            text.value = color.value;
+            color.value = text.value;
             number.value = opacity.value;
             checkbox.checked = true;
         }
