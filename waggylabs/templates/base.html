@@ -3,6 +3,7 @@
 {% load wagtailimages_tags %}
 {% load wagtailuserbar %}
 {% load menu_tags %}
+{% load waggylabs_tags %}
 {% load waggylabs_filters %}
 
 <!doctype html>
@@ -55,9 +56,9 @@
     <body>
         {% wagtailuserbar 'bottom-right' %}
         {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
-        <header class="navbar navbar-expand-lg {% if site_settings.navbar_color == '' %}bg-body-tertiary{% endif %} {{ site_settings.navbar_placement }}" 
+        <header class="{% navbar_class site_settings %}" 
             {% if site_settings.theme_supports_color_mode and site_settings.navbar_theme %}data-bs-theme="{{ site_settings.navbar_theme }}"{% endif %}
-            {% if site_settings.navbar_colorand and site_settings.theme_supports_color_mode %}style="background: {{ site_settings.navbar_color }};"{% endif %}>
+            style="{% navbar_style site_settings %}">
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
                     {% image site_settings.site_icon max-40x40 class='d-inline-block align-text-top' %}
@@ -92,7 +93,7 @@
                                     <div class="mb-3">
                                         <input type="text" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
                                     </div>
-                                    <button class="btn btn-outline-primary" type="submit" id="button-search" {% if site_settings.theme_supports_color_mode %}
+                                    <button class="btn btn-outline-primary" type="submit" id="button-search" {% if site_settings.navbar_color %}
                                     style="
                                     --bs-btn-color:  {{ site_settings.navbar_color }};
                                     --bs-btn-border-color: {{ site_settings.navbar_color }};
@@ -101,7 +102,7 @@
                                     --bs-btn-active-bg: {{ site_settings.navbar_color }};
                                     --bs-btn-active-border-color: {{ site_settings.navbar_color }};
                                     --bs-btn-disabled-color: {{ site_settings.navbar_color }};
-                                    --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %} >Search</button>                                 
+                                    --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %}>Search</button>                                 
                                 </form>
                             </li>
                             {% for site_link in site_settings.site_links.all %}
@@ -157,7 +158,7 @@
                 </div>
             </nav>
         </header>
-        {% endwith %}
+        
         {% comment %}
         <header class="navbar {{ settings.waggylabs.WaggyLabsSettings.navbar_placement }} bg-body-tertiary">
             <nav class="contatiner-fluid">
@@ -249,9 +250,12 @@
         {# Bootstrap javascript files #}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         {# Theme chooser #}
+        {% if site_settings.theme_supports_color_mode %}
         <script src="{% static 'waggylabs/js/color-mode.js' %}"></script>
+        {% endif %}
         {% block extra_js %}
         {# Overwrite this in templates to add extra javascript #}
         {% endblock %}
+        {% endwith %}
     </body>
 </html>
