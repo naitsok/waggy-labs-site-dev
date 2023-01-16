@@ -3,8 +3,10 @@
 {% load wagtailmarkdown %}
 
 <figure class="mb-3 waggylabs-label-embed" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    <div class="ratio ratio-16x9">
-        {% embed value.embed.url %}
+    <div class="border rounded">
+        <div class="ratio ratio-16x9">
+            {% embed value.embed.url %}
+        </div>
     </div>
     {% if value.caption %}
         <figcaption class="figure-caption">

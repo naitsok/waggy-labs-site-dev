@@ -8,7 +8,7 @@
             {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
         </figcaption>
     {% endif %}
-    {% image value.image original class='img-fluid' %}
+    {% image value.image original class='img-fluid rounded' %}
     {% if value.footer %}
     <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
     {% endif %}

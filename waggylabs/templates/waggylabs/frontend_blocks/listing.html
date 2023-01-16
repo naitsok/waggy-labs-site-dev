@@ -2,8 +2,10 @@
 {% load wagtailmarkdown %}
 
 <figure class="figure w-100 waggylabs-label-listing" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    <div class="max-vh-50 w-100" style="overflow: auto;">
-    {% include_block value.code %}
+    <div class="border rounded">
+        <div class="max-vh-50 w-100" style="overflow: auto;">
+        {% include_block value.code %}
+        </div>
     </div>
     {% if value.caption %}
     <figcaption class="figure-caption">

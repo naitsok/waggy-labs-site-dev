@@ -3,7 +3,7 @@
 {% load wagtailmarkdown %}
 
 <figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    {% image value.image original class='img-fluid' %}
+    {% image value.image original class='img-fluid rounded' %}
     {% if value.caption %}
         <figcaption class="figure-caption">
             {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}

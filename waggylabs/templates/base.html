@@ -105,7 +105,7 @@
                                     --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %}>Search</button>                                 
                                 </form>
                             </li>
-                            {% for site_link in site_settings.site_links.all %}
+                            {% for block in site_settings.navbar_links %}
                                 {% if forloop.counter0 == 0 %}
                                 <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                     <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
@@ -113,7 +113,7 @@
                                 </li>
                                 {% endif %}
                                 <li class="nav-item">
-                                    <a href="{{ site_link.link|link_https }}" target="_blank" class="{{ site_link.style }} px-2">{% if site_link.icon|is_icon %}<i class="{{ site_link.icon|icon_class }}{% if site_link.text %} icon-margin{% endif %}"></i>{% endif %}{% if site_link.text or site_link.icon|is_icon %}{{ site_link.text }}{% else %}{{ site_link.link|link_domain }}{% endif %}</a>
+                                    {% include_block block %}
                                 </li>
                             {% endfor %}
                             {% if site_settings.theme_supports_color_mode %}
@@ -172,7 +172,17 @@
         <footer class="py-4 py-md-5 mt-5 bg-body-tertiary">
             <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary">
                 <div class="row">
-                    
+                    <div class="col-lg-3 mb-3">
+                        <a class="d-inline-flex align-items-center mb-2 text-body-secondary text-decoration-none" href="/" aria-label="{{ current_site.site_name }}">
+                            {% image site_settings.site_icon max-40x40 class='d-inline-block align-text-top' %}
+                            <span class="fs-5">{{ current_site.site_name }}</span>
+                        </a>
+                        <ul class="list-unstyled small">
+                          <li class="mb-2">Designed and built <a href="https://github.com/naitsok/" target="_blank">K. Tamarov</a> with the great help of <a href="https://wagtail.org" target="_blank">Wagtail</a>, <a href="https://getbootstrap.com" target="_blank">Boostrap</a>, <a href="https://www.djangoproject.com/" target="_blank">Django</a>, and the developers of <a href="https://djangopackages.org/" target="_blank">Django packages</a>.</li>
+                          <li class="mb-2">Code licensed <a href="https://github.com/naitsok/waggylabs-site-dev/blob/main/LICENSE" target="_blank" rel="license noopener">MIT</a>, content <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a>.</li>
+                          <li class="mb-2">Currently v1.0.0-alpha</li>
+                        </ul>
+                      </div>
                 </div>
             </div>
         </footer>

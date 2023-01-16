@@ -4,74 +4,78 @@ from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
-from wagtail.admin.panels import FieldPanel, HelpPanel, ObjectList, TabbedInterface, InlinePanel
+from wagtail.fields import StreamField
+from wagtail.admin.panels import (
+    FieldPanel, HelpPanel, ObjectList, TabbedInterface, InlinePanel)
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Orderable
 
 from waggylabs.widgets import IconInput, ColorInput
+from waggylabs.blocks.links import ExternalLinkBlock, InternalLinkBlock
 
 
-class SiteLink(models.Model):
-    """Class to add links on the navbar. For example, links
-    to social websites."""
-    link = models.URLField(
-        max_length=255,
-        blank=False,
-        help_text=_('Full URL to the website'),
-        verbose_name=_('Link to the website'),
-    )
-    text = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text=_('Text for the link to be displayed. Can be empty '
-                    ' if only the icon to be displayed,'),
-        verbose_name=_('Text of the link'),
-    )
-    icon = models.CharField(
-        max_length=50,
-        blank=True,
-        help_text=_('Icon for the link. Can be empty if no icon '
-                    'to be displayed.'),
-        verbose_name=_('Link icon'),
-    )
-    style = models.CharField(
-        max_length=50,
-        blank=False,
-        choices=[
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-            ('nav-link', _('Link')),
-            ('nav-link active', _('Link active')),
-        ],
-        help_text=_('Select the style for the link. See '
-                    'Bootstrap documentation.'),
-        verbose_name=_('Link style'),
-    )
+# class SiteLink(models.Model):
+#     """Class to add links on the navbar. For example, links
+#     to social websites."""
+#     link = models.URLField(
+#         max_length=255,
+#         blank=False,
+#         help_text=_('Full URL to the website'),
+#         verbose_name=_('Link to the website'),
+#     )
+#     text = models.CharField(
+#         max_length=255,
+#         blank=True,
+#         help_text=_('Text for the link to be displayed. Can be empty '
+#                     ' if only the icon to be displayed,'),
+#         verbose_name=_('Text of the link'),
+#     )
+#     icon = models.CharField(
+#         max_length=50,
+#         blank=True,
+#         help_text=_('Icon for the link. Can be empty if no icon '
+#                     'to be displayed.'),
+#         verbose_name=_('Link icon'),
+#     )
+#     style = models.CharField(
+#         max_length=50,
+#         blank=False,
+#         choices=[
+#             ('btn btn-primary', _('Button primary')),
+#             ('btn btn-secondary', _('Button secondary')),
+#             ('btn btn-success', _('Button success')),
+#             ('btn btn-danger', _('Button danger')),
+#             ('btn btn-warning', _('Button warning')),
+#             ('btn btn-info', _('Button info')),
+#             ('btn btn-outline-primary', _('Button outline primary')),
+#             ('btn btn-outline-secondary', _('Button outline secondary')),
+#             ('btn btn-outline-success', _('Button outline success')),
+#             ('btn btn-outline-danger', _('Button outline danger')),
+#             ('btn btn-outline-warning', _('Button outline warning')),
+#             ('btn btn-outline-info', _('Button outline info')),
+#             ('nav-link', _('Link')),
+#             ('nav-link active', _('Link active')),
+#         ],
+#         help_text=_('Select the style for the link. See '
+#                     'Bootstrap documentation.'),
+#         verbose_name=_('Link style'),
+#     )
     
-    panels = [
-        FieldPanel('link'),
-        FieldPanel('text'),
-        FieldPanel('icon', widget=IconInput),
-        FieldPanel('style'),
-    ]
+#     panels = [
+#         FieldPanel('link'),
+#         FieldPanel('text'),
+#         FieldPanel('icon', widget=IconInput),
+#         FieldPanel('style'),
+#     ]
     
-    class Meta:
-        abstract = True
+#     class Meta:
+#         abstract = True
     
     
-class WaggyLabsSettingsSiteLinks(Orderable, SiteLink):
-    """Class that connects SiteLink with Waggy Labs Settings model."""
-    page = ParentalKey('waggylabs.WaggyLabsSettings', on_delete=models.CASCADE, related_name='site_links')
+# class WaggyLabsSettingsSiteLinks(Orderable, SiteLink):
+#     pass
+# #     """Class that connects SiteLink with Waggy Labs Settings model."""
+# #     page = ParentalKey('waggylabs.WaggyLabsSettings', on_delete=models.CASCADE, related_name='site_links')
 
 
 @register_setting
@@ -151,7 +155,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                     'especially useful if CSS does not support color modes, '
                     'or specific color for the navigation bar was selected. '
                     'Ignored if the uploaded CSS does not support color modes.'),
-        verbose_name=_('Navigation bar color mode')
+        verbose_name=_('Navigation bar color mode'),
     )
     navbar_color = models.CharField(
         max_length=25,
@@ -160,6 +164,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('Choose a specific color and opacity for the navigation bar. '
                     'The color does not work if navigation bar color mode is '
                     'selected to be Auto.'),
+        verbose_name=_('Navigation bar color'),
     )
     class NavbarPlacement(models.TextChoices):
         """Navbar placement choices from the Bootstrap documentation: 
@@ -174,6 +179,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         blank=True,
         help_text=_('Navigation bar placement options: default, '
                     'sticky-top or fixed-top. See Bootstrap documentation.'),
+        verbose_name=_('Navigation bar menu placement')
     )
     class NavbarMenuAlignment(models.TextChoices):
         """Alignment of the menu in the navigation bar."""
@@ -184,8 +190,13 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         choices=NavbarMenuAlignment.choices,
         default=NavbarMenuAlignment.LEFT,
         blank=True,
-        help_text=_('Menu links alignment in the navigation bar.')
+        help_text=_('Menu links alignment in the navigation bar.'),
+        verbose_name=_('Navigation bar menu alignment'),
     )
+    navbar_links = StreamField([
+        ('external_link', ExternalLinkBlock()),
+        ('internal_link', InternalLinkBlock()),
+    ], blank=True, use_json_field=True, verbose_name=_('Navigation bar links'))
 
     # Panels for the Wagtail admin
     site_name_panels = [
@@ -216,10 +227,13 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     ]
     
     social_panels = [
-        HelpPanel(content=_('Links to the external websites can contain icon, text, or icon and text.'),
+        HelpPanel(content=_('Links to the external websites or internal pages, '
+                            'to be displayed in the navigation bar. For example, '
+                            'links to the social media accounts.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
-        InlinePanel('site_links', label='Links to external sites')
+        # InlinePanel('site_links', label='Links to external sites'),
+        FieldPanel('navbar_links'),
     ]
     
     edit_handler = TabbedInterface([
