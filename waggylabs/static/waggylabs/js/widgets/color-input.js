@@ -1,30 +1,58 @@
 
 (() => {
-    function createColorWidgets() {
-        var elements = document.querySelectorAll('input.waggylabs-color-input');
-
-        for (let i = 0; i < elements.length; i++) {
-            colorAttach(elements[i].id);
-        }
-    }
-
     window.addEventListener("DOMContentLoaded", () => {
-        // Check we are not inside a StreamField - then icon-input-adapter.js inits the autocompletes
-        if (document.querySelector("[data-streamfield-stream-container]") === null) {
-            createColorWidgets();
-            let observer = new MutationObserver(() => {
-                setTimeout(() => { 
-                    createColorWidgets(); 
-                }, 50);
-            });
-            observer.observe(document.getElementById("main"), { 
-                childList: true,
-                subtree: true, 
-            });
-        }
+        createColorWidgets();
     });
 })();
 
+
+/**
+ * Creates color widgets if they are not in StreamField
+ */
+function createColorWidgets() {
+    var elements = document.querySelectorAll('input.waggylabs-color-input');
+    var observedElements = [];
+
+    for (let i = 0; i < elements.length; i++) {
+        // Go through parent elements and check if there is streamfield container
+        let current_el = elements[i];
+        while (current_el.parentNode) {
+            current_el = current_el.parentNode;
+            if (current_el.hasAttribute('data-streamfield-stream-container')) {
+                // We are inside streamfield - telepath will handle initialization
+                break;
+            }
+            if (current_el.hasAttribute('role') && current_el.getAttribute('role') === 'tabpanel') {
+                // We are inside a section and need to monitor its content and init 
+                // additional widgets if they appear.
+                colorAttach(elements[i].id);
+                if (observedElements.indexOf(current_el.id) < 0) {
+                    let observer = new MutationObserver(() => {
+                        setTimeout(() => { 
+                            updateColorWidgets(current_el.id); 
+                        }, 50);
+                    });
+                    observer.observe(current_el, { 
+                        childList: true,
+                        subtree: true, 
+                    });
+                    observedElements.push(current_el.id);
+                }
+                break;
+            }
+        }
+    }
+}
+
+/**
+ * Update color widgets if more color inputs are dynamically added
+ * @param {string} id - id of element inside which color widgets are updated
+ */
+function updateColorWidgets(id) {
+    document.getElementById(id).querySelectorAll('input.waggylabs-color-input').forEach((el) => {
+        colorAttach(el.id);
+    });
+}
 
 /**
  * Attaches the color and opacity input elements to the hidden input associates with the\

@@ -11,7 +11,7 @@
 
         var element = document.getElementById(id);
         element.value = initialState;
-        autocompleteAttach(element);
+        autocompleteAttach(id);
 
         // define public API functions for the widget:
         // https://docs.wagtail.io/en/latest/reference/streamfield/widget_api.html
