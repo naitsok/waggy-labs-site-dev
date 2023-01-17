@@ -67,16 +67,16 @@
                     {% if site_settings.show_site_name %}{{ current_site.site_name }}{% endif %}
                     {% if site_settings.site_slogan %}<br /><span class="navbar-text fs-6 fst-italic px-4 py-0 my-0"><small>{{ site_settings.site_slogan }}</small></span>{% endif %}
                 </a>
-                <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler d-flex d-lg-none order-3 p-2 border-0 shadow-none fs-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-label="Toggle navigation">
+                    <i class="bi bi-list"></i>
                 </button>
-                <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
+                <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true" role="dialog">
                     <div class="offcanvas-header px-4 pb-0">
-                      <h5 class="offcanvas-title" id="bdNavbarOffcanvasLabel">{{ current_site.site_name }}</h5>
-                      <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
+                        <h5 class="offcanvas-title" id="bdNavbarOffcanvasLabel">{{ current_site.site_name }}</h5>
+                        <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
                     <div class="offcanvas-body p-4 pt-0 p-lg-0">
-                        <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                        <ul class="navbar-nav flex-row flex-wrap">
                             {% main_menu template="waggylabs/menus/main_menu.html" %}
                         </ul>
                         <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
@@ -112,7 +112,7 @@
                                     <hr class="d-lg-none my-2">
                                 </li>
                                 {% endif %}
-                                <li class="nav-item">
+                                <li class="nav-item" style="--bs-navbar-nav-link-padding-x: 0px;">
                                     {% include_block block %}
                                 </li>
                             {% endfor %}
@@ -178,11 +178,15 @@
                             <span class="fs-5">{{ current_site.site_name }}</span>
                         </a>
                         <ul class="list-unstyled small">
-                          <li class="mb-2">Designed and built <a href="https://github.com/naitsok/" target="_blank">K. Tamarov</a> with the great help of <a href="https://wagtail.org" target="_blank">Wagtail</a>, <a href="https://getbootstrap.com" target="_blank">Boostrap</a>, <a href="https://www.djangoproject.com/" target="_blank">Django</a>, and the developers of <a href="https://djangopackages.org/" target="_blank">Django packages</a>.</li>
-                          <li class="mb-2">Code licensed <a href="https://github.com/naitsok/waggylabs-site-dev/blob/main/LICENSE" target="_blank" rel="license noopener">MIT</a>, content <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a>.</li>
-                          <li class="mb-2">Currently v1.0.0-alpha</li>
+                            <li class="mb-2"><i class="bi bi-c-circle"></i></li>
+                            <li class="mb-2">Content licensed <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a>.</li>
+                            <li class="mb-2">
+                                Driven by <a href="https://github.com/naitsok/waggylabs-site-dev/" target="_blank">Waggy Labs</a>, 
+                                a <a href="https://wagtail.org" target="_blank">Wagtail</a> powered research group and scientific blog CMS built by <a href="https://github.com/naitsok/" target="_blank">K. Tamarov</a>.
+                                Code licensed <a href="https://github.com/naitsok/waggylabs-site-dev/blob/main/LICENSE" target="_blank" rel="license noopener">MIT</a>.
+                            </li>
                         </ul>
-                      </div>
+                    </div>
                 </div>
             </div>
         </footer>

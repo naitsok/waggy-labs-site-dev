@@ -2009,7 +2009,7 @@ def collect_icons(icons_css):
     matches.sort()
     d = OrderedDict()
     for m in matches:
-        d[m[3:].replace('-', ' ')] = m
+        d[m[3:].replace('-', ' ')] = 'bi ' + m
     return d        
 
 

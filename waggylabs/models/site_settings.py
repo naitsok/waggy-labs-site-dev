@@ -126,7 +126,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         verbose_name=_('Site name alignment'),
     )
     
-    # Settings related to themes and navigation bar customization
+    # Theme and navigation bar style settings
     site_theme = models.FileField(
         blank=True,
         help_text=_('CSS file with theme to be used instead of default Bootstrap theme.'),
@@ -152,8 +152,8 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('Navigation bar color mode: auto, light or dark. '
                     'Auto mode changes according to the global color mode '
                     'selection. Light or dark mode keep the selected mode, '
-                    'especially useful if CSS does not support color modes, '
-                    'or specific color for the navigation bar was selected. '
+                    'which isespecially useful if CSS does not support color '
+                    'modes, or specific color for the navigation bar was selected. '
                     'Ignored if the uploaded CSS does not support color modes.'),
         verbose_name=_('Navigation bar color mode'),
     )
@@ -193,10 +193,17 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('Menu links alignment in the navigation bar.'),
         verbose_name=_('Navigation bar menu alignment'),
     )
+    
+    # Navigation bar links to e.g. social media accounts
     navbar_links = StreamField([
         ('external_link', ExternalLinkBlock()),
         ('internal_link', InternalLinkBlock()),
     ], blank=True, use_json_field=True, verbose_name=_('Navigation bar links'))
+    
+    # Footer settings
+    # copyright_info = models.CharField(
+        
+    # )
 
     # Panels for the Wagtail admin
     site_name_panels = [
@@ -239,7 +246,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     edit_handler = TabbedInterface([
         ObjectList(site_name_panels, heading=_('Site name settings')),
         ObjectList(theme_panels, heading=_('Theme settings')),
-        ObjectList(social_panels, heading=_('External links'))
+        ObjectList(social_panels, heading=_('Navigation bar links'))
     ])
     
     class Meta:

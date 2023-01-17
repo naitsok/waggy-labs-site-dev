@@ -85,12 +85,12 @@ class ExternalLinkBlock(StructBlock):
         required=True,
         label=_('Link to external site'),
     )
+    icon = IconBlock(label=_('Icon'))
+    style = StyleChoiceBlock()
     text = CharBlock(
         required=False,
         label=_('Text of the link'),
     )
-    icon = IconBlock(label=_('Icon'))
-    style = StyleChoiceBlock()
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -114,12 +114,12 @@ class InternalLinkBlock(StructBlock):
     link = PageChooserBlock(
         label=_('Link to a page of this site')
     )
+    icon = IconBlock(label=_('Icon'))
+    style = StyleChoiceBlock()
     text = CharBlock(
         required=False,
         label=_('Text instead of page title'),
     )
-    icon = IconBlock(label=_('Icon'))
-    style = StyleChoiceBlock()
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -141,12 +141,12 @@ class IconEmailBlock(StructBlock):
         required=True,
         label=_('Email address'),
     )
+    icon = IconBlock(required=False)
+    style = StyleChoiceBlock()
     text = CharBlock(
         required=False,
         label=_('Text to be displayed instead of address'),
     )
-    icon = IconBlock(required=False)
-    style = StyleChoiceBlock()
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
