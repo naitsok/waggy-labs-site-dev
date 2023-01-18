@@ -182,49 +182,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
 
     # Methods
     
-    @classmethod
-    def _check_cite_block(cls, block):
-        """Internal method to check the block is one that gets cited."""
-        return (block.block_type == 'citation' 
-                or block.block_type == 'document')
-    
-    @classmethod
-    def _get_cite_blocks(cls, stream_block):
-        """Internal method to get all citation blocks
-        within a StreamBlock"""
-        cite_blocks = []
-        for block in stream_block:
-            if (block.block_type == 'citation' 
-                or block.block_type == 'document'):
-                cite_blocks.append(block)
-        return cite_blocks
-    
-    @classmethod
-    def _get_cite_blocks_from_accordion(cls, accordion_block):
-        """Gets citation and document blocks located inside of
-        AccordionBlock."""
-        cite_blocks = []
-        for accordion_item in accordion_block.value['items']:
-            for acc_item_block in accordion_item['body']:
-                if SitePage._check_cite_block(acc_item_block):
-                    cite_blocks.append(acc_item_block)
-        return cite_blocks
-    
-    @classmethod
-    def _get_cite_blocks_from_columns(cls, columns_block):
-        """Gets citation and document blocks located inside of
-        ColumnsBlock."""
-        cite_blocks = []
-        for columns_item in columns_block.value['items']:
-            for col_item_block in columns_item['body']:
-                if SitePage._check_cite_block(col_item_block):
-                    cite_blocks.append(col_item_block)
-                if col_item_block.block_type == 'accordion':
-                    cite_blocks = (cite_blocks +
-                                   SitePage._get_cite_blocks_from_accordion(col_item_block))
-        return cite_blocks
-    
-    
     def citation_blocks(self):
         """Returns citations and documents found in body StreamField and
         its sub blocks."""   

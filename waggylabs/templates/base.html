@@ -168,7 +168,7 @@
         
         <div class="container">    
             <div class="row" role="main">
-                <main class="col-md-8 offset-md-2">
+                <main class="{% main_class site_settings page %}">
                     {% block content %}
                     {# Overwrite this in the page template to display page content #}
                     {% endblock %}
