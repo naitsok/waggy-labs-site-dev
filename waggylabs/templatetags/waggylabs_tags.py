@@ -39,17 +39,3 @@ def navbar_class(site_settings):
     css_class = css_class + ' ' + site_settings.navbar_placement
     
     return css_class
-
-@register.simple_tag(takes_context=False)
-def navbar_style(site_settings):
-    """Generates style property based on the WaggyLabsSettings
-    for the <header> element containing navigation bar"""
-    style = ''
-    if site_settings.navbar_color:
-        style = f'background: {site_settings.navbar_color};'
-        if site_settings.navbar_theme == 'light':
-            style = f'{style} filter: brightness(120%);'
-        if site_settings.navbar_theme == 'dark':
-            style = f'{style} filter: brightness(80%);'
-            
-    return style

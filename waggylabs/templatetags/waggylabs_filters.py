@@ -43,7 +43,7 @@ def link_https(value):
 def link_domain(value):
     """Gets domain name from URL."""
     domain = urlparse(value).netloc.lower()
-    return domain.split('.')[-2:-1].title()
+    return domain.split('.')[0].title()
     
 
 @register.filter(name='col_class')

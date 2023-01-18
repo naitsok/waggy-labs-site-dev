@@ -42,9 +42,9 @@
         <title>
         {# Page title block. Overwrite in the page template if needed. #}
         {% block title %}
-        {% if current_site.site_name and site_settings.show_site_name and site_settings.site_name_alignment == 'L' %}
+        {% if current_site.site_name and site_settings.show_site_name and site_settings.site_name_alignment == 'before_title' %}
             {{ current_site.site_name }} {{ site_settings.site_name_separator }} {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-        {% elif current_site.site_name and site_settings.show_site_name and site_settings.site_name_alignment == "R" %}
+        {% elif current_site.site_name and site_settings.show_site_name and site_settings.site_name_alignment == "after_title" %}
             {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %} {{ site_settings.site_name_separator }} {{ current_site.site_name }}
         {% else %}
             {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
@@ -58,7 +58,7 @@
         {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
         <header class="{% navbar_class site_settings %}" 
             {% if site_settings.theme_supports_color_mode and site_settings.navbar_theme %}data-bs-theme="{{ site_settings.navbar_theme }}"{% endif %}
-            style="{% navbar_style site_settings %}">
+            {% if site_settings.navbar_color %} style="background: {{ site_settings.navbar_color }}"{% endif %}>
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
                     {% image site_settings.site_icon max-40x40 class='d-inline-block align-text-top' %}
@@ -76,10 +76,17 @@
                         <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
                     <div class="offcanvas-body p-4 pt-0 p-lg-0">
-                        <ul class="navbar-nav flex-row flex-wrap">
+                        <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'left' %}ms-md-auto{% endif %}">
                             {% main_menu template="waggylabs/menus/main_menu.html" %}
+                            <li class="nav-item"><a href="#" class="nav-link py-2 px-0 px-lg-2">Link</a></li>
                         </ul>
-                        <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                        <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'right' %}ms-md-auto{% endif %}">
+                            {% if site_settings.navbar_menu_alignment == 'right' %}
+                            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                                <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
+                                <hr class="d-lg-none my-2">
+                            </li>
+                            {% endif %}
                             <li class="nav-item dropdown">
                                 <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
                                     id="bd-search" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
@@ -178,8 +185,12 @@
                             <span class="fs-5">{{ current_site.site_name }}</span>
                         </a>
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><i class="bi bi-c-circle"></i></li>
-                            <li class="mb-2">Content licensed <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a>.</li>
+                            {% if site_settings.copyright_info or site_settings.copyright_icon|is_icon %}
+                            <li class="mb-2">{% if site_settings.copyright_icon|is_icon %}<i class="{{ site_settings.copyright_icon|icon_class }}"></i>&nbsp;{% endif %}{{ site_settings.copyright_info }}</li>
+                            {% endif %}
+                            {% if site_settings.content_license_link or site_settings.content_license_text %}
+                            <li class="mb-2">Content licensed {% if site_settings.content_license_link %}<a href="{{ site_settings.content_license_link }}" target="_blank" rel="license noopener">{% if site_settings.content_license_text %}{{ site_settings.content_license_text }}{% else %}{{ site_settings.content_license_link|link_domain }}{% endif %}</a>{% else %}{{ site_settings.content_license_text }}{% endif %}.</li>
+                            {% endif %}
                             <li class="mb-2">
                                 Driven by <a href="https://github.com/naitsok/waggylabs-site-dev/" target="_blank">Waggy Labs</a>, 
                                 a <a href="https://wagtail.org" target="_blank">Wagtail</a> powered research group and scientific blog CMS built by <a href="https://github.com/naitsok/" target="_blank">K. Tamarov</a>.

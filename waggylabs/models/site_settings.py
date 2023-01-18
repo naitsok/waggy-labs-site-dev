@@ -6,7 +6,7 @@ from modelcluster.models import ClusterableModel
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import (
-    FieldPanel, HelpPanel, ObjectList, TabbedInterface, InlinePanel)
+    FieldPanel, HelpPanel, ObjectList, TabbedInterface, MultiFieldPanel)
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Orderable
 
@@ -91,8 +91,8 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        help_text=_('Image that appears in navigation bar and in the browser tab.'),
-        verbose_name=_('Navigation bar and browser tab image'),
+        help_text=_('Brand icon that appears in navigation bar and in the browser tab.'),
+        verbose_name=_('Site icon'),
     )
     site_slogan = models.CharField(
         max_length=255,
@@ -116,10 +116,10 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     class SiteNameAlignment(models.TextChoices):
         """Alignment choices for the site name in navbar: 
         before page title or after page title."""
-        LEFT = 'L', _('Before page title')
-        RIGHT = 'R', _('After page title')
+        LEFT = 'before_title', _('Before page title')
+        RIGHT = 'after_title', _('After page title')
     site_name_alignment = models.CharField(
-        max_length=1,
+        max_length=25,
         choices=SiteNameAlignment.choices,
         default=SiteNameAlignment.RIGHT,
         help_text=_('The alignment of site name: before or after page title.'),
@@ -171,7 +171,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         default, sticky-top or fixed-top."""
         DEFAULT = '', _('Default')
         STICKY_TOP = 'sticky-top', _('Sticky top')
-        FIXED_TOP = 'fixed-top', _('Fixed top')
+        # FIXED_TOP = 'fixed-top', _('Fixed top')
     navbar_placement = models.CharField(
         max_length=10,
         choices=NavbarPlacement.choices,
@@ -183,13 +183,14 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     )
     class NavbarMenuAlignment(models.TextChoices):
         """Alignment of the menu in the navigation bar."""
-        LEFT = '', _('Left')
-        RIGHT = 'ms-md-auto', _('Right')
+        LEFT = 'left', _('Left')
+        MIDDLE = 'middle', _('Middle')
+        RIGHT = 'right', _('Right')
     navbar_menu_alignment = models.CharField(
         max_length=10,
         choices=NavbarMenuAlignment.choices,
         default=NavbarMenuAlignment.LEFT,
-        blank=True,
+        blank=False,
         help_text=_('Menu links alignment in the navigation bar.'),
         verbose_name=_('Navigation bar menu alignment'),
     )
@@ -200,53 +201,113 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         ('internal_link', InternalLinkBlock()),
     ], blank=True, use_json_field=True, verbose_name=_('Navigation bar links'))
     
+    # Content settings
+    class ContentWidth(models.TextChoices):
+        """Width of the main content. Final width depends on the presence of 
+        the sidebar. See waggylabs_tags.py for width calculation."""
+        NARROW = 'narrow', _('Narrow')
+        MEDIUM = 'medium', _('Medium')
+        WIDE = 'wide', _('Wide')
+    content_width = models.CharField(
+        max_length=10,
+        choices=ContentWidth.choices,
+        default=ContentWidth.MEDIUM,
+        blank=False,
+        help_text=_('Sets the width of the main content of any page. '
+                    'Final width depends on the presence of a sidebar on '
+                    'a particlar page.'),
+        verbose_name=_('Page content width'),
+    )
+    
     # Footer settings
-    # copyright_info = models.CharField(
-        
-    # )
+    copyright_icon = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Icon to used in front of the copyright phrase.'),
+        verbose_name=_('Copyright icon'),
+    )
+    copyright_info = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Information about the copyright holder.'),
+        verbose_name=_('Copyright information'),
+    )
+    content_license_link = models.URLField(
+        blank=True,
+        help_text=_('Link to the license for the content. For example, '
+                    'to link to CC BY 3.0 license text.'),
+        verbose_name=_('Link to content license'),
+    )
+    content_license_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Text to put for the license link'),
+        verbose_name=_('Text of the license link'),
+    )
 
     # Panels for the Wagtail admin
     site_name_panels = [
-        HelpPanel(content=_('Edit settings for the currently selected Waggy Labs site'),
+        HelpPanel(content=_('Site brand settings include icon, '
+                            'site name, optional slogan, and their '
+                            'alignment settings.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
         FieldPanel('site_icon'),
         FieldPanel('site_slogan'),
         FieldPanel('show_site_name'),
         FieldPanel('site_name_separator'),
-        FieldPanel('site_name_alignment')
+        FieldPanel('site_name_alignment'),
     ]
     
-    theme_panels = [
-        HelpPanel(content=_('Choose the Bootstrap theme for your site and upload the '
-                            'Bootstrap CSS file to be used istead of default one. Select '
-                            'the correct navigation bar theme according to the '
-                            'chosen CSS file. Select the desired placement of the '
-                            'navigation bar. See Bootstrap documentation.'),
+    content_panels = [
+        HelpPanel(content=_('Content settings regulate the general appearance '
+                            'of the site. They include the custom Bootstrap CSS theme, '
+                            'if this theme supports color modes, and the width of the '
+                            'page content.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
         FieldPanel('site_theme'),
         FieldPanel('theme_supports_color_mode'),
+        FieldPanel('content_width'),
+    ]
+    
+    navbar_panels = [
+        HelpPanel(content=_('Navigation bar settings define the color of the '
+                            'navigation bar, its color mode, menu location, additional '
+                            'links e.g. to social media accounts.'
+                            'Select the correct navigation bar theme especially if '
+                            'custom CSS file was used. Select the desired placement of the '
+                            'navigation bar and the alignment of the menu links.'),
+                  heading=_('Explanation of the settings'),
+                  classname='title'),
         FieldPanel('navbar_theme'),
         FieldPanel('navbar_color', widget=ColorInput),
         FieldPanel('navbar_placement'),
-        FieldPanel('navbar_menu_alignment')
+        FieldPanel('navbar_menu_alignment'),
+        FieldPanel('navbar_links'),
     ]
     
-    social_panels = [
-        HelpPanel(content=_('Links to the external websites or internal pages, '
-                            'to be displayed in the navigation bar. For example, '
-                            'links to the social media accounts.'),
+    footer_panels = [
+        HelpPanel(content=_('Footer settings include content lisencing information '
+                            'and general content located in the footer, such as '
+                            'duplicating navigation bar menu, block with external '
+                            'and/or internal links, and blocks related to posts in '
+                            'the blog.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
-        # InlinePanel('site_links', label='Links to external sites'),
-        FieldPanel('navbar_links'),
+        MultiFieldPanel([
+            FieldPanel('copyright_icon', widget=IconInput),
+            FieldPanel('copyright_info'),
+            FieldPanel('content_license_link'),
+            FieldPanel('content_license_text'),
+        ], heading=_('Content license settings')),
     ]
     
     edit_handler = TabbedInterface([
         ObjectList(site_name_panels, heading=_('Site name settings')),
-        ObjectList(theme_panels, heading=_('Theme settings')),
-        ObjectList(social_panels, heading=_('Navigation bar links'))
+        ObjectList(content_panels, heading=_('Content settings')),
+        ObjectList(navbar_panels, heading=_('Navigation bar settings')),
+        ObjectList(footer_panels, heading=_('Footer settings')),
     ])
     
     class Meta:
