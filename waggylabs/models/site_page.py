@@ -58,12 +58,14 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
                     'situatively, e.g. when it appears in a list or a card '
                     'grid.')
     )
+    
     # Content fields
     body = StreamField(
         BodyBlock(),
         use_json_field=True,
     )
-    # Settings fields
+    
+    # Content settings fields
     embed_caption_label = models.CharField(
         max_length=50,
         blank=True,
@@ -100,6 +102,15 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         verbose_name=_('Label for tables'),
         help_text=_('For example, Table. The label will be used to create '
                     'table labels before caption. Leave empty for no label.'),
+    )
+    
+    # Sidebar settings fields
+    show_sidebar = models.BooleanField(
+        blank=True,
+        default=False,
+        help_text=_('If checked, sidebar with the selected panels '
+                    'appears on the page.'),
+        verbose_name=_('Show sidebar'),
     )
 
     # Search index configuration
@@ -141,7 +152,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
                 FieldPanel('show_header_image_on_page'),
             ],
             heading=_('Header image')
-        ),  
+        ),
     ]
 
     settings_panels = Page.settings_panels + [
