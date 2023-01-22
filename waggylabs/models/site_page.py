@@ -5,9 +5,9 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin import widgets
 from wagtail.admin.panels import FieldPanel, HelpPanel, MultiFieldPanel
-from wagtail.core.models import Page
-from wagtail.core.fields import StreamField
-from wagtail.core.blocks import CharBlock, PageChooserBlock
+from wagtail.models import Page
+from wagtail.fields import StreamField
+from wagtail.blocks import CharBlock, PageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.search import index
@@ -21,6 +21,7 @@ from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
 from waggylabs.blocks.body import BodyBlock
+from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
 
 
@@ -105,12 +106,20 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     )
     
     # Sidebar settings fields
-    show_sidebar = models.BooleanField(
+    # show_sidebar = models.BooleanField(
+    #     blank=True,
+    #     default=False,
+    #     help_text=_('If checked, sidebar with the selected panels '
+    #                 'appears on the page.'),
+    #     verbose_name=_('Show sidebar'),
+    # )
+    sidebar = StreamField(
+        [
+            ('sidebar', SidebarBlock()),
+        ],
+        max_num=1,
         blank=True,
-        default=False,
-        help_text=_('If checked, sidebar with the selected panels '
-                    'appears on the page.'),
-        verbose_name=_('Show sidebar'),
+        use_json_field=True
     )
 
     # Search index configuration
@@ -156,15 +165,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     ]
 
     settings_panels = Page.settings_panels + [
-        menupage_panel,
-        # MultiFieldPanel(
-        #     [
-        #         FieldPanel('show_search'),
-        #         FieldPanel('show_tag_cloud'),
-        #         FieldPanel('show_categories'),
-        #     ],
-        #     heading=_('Page settings')
-        # ),
         MultiFieldPanel(
             [
                 FieldPanel('embed_caption_label'),
@@ -175,6 +175,16 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
             ],
             heading=_('Label settings'),
         ),
+        FieldPanel('sidebar'),
+        menupage_panel,
+        # MultiFieldPanel(
+        #     [
+        #         FieldPanel('show_search'),
+        #         FieldPanel('show_tag_cloud'),
+        #         FieldPanel('show_categories'),
+        #     ],
+        #     heading=_('Page settings')
+        # ),
         MultiFieldPanel(
             [
                 ReadOnlyPanel('first_published_at', heading='First published at'),

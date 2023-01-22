@@ -97,11 +97,11 @@ class CardGridBlock(StructBlock):
         default='',
         label=_('Number of columns'),
     )
-    cards = ListBlock(CardBlock())
+    items = ListBlock(CardBlock())
     
     class Meta:
         icon = 'form'
         label = _('Card grid')
         template = 'waggylabs/frontend_blocks/card_grid.html'
         form_template = 'waggylabs/blocks/card_grid.html'
-        label_format = _('Card grid: {cards}')
+        label_format = _('Card grid: {items}')

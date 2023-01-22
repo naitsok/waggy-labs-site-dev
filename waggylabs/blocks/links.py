@@ -1,14 +1,13 @@
-from django.forms import CharField
-from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
     StructBlock, CharBlock,
     PageChooserBlock, URLBlock,
-    ChoiceBlock, FieldBlock, EmailBlock
+    ChoiceBlock, EmailBlock
     )
 
-from waggylabs.widgets import IconInput, DisabledOptionSelect
+from waggylabs.blocks.icon import IconBlock
+from waggylabs.widgets import DisabledOptionSelect
 
 
 class StyleChoiceBlock(ChoiceBlock):
@@ -50,33 +49,6 @@ class StyleChoiceBlock(ChoiceBlock):
             validators,
             label=label,
             **kwargs)
-        
-        
-class IconBlock(FieldBlock):
-    """Icon block with the IconInput widget."""
-    def __init__(
-        self,
-        required=False,
-        help_text=None,
-        max_length=None,
-        min_length=None,
-        validators=(),
-        **kwargs,
-    ):
-        self.field_options = {
-            "required": required,
-            "help_text": help_text,
-            "max_length": max_length,
-            "min_length": min_length,
-            "validators": validators,
-        }
-        super().__init__(**kwargs)
-    
-    @cached_property
-    def field(self):
-        field_kwargs = { 'widget': IconInput() }
-        field_kwargs.update(self.field_options)
-        return CharField(**field_kwargs)
 
 
 class ExternalLinkBlock(StructBlock):
