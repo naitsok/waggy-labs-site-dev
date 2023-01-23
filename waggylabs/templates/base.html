@@ -166,13 +166,18 @@
             </nav>
         </header>
         
-        <div class="container">    
+        <div class="container mt-5">    
             <div class="row" role="main">
                 <main class="{% main_class site_settings page %}">
                     {% block content %}
                     {# Overwrite this in the page template to display page content #}
                     {% endblock %}
                 </main>
+                {% if page.show_sidebar %}
+                <div class="col-md-4">
+                    {% include_block page.sidebar with id=page.sidebar.id %}
+                </div>
+                {% endif %}
             </div>
         </div>
 

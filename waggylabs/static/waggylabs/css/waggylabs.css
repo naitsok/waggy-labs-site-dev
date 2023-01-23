@@ -11,6 +11,8 @@
 .figure-caption p { display: inline; }
 /* Tables */
 .table p { margin-bottom: 0px; }
+/* links in navigation bar and car grid */
+.card-footer a.nav-link { display: inline; text-decoration: underline; } 
 
 /* Styles for references to figures, tables, listings */
 span.reference { font-family: 'Courier New', Courier; font-size: 100%; font-weight: bold; }

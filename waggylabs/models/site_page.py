@@ -113,6 +113,12 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     #                 'appears on the page.'),
     #     verbose_name=_('Show sidebar'),
     # )
+    show_sidebar = models.BooleanField(
+        blank=True,
+        default=False,
+        verbose_name=_('Show sidebar'),
+        help_text=_('Controls the display of sidebar.')
+    )
     sidebar = StreamField(
         [
             ('sidebar', SidebarBlock()),
@@ -175,7 +181,13 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
             ],
             heading=_('Label settings'),
         ),
-        FieldPanel('sidebar'),
+        MultiFieldPanel(
+            [
+                FieldPanel('show_sidebar'),
+                FieldPanel('sidebar'),
+            ],
+            heading=_('Sidebar settings'),
+        ),
         menupage_panel,
         # MultiFieldPanel(
         #     [

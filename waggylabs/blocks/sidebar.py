@@ -12,7 +12,7 @@ from waggylabs.widgets import DisabledOptionSelect
 class TableOfContentsBlock(StructBlock):
     """Block to add table of contents in the sidebar."""
     title = CharBlock(
-        required=True,
+        required=False,
         label=_('Title'),
         help_text=_('Title to appear on the tab.'),
     )
@@ -31,7 +31,7 @@ class VisualPreviewBlock(StructBlock):
     """Block to add thumbnails on visuals to sidebar.
     Embeds, equations, """
     title = CharBlock(
-        required=True,
+        required=False,
         label=_('Title'),
         help_text=_('Title to appear on the tab.'),
     )
@@ -73,7 +73,7 @@ class CitationsBlock(StructBlock):
     """Adds block with references to the side bar. Only one such block can be
     added."""
     title = CharBlock(
-        required=True,
+        required=False,
         label=_('Title'),
         help_text=_('Title to appear on the tab.'),
     )
@@ -109,34 +109,64 @@ class SidebarBlock(StructBlock):
         required=True,
         choices=[
             ('', _('Choose tabs style')),
-            ('nav nav-tabs', ('Tabs')),
-            ('nav nav-pills', ('Pills')),
-            ('nav nav-pills nav-fill', ('Wide pills')),
+            ('nav nav-tabs', _('Tabs')),
+            ('nav nav-pills', _('Pills')),
+            ('nav nav-pills nav-fill', _('Wide pills')),
         ],
         default='',
         label=_('Tabs style'),
     )
-    tabs_justify = ChoiceBlock(
+    tab_buttons_style = ChoiceBlock(
+        required=True,
+        choices=[
+            ('', _('Choose button style')),
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
+            ('nav-link', _('Navigation bar link')),
+            ('link-primary', _('Primary link')),
+            ('link-secondary', _('Secondary link')),
+            ('link-success', _('Success link')),
+            ('link-danger', _('Danger link')),
+            ('link-warning', _('Warning link')),
+            ('link-info', _('Info link')),
+            ('link-light', _('Light link')),
+            ('link-dark', _('Dark link')),
+        ],
+        default='',
+        label=_('Tab buttons style'),
+    )
+    tab_buttons_orientation = ChoiceBlock(
+        required=True,
+        choices=[
+            ('', _('Choose button orientation')),
+            ('horizontal', _('Horizontal')),
+            ('vertical', _('Vertical')),
+        ],
+        default='',
+        label=_('Tabs orientation'),
+    )
+    tab_buttons_justify = ChoiceBlock(
         required=True,
         choices=[
             ('', _('Choose horizontal alignment')),
-            ('justify-content-start', ('Align left')),
-            ('justify-content-center', ('Align center')),
-            ('justify-content-end', ('Align right')),
+            ('justify-content-start', _('Align left')),
+            ('justify-content-center', _('Align center')),
+            ('justify-content-end', _('Align right')),
         ],
         default='',
         label=_('Tabs orientation'),
     )
-    tabs_orientation = ChoiceBlock(
-        required=True,
-        choices=[
-            ('', _('Choose orientation')),
-            ('horizontal', ('Horizontal')),
-            ('vertical', ('Vertical')),
-        ],
-        default='',
-        label=_('Tabs orientation'),
-    )
+    
     items = SidebarTabsBlock()
     
     class Meta:
@@ -145,4 +175,9 @@ class SidebarBlock(StructBlock):
         template = 'waggylabs/frontend_blocks/sidebar.html'
         form_template = 'waggylabs/blocks/sidebar.html'
         label_format = _('Sidebar: {items}')
+        help_text = _('Choose the style of the sidebar and which panels to use. '
+                      'Note that some settings are incompartible. If tabs style is '
+                      '"Tabs", then only link styles will be used for titles. '
+                      'Vertical orientation of tab buttons does not support "Tabs" '
+                      'style.')
     

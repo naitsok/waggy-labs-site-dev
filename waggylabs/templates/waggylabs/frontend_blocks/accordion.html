@@ -14,7 +14,7 @@
               {% for block in item.body %}
                 {% if block.block_type != 'citation' and block.block_type != 'document' %}
                 {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
-                {% include_block block %}
+                {% include_block block with id=block.id %}
                 {% endif %}
               {% endfor %}
             </div>
