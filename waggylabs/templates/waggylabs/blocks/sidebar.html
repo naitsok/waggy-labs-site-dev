@@ -9,20 +9,23 @@
         </div>
     </span>
     {% endif %}
-    <div class="waggylabs-grid-container-2">
+    <div class="waggylabs-grid-container-3">
         <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_style.block.name }}">
             {{ children.tabs_style.render_form }}{% if children.tabs_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
         </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tab_buttons_style.block.name }}">
-            {{ children.tab_buttons_style.render_form }}{% if children.tab_buttons_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.buttons_style.block.name }}">
+            {{ children.buttons_style.render_form }}{% if children.buttons_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_font_size.block.name }}">
+            {{ children.tabs_font_size.render_form }}{% if children.tabs_font_size.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
         </div>
     </div>
-    <div class="waggylabs-grid-container-2">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tab_buttons_orientation.block.name }}">
-            {{ children.tab_buttons_orientation.render_form }}{% if children.tab_buttons_orientation.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
+    <div class="waggylabs-grid-container-3">
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_orientation.block.name }}">
+            {{ children.tabs_orientation.render_form }}{% if children.tabs_orientation.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
         </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tab_buttons_justify.block.name }}">
-            {{ children.tab_buttons_justify.render_form }}{% if children.tab_buttons_justify.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_justify.block.name }}">
+            {{ children.tabs_justify.render_form }}{% if children.tabs_justify.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
         </div>
     </div>
     <div data-contentpath="{{ children.items.block.name }}">

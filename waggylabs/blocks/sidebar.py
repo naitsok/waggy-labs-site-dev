@@ -1,4 +1,5 @@
 
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
@@ -21,10 +22,13 @@ class TableOfContentsBlock(StructBlock):
         label=_('Icon'),
     )
     
+    def render_basic(self, value, context=None):
+        return mark_safe('<div class="waggylabs-sidebar-toc"></div>')
+    
     class Meta:
         icon = 'list-ul'
         label = _('Table of contents')
-        help_text = _('Adds table of contents tab to the sidebar.') 
+        help_text = _('Adds table of contents tab to the sidebar.')
  
         
 class VisualPreviewBlock(StructBlock):
@@ -60,6 +64,27 @@ class VisualPreviewBlock(StructBlock):
         label=_('Include tables'),
     )
     
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+    
+    def render(self, value, context):
+        page = context['page']
+        block_types = {
+            'embed': value['include_embeds'],
+            'equation': value['include_equations'],
+            'figure': value['include_figures'],
+            'listing': value['include_listings'],
+            'table': value['include_tables'],
+            'table_figure': value['include_tables'],
+        }
+        visuals = []
+        for block in page.body:
+            if block.block_type in block_types and block_types[block.block_type]:
+                visuals.append(block)
+        value['visuals'] = visuals
+        
+        return super().render(value, context)
+    
     class Meta:
         icon = 'form'
         label = _('Visuals')
@@ -67,6 +92,7 @@ class VisualPreviewBlock(StructBlock):
                       'one such sidebar tab can be added with different visuals '
                       'selected. Selected visuals will appear as thumbnails '
                       'in the sidebar and open in a dialog box for the preview.')
+        template = 'waggylabs/frontend_blocks/visuals_preview.html'
         
         
 class CitationsBlock(StructBlock):
@@ -81,6 +107,9 @@ class CitationsBlock(StructBlock):
         required=False,
         label=_('Icon'),
     )
+    
+    def render_basic(self, value, context=None):
+        return mark_safe('<div class="waggylabs-sidebar-citations"></div>')
     
     class Meta:
         icon = 'list-ol'
@@ -116,7 +145,7 @@ class SidebarBlock(StructBlock):
         default='',
         label=_('Tabs style'),
     )
-    tab_buttons_style = ChoiceBlock(
+    buttons_style = ChoiceBlock(
         required=True,
         choices=[
             ('', _('Choose button style')),
@@ -132,7 +161,7 @@ class SidebarBlock(StructBlock):
             ('btn btn-outline-danger', _('Button outline danger')),
             ('btn btn-outline-warning', _('Button outline warning')),
             ('btn btn-outline-info', _('Button outline info')),
-            ('nav-link', _('Navigation bar link')),
+            ('link-default', _('Default link')),
             ('link-primary', _('Primary link')),
             ('link-secondary', _('Secondary link')),
             ('link-success', _('Success link')),
@@ -145,17 +174,30 @@ class SidebarBlock(StructBlock):
         default='',
         label=_('Tab buttons style'),
     )
-    tab_buttons_orientation = ChoiceBlock(
+    tabs_font_size = ChoiceBlock(
+        required=True,
+        choices=[
+            ('', _('Choose font size')),
+            ('fs-6', _('Normal')),
+            ('fs-5', _('Bigger')),
+            ('fs-4', _('Big')),
+            ('fs-3', _('Larger')),
+            ('fs-2', _('Large')),
+        ],
+        default='',
+        label=_('Tabs font size'),
+    )
+    tabs_orientation = ChoiceBlock(
         required=True,
         choices=[
             ('', _('Choose button orientation')),
-            ('horizontal', _('Horizontal')),
-            ('vertical', _('Vertical')),
+            ('tabs-default', _('Horizontal')),
+            ('flex-column', _('Vertical')),
         ],
         default='',
         label=_('Tabs orientation'),
     )
-    tab_buttons_justify = ChoiceBlock(
+    tabs_justify = ChoiceBlock(
         required=True,
         choices=[
             ('', _('Choose horizontal alignment')),

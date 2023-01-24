@@ -174,8 +174,14 @@
                     {% endblock %}
                 </main>
                 {% if page.show_sidebar %}
-                <div class="col-md-4">
-                    {% include_block page.sidebar with id=page.sidebar.id %}
+                <div class="col-md-4 align-self-start sticky-top sidebar-z-index overflow-y-auto">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% include_block page.sidebar %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {% endif %}
             </div>
