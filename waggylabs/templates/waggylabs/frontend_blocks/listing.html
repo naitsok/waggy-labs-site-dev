@@ -1,9 +1,27 @@
 {% load wagtailcore_tags %}
 {% load wagtailmarkdown %}
+{% load waggylabs_filters %}
 
-<figure class="figure w-100 waggylabs-label-listing" {% if value.label %}id="{{ value.label }}"{% endif %}>
+{% if sidebar %}
+<figure class="figure w-100" id="sidebar-bl-{{ id }}">
+    <div class="waggylabs-sidebar-button-container">
+        <div class="border rounded ratio ratio-16x9 overflow-hidden">
+            {% include_block value.code %}
+        </div>
+        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" {% comment %} data-toggle="modal" data-target="#modal-{{ id }}"{% endcomment %}>
+            {% if visual_settings.preview_buttons_icon|is_icon %}<i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>{% endif %}{{ visual_settings.preview_buttons_text }}
+        </button>
+    </div>
+    {% if value.caption %}
+    <figcaption class="figure-caption">
+        {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.listing_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+    </figcaption>
+    {% endif %}
+</figure>
+{% else %}
+<figure class="figure w-100 waggylabs-label-listing" {% if value.label %}id="{{ value.label }}"{% endif %} sidebar="bl-{{ id }}">
     <div class="border rounded">
-        <div class="max-vh-50 w-100" style="overflow: auto;">
+        <div class="max-vh-50 w-100 overflow-auto">
         {% include_block value.code %}
         </div>
     </div>
@@ -13,3 +31,4 @@
     </figcaption>
     {% endif %}
 </figure>
+{% endif %}

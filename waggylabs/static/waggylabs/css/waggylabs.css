@@ -12,7 +12,14 @@
 /* Tables */
 .table p { margin-bottom: 0px; }
 /* links in navigation bar and car grid */
-.card-footer a.nav-link { display: inline; text-decoration: underline; } 
+/* .card-footer a.nav-link { display: inline; text-decoration: underline; }  */
+/* Sidebar */
+.overflow-max-height { height: calc(100vh - 7rem); overflow-y: auto; scrollbar-color: transparent transparent; scrollbar-width: thin; }
+.overflow-max-height:hover { scrollbar-color: var(--bs-secondary-bg) transparent; }
+.waggylabs-sidebar-label { position: unset; top: unset; left: unset; width: unset; height: unset; }
+.waggylabs-sidebar-button { position: absolute; opacity: 0; top: 50%; left: 50%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); }
+.waggylabs-sidebar-button-container { position: relative; }
+.waggylabs-sidebar-button-container:hover .waggylabs-sidebar-button { opacity: 1; }
 
 /* Styles for references to figures, tables, listings */
 span.reference { font-family: 'Courier New', Courier; font-size: 100%; font-weight: bold; }

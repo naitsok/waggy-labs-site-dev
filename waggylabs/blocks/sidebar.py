@@ -15,12 +15,12 @@ class TableOfContentsBlock(StructBlock):
     """Block to add table of contents in the sidebar."""
     title = CharBlock(
         required=False,
-        label=_('Title'),
+        label=_('Tab title'),
         help_text=_('Title to appear on the tab.'),
     )
     icon = IconBlock(
         required=False,
-        label=_('Icon'),
+        label=_('Tab icon'),
     )
     
     def render_basic(self, value, context=None):
@@ -37,12 +37,41 @@ class VisualPreviewBlock(StructBlock):
     Embeds, equations, """
     title = CharBlock(
         required=False,
-        label=_('Title'),
+        label=_('Tab title'),
         help_text=_('Title to appear on the tab.'),
     )
     icon = IconBlock(
         required=False,
-        label=_('Icon'),
+        label=_('Tab icon'),
+    )
+    preview_buttons_text = CharBlock(
+        required=False,
+        label=_('Preview buttons text'),
+        
+    )
+    preview_buttons_icon = IconBlock(
+        required=False,
+        label=_('Preview buttons icon'),
+    )
+    preview_buttons_style = ChoiceBlock(
+        required=True,
+        choices=[
+            ('', _('Choose button style')),
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
+        ],
+        default='',
+        label=_('Preview buttons style'),
     )
     include_embeds = BooleanBlock(
         required=False,
@@ -98,12 +127,12 @@ class CitationsBlock(StructBlock):
     added."""
     title = CharBlock(
         required=False,
-        label=_('Title'),
+        label=_('Tab title'),
         help_text=_('Title to appear on the tab.'),
     )
     icon = IconBlock(
         required=False,
-        label=_('Icon'),
+        label=_('Tab icon'),
     )
     
     def render_basic(self, value, context=None):
