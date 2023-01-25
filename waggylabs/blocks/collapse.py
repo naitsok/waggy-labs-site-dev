@@ -89,16 +89,14 @@ class CollapseBlock(StructBlock):
         })
         
     @classmethod
-    def citation_blocks(cls, collapse: StructValue):
-        """Returns citation blocks (= citation and document)
-         ordered by the appearance in the CollapseBlock
-         StructValue."""
-        citation_blocks = []
+    def blocks_by_types(cls, collapse: StructValue, types: list):
+        """Returns blocks specificed by types (e.g., citation and document)
+         ordered by the appearance in the CollapseBlock StructValue."""
+        blocks_by_types = []
         for block in collapse.value['body']:
-            if (block.block_type == 'citation'
-                or block.block_type == 'document'):
-                citation_blocks.append(block)
-        return citation_blocks
+            if block.block_type in types:
+                blocks_by_types.append(block)
+        return blocks_by_types
         
     class Meta:
         icon = 'arrows-up-down'

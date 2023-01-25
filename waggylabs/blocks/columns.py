@@ -71,24 +71,21 @@ class ColumnsBlock(StructBlock):
     )
     
     @classmethod
-    def citation_blocks(cls, columns: StructValue):
-        """Returns citation blocks (= citation and document)
-         ordered by the appearance in the ColumnsBlock
-         StructValue.
-        """
-        citation_blocks = []
+    def blocks_by_types(cls, columns: StructValue, types: list):
+        """Returns blocks specificed by types (e.g., citation and document)
+         ordered by the appearance in the ColumnsBlock StructValue."""
+        blocks_by_types = []
         for columns_item in columns.value['items']:
             for col_item_block in columns_item['body']:
-                if (col_item_block == 'citation'
-                    or col_item_block == 'document'):
-                    citation_blocks.append(col_item_block)
+                if col_item_block in types:
+                    blocks_by_types.append(col_item_block)
                 if col_item_block.block_type == 'accordion':
-                    citation_blocks = (citation_blocks +
-                                       AccordionBlock.citation_blocks(col_item_block))
+                    blocks_by_types = (blocks_by_types +
+                                       AccordionBlock.blocks_by_types(col_item_block, types))
                 if col_item_block.block_type == 'collapse':
-                    citation_blocks = (citation_blocks +
-                                       CollapseBlock.citation_blocks(col_item_block))
-        return citation_blocks
+                    blocks_by_types = (blocks_by_types +
+                                       CollapseBlock.blocks_by_types(col_item_block, types))
+        return blocks_by_types
         
     class Meta:
         icon = 'duplicate'

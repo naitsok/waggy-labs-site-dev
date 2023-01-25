@@ -39,36 +39,34 @@ class BodyBlock(StreamBlock):
     
     
     @classmethod
-    def citation_blocks(cls, body: StreamValue):
-        """Returns citation blocks (= citation and document)
-         ordered by the appearance in the body
-         StreamValue (body = StreamField(BodyBlock())) in a
-         Page model."""
-        citation_blocks = []
+    def blocks_by_types(cls, body: StreamValue, types: list):
+        """Returns blocks specificed by types (e.g., citation and document)
+         ordered by the appearance in the body StreamValue 
+         (body = StreamField(BodyBlock())) in a Page model."""
+        blocks_by_types = []
         for block in body:
             # Append all citation and document blocks
-            if (block.block_type == 'citation'
-                or block.block_type == 'document'):
-                citation_blocks.append(block)
+            if block.block_type in types:
+                blocks_by_types.append(block)
             
             # If block is accordion - loop through its child blocks
-            # and append chitation and document blocks
+            # and append the specified types of blocks
             if block.block_type == 'accordion':
-                citation_blocks = (citation_blocks +
-                                   AccordionBlock.citation_blocks(block))
+                blocks_by_types = (blocks_by_types +
+                                   AccordionBlock.blocks_by_types(block, types))
                 
             # If block is collapse - loop through its child blocks
-            # and append citation and document blocks
+            # and append the specified types of blocks
             if block.block_type == 'collapse':
-                citation_blocks = (citation_blocks +
-                                   CollapseBlock.citation_blocks(block))
+                blocks_by_types = (blocks_by_types +
+                                   CollapseBlock.blocks_by_types(block, types))
             
             # If block is columns - loop through its child blocks
-            # and append citation and document blocks
+            # and append the specified types of blocks
             if block.block_type == 'columns':
-                citation_blocks = (citation_blocks +
-                                   ColumnsBlock.citation_blocks(block))
+                blocks_by_types = (blocks_by_types +
+                                   ColumnsBlock.blocks_by_types(block, types))
         
-        return citation_blocks
+        return blocks_by_types
                 
     

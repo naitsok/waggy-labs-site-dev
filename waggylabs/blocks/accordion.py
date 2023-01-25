@@ -92,17 +92,15 @@ class AccordionBlock(StructBlock):
     items = ListBlock(AccordionItemBlock())
     
     @classmethod
-    def citation_blocks(cls, accordion: StructValue):
-        """Returns citation blocks (= citation and document)
-         ordered by the appearance in the AccordionBlock
-         StructValue."""
-        citation_blocks = []
+    def blocks_by_types(cls, accordion: StructValue, types: list):
+        """Returns blocks specificed by types (e.g., citation and document)
+         ordered by the appearance in the AccordionBlock StructValue."""
+        blocks_by_types = []
         for accordion_item in accordion.value['items']:
             for acc_item_block in accordion_item['body']:
-                if (acc_item_block.block_type == 'citation'
-                    or acc_item_block.block_type == 'document'):
-                    citation_blocks.append(acc_item_block)
-        return citation_blocks
+                if acc_item_block.block_type in types:
+                    blocks_by_types.append(acc_item_block)
+        return blocks_by_types
 
     class Meta:
         icon = 'list-ul'

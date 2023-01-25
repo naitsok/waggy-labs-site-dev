@@ -7,6 +7,7 @@ from wagtail.blocks import (
     ChoiceBlock
     )
 
+from waggylabs.blocks.body import BodyBlock
 from waggylabs.blocks.icon import IconBlock
 from waggylabs.widgets import DisabledOptionSelect
 
@@ -68,20 +69,17 @@ class VisualPreviewBlock(StructBlock):
         super().__init__(local_blocks, **kwargs)
     
     def render(self, value, context):
-        page = context['page']
-        block_types = {
-            'embed': value['include_embeds'],
-            'equation': value['include_equations'],
-            'figure': value['include_figures'],
-            'listing': value['include_listings'],
-            'table': value['include_tables'],
-            'table_figure': value['include_tables'],
-        }
-        visuals = []
-        for block in page.body:
-            if block.block_type in block_types and block_types[block.block_type]:
-                visuals.append(block)
-        value['visuals'] = visuals
+        block_types = []
+        for key, val in value.items():
+            if 'include_' in key and val:
+                block_types.append(key[8:-1])
+        if value['include_tables']:
+            block_types.append('table_figure')
+        
+        value['visuals'] = BodyBlock.blocks_by_types(
+            context['page'].body,
+            block_types
+        )
         
         return super().render(value, context)
     

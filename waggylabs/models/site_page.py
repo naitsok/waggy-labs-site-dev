@@ -218,7 +218,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     def citation_blocks(self):
         """Returns citations and documents found in body StreamField and
         its sub blocks."""   
-        return BodyBlock.citation_blocks(self.body)
+        return BodyBlock.blocks_by_types(self.body, ['citation', 'document'])
             
 
     def hit_counts(self):
