@@ -26,7 +26,7 @@ class ListingBlock(StructBlock):
         max_length=50,
         required=False,
         form_classname='waggylabs-label-listing', # needed to render references to listings
-        )
+    )
     
     class Meta:
         icon = 'code'

@@ -38,7 +38,7 @@ class VisualPreviewBlock(StructBlock):
     title = CharBlock(
         required=False,
         label=_('Tab title'),
-        help_text=_('Title to appear on the tab.'),
+        # help_text=_('Title to appear on the tab.'),
     )
     icon = IconBlock(
         required=False,
@@ -96,6 +96,9 @@ class VisualPreviewBlock(StructBlock):
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
+        self.child_blocks['title'].field.widget.attrs.update({
+            'placeholder': 'Tab title',
+        })
     
     def render(self, value, context):
         block_types = []
@@ -120,6 +123,7 @@ class VisualPreviewBlock(StructBlock):
                       'selected. Selected visuals will appear as thumbnails '
                       'in the sidebar and open in a dialog box for the preview.')
         template = 'waggylabs/frontend_blocks/visuals_preview.html'
+        form_template = 'waggylabs/blocks/visuals_preview.html'
         
         
 class CitationsBlock(StructBlock):

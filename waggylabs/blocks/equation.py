@@ -1,3 +1,5 @@
+import re
+
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StructBlock
@@ -47,12 +49,12 @@ class EquationBlock(StructBlock):
                     'which can be checked using "Preview" functionality.'),
     )
     
-    def render(self, value, context=None):
+    def render(self, value, context):
         equation_string = value['equation'].lower()
         # First add LaTeX \begin{equation} and \end{equation}
         # if no \begin{...} and \end{...} statements are present
         if not equation_string.startswith('\\begin{'):
-            value['equation'] = ('\\begin{equation}\n' + 
+            value['equation'] = ('\\begin{equation}\n' +
                                  value['equation'].trim('$') +
                                  '\\end{equation}\n')
         # then check and add label if no \label{...} is found
@@ -63,6 +65,10 @@ class EquationBlock(StructBlock):
             value['equation'] = (value['equation'][:idx] +
                                     '\n\\label{' + value['label'] +
                                     '}\n' + value['equation'][idx:])
+        # if equation is rendered in sidebar,
+        # \label{...} must be removed to avoid MathJax label error
+        if 'sidebar' in context and context['sidebar']:
+            value['equation'] = re.sub(r'\\label\{.*?\}', '', value['equation'])
         return super().render(value, context)
     
     class Meta:

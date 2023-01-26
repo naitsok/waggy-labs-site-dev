@@ -1,4 +1,7 @@
 /* General tweaks for Bootstrap */
+/* Font */
+.fs-7 { font-size: 0.75rem !important; }
+.fs-8 { font-size: 0.5rem !important; }
 /* Some Bootstrap blocks do not have bottom margin */
 .block-margin { margin-bottom: 1rem; }
 /* Image fit for the Card horizontal layout: waggylabs/frontend_blocks/card.html */

@@ -1,11 +1,30 @@
 {% load wagtailmarkdown %}
+{% load waggylabs_filters %}
 
-<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    <p>{{ value.equation }}</p>
+{% if sidebar %}
+<div id="sidebar-bl-{{ id }}">
+    <div class="waggylabs-sidebar-button-container">
+        <div class="overflow-hidden">
+            <p>{{ value.equation }}</p>
+        </div>
+        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" {% comment %} data-toggle="modal" data-target="#modal-{{ id }}"{% endcomment %}>
+            {% if visual_settings.preview_buttons_icon|is_icon %}<i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>{% endif %}{{ visual_settings.preview_buttons_text }}
+        </button>
+    </div>
     {% if value.caption %}
-    <div class="figure-caption" style="display: none;">
+    <div class="figure-caption mb-3">
         {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
     </div>
     {% endif %}
 </div>
+{% else %}
+<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %} sidebar="bl-{{ id }}">
+    <p>{{ value.equation }}</p>
+    {% if value.caption %}
+    <div class="figure-caption d-none">
+        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
 

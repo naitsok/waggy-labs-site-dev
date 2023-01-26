@@ -77,7 +77,7 @@ class ColumnsBlock(StructBlock):
         blocks_by_types = []
         for columns_item in columns.value['items']:
             for col_item_block in columns_item['body']:
-                if col_item_block in types:
+                if col_item_block.block_type in types:
                     blocks_by_types.append(col_item_block)
                 if col_item_block.block_type == 'accordion':
                     blocks_by_types = (blocks_by_types +
