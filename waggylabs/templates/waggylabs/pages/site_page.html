@@ -22,7 +22,7 @@
 </figure>
 {% endif %}
 
-<div id="page_body">
+<div id="page-body">
 {% for block in page.body %}
     {% if block.block_type != 'citation' and block.block_type != 'document' %}
     {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
@@ -49,7 +49,7 @@
         tex: { tags: "ams" },
         startup: {
             ready: () => {
-                var el = document.getElementById("page_body");
+                var el = document.getElementById("page-body");
                 processRefs(el);
                 processCites(el);
                 MathJax.startup.defaultReady();

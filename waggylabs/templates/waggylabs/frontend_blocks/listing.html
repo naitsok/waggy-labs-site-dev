@@ -8,7 +8,7 @@
         <div class="border rounded ratio ratio-16x9 overflow-hidden fs-7">
             {% include_block value.code %}
         </div>
-        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" {% comment %} data-toggle="modal" data-target="#modal-{{ id }}"{% endcomment %}>
+        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
             {% if visual_settings.preview_buttons_icon|is_icon %}<i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>{% endif %}{{ visual_settings.preview_buttons_text }}
         </button>
     </div>
@@ -18,6 +18,31 @@
     </figcaption>
     {% endif %}
 </figure>
+{% elif modals %}
+<div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-label-{{ id }}" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modal-label-{{ id }}">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <figure class="figure w-100" id="modal-bl-{{ id }}">
+                    <div class="border rounded">
+                        <div class="max-vh-50 w-100 overflow-auto">
+                        {% include_block value.code %}
+                        </div>
+                    </div>
+                    {% if value.caption %}
+                    <figcaption class="figure-caption">
+                        {{ value.caption|markdown|safe }}
+                    </figcaption>
+                    {% endif %}
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
 {% else %}
 <figure class="figure w-100 waggylabs-label-listing" {% if value.label %}id="{{ value.label }}"{% endif %} sidebar="bl-{{ id }}">
     <div class="border rounded">

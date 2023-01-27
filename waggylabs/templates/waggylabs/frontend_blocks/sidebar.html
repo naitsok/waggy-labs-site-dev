@@ -1,6 +1,14 @@
 {% load wagtailcore_tags %}
 {% load waggylabs_filters %}
 
+{% if modals %}
+    {# Unfortunately modals cannot be rendered inside of a tab pane, therefore they are rendered separately on page. #}
+    {% for item in value.items %}
+        {% if item.block_type == 'visuals' %}
+            {% include_block item with modals=True %}
+        {% endif %}
+    {% endfor %}
+{% else %}
 <ul class="{{ value.tabs_style }} {{ value.tabs_justify }} {{ value.tabs_orientation }}" id="sidebar-tabs" role="tablist">
     {% for item in value.items %}
     <li class="nav-item mx-1 my-1" role="presentation">
@@ -17,7 +25,7 @@
     </li>
     {% endfor %}
 </ul>
-<div class="tab-content" id="sidebar-tab-content">
+<div class="tab-content waggylabs-sidebar-modal" id="sidebar-tab-content">
     {% for item in value.items %}
     <div class="tab-pane fade {% if forloop.counter0 == 0 %}show active{% endif %}" 
         id="id-{{ item.id }}-tab-pane-{{ forloop.counter0 }}" 
@@ -28,3 +36,4 @@
     </div>
     {% endfor %}
 </div>
+{% endif %}
