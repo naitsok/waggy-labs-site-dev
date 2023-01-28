@@ -49,7 +49,16 @@ class EquationBlock(StructBlock):
                     'which can be checked using "Preview" functionality.'),
     )
     
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        self.re_label = re.compile(r'\\label\{.*?\}', re.IGNORECASE)
+        self.re_begin = re.compile(r'\\begin\{[\w]*?\}', re.IGNORECASE)
+        self.re_end = re.compile(r'\\end\{[\w]*?\}', re.IGNORECASE)
+    
+    
     def render(self, value, context):
+        """Renders the equation. If it is rendered in sidebar or modal,
+        removes the numbering and label to avoid MathJax errors."""
         equation_string = value['equation'].lower()
         # First add LaTeX \begin{equation} and \end{equation}
         # if no \begin{...} and \end{...} statements are present
@@ -67,8 +76,17 @@ class EquationBlock(StructBlock):
                                     '}\n' + value['equation'][idx:])
         # if equation is rendered in sidebar,
         # \label{...} must be removed to avoid MathJax label error
-        if 'sidebar' in context and context['sidebar']:
-            value['equation'] = re.sub(r'\\label\{.*?\}', '', value['equation'])
+        # and * must be added to avoid equation numbering
+        if (('sidebar' in context and context['sidebar']) or
+            ('modal' in context and context['modal'])):
+            value['equation'] = re.sub(self.re_label, '', value['equation'])
+            value['equation'] = re.sub(self.re_begin,
+                                       lambda m: m.group(0)[:-1] + '*}',
+                                       value['equation'])
+            value['equation'] = re.sub(self.re_end,
+                                       lambda m: m.group(0)[:-1] + '*}',
+                                       value['equation'])
+
         return super().render(value, context)
     
     class Meta:

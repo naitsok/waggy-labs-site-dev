@@ -179,6 +179,7 @@
                         {% include_block page.sidebar %}
                     </div>
                 </div>
+                {# Modals do not work properly when rendered inside sticky html element #}
                 {% include_block page.sidebar with modals=True %}
                 {% endif %}
             </div>
