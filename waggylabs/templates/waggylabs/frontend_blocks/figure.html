@@ -4,7 +4,7 @@
 {% load waggylabs_filters %}
 
 {% if sidebar %}
-<figure class="figure" id="sidebar-bl-{{ id }}">
+<figure class="figure">
     <div class="waggylabs-sidebar-button-container">
         {% image value.image original class='img-fluid rounded' %}
         <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
@@ -13,20 +13,20 @@
     </div>
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
         </figcaption>
     {% endif %}
 </figure>
 {% elif modal %}
-<div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-label-{{ id }}" aria-hidden="true">
+<div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-el-{{ id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modal-label-{{ id }}">Modal title</h1>
+            <h1 class="modal-title fs-5" id="modal-el-{{ id }}">{% if page.figure_caption_label %}{{ page.figure_caption_label }}{% endif %}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <figure class="figure" id="modal-bl-{{ id }}">
+                <figure class="figure">
                     {% image value.image original class='img-fluid rounded' %}
                     {% if value.caption %}
                     <figcaption class="figure-caption">
@@ -39,11 +39,11 @@
     </div>
 </div>
 {% else %}
-<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %} sidebar="bl-{{ id }}">
+<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %}>
     {% image value.image original class='img-fluid rounded' %}
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
         </figcaption>
     {% endif %}
 </figure>

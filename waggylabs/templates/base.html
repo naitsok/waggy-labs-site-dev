@@ -56,7 +56,7 @@
     <body>
         {% wagtailuserbar 'bottom-right' %}
         {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
-        <header class="{% navbar_class site_settings %}" 
+        <header id="navbar-header" class="{% navbar_class site_settings %}" 
             {% if site_settings.theme_supports_color_mode and site_settings.navbar_theme %}data-bs-theme="{{ site_settings.navbar_theme }}"{% endif %}
             {% if site_settings.navbar_color %} style="background: {{ site_settings.navbar_color }}"{% endif %}>
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
@@ -175,9 +175,11 @@
                 </main>
                 {% if page.show_sidebar %}
                 <div class="col-md-4 align-self-start sticky-top">
+                    {% comment %} <div class="row"><div class="col-md-12"> {% endcomment %}
                     <div class="overflow-max-height">
                         {% include_block page.sidebar %}
                     </div>
+                    {% comment %} </div></div> {% endcomment %}
                 </div>
                 {# Modals do not work properly when rendered inside sticky html element #}
                 {% include_block page.sidebar with modals=True %}

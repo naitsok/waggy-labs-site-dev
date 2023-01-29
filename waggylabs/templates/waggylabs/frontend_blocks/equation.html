@@ -2,7 +2,7 @@
 {% load waggylabs_filters %}
 
 {% if sidebar %}
-<div id="sidebar-bl-{{ id }}">
+<div class="mb-3">
     <div class="waggylabs-sidebar-button-container">
         <div class="overflow-hidden">
             <p>{{ value.equation }}</p>
@@ -13,37 +13,35 @@
     </div>
     {% if value.caption %}
     <div class="figure-caption mb-3">
-        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
     </div>
     {% endif %}
 </div>
 {% elif modal %}
-<div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-label-{{ id }}" aria-hidden="true">
+<div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-el-{{ id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modal-label-{{ id }}">Modal title</h1>
+            <h1 class="modal-title fs-5" id="modal-el-{{ id }}">{% if page.equation_caption_label %}{{ page.equation_caption_label }}{% endif %}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="modal-bl-{{ id }}">
-                    <p>{{ value.equation }}</p>
-                    {% if value.caption %}
-                    <div class="figure-caption">
-                        {{ value.caption|markdown|safe }}
-                    </div>
-                    {% endif %}
+                <p>{{ value.equation }}</p>
+                {% if value.caption %}
+                <div class="figure-caption">
+                    {{ value.caption|markdown|safe }}
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
 {% else %}
-<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %} sidebar="bl-{{ id }}">
+<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
     <p>{{ value.equation }}</p>
     {% if value.caption %}
     <div class="figure-caption d-none">
-        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
     </div>
     {% endif %}
 </div>
