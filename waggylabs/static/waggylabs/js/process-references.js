@@ -15,7 +15,7 @@ function processLabels(el) {
 function processRefs(el) {
     const classNames = ['blockquote', 'embed', 'figure', 'listing', 'table'];
     const navbar = document.getElementById('navbar-header');
-    var navbarHeight = '0px';
+    var navbarHeight = '10px';
     if (navbar.classList.contains('sticky-top') || navbar.classList.contains('fixed-top')) {
         navbarHeight = String(navbar.offsetHeight + 10) + 'px';
     }
@@ -39,6 +39,24 @@ function processRefs(el) {
             // TODO: add correct class to the referenced elements for scrolling if navbar is fixed
             labelElements[i].style.setProperty('scroll-margin-top', navbarHeight);
         }
+    }
+}
+
+/**
+ * Updates scroll-margin-top style setting for MathJax labels 
+ * @param {DOM element} el - element within which lebels will be processed
+ */
+function updateMathJaxScroll(el) {
+    const navbar = document.getElementById('navbar-header');
+    var navbarHeight = '10px';
+    if (navbar.classList.contains('sticky-top') || navbar.classList.contains('fixed-top')) {
+        navbarHeight = String(navbar.offsetHeight + 10) + 'px';
+
+        el.querySelectorAll('mjx-labels').forEach((label) => {
+            label.querySelectorAll('mjx-mtd').forEach((number) => {
+                number.style.setProperty('scroll-margin-top', navbarHeight);
+            });
+        });
     }
 }
 
@@ -77,11 +95,17 @@ function processSidebarEquations(el) {
  * @param {DOM element} el - element which innterHTML needs processing 
  */
 function processCites(el) {
+    const navbar = document.getElementById('navbar-header');
+    var navbarHeight = '10px';
+    if (navbar.classList.contains('sticky-top') || navbar.classList.contains('fixed-top')) {
+        navbarHeight = String(navbar.offsetHeight + 10) + 'px';
+    }
     var labelElements = el.getElementsByClassName('waggylabs-label-cite');
     var labelIds = []; // needed to collect the ids of the elements containing citations
     for (var i = 0; i < labelElements.length; i++) {
         labelElements[i].innerHTML = i + 1;
         labelIds.push(labelElements[i].id);
+        labelElements[i].style.setProperty('scroll-margin-top', navbarHeight);
     }
     // var citeIds = []; // keeps the ids of for the current \cite{...}
     var re = /\\cite{(.*?)}/g;

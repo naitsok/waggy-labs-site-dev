@@ -55,6 +55,7 @@
                 MathJax.startup.defaultReady();
                 MathJax.startup.promise.then(() => {
                     processSidebarEquations(el);
+                    updateMathJaxScroll(el);
                 });
             }
         }
