@@ -15,7 +15,7 @@
 /* Tables */
 .table p { margin-bottom: 0px; }
 /* links in navigation bar and car grid */
-/* .card-footer a.nav-link { display: inline; text-decoration: underline; }  */
+/* .card-footer a.nav-link:hover { text-decoration: underline; } */
 /* Sidebar */
 .sidebar-top { top: 6rem; } /* so that sticky-top does not go in front of the nevbar */
 .overflow-max-height { height: calc(100vh - 7rem); overflow-y: auto; scrollbar-color: transparent transparent; scrollbar-width: thin; }
@@ -26,6 +26,13 @@
 .waggylabs-sidebar-button-container { position: relative; }
 .waggylabs-sidebar-button-container:hover .waggylabs-sidebar-button { opacity: 1; }
 .waggylabs-sidebar-modal { position: unset; z-index: unset; }
+.waggylabs-sidebar-toc a:hover { text-decoration: underline; }
+.waggylabs-sidebar-toc .ps-0 { padding-left: 0rem !important; }
+.waggylabs-sidebar-toc .ps-1 { padding-left: 1rem !important; }
+.waggylabs-sidebar-toc .ps-2 { padding-left: 2rem !important; }
+.waggylabs-sidebar-toc .ps-3 { padding-left: 3rem !important; }
+.waggylabs-sidebar-toc .ps-4 { padding-left: 4rem !important; }
+.waggylabs-sidebar-toc .ps-5 { padding-left: 5rem !important; }
 /* MathJax menu tweaks */
 div.CtxtMenu_MenuFrame { z-index: 1501 !important;} /* Change of z-index for menu to appear above Bootstrap tab panes */
 div.CtxtMenu_MenuFrame div,span { z-index: 1502 !important;} /* Change of z-index for menu to appear above Bootstrap tab panes */

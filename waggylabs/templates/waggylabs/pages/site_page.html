@@ -43,7 +43,7 @@
 {% endblock content %}
 
 {% block extra_js %}
-<script src="{% static 'waggylabs/js/process-references.js' %}"></script>
+<script src="{% static 'waggylabs/js/prepare-page.js' %}"></script>
 <script>
     window.MathJax =   { 
         tex: { tags: "ams" },
@@ -52,6 +52,7 @@
                 const el = document.getElementById("page-body");
                 processRefs(el);
                 processCites(el);
+                prepareSidebarContents(el);
                 MathJax.startup.defaultReady();
                 MathJax.startup.promise.then(() => {
                     processSidebarEquations(el);

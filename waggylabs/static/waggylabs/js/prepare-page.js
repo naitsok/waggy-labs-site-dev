@@ -1,11 +1,3 @@
-/**
-
- */
-
-function processLabels(el) {
-    const classNames = ['blockquote', 'embed', 'figure', 'listing', 'table'];
-
-}
 
 /**
  * Processes figure, table, listing, blockquote references before 
@@ -133,5 +125,33 @@ function processCites(el) {
     }
     for (let i in matches) {
         el.innerHTML = el.innerHTML.replace(matches[i], citeHTMLs[i]);
+    }
+}
+
+/**
+ * Prepares sidebar table of contents
+ * @param {DOM element} el - element from where to take headers
+ */
+function prepareSidebarContents(el) {
+    const toc = document.getElementsByClassName('waggylabs-sidebar-toc')[0];
+    const headerTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+    const navbar = document.getElementById('navbar-header');
+    var navbarHeight = '10px';
+    if (navbar.classList.contains('sticky-top') || navbar.classList.contains('fixed-top')) {
+        navbarHeight = String(navbar.offsetHeight + 10) + 'px';
+    }
+    if (toc) {
+        el.childNodes.forEach((node, idx) => {
+            if (headerTags.indexOf(node.tagName) >= 0) {
+                node.setAttribute('id', 'waggylabs-header-' + String(idx));
+                node.style.setProperty('scroll-margin-top', navbarHeight);
+                var header_num = Number(node.tagName.slice(-1));
+                var tocLink = document.createElement('a');
+                tocLink.setAttribute('href', '#' + 'waggylabs-header-' + String(idx));
+                tocLink.classList.add('nav-link', 'ms-2', 'ps-' + String(header_num - 1));
+                tocLink.innerHTML = node.innerHTML;
+                toc.appendChild(tocLink);
+            }
+        });
     }
 }

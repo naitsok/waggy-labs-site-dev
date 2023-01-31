@@ -24,12 +24,14 @@ class TableOfContentsBlock(StructBlock):
     )
     
     def render_basic(self, value, context=None):
-        return mark_safe('<div class="waggylabs-sidebar-toc"></div>')
+        return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div>')
     
     class Meta:
         icon = 'list-ul'
         label = _('Table of contents')
-        help_text = _('Adds table of contents tab to the sidebar.')
+        help_text = _('Adds table of contents tab to the sidebar. All the '
+                      'headers present on the text blocks of the page body '
+                      'will appear as headers in the table of contents.')
  
         
 class VisualPreviewBlock(StructBlock):
