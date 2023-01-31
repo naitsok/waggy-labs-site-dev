@@ -60,4 +60,17 @@ def main_class(site_settings, page):
         return 'col-md-10 offset-md-1'
     if site_settings.content_width == 'wide':
         return 'col-md-12'
+    
+    
+@register.simple_tag(takes_context=False)
+def sidebar_class(site_settings, page):
+    """Generates CSS class for the sidebar <div> element
+    depending on the WaggyLabsSettings and page sidebar."""
+    css_class = ''
+    if site_settings.content_width == 'narrow':
+        css_class = 'col-md-3' # and col-md-3 for sidebar
+    else:
+        css_class = 'col-md-4'
+    if not page.show_sidebar:
+        css_class = css_class + ' d-none'
    

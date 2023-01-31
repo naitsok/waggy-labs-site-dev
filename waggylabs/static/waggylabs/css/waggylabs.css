@@ -17,6 +17,7 @@
 /* links in navigation bar and car grid */
 /* .card-footer a.nav-link { display: inline; text-decoration: underline; }  */
 /* Sidebar */
+.sidebar-top { top: 6rem; } /* so that sticky-top does not go in front of the nevbar */
 .overflow-max-height { height: calc(100vh - 7rem); overflow-y: auto; scrollbar-color: transparent transparent; scrollbar-width: thin; }
 .overflow-max-height:hover { scrollbar-color: var(--bs-secondary-bg) transparent; }
 /* .waggylabs-sidebar-z-index { z-index: 199 !important; } /* needed to avoid collision with MathJax menu and preview */
