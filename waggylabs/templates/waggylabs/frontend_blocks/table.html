@@ -7,7 +7,7 @@
     <div class="waggylabs-sidebar-button-container">
         <div class="d-flex justify-content-center border rounded ratio ratio-16x9 bg-secondary">
             <div class="align-self-center waggylabs-sidebar-label">
-                <h5 id="pl-el-{{ id }}">{% if page.table_caption_label %}{{ page.table_caption_label }}{% endif %}</h5>
+                <h5 id="pl-el-{{ id }}">{% if page.table_caption_label %}{{ page.table_caption_label }}{% else %}Table{% endif %}</h5>
             </div>
         </div>
         <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">

@@ -50,13 +50,12 @@
         startup: {
             ready: () => {
                 const el = document.getElementById("page-body");
-                processRefs(el);
-                processCites(el);
-                prepareSidebarContents(el);
+                prepareReferences(el);
+                prepareCitations(el);
                 MathJax.startup.defaultReady();
                 MathJax.startup.promise.then(() => {
-                    processSidebarEquations(el);
-                    updateMathJaxScroll(el);
+                    prepareScrollMarginTop(el);
+                    prepareSidebar(el);
                 });
             }
         }
