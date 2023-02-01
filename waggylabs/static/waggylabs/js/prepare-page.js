@@ -161,7 +161,25 @@ function prepareSidebarContents(element) {
     }
 }
 
+/**
+ * Prepares sidebar citations
+ * @param {DOM element} element - element from where to take headers
+ */
+function prepareSidebarCitations(element) {
+    const literatureElem = document.getElementById('literature');
+    const literatureSidebarElem = document.getElementsByClassName('waggylabs-sidebar-literature')[0];
+    if (literatureElem && literatureSidebarElem) {
+        for (let i = 0; i < literatureElem.children.length; i++) {
+            const citeClone = literatureElem.children[i].cloneNode(true);
+            citeClone.children[0].removeAttribute('id');
+            literatureSidebarElem.appendChild(citeClone);
+            literatureSidebarElem.appendChild(document.createElement('hr'));
+        }
+    }
+}
+
 function prepareSidebar(element) {
     prepareSidebarContents(element);
     prepareSidebarVisuals(element);
+    prepareSidebarCitations(element);
 }

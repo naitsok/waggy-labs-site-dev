@@ -174,9 +174,9 @@
                     {% endblock %}
                 </main>
                 {% if page.show_sidebar %}
-                <div class="col-md-4 align-self-start sticky-top {% if site_settings.navbar_placement != '' %}sidebar-top{% endif %}">
+                <div class="col-md-4 align-self-start sticky-top waggylabs-sidebar-z-index {% if site_settings.navbar_placement != '' %}waggylabs-sidebar-top{% endif %}">
                     {% comment %} <div class="row"><div class="col-md-12"> {% endcomment %}
-                    <div class="overflow-max-height">
+                    <div class="waggylabs-overflow-max-height">
                         {% include_block page.sidebar %}
                     </div>
                     {% comment %} </div></div> {% endcomment %}

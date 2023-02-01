@@ -24,7 +24,7 @@ class TableOfContentsBlock(StructBlock):
     )
     
     def render_basic(self, value, context=None):
-        return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div>')
+        return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div><hr>')
     
     class Meta:
         icon = 'list-ul'
@@ -142,7 +142,7 @@ class CitationsBlock(StructBlock):
     )
     
     def render_basic(self, value, context=None):
-        return mark_safe('<div class="waggylabs-sidebar-citations"></div>')
+        return mark_safe('<div class="waggylabs-sidebar-literature"></div>')
     
     class Meta:
         icon = 'list-ol'
