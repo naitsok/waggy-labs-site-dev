@@ -12,13 +12,12 @@ function prepareReferences(element) {
             // Add numbers to the elements if caption is present
             const blockLabelElem = blockElements[i].getElementsByClassName('waggylabs-entity-label')[0];
             if (blockLabelElem) {
-                blockLabelElem.innerHTML = blockLabelElem.innerHTML + ' ' + String(i + 1) + '.';
+                blockLabelElem.innerHTML = blockLabelElem.innerHTML.trim() + ' ' + String(i + 1) + '.';
             }
             // Replace \ref{...} blocks with numbers of corresponding blocks
             const regex = new RegExp('\\\\ref\{' + blockElements[i].id + '\}', 'g');
             element.innerHTML = element.innerHTML.replace(regex, 
                `<span class="reference"><a href="#${blockElements[i].id}">${i + 1}</a></span>`);
-            // TODO: add correct class to the referenced elements for scrolling if navbar is fixed
         }
     });
 }
