@@ -174,15 +174,13 @@
                     {% endblock %}
                 </main>
                 {% if page.show_sidebar %}
-                <div class="col-md-4 align-self-start sticky-top waggylabs-sidebar-z-index {% if site_settings.navbar_placement != '' %}waggylabs-sidebar-top{% endif %}">
+                {% comment %} <div class="col-md-4 align-self-start sticky-top"> {% endcomment %}
                     {% comment %} <div class="row"><div class="col-md-12"> {% endcomment %}
-                    <div class="waggylabs-overflow-max-height">
-                        {% include_block page.sidebar %}
-                    </div>
+                    {% for block in page.sidebar %}
+                        {% include_block block %}
+                    {% endfor %}
                     {% comment %} </div></div> {% endcomment %}
-                </div>
-                {# Modals do not work properly when rendered inside sticky html element #}
-                {% include_block page.sidebar with modals=True %}
+                {% comment %} </div> {% endcomment %}
                 {% endif %}
             </div>
         </div>

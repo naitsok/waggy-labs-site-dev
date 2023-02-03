@@ -2,7 +2,7 @@
 
 {% if modals %}
     {% for block in value.visuals %}
-        {% include_block block with id=block.id modals=True visual_settings=value %}
+        {% include_block block with id=block.id modal=True visual_settings=value %}
     {% endfor %}
 {% else %}
     {% for block in value.visuals %}
