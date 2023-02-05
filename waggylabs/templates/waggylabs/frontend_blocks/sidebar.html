@@ -19,7 +19,7 @@
             </li>
             {% endfor %}
         </ul>
-        <div class="tab-content waggylabs-sidebar-modal" id="sidebar-tab-content">
+        <div class="tab-content" id="sidebar-tab-content">
             {% if value.tabs_style != 'nav nav-tabs' %}<hr>{% endif %}
             {% for item in value.items %}
             <div class="tab-pane fade {% if forloop.counter0 == 0 %}show active{% endif %}" 
