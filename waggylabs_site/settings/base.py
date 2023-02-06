@@ -44,12 +44,10 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail",
     
-    # "fontawesomefree",
     "modelcluster",
     "taggit",
     # "taggit_templatetags",
     "el_pagination",
-    # "markdownx",
     "wagtailmenus",
     "wagtailmarkdown",
     "hitcount",

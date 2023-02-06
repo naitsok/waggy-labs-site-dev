@@ -21,7 +21,7 @@ from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
 from waggylabs.blocks.body import BodyBlock
-from waggylabs.blocks.sidebar import SidebarBlock
+from waggylabs.blocks.sidebar import SidebarTabItemBlock
 from waggylabs.panels import ReadOnlyPanel
 
 
@@ -121,7 +121,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     )
     sidebar = StreamField(
         [
-            ('sidebar', SidebarBlock()),
+            ('sidebar', SidebarTabItemBlock()),
         ],
         max_num=1,
         blank=True,
