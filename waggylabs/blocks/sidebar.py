@@ -11,5 +11,5 @@ from waggylabs.blocks.sidebar_tabs import SidebarTabsBlock
 
 class SidebarPageDetails(StructBlock):
     """A sidebar block to show page details such as author, creation
-    date, etc."""
+    date, etc. Rendered as a description list."""
     pass
