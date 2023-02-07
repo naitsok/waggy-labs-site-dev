@@ -1,11 +1,5 @@
 {% load wagtailcore_tags %}
 
-{% if modals %}
-    {% for block in value.visuals %}
-        {% include_block block with id=block.id modal=True visual_settings=value %}
-    {% endfor %}
-{% else %}
-    {% for block in value.visuals %}
-        {% include_block block with id=block.id sidebar=True visual_settings=value %}
-    {% endfor %}
-{% endif %}
+{% for block in value.visuals %}
+    {% include_block block with id=block.id sidebar=True visual_settings=value %}
+{% endfor %}

@@ -4,6 +4,7 @@
 {% load waggylabs_filters %}
 
 {% if sidebar %}
+{# rendering in the sidebar #}
 <figure class="figure">
     <div class="waggylabs-sidebar-button-container">
         {% image value.image original class='img-fluid rounded' %}
@@ -18,7 +19,16 @@
     {% endif %}
 </figure>
 <hr>
-{% elif modal %}
+{% else %}
+<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %}>
+    {% image value.image original class='img-fluid rounded' %}
+    {% if value.caption %}
+        <figcaption class="figure-caption">
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        </figcaption>
+    {% endif %}
+</figure>
+{# Modals are always renedered on the main page because they are not working well in case of rendering inside sticky sidebar tabs #}
 <div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-el-{{ id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -39,13 +49,4 @@
         </div>
     </div>
 </div>
-{% else %}
-<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    {% image value.image original class='img-fluid rounded' %}
-    {% if value.caption %}
-        <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
-        </figcaption>
-    {% endif %}
-</figure>
 {% endif %}

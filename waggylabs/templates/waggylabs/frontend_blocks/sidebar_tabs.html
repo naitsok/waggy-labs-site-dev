@@ -33,11 +33,3 @@
         </div>
     </div>
 </div>
-{# Modals do not work properly when rendered inside "postion: sticky" element #}
-<div>
-{% for item in value.items %}
-    {% if item.block_type == 'visuals' %}
-        {% include_block item with modals=True %}
-    {% endif %}
-{% endfor %}
-</div>

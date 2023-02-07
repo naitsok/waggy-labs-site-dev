@@ -2,6 +2,7 @@
 {% load waggylabs_filters %}
 
 {% if sidebar %}
+{# rendering in the sidebar #}
 <div class="mb-3">
     <div class="waggylabs-sidebar-button-container">
         <div class="overflow-hidden">
@@ -18,7 +19,16 @@
     {% endif %}
 </div>
 <hr>
-{% elif modal %}
+{% else %}
+<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
+    <p>{{ value.equation }}</p>
+    {% if value.caption %}
+    <div class="figure-caption d-none">
+        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+    </div>
+    {% endif %}
+</div>
+{# Modals are always renedered on the main page because they are not working well in case of rendering inside sticky sidebar tabs #}
 <div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-el-{{ id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -36,15 +46,6 @@
             </div>
         </div>
     </div>
-</div>
-{% else %}
-<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    <p>{{ value.equation }}</p>
-    {% if value.caption %}
-    <div class="figure-caption d-none">
-        {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.equation_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
-    </div>
-    {% endif %}
 </div>
 {% endif %}
 
