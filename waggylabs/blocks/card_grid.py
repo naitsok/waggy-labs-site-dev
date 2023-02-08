@@ -47,8 +47,8 @@ class CardBlock(StructBlock):
     class Meta:
         icon = 'form'
         label = _('Item of the card grid')
-        template = 'waggylabs/frontend_blocks/card.html'
-        label_format = _('{title}')
+        template = 'waggylabs/blocks/template/card.html'
+        label_format = _('Card: {title}')
         
 
 DEFAULT_CARD_GRID_COLUMNS = 5
@@ -102,6 +102,6 @@ class CardGridBlock(StructBlock):
     class Meta:
         icon = 'form'
         label = _('Card grid')
-        template = 'waggylabs/frontend_blocks/card_grid.html'
-        form_template = 'waggylabs/blocks/card_grid.html'
+        template = 'waggylabs/blocks/template/card_grid.html'
+        form_template = 'waggylabs/blocks/form_template/card_grid.html'
         label_format = _('Card grid: {items}')

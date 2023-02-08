@@ -25,6 +25,6 @@ class CitationBlock(StructBlock):
     class Meta:
         icon = 'link'
         label = _('Citation')
-        template = 'waggylabs/frontend_blocks/citation.html'
-        form_template = 'waggylabs/blocks/citation.html'
+        template = 'waggylabs/blocks/template/citation.html'
+        form_template = 'waggylabs/blocks/form_template/citation.html'
         label_format = _('Cite: {citation}')

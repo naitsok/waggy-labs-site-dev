@@ -71,7 +71,7 @@ class AccordionItemBlock(StructBlock):
     class Meta:
         icon = 'doc-full'
         label = _('Item of the accordion')
-        form_template = 'waggylabs/blocks/accordion_item.html'
+        form_template = 'waggylabs/blocks/form_template/accordion_item.html'
         label_format = '{heading}'
 
 
@@ -105,7 +105,7 @@ class AccordionBlock(StructBlock):
     class Meta:
         icon = 'list-ul'
         label = _('Accordion')
-        template = 'waggylabs/frontend_blocks/accordion.html'
-        form_template = 'waggylabs/blocks/accordion.html'
+        template = 'waggylabs/blocks/template/accordion.html'
+        form_template = 'waggylabs/blocks/form_template/accordion.html'
         label_format = _('Accordion: {items}')
     

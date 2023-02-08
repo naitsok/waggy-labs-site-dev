@@ -84,8 +84,8 @@ class ExternalLinkBlock(StructBlock):
     class Meta:
         icon = 'link-external'
         label = _('External link')
-        form_template = 'waggylabs/blocks/external_link.html'
-        template = 'waggylabs/frontend_blocks/external_link.html'
+        form_template = 'waggylabs/blocks/form_template/external_link.html'
+        template = 'waggylabs/blocks/template/external_link.html'
         label_format = _('External link')
     
     
@@ -110,8 +110,8 @@ class InternalLinkBlock(StructBlock):
     class Meta:
         icon = 'link'
         label = _('Internal link')
-        form_template = 'waggylabs/blocks/internal_link.html'
-        template = 'waggylabs/frontend_blocks/internal_link.html'
+        form_template = 'waggylabs/blocks/form_template/internal_link.html'
+        template = 'waggylabs/blocks/template/internal_link.html'
         label_format = _('Link: {link}')
 
 
@@ -140,8 +140,8 @@ class IconEmailBlock(StructBlock):
     class Meta:
         icon = 'mail'
         label = _('Email')
-        form_template = 'waggylabs/blocks/email.html'
-        template = 'waggylabs/frontend_blocks/email.html'
+        form_template = 'waggylabs/blocks/form_template/email.html'
+        template = 'waggylabs/blocks/template/email.html'
         label_format = _('Email: {email}')
         
         
@@ -163,7 +163,7 @@ class InfoTextBlock(StructBlock):
     class Meta:
         icon = 'clipboard-list'
         label = _('Phone, address, etc.')
-        form_template = 'waggylabs/blocks/info_text.html'
-        template = 'waggylabs/frontend_blocks/info_text.html'
+        form_template = 'waggylabs/blocks/form_template/info_text.html'
+        template = 'waggylabs/blocks/template/info_text.html'
         label_format = _('Info: {text}')
         

@@ -1,0 +1,22 @@
+{% load wagtailcore_tags %}
+{% load humanize %}
+
+<dl class="row">
+    {% if value.show_user %}
+    <dt class="col-sm-4 {{ value.header_style }}">{{ value.user_header }}</dt>
+    {# TODO: add correct link after developing #}
+    <dd class="col-sm-6 {{ value.data_style }}"><a href="#" class="{{ value.data_style }}">{% if value.full_name %}{{ value.full_name }}{% else %}{{ value.username }}{% endif %}</a></dd>
+    {% endif %}
+    {% if value.email_header %}
+    <dt class="col-sm-4 {{ value.header_style }}">{{ value.email_header }}</dt>
+    <dd class="col-sm-6 {{ value.data_style }}"><a href="mailto:{{ value.email }}" class="{{ value.data_style }}">{{ value.email }}</a></dd>
+    {% endif %}
+    {% if value.show_first_published_at %}
+    <dt class="col-sm-4 {{ value.header_style }}">{{ value.first_published_at_header }}</dt>
+    <dd class="col-sm-6 {{ value.data_style }}">{{ value.first_published_at|date:'j E, Y' }} {% if value.show_time %}{{ value.first_published_at|time:value.time_format }}{% endif %}</dd>
+    {% endif %}
+    {% if value.show_last_published_at %}
+    <dt class="col-sm-4 {{ value.header_style }}">{{ value.last_published_at_header }}</dt>
+    <dd class="col-sm-6 {{ value.data_style }}">{{ value.last_published_at|date:'j E, Y' }} {% if value.show_time %}{{ value.last_published_at|time:value.time_format }}{% endif %}</dd>
+    {% endif %}
+</dl>

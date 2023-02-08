@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+
+<div class="col-md-4 align-self-start {{ value.style }} waggylabs-sidebar-z-index {% if site_settings.navbar_placement != '' %}waggylabs-sidebar-top{% endif %}">
+    <div class="waggylabs-overflow-max-height">
+        {% for block in value.items %}
+            {% include_block block %}
+        {% endfor %}
+    </div>
+</div>

@@ -32,7 +32,7 @@ class FigureBlock(StructBlock):
     )
     
     class Meta:
-        template = 'waggylabs/frontend_blocks/figure.html'
+        template = 'waggylabs/blocks/template/figure.html'
         icon = 'image'
         label = _('Figure')
         label_format = _('Figure: {image}')

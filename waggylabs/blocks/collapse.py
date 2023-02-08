@@ -101,6 +101,6 @@ class CollapseBlock(StructBlock):
     class Meta:
         icon = 'arrows-up-down'
         label = _('Collapse')
-        form_template = 'waggylabs/blocks/collapse.html'
-        template = 'waggylabs/frontend_blocks/collapse.html'
+        form_template = 'waggylabs/blocks/form_template/collapse.html'
+        template = 'waggylabs/blocks/template/collapse.html'
         label_format = _('Collapse: {text}')

@@ -124,8 +124,8 @@ class VisualsTabBlock(StructBlock):
                       'one such sidebar tab can be added with different visuals '
                       'selected. Selected visuals will appear as thumbnails '
                       'in the sidebar and open in a dialog box for the preview.')
-        template = 'waggylabs/frontend_blocks/visuals_tab.html'
-        form_template = 'waggylabs/blocks/visuals_tab.html'
+        template = 'waggylabs/blocks/template/visuals_tab.html'
+        form_template = 'waggylabs/blocks/form_template/visuals_tab.html'
         
         
 class CitationsTabBlock(StructBlock):
@@ -158,7 +158,7 @@ class SidebarTabItemBlock(StreamBlock):
     
     class Meta:
         icon = 'clipboard-list'
-        label = _('Sidebar')
+        label = _('Sidebar tabs')
         block_counts = {
             'table_of_contents': {'max_num': 1},
             'citations': {'max_num': 1},
@@ -254,8 +254,8 @@ class SidebarTabsBlock(StructBlock):
     class Meta:
         icon = 'clipboard-list'
         label = _('Sidebar')
-        template = 'waggylabs/frontend_blocks/sidebar_tabs.html'
-        form_template = 'waggylabs/blocks/sidebar_tabs.html'
+        template = 'waggylabs/blocks/template/sidebar_tabs.html'
+        form_template = 'waggylabs/blocks/form_template/sidebar_tabs.html'
         label_format = _('Sidebar: {items}')
         help_text = _('Choose the style of the sidebar and which panels to use. '
                       'Note that some settings are incompartible. If tabs style is '

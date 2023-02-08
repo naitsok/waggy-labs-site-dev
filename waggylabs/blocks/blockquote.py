@@ -56,5 +56,5 @@ class BlockQuoteBlock(StructBlock):
     class Meta:
         icon = 'openquote'
         label = _('Blockquote')
-        template = 'waggylabs/frontend_blocks/blockquote.html'
+        template = 'waggylabs/blocks/template/blockquote.html'
         label_format = _('Quote: {quote}')

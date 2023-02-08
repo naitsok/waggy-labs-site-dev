@@ -90,6 +90,6 @@ class ColumnsBlock(StructBlock):
     class Meta:
         icon = 'duplicate'
         label = _('Multiple columns')
-        template = 'waggylabs/frontend_blocks/columns.html'
-        form_template = 'waggylabs/blocks/columns.html'
+        template = 'waggylabs/blocks/template/columns.html'
+        form_template = 'waggylabs/blocks/form_template/columns.html'
         label_format = _('Columns: {items}')

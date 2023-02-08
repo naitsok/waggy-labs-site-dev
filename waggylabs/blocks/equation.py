@@ -92,5 +92,5 @@ class EquationBlock(StructBlock):
     class Meta:
         icon = 'superscript'
         label = _('Equation')
-        template = 'waggylabs/frontend_blocks/equation.html'
+        template = 'waggylabs/blocks/template/equation.html'
         label_format = _('Equation')
