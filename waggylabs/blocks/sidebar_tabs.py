@@ -101,6 +101,9 @@ class VisualsTabBlock(StructBlock):
         self.child_blocks['title'].field.widget.attrs.update({
             'placeholder': 'Tab title',
         })
+        self.child_blocks['preview_buttons_text'].field.widget.attrs.update({
+            'placeholder': 'Preview button text',
+        })
     
     def render(self, value, context):
         block_types = []
@@ -253,7 +256,7 @@ class SidebarTabsBlock(StructBlock):
     
     class Meta:
         icon = 'clipboard-list'
-        label = _('Sidebar')
+        label = _('Sidebar tabs')
         template = 'waggylabs/blocks/template/sidebar_tabs.html'
         form_template = 'waggylabs/blocks/form_template/sidebar_tabs.html'
         label_format = _('Sidebar: {items}')

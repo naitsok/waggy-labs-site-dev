@@ -184,7 +184,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         MultiFieldPanel(
             [
                 FieldPanel('show_sidebar'),
-                FieldPanel('sidebar'),
+                FieldPanel('sidebar', classname='waggylabs-d-none'),
             ],
             heading=_('Sidebar settings'),
         ),

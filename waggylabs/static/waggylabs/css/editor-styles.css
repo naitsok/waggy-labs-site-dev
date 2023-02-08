@@ -16,3 +16,5 @@ div.waggylabs-color-input input[type="number"] { max-width: 6.5em; }
 div.waggylabs-color-input input[type="range"] { -moz-apperance: none; cursor: pointer; width: 15em; border-radius: 8px; height: 7px; border: 1px solid var(--w-color-secondary); background: initial; margin-right: 0.5rem; }
 div.waggylabs-color-input input[type="range"]::-moz-range-progress { border-radius: 8px; height: 7px; border: 1px solid var(--w-color-secondary); background: var(--w-color-secondary); }
 div.waggylabs-color-input datalist { display: flex; flex-direction: row; justify-content: space-between; width: 15em; }
+div.struct-block div.help { margin-bottom: 1rem; }
+div.waggylabs-d-none h3 { display: none; }

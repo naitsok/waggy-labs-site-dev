@@ -4,7 +4,7 @@
 
 <ul class="{{ value.tabs_style }} {{ value.tabs_justify }} {{ value.tabs_orientation }}" id="sidebar-tabs" role="tablist">
     {% for item in value.items %}
-    <li class="nav-item mx-1 my-1" role="presentation">
+    <li class="nav-item mx-1 mt-1" role="presentation">
         <button class="{% if 'tab' in value.tabs_style or 'btn' not in value.buttons_style %}nav-link{% if 'btn' not in value.buttons_style %} {{ value.buttons_style }}{% endif %}{% else %} {{ value.buttons_style }}{% endif %} {{ value.tabs_font_size }}{% if forloop.counter0 == 0 %} active{% endif %}" 
             id="id-{{ item.id }}-tab-{{ forloop.counter0 }}" 
             data-bs-toggle="tab" 
@@ -18,7 +18,7 @@
     </li>
     {% endfor %}
 </ul>
-<div class="tab-content" id="sidebar-tab-content">
+<div class="tab-content mt-1" id="sidebar-tab-content">
     {% if value.tabs_style != 'nav nav-tabs' %}<hr>{% endif %}
     {% for item in value.items %}
     <div class="tab-pane fade {% if forloop.counter0 == 0 %}show active{% endif %}" 
