@@ -29,7 +29,7 @@ class SidebarItemBlock(StreamBlock):
     tabs = SidebarTabsBlock()
     
     class Meta:
-        icon = 'form'
+        icon = 'tasks'
         label = _('Item of the sidebar')
         block_counts = {
             'page_info': {'max_num': 1},
@@ -51,7 +51,7 @@ class SidebarBlock(StructBlock):
     items = SidebarItemBlock()
     
     class Meta:
-        icon = 'form'
+        icon = 'clipboard-list'
         label = _('Sidebar')
         template = 'waggylabs/blocks/template/sidebar.html'
     

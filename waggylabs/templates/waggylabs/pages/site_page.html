@@ -38,6 +38,14 @@
             {% include_block block with id=block.id %}
         {% endfor %}
     </div>
+
+    {% if page.show_sidebar %}
+    <div id="modals">
+        {% for block in page.visuals %}
+            {% include_block block with id=block.id modal=True %}
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 
 {% endblock content %}

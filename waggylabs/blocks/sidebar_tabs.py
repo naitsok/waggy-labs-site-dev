@@ -9,7 +9,7 @@ from wagtail.blocks import (
 
 from waggylabs.blocks.body import BodyBlock
 from waggylabs.blocks.icon import IconBlock
-from waggylabs.widgets import DisabledOptionSelect
+
 
 class TableOfContentsTabBlock(StructBlock):
     """Block to add table of contents in the sidebar."""
@@ -22,6 +22,12 @@ class TableOfContentsTabBlock(StructBlock):
         required=False,
         label=_('Tab icon'),
     )
+    
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        self.child_blocks['icon'].field.widget.attrs.update({
+            'placeholder': _('Tab icon - start typing'),
+        })
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div><hr>')
@@ -99,10 +105,16 @@ class VisualsTabBlock(StructBlock):
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
         self.child_blocks['title'].field.widget.attrs.update({
-            'placeholder': 'Tab title',
+            'placeholder': _('Tab title'),
         })
         self.child_blocks['preview_buttons_text'].field.widget.attrs.update({
-            'placeholder': 'Preview button text',
+            'placeholder': _('Preview button text'),
+        })
+        self.child_blocks['icon'].field.widget.attrs.update({
+            'placeholder': _('Tab icon - start typing'),
+        })
+        self.child_blocks['preview_buttons_icon'].field.widget.attrs.update({
+            'placeholder': _('Preview button icon - start typing'),
         })
     
     def render(self, value, context):
@@ -121,7 +133,7 @@ class VisualsTabBlock(StructBlock):
         return super().render(value, context)
     
     class Meta:
-        icon = 'form'
+        icon = 'image'
         label = _('Visuals')
         help_text = _('Adds sidebar tab with the selected visuals. More than '
                       'one such sidebar tab can be added with different visuals '
@@ -143,6 +155,12 @@ class CitationsTabBlock(StructBlock):
         required=False,
         label=_('Tab icon'),
     )
+    
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        self.child_blocks['icon'].field.widget.attrs.update({
+            'placeholder': _('Tab icon - start typing'),
+        })
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-literature"></div>')

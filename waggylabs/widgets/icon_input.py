@@ -7,8 +7,8 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.telepath import register
-from wagtail.core.widget_adapters import WidgetAdapter
+from wagtail.telepath import register
+from wagtail.widget_adapters import WidgetAdapter
 from wagtail.utils.widgets import WidgetWithScript
 
 from waggylabs.templatetags.waggylabs_tags import random_uuid

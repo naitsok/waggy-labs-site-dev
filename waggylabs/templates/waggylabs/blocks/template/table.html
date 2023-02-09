@@ -25,24 +25,7 @@
     {% endif %}
 </figure>
 <hr>
-{% else %}
-<div class="table-responsive waggylabs-label-table" {% if value.label %}id="{{ value.label }}"{% endif %}>
-    <table class="table caption-top align-middle">
-        {% if value.caption %}
-        <caption class="figure-caption">
-            {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
-        </caption>
-        {% endif %}
-        {% include_block value.bound_blocks.table %}
-        <tfoot class="table-group-divider">
-            <tr>
-                {% if value.footer %}
-                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{{ value.footer|markdown|safe }}</td>
-                {% endif %}
-            </tr>
-        </tfoot>
-    </table>
-</div>
+{% elif modal %}
 {# Modals are always renedered on the main page because they are not working well in case of rendering inside sticky sidebar tabs #}
 <div class="modal fade" id="modal-{{ id }}" tabindex="-1" aria-labelledby="modal-el-{{ id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -72,5 +55,23 @@
             </div>
         </div>
     </div>
+</div>
+{% else %}
+<div class="table-responsive waggylabs-label-table" {% if value.label %}id="{{ value.label }}"{% endif %}>
+    <table class="table caption-top align-middle">
+        {% if value.caption %}
+        <caption class="figure-caption">
+            {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        </caption>
+        {% endif %}
+        {% include_block value.bound_blocks.table %}
+        <tfoot class="table-group-divider">
+            <tr>
+                {% if value.footer %}
+                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{{ value.footer|markdown|safe }}</td>
+                {% endif %}
+            </tr>
+        </tfoot>
+    </table>
 </div>
 {% endif %}

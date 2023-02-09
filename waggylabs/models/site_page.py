@@ -219,6 +219,16 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         """Returns citations and documents found in body StreamField and
         its sub blocks."""   
         return BodyBlock.blocks_by_types(self.body, ['citation', 'document'])
+    
+    def visuals(self):
+        """Returns visual blocks (embeds, equations, figures, listings, tables)
+        to render modals if sidebar is present. It is necessary to do this
+        rendering separately, because some of the visuals might have display:none
+        and thus modal will not open correctly in this case."""
+        return BodyBlock.blocks_by_types(
+            self.body,
+            ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
+        )
             
 
     def hit_counts(self):
