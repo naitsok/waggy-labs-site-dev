@@ -73,4 +73,5 @@ def sidebar_class(site_settings, page):
         css_class = 'col-md-4'
     if not page.show_sidebar:
         css_class = css_class + ' d-none'
+    return css_class
    

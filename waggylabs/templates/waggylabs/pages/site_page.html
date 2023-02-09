@@ -23,12 +23,12 @@
 {% endif %}
 
 <div id="page-body">
-{% for block in page.body %}
-    {% if block.block_type != 'citation' and block.block_type != 'document' %}
-    {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
-    {% include_block block with id=block.id %}
-    {% endif %}
-{% endfor %}
+    {% for block in page.body %}
+        {% if block.block_type != 'citation' and block.block_type != 'document' %}
+        {# these blocks a rendedered at the end of the page as references #}
+        {% include_block block with id=block.id %}
+        {% endif %}
+    {% endfor %}
 
     <div id="literature">
         {% if page.cite_blocks %}
@@ -50,27 +50,16 @@
 
 {% endblock content %}
 
-{% block extra_js %}
-<script src="{% static 'waggylabs/js/prepare-page.js' %}"></script>
-<script>
-    window.MathJax =   { 
-        tex: { tags: "ams" },
-        startup: {
-            ready: () => {
-                const el = document.getElementById("page-body");
-                prepareReferences(el);
-                prepareCitations(el);
-                MathJax.startup.defaultReady();
-                MathJax.startup.promise.then(() => {
-                    prepareScrollMarginTop(el);
-                    prepareSidebar(el);
-                });
-            }
-        }
-    };
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-{% endblock %}
+{% block sidebar %}
+
+{% if page.show_sidebar %}
+    {% for block in page.sidebar %}
+        {% include_block block %}
+    {% endfor %}
+{% endif %}
+
+{% endblock sidebar %}
+
 
 
 

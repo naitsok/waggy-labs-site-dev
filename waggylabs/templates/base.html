@@ -173,11 +173,9 @@
                     {# Overwrite this in the page template to display page content #}
                     {% endblock %}
                 </main>
-                {% if page.show_sidebar %}
-                    {% for block in page.sidebar %}
-                        {% include_block block %}
-                    {% endfor %}
-                {% endif %}
+                {% block sidebar %}
+                {# Overwrite this in the page template to display page sidebar #}
+                {% endblock %}
             </div>
         </div>
         
@@ -213,6 +211,26 @@
         {% if site_settings.theme_supports_color_mode %}
         <script src="{% static 'waggylabs/js/color-mode.js' %}"></script>
         {% endif %}
+        {# Page preparation scripts and MathJax typesetting #}
+        <script src="{% static 'waggylabs/js/prepare-page.js' %}"></script>
+        <script>
+            window.MathJax =   { 
+                tex: { tags: "ams" },
+                startup: {
+                    ready: () => {
+                        const el = document.getElementById("page-body");
+                        prepareReferences(el);
+                        prepareCitations(el);
+                        MathJax.startup.defaultReady();
+                        MathJax.startup.promise.then(() => {
+                            prepareScrollMarginTop(el);
+                            prepareSidebar(el);
+                        });
+                    }
+                }
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         {% block extra_js %}
         {# Overwrite this in templates to add extra javascript #}
         {% endblock %}
