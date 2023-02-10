@@ -15,7 +15,7 @@
     </div>
     {% if value.caption %}
     <figcaption class="figure-caption">
-        {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.listing_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.listing_caption_label }}</p>{% endif %}{% include_block value.caption %}
     </figcaption>
     {% endif %}
 </figure>
@@ -32,13 +32,13 @@
             <div class="modal-body">
                 <figure class="figure w-100">
                     <div class="border rounded">
-                        <div class="max-vh-50 w-100 overflow-auto">
+                        <div class="max-vh-70 w-100 overflow-auto">
                         {% include_block value.code %}
                         </div>
                     </div>
                     {% if value.caption %}
                     <figcaption class="figure-caption">
-                        {{ value.caption|markdown|safe }}
+                        {% include_block value.caption %}
                     </figcaption>
                     {% endif %}
                 </figure>
@@ -55,7 +55,7 @@
     </div>
     {% if value.caption %}
     <figcaption class="figure-caption">
-        {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.listing_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.listing_caption_label }}</p>{% endif %}{% include_block value.caption %}
     </figcaption>
     {% endif %}
 </figure>

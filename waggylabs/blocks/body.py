@@ -1,4 +1,6 @@
 
+from django.utils.translation import gettext_lazy as _
+
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamValue
 
@@ -68,5 +70,27 @@ class BodyBlock(StreamBlock):
                                    ColumnsBlock.blocks_by_types(block, types))
         
         return blocks_by_types
+    
+    def render(self, value, context):
+        context = dict(context)
+        context.update({
+            'literature': BodyBlock.blocks_by_types(
+                value,
+                ['citation', 'document']
+            ),
+        })
+        if context['page'].show_sidebar:
+            context.update({
+                'modals': BodyBlock.blocks_by_types(
+                    value,
+                    ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
+                ),
+            })
+        return super().render(value, context)
+    
+    class Meta:
+        icon = 'doc'
+        label = _('Page content')
+        template = 'waggylabs/blocks/template/body.html'
                 
     

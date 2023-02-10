@@ -1,0 +1,27 @@
+{% load wagtailcore_tags %}
+
+<div id="page-body">
+    {% for block in value %}
+        {% if block.block_type != 'citation' and block.block_type != 'document' %}
+        {# these blocks a rendedered at the end of the page as references #}
+        {% include_block block with id=block.id %}
+        {% endif %}
+    {% endfor %}
+
+    {% if literature %}
+    <h5>References</h5>
+    <div id="literature">
+        {% for block in literature %}
+            {% include_block block with id=block.id %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if modals %}
+    <div id="modals">
+        {% for block in modals %}
+            {% include_block block with id=block.id modal=True %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

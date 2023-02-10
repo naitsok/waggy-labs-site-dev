@@ -22,31 +22,7 @@
 </figure>
 {% endif %}
 
-<div id="page-body">
-    {% for block in page.body %}
-        {% if block.block_type != 'citation' and block.block_type != 'document' %}
-        {# these blocks a rendedered at the end of the page as references #}
-        {% include_block block with id=block.id %}
-        {% endif %}
-    {% endfor %}
-
-    <div id="literature">
-        {% if page.cite_blocks %}
-        <h5>References</h5>
-        {% endif %}
-        {% for block in page.citation_blocks %}
-            {% include_block block with id=block.id %}
-        {% endfor %}
-    </div>
-
-    {% if page.show_sidebar %}
-    <div id="modals">
-        {% for block in page.visuals %}
-            {% include_block block with id=block.id modal=True %}
-        {% endfor %}
-    </div>
-    {% endif %}
-</div>
+{% include_block page.body %}
 
 {% endblock content %}
 

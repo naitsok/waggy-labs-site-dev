@@ -14,7 +14,7 @@
     </div>
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{% include_block value.caption %}
         </figcaption>
     {% endif %}
 </figure>
@@ -33,7 +33,7 @@
                     {% image value.image original class='img-fluid rounded' %}
                     {% if value.caption %}
                     <figcaption class="figure-caption">
-                        {{ value.caption|markdown|safe }}
+                        {% include_block value.caption %}
                     </figcaption>
                     {% endif %}
                 </figure>
@@ -46,7 +46,7 @@
     {% image value.image original class='img-fluid rounded' %}
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{% include_block value.caption %}
         </figcaption>
     {% endif %}
 </figure>

@@ -10,6 +10,10 @@
 .icon-margin { margin-right: 0.5rem; }
 /* Additional viewport based height classes */
 .max-vh-50 { height: 50vh; }
+.max-vh-60 { height: 60vh; }
+.max-vh-70 { height: 70vh; }
+.max-vh-80 { height: 80vh; }
+.max-vh-90 { height: 90vh; }
 /* Inline pargarphs of markdown within captions. */
 .figure-caption p { display: inline; }
 /* Tables */
