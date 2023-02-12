@@ -218,13 +218,20 @@
                 tex: { tags: "ams" },
                 startup: {
                     ready: () => {
-                        const el = document.getElementById("page-body");
-                        prepareReferences(el);
-                        prepareCitations(el);
+                        const pageBodies = document.getElementsByClassName('waggylabs-page-body');
+                        for (let i = 0; i < pageBodies.length; i++) {
+                            prepareReferences(pageBodies[i]);
+                            prepareCitations(pageBodies[i]);
+                            
+                        }
                         MathJax.startup.defaultReady();
                         MathJax.startup.promise.then(() => {
-                            prepareScrollMarginTop(el);
-                            prepareSidebar(el);
+                            for (let i = 0; i < pageBodies.length; i++) {
+                                prepareScrollMarginTop(pageBodies[i]);
+                            }
+                            if (pageBodies.length === 1) {
+                                prepareSidebar(pageBodies[0]);
+                            }
                         });
                     }
                 }

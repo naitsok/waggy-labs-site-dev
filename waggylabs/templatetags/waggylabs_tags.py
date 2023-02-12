@@ -46,7 +46,7 @@ def main_class(site_settings, page):
     """Generates CSS class for the <main> element 
     depending on the WaggyLabsSettings and page sidebar."""
     
-    if page.show_sidebar:
+    if page.show_sidebar or site_settings.constant_content_width:
         if site_settings.content_width == 'narrow':
             return 'col-md-5 offset-md-2' # and col-md-3 for sidebar
         if site_settings.content_width == 'medium':

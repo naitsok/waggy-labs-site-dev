@@ -166,8 +166,13 @@ function prepareSidebarContents(element) {
  * @param {DOM element} element - element from where to take headers
  */
 function prepareSidebarCitations(element) {
-    const literatureElem = document.getElementById('literature');
+    const literatureElem = element.getElementsByClassName('waggylabs-literature')[0];
     const literatureSidebarElem = document.getElementsByClassName('waggylabs-sidebar-literature')[0];
+    if (!literatureElem && literatureSidebarElem) {
+        const noLiteratureElem = document.createElement('p');
+        noLiteratureElem.innerHTML = 'No references found.';
+        literatureSidebarElem.appendChild(noLiteratureElem);
+    }
     if (literatureElem && literatureSidebarElem) {
         for (let i = 0; i < literatureElem.children.length; i++) {
             const citeClone = literatureElem.children[i].cloneNode(true);
@@ -175,6 +180,15 @@ function prepareSidebarCitations(element) {
             literatureSidebarElem.appendChild(citeClone);
             literatureSidebarElem.appendChild(document.createElement('hr'));
         }
+    }
+}
+
+function preparePage() {
+    const pageBodies = document.getElementsByClassName('waggylabs-page-body');
+    for (let i = 0; i < pageBodies.length; i++) {
+        prepareReferences(pageBodies[i]);
+        prepareCitations(pageBodies[i]);
+        
     }
 }
 

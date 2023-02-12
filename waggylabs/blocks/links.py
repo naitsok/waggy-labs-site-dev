@@ -6,57 +6,9 @@ from wagtail.blocks import (
     ChoiceBlock, EmailBlock
     )
 
-from waggylabs.blocks.icon import IconBlock
 from waggylabs.widgets import DisabledOptionSelect
-
-
-class StyleChoiceBlock(ChoiceBlock):
-    """Block to choose link style (button or link) from 
-    Bootstrap styles."""
-    def __init__(
-        self,
-        choices=[
-            ('', _('Choose style')),
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-            ('card-link', _('Card link')),
-            ('nav-link', _('Navigation bar link')),
-            ('nav-link active', _('Navigation bar active link')),
-            ('link-primary', _('Primary link')),
-            ('link-secondary', _('Secondary link')),
-            ('link-success', _('Success link')),
-            ('link-danger', _('Danger link')),
-            ('link-warning', _('Warning link')),
-            ('link-info', _('Info link')),
-            ('link-light', _('Light link')),
-            ('link-dark', _('Dark link')),
-        ],
-        default='',
-        label=_('Style of the link'),
-        required=True,
-        help_text=None,
-        widget=DisabledOptionSelect,
-        validators=(),
-        **kwargs):
-        super().__init__(
-            choices,
-            default,
-            required,
-            help_text,
-            widget,
-            validators,
-            label=label,
-            **kwargs)
+from .icon import IconBlock, IconLocationBlock
+from .link_style import LinkStyleChoiceBlock
 
 
 class ExternalLinkBlock(StructBlock):
@@ -65,12 +17,13 @@ class ExternalLinkBlock(StructBlock):
         required=True,
         label=_('Link to external site'),
     )
-    icon = IconBlock(label=_('Icon'))
-    style = StyleChoiceBlock()
     text = CharBlock(
         required=False,
         label=_('Text of the link'),
     )
+    icon = IconBlock(label=_('Icon'), required=False)
+    icon_location = IconLocationBlock(required=False)
+    style = LinkStyleChoiceBlock()
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -94,12 +47,13 @@ class InternalLinkBlock(StructBlock):
     link = PageChooserBlock(
         label=_('Link to a page of this site')
     )
-    icon = IconBlock(label=_('Icon'))
-    style = StyleChoiceBlock()
     text = CharBlock(
         required=False,
         label=_('Text instead of page title'),
     )
+    icon = IconBlock(label=_('Icon'), required=False)
+    icon_location = IconLocationBlock(required=False)
+    style = LinkStyleChoiceBlock()
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -121,12 +75,13 @@ class IconEmailBlock(StructBlock):
         required=True,
         label=_('Email address'),
     )
-    icon = IconBlock(required=False)
-    style = StyleChoiceBlock()
     text = CharBlock(
         required=False,
         label=_('Text to be displayed instead of address'),
     )
+    icon = IconBlock(required=False)
+    icon_location = IconLocationBlock(required=False)
+    style = LinkStyleChoiceBlock()
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -151,8 +106,9 @@ class InfoTextBlock(StructBlock):
         required=True,
         label=_('Phone, address, etc.'),
     )
+    style = LinkStyleChoiceBlock()
     icon = IconBlock(required=False)
-    style = StyleChoiceBlock()
+    icon_location = IconLocationBlock(required=False)
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)

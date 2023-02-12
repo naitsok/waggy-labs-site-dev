@@ -11,9 +11,21 @@
                 <h5 id="pl-el-{{ id }}">{% if page.table_caption_label %}{{ page.table_caption_label }}{% else %}Table{% endif %}</h5>
             </div>
         </div>
+        {% if visual_settings.preview_buttons_icon_location == 'end' %}
         <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
-            {% if visual_settings.preview_buttons_icon|is_icon %}<i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>{% endif %}{{ visual_settings.preview_buttons_text }}
+            {{ visual_settings.preview_buttons_text }}
+            {% if visual_settings.preview_buttons_icon|is_icon %}
+            <i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} ms-1{% endif %}"></i>
+            {% endif %}
         </button>
+        {% else %}
+        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
+            {% if visual_settings.preview_buttons_icon|is_icon %}
+            <i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>
+            {% endif %}
+            {{ visual_settings.preview_buttons_text }}
+        </button>
+        {% endif %}
     </div>
     {% if value.footer %}
     <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
@@ -57,7 +69,7 @@
     </div>
 </div>
 {% else %}
-<div class="table-responsive waggylabs-label-table" {% if value.label %}id="{{ value.label }}"{% endif %}>
+<div class="table-responsive waggylabs-label-table" {% if value.label %}id="{{ value.label }}-{{ page.pk }}"{% endif %}>
     <table class="table caption-top align-middle">
         {% if value.caption %}
         <caption class="figure-caption">

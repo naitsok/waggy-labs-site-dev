@@ -8,9 +8,21 @@
 <figure class="figure">
     <div class="waggylabs-sidebar-button-container">
         {% image value.image original class='img-fluid rounded' %}
+        {% if visual_settings.preview_buttons_icon_location == 'end' %}
         <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
-            {% if visual_settings.preview_buttons_icon|is_icon %}<i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>{% endif %}{{ visual_settings.preview_buttons_text }}
+            {{ visual_settings.preview_buttons_text }}
+            {% if visual_settings.preview_buttons_icon|is_icon %}
+            <i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} ms-1{% endif %}"></i>
+            {% endif %}
         </button>
+        {% else %}
+        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
+            {% if visual_settings.preview_buttons_icon|is_icon %}
+            <i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>
+            {% endif %}
+            {{ visual_settings.preview_buttons_text }}
+        </button>
+        {% endif %}
     </div>
     {% if value.caption %}
         <figcaption class="figure-caption">
@@ -42,8 +54,11 @@
     </div>
 </div>
 {% else %}
-<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}"{% endif %}>
+<figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}-{{ page.pk }}"{% endif %}>
+    {% if not page_in_list %}
+    {# No need to render if it is under cut #}
     {% image value.image original class='img-fluid rounded' %}
+    {% endif %}
     {% if value.caption %}
         <figcaption class="figure-caption">
             {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{% include_block value.caption %}

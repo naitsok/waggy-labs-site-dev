@@ -218,6 +218,15 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                     'a particlar page.'),
         verbose_name=_('Page content width'),
     )
+    constant_content_width = models.BooleanField(
+        blank=True,
+        default=False,
+        help_text=_('Keep the width of the page content always the same '
+                    'indepent from presence or absence of sidebar on the page. '
+                    'If true, when the sidebar is not present on the page, '
+                    'its place stays empty without change of page content width.'),
+        verbose_name=_('Keep content width constant'),
+    )
     
     # Footer settings
     copyright_icon = models.CharField(
@@ -269,6 +278,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         FieldPanel('site_theme'),
         FieldPanel('theme_supports_color_mode'),
         FieldPanel('content_width'),
+        FieldPanel('constant_content_width'),
     ]
     
     navbar_panels = [

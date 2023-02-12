@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -48,6 +50,10 @@ class MathJaxMarkdownBlock(TextBlock):
         self.easymde_combine = easymde_combine
         self.easymde_toolbar_config = easymde_toolbar_config
         self.easymde_status = easymde_status
+        self.re_label = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
+        self.re_ref = re.compile(r'\\ref\{(.*?)\}', re.IGNORECASE)
+        self.re_eqref = re.compile(r'\\eqref\{(.*?)\}', re.IGNORECASE)
+        self.re_cite = re.compile(r'\\cite\{(.*?)\}', re.IGNORECASE)
         super().__init__(required, help_text, rows, max_length, min_length, validators, **kwargs)
     
     @cached_property
@@ -65,8 +71,35 @@ class MathJaxMarkdownBlock(TextBlock):
         field_kwargs.update(self.field_options)
         return forms.CharField(**field_kwargs)
 
-    def render_basic(self, value, context=None):
+    def render_basic(self, value, context):
         value = value.replace('\r', '')
+        # replace all the encountered label with the label created by user 
+        # plus page.pk, it is needed to avoid label conflicts when page
+        # is rendered in a list, such as pagination or search results
+        value = re.sub(self.re_label,
+                       lambda m: (
+                           r'\label{' + m.group(1) + '-' + 
+                           str(context['page'].pk) + '}'
+                        ),
+                       value)
+        value = re.sub(self.re_ref,
+                       lambda m: (
+                           r'\ref{' + m.group(1) + '-' + 
+                           str(context['page'].pk) + '}'
+                        ),
+                       value)
+        value = re.sub(self.re_eqref,
+                       lambda m: (
+                           r'\eqref{' + m.group(1) + '-' + 
+                           str(context['page'].pk) + '}'
+                        ),
+                       value)
+        value = re.sub(self.re_cite,
+                       lambda m: (
+                           r'\cite{' + 
+                           ','.join([cite + '-' + str(context['page'].pk) for cite in m.group(1).split(',')]) + '}'
+                        ),
+                       value)
         return render_markdown(value, context)
     
     class Meta:

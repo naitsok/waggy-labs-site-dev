@@ -8,9 +8,21 @@
         <div class="overflow-hidden">
             <p>{{ value.equation }}</p>
         </div>
+        {% if visual_settings.preview_buttons_icon_location == 'end' %}
         <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
-            {% if visual_settings.preview_buttons_icon|is_icon %}<i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>{% endif %}{{ visual_settings.preview_buttons_text }}
+            {{ visual_settings.preview_buttons_text }}
+            {% if visual_settings.preview_buttons_icon|is_icon %}
+            <i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} ms-1{% endif %}"></i>
+            {% endif %}
         </button>
+        {% else %}
+        <button type="button" class="{{ visual_settings.preview_buttons_style }} waggylabs-sidebar-button" data-bs-toggle="modal" data-bs-target="#modal-{{ id }}">
+            {% if visual_settings.preview_buttons_icon|is_icon %}
+            <i class="{{  visual_settings.preview_buttons_icon|icon_class }}{% if  visual_settings.preview_buttons_text %} me-1{% endif %}"></i>
+            {% endif %}
+            {{ visual_settings.preview_buttons_text }}
+        </button>
+        {% endif %}
     </div>
     {% if value.caption %}
     <div class="figure-caption mb-3">
@@ -40,7 +52,7 @@
     </div>
 </div>
 {% else %}
-<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}"{% endif %}>
+<div class="waggylabs-label-equation" {% if value.label %}id="{{ value.label }}-{{ page.pk }}"{% endif %}>
     <p>{{ value.equation }}</p>
     {% if value.caption %}
     <div class="figure-caption d-none">

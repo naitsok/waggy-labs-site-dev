@@ -11,7 +11,8 @@
     {% endif %}
     <div class="waggylabs-grid-container-2">
         <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.heading.block.name }}">
-            {{ children.heading.render_form }}{% if children.heading.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+            {{ children.heading.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.heading.block.required %} op-0{% endif %}">*</span></div>
         </div>
         <div class="waggylabs-flex-container" data-contentpath="{{ children.is_open.block.name }}">
             {{ children.is_open.render_form }}

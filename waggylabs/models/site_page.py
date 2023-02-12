@@ -53,12 +53,20 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     )
     show_header_image_on_page = models.BooleanField(
         blank=True,
+        # default=False,
         verbose_name=_('Show header image on page'),
         help_text=_('If true, the header image appears on top of the page '
                     'after the title. If false, header image is used only '
                     'situatively, e.g. when it appears in a list or a card '
                     'grid.')
     )
+    # show_header_image_in_list = models.BooleanField(
+    #     blank=True,
+    #     default=True,
+    #     verbose_name=_('Show header image in list'),
+    #     help_text=_('If true, shows the header image when page appears in '
+    #                 'list. For example, when page is listed search or pagination.')
+    # )
     
     # Content fields
     body = StreamField(

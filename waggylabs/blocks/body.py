@@ -10,6 +10,7 @@ from .card_grid import CardGridBlock
 from .carousel import ImageCarouselBlock
 from .collapse import CollapseBlock
 from .columns import ColumnsBlock
+from .cut import CutBlock
 from .document import DocumentBlock
 from .citation import CitationBlock
 from .embed import EmbedBlock

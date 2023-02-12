@@ -51,10 +51,9 @@ class EquationBlock(StructBlock):
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
-        self.re_label = re.compile(r'\\label\{.*?\}', re.IGNORECASE)
+        self.re_label = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
         self.re_begin = re.compile(r'\\begin\{[\w]*?\}', re.IGNORECASE)
         self.re_end = re.compile(r'\\end\{[\w]*?\}', re.IGNORECASE)
-    
     
     def render(self, value, context):
         """Renders the equation. If it is rendered in sidebar or modal,
@@ -74,6 +73,13 @@ class EquationBlock(StructBlock):
             value['equation'] = (value['equation'][:idx] +
                                     '\n\\label{' + value['label'] +
                                     '}\n' + value['equation'][idx:])
+        # label within MathJax block must be correctly updated with page id
+        value['equation'] = re.sub(self.re_label,
+                                   lambda m: (
+                                       r'\label{' + m.group(1) + '-' +
+                                       str(context['page'].pk) + '}'
+                                    ),
+                                   value['equation'])
         # if equation is rendered in sidebar,
         # \label{...} must be removed to avoid MathJax label error
         # and * must be added to avoid equation numbering

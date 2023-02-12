@@ -1,8 +1,12 @@
 {% load wagtailcore_tags %}
 
-<div id="page-body">
+<div class="waggylabs-page-body" data-waggylabs-page="page-{{ page.pk }}">
+    {% with cut_break=False %}
     {% for block in value %}
-        {% if block.block_type != 'citation' and block.block_type != 'document' %}
+        {% if block.block_type == 'cut' and page_in_list %}
+
+        {% endif %}
+        {% if block.block_type != 'citation' and block.block_type != 'document' and block.block_type != 'cut' %}
         {# these blocks a rendedered at the end of the page as references #}
         {% include_block block with id=block.id %}
         {% endif %}
@@ -10,7 +14,7 @@
 
     {% if literature %}
     <h5>References</h5>
-    <div id="literature">
+    <div class="waggylabs-literature">
         {% for block in literature %}
             {% include_block block with id=block.id %}
         {% endfor %}
@@ -18,10 +22,11 @@
     {% endif %}
 
     {% if modals %}
-    <div id="modals">
+    <div class="waggylabs-modals">
         {% for block in modals %}
             {% include_block block with id=block.id modal=True %}
         {% endfor %}
     </div>
     {% endif %}
+    {% endwith %}
 </div>

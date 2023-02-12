@@ -10,23 +10,29 @@
     </span>
     {% endif %}
     <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.image.block.name }}">
-        {{ children.image.render_form }}{% if children.image.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        {{ children.image.render_form }}
+        <div class="w-field"><span class="w-required-mark{% if not children.image.block.required %} op-0{% endif %}">*</span></div>
     </div>
     <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.caption.block.name }}">
-        {{ children.caption.render_form }}{% if children.caption.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        {{ children.caption.render_form }}
+        <div class="w-field"><span class="w-required-mark{% if not children.caption.block.required %} op-0{% endif %}">*</span></div>
     </div>
     <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.interval.block.name }}">
-        {{ children.interval.render_form }}{% if children.interval.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+        {{ children.interval.render_form }}
+        <div class="w-field"><span class="w-required-mark{% if not children.interval.block.required %} op-0{% endif %}">*</span></div>
     </div>
     <div class="waggylabs-grid-container-3">
         <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.text_justify.block.name }}">
-            {{ children.text_justify.render_form }}{% if children.text_justify.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+            {{ children.text_justify.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.text_justify.block.required %} op-0{% endif %}">*</span></div>
         </div>
         <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.text_color.block.name }}">
-            {{ children.text_color.render_form }}{% if children.text_color.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+            {{ children.text_color.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.text_color.block.required %} op-0{% endif %}">*</span></div>
         </div>
         <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.text_size.block.name }}">
-            {{ children.text_size.render_form }}{% if children.text_size.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+            {{ children.text_size.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.text_size.block.required %} op-0{% endif %}">*</span></div>
         </div>
     </div>
 </div>

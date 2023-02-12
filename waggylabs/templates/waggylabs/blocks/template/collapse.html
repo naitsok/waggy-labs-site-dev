@@ -1,9 +1,34 @@
 {% load wagtailcore_tags%}
+{% load waggylabs_filters %}
 
 <p>
-    <button class="{{ value.style }}" type="button" data-bs-toggle="collapse" data-bs-target="#id-{{ id }}" aria-expanded="false" aria-controls="id-{{ id }}">
+    {% if value.icon_location == 'end' %}
+    <button 
+        class="{{ value.style }}" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#id-{{ id }}" 
+        aria-expanded="false" 
+        aria-controls="id-{{ id }}">
         {{ value.text }}
+        {% if value.icon|is_icon %}
+        <i class="{{ value.icon|icon_class }}{% if value.text %} ms-1{% endif %}"></i>
+        {% endif %}
     </button>
+    {% else %}
+        <button 
+            class="{{ value.style }}" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#id-{{ id }}" 
+            aria-expanded="false" 
+            aria-controls="id-{{ id }}">
+            {% if value.icon|is_icon %}
+            <i class="{{ value.icon|icon_class }}{% if value.text %} me-1{% endif %}"></i>
+            {% endif %}
+            {{ value.text }}
+        </button>
+    {% endif %}
 </p>
 <div class="collapse" id="id-{{ id }}">
     <div class="card card-body">

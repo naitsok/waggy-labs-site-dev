@@ -7,8 +7,9 @@ from wagtail.blocks import (
     ChoiceBlock
     )
 
-from waggylabs.blocks.body import BodyBlock
-from waggylabs.blocks.icon import IconBlock
+from .body import BodyBlock
+from .icon import IconBlock, IconLocationBlock
+from .link_style import LinkStyleChoiceBlock
 
 
 class TableOfContentsTabBlock(StructBlock):
@@ -22,6 +23,7 @@ class TableOfContentsTabBlock(StructBlock):
         required=False,
         label=_('Tab icon'),
     )
+    icon_location = IconLocationBlock(required=False)
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -52,6 +54,7 @@ class VisualsTabBlock(StructBlock):
         required=False,
         label=_('Tab icon'),
     )
+    icon_location = IconLocationBlock(required=False)
     preview_buttons_text = CharBlock(
         required=False,
         label=_('Preview buttons text'),
@@ -61,26 +64,11 @@ class VisualsTabBlock(StructBlock):
         required=False,
         label=_('Preview buttons icon'),
     )
-    preview_buttons_style = ChoiceBlock(
-        required=True,
-        choices=[
-            ('', _('Choose button style')),
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-        ],
-        default='',
-        label=_('Preview buttons style'),
+    preview_buttons_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Preview buttons icon location'),
     )
+    preview_buttons_style = LinkStyleChoiceBlock()
     include_embeds = BooleanBlock(
         required=False,
         label=_('Include embeds'),
@@ -155,6 +143,7 @@ class CitationsTabBlock(StructBlock):
         required=False,
         label=_('Tab icon'),
     )
+    icon_location = IconLocationBlock(required=False)
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)

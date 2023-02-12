@@ -10,23 +10,17 @@
     </span>
     {% endif %}
     <div class="waggylabs-grid-container-3">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_style.block.name }}">
-            {{ children.tabs_style.render_form }}{% if children.tabs_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.buttons_style.block.name }}">
-            {{ children.buttons_style.render_form }}{% if children.buttons_style.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_font_size.block.name }}">
-            {{ children.tabs_font_size.render_form }}{% if children.tabs_font_size.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
-        </div>
-    </div>
-    <div class="waggylabs-grid-container-3">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_orientation.block.name }}">
-            {{ children.tabs_orientation.render_form }}{% if children.tabs_orientation.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.tabs_justify.block.name }}">
-            {{ children.tabs_justify.render_form }}{% if children.tabs_justify.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>&emsp;{% endif %}
-        </div>
+        {% for child in children.values %}
+            {% if child.block.name != 'items' %}
+                <div class="waggylabs-flex-container w-100" data-contentpath="{{ child.block.name }}">
+                    {% comment "" %}{% if child.block.label %}
+                        <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+                    {% endif %}{% endcomment %}
+                    {{ child.render_form }}
+                    <div class="w-field"><span class="w-required-mark{% if not child.block.required %} op-0{% endif %}">*</span></div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
     <div data-contentpath="{{ children.items.block.name }}">
         {{ children.items.render_form }}

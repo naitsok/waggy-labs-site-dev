@@ -14,7 +14,8 @@
             {% comment "" %}{% if child.block.label %}
                 <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
             {% endif %}{% endcomment %}
-            {{ child.render_form }}{% if child.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+            {{ child.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not child.block.required %} op-0{% endif %}">*</span></div>
         </div>
     {% endfor %}
     {% comment %}
