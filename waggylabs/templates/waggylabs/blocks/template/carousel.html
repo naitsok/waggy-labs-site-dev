@@ -1,5 +1,4 @@
 {% load wagtailimages_tags %}
-{% load wagtailmarkdown %}
 {% load waggylabs_tags %}
 
 {% random_uuid as id %}
@@ -15,9 +14,11 @@
         <div class="carousel-inner">
             {% for item in value.items %}
             <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}" data-bs-interval="{% if item.interval == 0 %}2000{% else %}{{ item.interval }}{% endif %}">
+                {% if not after_cut %}
                 {% image item.image original class='d-block w-100 img-fluid rounded' %}
+                {% endif %}
                 <div class="carousel-caption d-none d-md-block {{ item.text_justify }} {{ item.text_size }} {{ item.text_color }}">
-                    {{ item.caption|markdown|safe }}
+                    {% include_block value.caption %}
                 </div>
             </div>
             {% endfor %}

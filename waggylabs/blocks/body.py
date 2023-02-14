@@ -73,20 +73,36 @@ class BodyBlock(StreamBlock):
         return blocks_by_types
     
     def render(self, value, context):
-        context = dict(context)
-        context.update({
-            'literature': BodyBlock.blocks_by_types(
-                value,
-                ['citation', 'document']
-            ),
-        })
+        value = { 'body': value }
+        value['literature'] = BodyBlock.blocks_by_types(
+            value['body'],
+            ['citation', 'document']
+        )
         if context['page'].show_sidebar:
-            context.update({
-                'modals': BodyBlock.blocks_by_types(
-                    value,
-                    ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
-                ),
-            })
+            value['modals'] = BodyBlock.blocks_by_types(
+                value['body'],
+                ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
+            )
+        if context['page_in_list']:
+            # page is rendered in the list, e.g. after search
+            # we need to display blocks in page.body only those that before cut
+            # other blocks may be rendereded truncated, for example, to avoid image 
+            # loading and use of traffic
+            # however, literature, equations and all label blocks must be rendered
+            # hidden in order to correctly generate reference and citations
+            before_cut = []
+            after_cut = []
+            cut_met = False
+            for block in value['body']:
+                if not cut_met:
+                    before_cut.append(block)
+                else:
+                    after_cut.append(block)
+                if block.block_type == 'cut':
+                    cut_met = True
+            value['before_cut'] = before_cut
+            value['after_cut'] = after_cut
+            
         return super().render(value, context)
     
     class Meta:

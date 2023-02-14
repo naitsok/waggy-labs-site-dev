@@ -1,18 +1,19 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load wagtailmarkdown %}
 
 {% if orientation_style == 'horizontal' %}
 <div class="card mb-3 {% if height_style == 'equal' %}h-100{% endif %}">
   <div class="row g-0">
     <div class="col-md-4">
+      {% if not after_cut %}
       {% image value.image original class='img-fluid-h rounded-start' %}
+      {% endif %}
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">{{ value.title }}</h5>
         {% if value.subtitle %}<h6 class="card-subtitle mb-2 text-muted">{{ value.subtitle }}</h6>{% endif %}
-        {{ value.text|markdown|safe }}
+        {% include_block value.text %}
       </div>
       {% if value.links %}
       <div class="card-footer">
@@ -24,11 +25,13 @@
 </div>
 {% else %}
 <div class="card{% if height_style == 'equal' %} h-100{% endif %}">
+  {% if not after_cut %}
   {% image value.image original class='img-fluid card-img-top' %}
+  {% endif %}
   <div class="card-body">
     <h5 class="card-title">{{ value.title }}</h5>
     {% if value.subtitle %}<h6 class="card-subtitle mb-2 text-muted">{{ value.subtitle }}</h6>{% endif %}
-    {{ value.text|markdown|safe }}
+    {% include_block value.text %}
   </div>
   {% if value.links %}
   <div class="card-footer">

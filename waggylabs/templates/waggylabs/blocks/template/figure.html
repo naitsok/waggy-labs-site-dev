@@ -1,6 +1,5 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load wagtailmarkdown %}
 {% load waggylabs_filters %}
 
 {% if sidebar %}
@@ -26,7 +25,8 @@
     </div>
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{% include_block value.caption %}
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}
+            {% include_block value.caption %}
         </figcaption>
     {% endif %}
 </figure>
@@ -55,13 +55,14 @@
 </div>
 {% else %}
 <figure class="figure waggylabs-label-figure" {% if value.label %}id="{{ value.label }}-{{ page.pk }}"{% endif %}>
-    {% if not page_in_list %}
+    {% if not after_cut %}
     {# No need to render if it is under cut #}
     {% image value.image original class='img-fluid rounded' %}
     {% endif %}
     {% if value.caption %}
         <figcaption class="figure-caption">
-            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}{% include_block value.caption %}
+            {% if page.figure_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.figure_caption_label }}</p>{% endif %}
+            {% include_block value.caption %}
         </figcaption>
     {% endif %}
 </figure>

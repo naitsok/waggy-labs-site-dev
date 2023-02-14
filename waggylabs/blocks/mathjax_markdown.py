@@ -8,6 +8,7 @@ from wagtail.core.blocks import TextBlock
 
 from wagtailmarkdown.blocks import render_markdown
 
+from waggylabs.extensions.markdown import page_pk_to_markdown
 from waggylabs.widgets import MathJaxMarkdownTextarea
 
 
@@ -76,30 +77,7 @@ class MathJaxMarkdownBlock(TextBlock):
         # replace all the encountered label with the label created by user 
         # plus page.pk, it is needed to avoid label conflicts when page
         # is rendered in a list, such as pagination or search results
-        value = re.sub(self.re_label,
-                       lambda m: (
-                           r'\label{' + m.group(1) + '-' + 
-                           str(context['page'].pk) + '}'
-                        ),
-                       value)
-        value = re.sub(self.re_ref,
-                       lambda m: (
-                           r'\ref{' + m.group(1) + '-' + 
-                           str(context['page'].pk) + '}'
-                        ),
-                       value)
-        value = re.sub(self.re_eqref,
-                       lambda m: (
-                           r'\eqref{' + m.group(1) + '-' + 
-                           str(context['page'].pk) + '}'
-                        ),
-                       value)
-        value = re.sub(self.re_cite,
-                       lambda m: (
-                           r'\cite{' + 
-                           ','.join([cite + '-' + str(context['page'].pk) for cite in m.group(1).split(',')]) + '}'
-                        ),
-                       value)
+        value = page_pk_to_markdown(value, context['page'].pk)
         return render_markdown(value, context)
     
     class Meta:

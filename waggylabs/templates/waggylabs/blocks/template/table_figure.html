@@ -1,6 +1,5 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load wagtailmarkdown %}
 {% load waggylabs_filters %}
 
 {% if sidebar %}
@@ -25,11 +24,12 @@
         {% endif %}
     </div>
     {% if value.footer %}
-    <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
+    <div class="figure-caption">{% include_block value.footer %}</div>
     {% endif %}
     {% if value.caption %}
     <figcaption class="figure-caption">
-        {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}
+        {% include_block value.caption %}
     </figcaption>
     {% endif %}
 </figure>
@@ -47,12 +47,12 @@
                 <figure class="figure caption-top" id="modal-bl-{{ id }}">
                     {% if value.caption %}
                     <figcaption class="figure-caption">
-                        {{ value.caption|markdown|safe }}
+                        {% include_block value.caption %}
                     </figcaption>
                     {% endif %}
                     {% image value.image original class='img-fluid rounded' %}
                     {% if value.footer %}
-                    <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
+                    <div class="figure-caption">{% include_block value.footer %}</div>
                     {% endif %}
                 </figure>
             </div>
@@ -63,12 +63,15 @@
 <figure class="figure caption-top waggylabs-label-table" {% if value.label %}id="{{ value.label }}-{{ page.pk }}"{% endif %}>
     {% if value.caption %}
     <figcaption class="figure-caption">
-        {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}
+        {% include_block value.caption %}
     </figcaption>
     {% endif %}
+    {% if not after_cut %}
     {% image value.image original class='img-fluid rounded' %}
+    {% endif %}
     {% if value.footer %}
-    <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
+    <div class="figure-caption">{% include_block value.footer %}</div>
     {% endif %}
 </figure>
 {% endif %}

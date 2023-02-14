@@ -1,5 +1,6 @@
 
 import html
+import re
 import xml.etree.ElementTree as etree
 
 from markdown.extensions import Extension
@@ -7,6 +8,32 @@ from markdown.inlinepatterns import InlineProcessor, SimpleTagInlineProcessor
 from markdown.postprocessors import Postprocessor
 from markdown.preprocessors import Preprocessor
 from markdown.util import AtomicString
+
+
+RE_LABEL = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
+RE_REF = re.compile(r'\\ref\{(.*?)\}', re.IGNORECASE)
+RE_EQREF = re.compile(r'\\eqref\{(.*?)\}', re.IGNORECASE)
+RE_CITE = re.compile(r'\\cite\{(.*?)\}', re.IGNORECASE)
+def page_pk_to_markdown(value: str, pk: int):
+    """Modifies all label, ref, eqref, cite ids with page primary key
+    to avoid collisions when multiple parts from different pages are rendered
+    on one page (e.g. when pages are renedered in list)."""
+    value = re.sub(RE_LABEL,
+                   lambda m: (r'\label{' + m.group(1) + '-' + str(pk) + '}'),
+                   value)
+    value = re.sub(RE_REF,
+                   lambda m: (r'\ref{' + m.group(1) + '-' + str(pk) + '}'),
+                   value)
+    value = re.sub(RE_EQREF,
+                   lambda m: (r'\eqref{' + m.group(1) + '-' + str(pk) + '}'),
+                   value)
+    value = re.sub(RE_CITE,
+                   lambda m: (
+                       r'\cite{' +
+                       ','.join([cite + '-' + str(pk) for cite in m.group(1).split(',')]) + '}'
+                    ),
+                   value)
+    return value
 
 
 class DollarSignPreprocessor(Preprocessor):

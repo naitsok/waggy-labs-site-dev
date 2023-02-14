@@ -1,5 +1,4 @@
 {% load wagtailcore_tags %}
-{% load wagtailmarkdown %}
 {% load waggylabs_filters %}
 
 {% if sidebar %}
@@ -28,11 +27,12 @@
         {% endif %}
     </div>
     {% if value.footer %}
-    <div class="figure-caption">{{ value.footer|markdown|safe }}</div>
+    <div class="figure-caption">{% include_block value.footer %}</div>
     {% endif %}
     {% if value.caption %}
     <figcaption class="figure-caption">
-        {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+        {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}
+        {% include_block value.caption %}
     </figcaption>
     {% endif %}
 </figure>
@@ -51,14 +51,14 @@
                     <table class="table caption-top align-middle">
                         {% if value.caption %}
                         <caption class="figure-caption">
-                            {{ value.caption|markdown|safe }}
+                            {% include_block value.caption %}
                         </caption>
                         {% endif %}
                         {% include_block value.bound_blocks.table %}
                         <tfoot class="table-group-divider">
                             <tr>
                                 {% if value.footer %}
-                                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{{ value.footer|markdown|safe }}</td>
+                                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{% include_block value.footer %}</td>
                                 {% endif %}
                             </tr>
                         </tfoot>
@@ -73,14 +73,15 @@
     <table class="table caption-top align-middle">
         {% if value.caption %}
         <caption class="figure-caption">
-            {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}{{ value.caption|markdown|safe }}
+            {% if page.table_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.table_caption_label }}</p>{% endif %}
+            {% include_block value.caption %}
         </caption>
         {% endif %}
         {% include_block value.bound_blocks.table %}
         <tfoot class="table-group-divider">
             <tr>
                 {% if value.footer %}
-                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{{ value.footer|markdown|safe }}</td>
+                <td colspan="{{ value.table.data.0|length }}" class="figure-caption">{% include_block value.footer %}</td>
                 {% endif %}
             </tr>
         </tfoot>

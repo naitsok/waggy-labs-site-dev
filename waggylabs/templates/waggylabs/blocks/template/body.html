@@ -1,32 +1,44 @@
 {% load wagtailcore_tags %}
 
-<div class="waggylabs-page-body" data-waggylabs-page="page-{{ page.pk }}">
-    {% with cut_break=False %}
-    {% for block in value %}
-        {% if block.block_type == 'cut' and page_in_list %}
+<div class="waggylabs-page-body" {# data-waggylabs-page="page-{{ page.pk }}" #}>
+    {% if page_in_ list %}
+        {% for block in value.before_cut %}
+            {% if block.block_type != 'citation' and block.block_type != 'document' %}
+            {# these blocks a rendered at the end of the page as references #}
+            {% include_block block with id=block.id %}
+            {% endif %}
+        {% endfor %}
+        <div class="d-none">
+            {% for block in value.after_cut %}
+                {% if block.block_type != 'citation' and block.block_type != 'document' %}
+                {# these blocks a rendered at the end of the page as references #}
+                {% include_block block with id=block.id after_cut=True %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        {% for block in value.body %}
+            {% if block.block_type != 'citation' and block.block_type != 'document' %}
+            {# these blocks a rendered at the end of the page as references #}
+            {% include_block block with id=block.id %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
-        {% endif %}
-        {% if block.block_type != 'citation' and block.block_type != 'document' and block.block_type != 'cut' %}
-        {# these blocks a rendedered at the end of the page as references #}
-        {% include_block block with id=block.id %}
-        {% endif %}
-    {% endfor %}
-
-    {% if literature %}
+    {% if value.literature %}
     <h5>References</h5>
-    <div class="waggylabs-literature">
+    <div class="waggylabs-literature {% if page_in_list and value.after_cut|length > 0 %}d-none{% endif %}">
         {% for block in literature %}
             {% include_block block with id=block.id %}
         {% endfor %}
     </div>
     {% endif %}
 
-    {% if modals %}
+    {% if value.modals %}
     <div class="waggylabs-modals">
         {% for block in modals %}
             {% include_block block with id=block.id modal=True %}
         {% endfor %}
     </div>
     {% endif %}
-    {% endwith %}
 </div>
