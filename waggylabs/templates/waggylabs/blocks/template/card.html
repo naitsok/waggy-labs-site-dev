@@ -1,5 +1,6 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
+{% load waggylabs_filters %}
 
 {% if orientation_style == 'horizontal' %}
 <div class="card mb-3 {% if height_style == 'equal' %}h-100{% endif %}">
@@ -31,7 +32,7 @@
   <div class="card-body">
     <h5 class="card-title">{{ value.title }}</h5>
     {% if value.subtitle %}<h6 class="card-subtitle mb-2 text-muted">{{ value.subtitle }}</h6>{% endif %}
-    {% include_block value.text %}
+    {{ value.text|markdown:page.pk|safe }}
   </div>
   {% if value.links %}
   <div class="card-footer">

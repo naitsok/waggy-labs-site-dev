@@ -1,7 +1,7 @@
+{% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
-{% load waggylabs_tags %}
+{% load waggylabs_filters %}
 
-{% random_uuid as id %}
 <div class="mb-3">
     <div id="id-{{ id }}" class="carousel {{ value.color }} slide{% if value.switch == 'false-fade' or value.switch == 'carousel-fade' %} carousel-fade{% endif %}" data-bs-ride="{% if value.switch == 'false' or value.switch == 'false-fade' %}false{% else %}carousel{% endif %}">
         {% if value.controls == 'none' or value.controls != 'buttons' %}
@@ -18,7 +18,7 @@
                 {% image item.image original class='d-block w-100 img-fluid rounded' %}
                 {% endif %}
                 <div class="carousel-caption d-none d-md-block {{ item.text_justify }} {{ item.text_size }} {{ item.text_color }}">
-                    {% include_block value.caption %}
+                    {{ item.caption|markdown:page.pk|safe }}
                 </div>
             </div>
             {% endfor %}

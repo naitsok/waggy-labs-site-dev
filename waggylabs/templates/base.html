@@ -215,9 +215,31 @@
         <script src="{% static 'waggylabs/js/prepare-page.js' %}"></script>
         <script>
             window.MathJax =   { 
-                tex: { tags: "ams" },
+                loader: {
+                    load: ['[tex]/autoload'],
+                },
+                tex: {
+                    packages: {"[+]": ["autoload"]},
+                    tags: "ams",
+                },
                 startup: {
-                    ready: () => {
+                    pageReady: () => {
+                        const pageBodies = document.getElementsByClassName('waggylabs-page-body');
+                        for (let i = 0; i < pageBodies.length; i++) {
+                            prepareReferences(pageBodies[i]);
+                            prepareCitations(pageBodies[i]);
+                            MathJax.typeset([pageBodies[i]]);
+                            // MathJax.texReset([1]);
+                            prepareScrollMarginTop(pageBodies[i]);
+                        }
+                        const sidebar = document.getElementById('sidebar');
+                        if (sidebar) {
+                            MathJax.typeset([sidebar]);
+                            prepareSidebar(pageBodies[0]);
+                        }
+                        return new Promise((resolve, reject) => {});
+                    }
+                    {% comment %} ready: () => {
                         const pageBodies = document.getElementsByClassName('waggylabs-page-body');
                         for (let i = 0; i < pageBodies.length; i++) {
                             prepareReferences(pageBodies[i]);
@@ -233,7 +255,7 @@
                                 prepareSidebar(pageBodies[0]);
                             }
                         });
-                    }
+                    } {% endcomment %}
                 }
             };
         </script>

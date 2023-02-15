@@ -1,5 +1,5 @@
 {% load table_block_tags %}
-{% load wagtailmarkdown %}
+{% load waggylabs_filters %}
 
 {% if keep_table_tag %}
 <div class="table-responsive mb-3">
@@ -12,7 +12,7 @@
                     {% with forloop.counter0 as col_index %}
                         <th scope="col" {% cell_classname 0 col_index %}>
                             {% if column.strip %}
-                                {{ column.strip|markdown|safe }}
+                                {{ column.strip|markdown:page.pk|safe }}
                                 {% comment %} {% if html_renderer %}
                                     {{ column.strip|markdown|safe|linebreaksbr }}
                                 {% else %}
@@ -34,7 +34,7 @@
                             {% if first_col_is_header and forloop.first %}
                                 <th scope="row" {% cell_classname row_index col_index table_header %}>
                                     {% if column.strip %}
-                                    {{ column.strip|markdown|safe }}
+                                    {{ column.strip|markdown:page.pk|safe }}
                                         {% comment %} {% if html_renderer %}
                                             {{ column.strip|markdown|safe|linebreaksbr }}
                                         {% else %}
@@ -45,7 +45,7 @@
                             {% else %}
                                 <td {% cell_classname row_index col_index table_header %}>
                                     {% if column.strip %}
-                                    {{ column.strip|markdown|safe }}
+                                    {{ column.strip|markdown:page.pk|safe }}
                                         {% comment %} {% if html_renderer %}
                                             {{ column.strip|safe|linebreaksbr }}
                                         {% else %}

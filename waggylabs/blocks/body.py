@@ -83,7 +83,7 @@ class BodyBlock(StreamBlock):
                 value['body'],
                 ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
             )
-        if context['page_in_list']:
+        if 'page_in_list' in context:
             # page is rendered in the list, e.g. after search
             # we need to display blocks in page.body only those that before cut
             # other blocks may be rendereded truncated, for example, to avoid image 

@@ -183,15 +183,6 @@ function prepareSidebarCitations(element) {
     }
 }
 
-function preparePage() {
-    const pageBodies = document.getElementsByClassName('waggylabs-page-body');
-    for (let i = 0; i < pageBodies.length; i++) {
-        prepareReferences(pageBodies[i]);
-        prepareCitations(pageBodies[i]);
-        
-    }
-}
-
 function prepareSidebar(element) {
     prepareSidebarContents(element);
     prepareSidebarVisuals(element);

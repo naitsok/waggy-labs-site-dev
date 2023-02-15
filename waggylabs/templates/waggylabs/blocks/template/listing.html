@@ -27,7 +27,7 @@
     {% if value.caption %}
     <figcaption class="figure-caption">
         {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.listing_caption_label }}</p>{% endif %}
-        {% include_block value.caption %}
+        {{ value.caption|markdown:page.pk|safe }}
     </figcaption>
     {% endif %}
 </figure>
@@ -50,7 +50,7 @@
                     </div>
                     {% if value.caption %}
                     <figcaption class="figure-caption">
-                        {% include_block value.caption %}
+                        {{ value.caption|markdown:page.pk|safe }}
                     </figcaption>
                     {% endif %}
                 </figure>
@@ -68,7 +68,7 @@
     {% if value.caption %}
     <figcaption class="figure-caption">
         {% if page.listing_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.listing_caption_label }}</p>{% endif %}
-        {% include_block value.caption %}
+        {{ value.caption|markdown:page.pk|safe }}
     </figcaption>
     {% endif %}
 </figure>

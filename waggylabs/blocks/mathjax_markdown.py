@@ -2,13 +2,14 @@ import re
 
 from django import forms
 from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import TextBlock
 
 from wagtailmarkdown.blocks import render_markdown
 
-from waggylabs.extensions.markdown import page_pk_to_markdown
+from waggylabs.utils import pk_to_markdown
 from waggylabs.widgets import MathJaxMarkdownTextarea
 
 
@@ -77,7 +78,7 @@ class MathJaxMarkdownBlock(TextBlock):
         # replace all the encountered label with the label created by user 
         # plus page.pk, it is needed to avoid label conflicts when page
         # is rendered in a list, such as pagination or search results
-        value = page_pk_to_markdown(value, context['page'].pk)
+        value = pk_to_markdown(value, context['page'].pk)
         return render_markdown(value, context)
     
     class Meta:

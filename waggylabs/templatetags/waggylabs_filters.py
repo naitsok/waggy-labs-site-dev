@@ -5,6 +5,9 @@ from django.template.defaultfilters import stringfilter
 
 from urllib.parse import urlparse
 
+from wagtailmarkdown.utils import render_markdown
+
+from waggylabs.utils import pk_to_markdown
 from waggylabs.widgets import DEFAULT_BOOTSTRAP_ICONS
 
 
@@ -51,4 +54,13 @@ def col_class(value):
     """Calulates the correct value for Bootstrap CSS
     column width class."""
     return int(12 / len(value.bound_blocks))
+
+
+@register.filter(name='markdown')
+def markdown(value, arg):
+    """Returns the markdown with label, ref, eqref, cite
+    updated with page primary key if it arg is not empty."""
+    if arg:
+        value = pk_to_markdown(value, arg)
+    return render_markdown(value)
     

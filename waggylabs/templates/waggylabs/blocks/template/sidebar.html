@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 {% load waggylabs_tags %}
 
-<div class="{% sidebar_class site_settings page %} align-self-start {{ value.style }} waggylabs-sidebar-z-index {% if site_settings.navbar_placement != '' %}waggylabs-sidebar-top{% endif %}">
+<div id="sidebar" class="{% sidebar_class site_settings page %} align-self-start {{ value.style }} waggylabs-sidebar-z-index {% if site_settings.navbar_placement != '' %}waggylabs-sidebar-top{% endif %}">
     {% if value.style == 'sticky-top' %}
     <div class="waggylabs-overflow-max-height">
     {% endif %}

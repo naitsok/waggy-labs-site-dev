@@ -1,3 +1,4 @@
+{% load wagtailcore_tags %}
 {% load waggylabs_filters %}
 
 {% if sidebar %}
@@ -26,7 +27,7 @@
     {% if value.caption %}
     <div class="figure-caption mb-3">
         {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label" id="sb-el-{{ id }}">{{ page.equation_caption_label }}</p>{% endif %}
-        {% include_block value.caption %}
+        {{ value.caption|markdown:page.pk|safe }}
     </div>
     {% endif %}
 </div>
@@ -44,7 +45,7 @@
                 <p>{{ value.equation }}</p>
                 {% if value.caption %}
                 <div class="figure-caption">
-                    {% include_block value.caption %}
+                    {{ value.caption|markdown:page.pk|safe }}
                 </div>
                 {% endif %}
             </div>
@@ -57,7 +58,7 @@
     {% if value.caption %}
     <div class="figure-caption d-none">
         {% if page.equation_caption_label %}<p class="me-2 waggylabs-entity-label" id="el-{{ id }}">{{ page.equation_caption_label }}</p>{% endif %}
-        {% include_block value.caption %}
+        {{ value.caption|markdown:page.pk|safe }}
     </div>
     {% endif %}
 </div>
