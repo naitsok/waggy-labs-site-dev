@@ -169,6 +169,7 @@
         <div class="container mt-5">
             <div class="row" role="main">
                 <main class="{% main_class site_settings page %}">
+                    <p> &#x0001F947 &#x0001F446&#x0001F3FB</p>
                     {% block content %}
                     {# Overwrite this in the page template to display page content #}
                     {% endblock %}
@@ -233,7 +234,7 @@
                             prepareScrollMarginTop(pageBodies[i]);
                         }
                         const sidebar = document.getElementById('sidebar');
-                        if (sidebar) {
+                        if (sidebar && (pageBodies.length === 1)) {
                             MathJax.typeset([sidebar]);
                             prepareSidebar(pageBodies[0]);
                         }
