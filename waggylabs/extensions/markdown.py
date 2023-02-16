@@ -1,4 +1,5 @@
 
+import emoji
 import html
 import xml.etree.ElementTree as etree
 
@@ -22,6 +23,12 @@ class DollarSignPostprocessor(Postprocessor):
     """Posprocessor to return $ signs back from {{DOLLAR}}."""
     def run(self, text):
         return text.replace('{{DOLLAR}}', '$')
+    
+    
+class EmojiPostprocessor(Postprocessor):
+    """Postprocessor to convert emoji text to unicode characters."""
+    def run(self, text):
+        return emoji.emojize(text, language="alias")
 
 
 class StrikethroughExtension(Extension):
@@ -77,7 +84,9 @@ class WaggyLabsMarkdownExtenstion(Extension):
         # ~~strikethrough~~ pattern.
         md.inlinePatterns.register(SimpleTagInlineProcessor(r'()~~(.*?)~~', 's'), 's', 171)
         # Postprocessors
-        md.postprocessors.register(DollarSignPostprocessor(), 'dollar-post', 19)
+        md.postprocessors.register(DollarSignPostprocessor(), 'dollar-post', 18)
+        md.postprocessors.register(EmojiPostprocessor(), 'emoji-post', 19)
+        
         
         
 def makeExtension(configs={}):

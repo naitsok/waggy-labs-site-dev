@@ -302,7 +302,7 @@ function resetPreviewAll(editor) {
     for (let i in textAreas) {
         if(textAreas[i].easyMDE && textAreas[i].easyMDE.element.id !== editor.element.id) {
             var preview = textAreas[i].easyMDE.codemirror.getWrapperElement().lastChild;
-            preview.innerHTML = mathjaxMarkdown(textAreas[i].easyMDE.value(), textAreas[i].easyMDE);
+            preview.innerHTML = renderMarkdown(textAreas[i].easyMDE.value(), textAreas[i].easyMDE);
         }
     }
     MathJax.texReset();
@@ -346,7 +346,7 @@ function easymdeAttach(id) {
                 resetPreviewAll(mde);
             }, 500);
         }
-        return mathjaxMarkdown(plainText, mde);
+        return renderMarkdown(plainText, mde);
     };
     mde.render();
 

@@ -19,7 +19,7 @@ from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .table import TableBlock, TableFigureBlock
 
 
@@ -37,7 +37,7 @@ class ColumnsContentBlock(StreamBlock):
     listing = ListingBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
-    text = MathJaxMarkdownBlock(help_text='')
+    text = MarkdownBlock(help_text='')
         
 
 class ColumnsItemBlock(StructBlock):

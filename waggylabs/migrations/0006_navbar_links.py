@@ -3,7 +3,7 @@
 from django.db import migrations
 import waggylabs.blocks.label
 import waggylabs.blocks.links
-import waggylabs.blocks.mathjax_markdown
+import waggylabs.blocks.markdown
 import waggylabs.blocks.table
 import wagtail.blocks
 import wagtail.documents.blocks
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "quote",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -231,7 +231,7 @@ class Migration(migrations.Migration):
                                                                                         ),
                                                                                         (
                                                                                             "caption",
-                                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                 easymde_combine="true",
                                                                                                 easymde_max_height="100px",
                                                                                                 easymde_min_height="100px",
@@ -392,7 +392,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -420,7 +420,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "equation",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="false",
                                                                                 easymde_max_height="150px",
                                                                                 easymde_min_height="150px",
@@ -432,7 +432,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -468,7 +468,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -573,7 +573,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -601,7 +601,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -623,7 +623,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "footer",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -651,7 +651,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="150px",
                                                                                 easymde_min_height="150px",
@@ -671,7 +671,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "footer",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -695,7 +695,7 @@ class Migration(migrations.Migration):
                                                             ),
                                                             (
                                                                 "text",
-                                                                waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                waggylabs.blocks.markdown.MarkdownBlock(
                                                                     easymde_combine="true",
                                                                     easymde_max_height="150px",
                                                                     easymde_min_height="150px",
@@ -722,7 +722,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "quote",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -852,7 +852,7 @@ class Migration(migrations.Migration):
                                                 ),
                                                 (
                                                     "text",
-                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                         easymde_combine="true",
                                                         easymde_max_height="100px",
                                                         easymde_min_height="100px",
@@ -1323,7 +1323,7 @@ class Migration(migrations.Migration):
                                                 ),
                                                 (
                                                     "caption",
-                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                         easymde_combine="true",
                                                         easymde_max_height="100px",
                                                         easymde_min_height="100px",
@@ -1465,7 +1465,7 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "quote",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -1623,7 +1623,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -1784,7 +1784,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "caption",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -1812,7 +1812,7 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "equation",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="false",
                                                                 easymde_max_height="150px",
                                                                 easymde_min_height="150px",
@@ -1824,7 +1824,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "caption",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -1860,7 +1860,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "caption",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -1965,7 +1965,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "caption",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -1993,7 +1993,7 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "caption",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -2015,7 +2015,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "footer",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -2043,7 +2043,7 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "caption",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="150px",
                                                                 easymde_min_height="150px",
@@ -2063,7 +2063,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "footer",
-                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                 easymde_combine="true",
                                                                 easymde_max_height="100px",
                                                                 easymde_min_height="100px",
@@ -2087,7 +2087,7 @@ class Migration(migrations.Migration):
                                             ),
                                             (
                                                 "text",
-                                                waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                waggylabs.blocks.markdown.MarkdownBlock(
                                                     easymde_combine="true",
                                                     easymde_max_height="150px",
                                                     easymde_min_height="150px",
@@ -2191,7 +2191,7 @@ class Migration(migrations.Migration):
                                                                                                             [
                                                                                                                 (
                                                                                                                     "quote",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2352,7 +2352,7 @@ class Migration(migrations.Migration):
                                                                                                                                 ),
                                                                                                                                 (
                                                                                                                                     "caption",
-                                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                                         easymde_combine="true",
                                                                                                                                         easymde_max_height="100px",
                                                                                                                                         easymde_min_height="100px",
@@ -2513,7 +2513,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2541,7 +2541,7 @@ class Migration(migrations.Migration):
                                                                                                             [
                                                                                                                 (
                                                                                                                     "equation",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="false",
                                                                                                                         easymde_max_height="150px",
                                                                                                                         easymde_min_height="150px",
@@ -2553,7 +2553,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2589,7 +2589,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2694,7 +2694,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2722,7 +2722,7 @@ class Migration(migrations.Migration):
                                                                                                             [
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2744,7 +2744,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "footer",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2772,7 +2772,7 @@ class Migration(migrations.Migration):
                                                                                                             [
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="150px",
                                                                                                                         easymde_min_height="150px",
@@ -2792,7 +2792,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "footer",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -2816,7 +2816,7 @@ class Migration(migrations.Migration):
                                                                                                     ),
                                                                                                     (
                                                                                                         "text",
-                                                                                                        waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                        waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                             easymde_combine="true",
                                                                                                             easymde_max_height="150px",
                                                                                                             easymde_min_height="150px",
@@ -2843,7 +2843,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "quote",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -3004,7 +3004,7 @@ class Migration(migrations.Migration):
                                                                                         ),
                                                                                         (
                                                                                             "caption",
-                                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                 easymde_combine="true",
                                                                                                 easymde_max_height="100px",
                                                                                                 easymde_min_height="100px",
@@ -3235,7 +3235,7 @@ class Migration(migrations.Migration):
                                                                                             [
                                                                                                 (
                                                                                                     "quote",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3396,7 +3396,7 @@ class Migration(migrations.Migration):
                                                                                                                 ),
                                                                                                                 (
                                                                                                                     "caption",
-                                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                                         easymde_combine="true",
                                                                                                                         easymde_max_height="100px",
                                                                                                                         easymde_min_height="100px",
@@ -3557,7 +3557,7 @@ class Migration(migrations.Migration):
                                                                                                 ),
                                                                                                 (
                                                                                                     "caption",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3585,7 +3585,7 @@ class Migration(migrations.Migration):
                                                                                             [
                                                                                                 (
                                                                                                     "equation",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="false",
                                                                                                         easymde_max_height="150px",
                                                                                                         easymde_min_height="150px",
@@ -3597,7 +3597,7 @@ class Migration(migrations.Migration):
                                                                                                 ),
                                                                                                 (
                                                                                                     "caption",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3633,7 +3633,7 @@ class Migration(migrations.Migration):
                                                                                                 ),
                                                                                                 (
                                                                                                     "caption",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3738,7 +3738,7 @@ class Migration(migrations.Migration):
                                                                                                 ),
                                                                                                 (
                                                                                                     "caption",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3766,7 +3766,7 @@ class Migration(migrations.Migration):
                                                                                             [
                                                                                                 (
                                                                                                     "caption",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3788,7 +3788,7 @@ class Migration(migrations.Migration):
                                                                                                 ),
                                                                                                 (
                                                                                                     "footer",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3816,7 +3816,7 @@ class Migration(migrations.Migration):
                                                                                             [
                                                                                                 (
                                                                                                     "caption",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="150px",
                                                                                                         easymde_min_height="150px",
@@ -3836,7 +3836,7 @@ class Migration(migrations.Migration):
                                                                                                 ),
                                                                                                 (
                                                                                                     "footer",
-                                                                                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                                    waggylabs.blocks.markdown.MarkdownBlock(
                                                                                                         easymde_combine="true",
                                                                                                         easymde_max_height="100px",
                                                                                                         easymde_min_height="100px",
@@ -3860,7 +3860,7 @@ class Migration(migrations.Migration):
                                                                                     ),
                                                                                     (
                                                                                         "text",
-                                                                                        waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                                        waggylabs.blocks.markdown.MarkdownBlock(
                                                                                             easymde_combine="true",
                                                                                             easymde_max_height="150px",
                                                                                             easymde_min_height="150px",
@@ -3908,7 +3908,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -3936,7 +3936,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "equation",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="false",
                                                                                 easymde_max_height="150px",
                                                                                 easymde_min_height="150px",
@@ -3948,7 +3948,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -3984,7 +3984,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -4089,7 +4089,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -4117,7 +4117,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -4139,7 +4139,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "footer",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -4167,7 +4167,7 @@ class Migration(migrations.Migration):
                                                                     [
                                                                         (
                                                                             "caption",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="150px",
                                                                                 easymde_min_height="150px",
@@ -4187,7 +4187,7 @@ class Migration(migrations.Migration):
                                                                         ),
                                                                         (
                                                                             "footer",
-                                                                            waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                            waggylabs.blocks.markdown.MarkdownBlock(
                                                                                 easymde_combine="true",
                                                                                 easymde_max_height="100px",
                                                                                 easymde_min_height="100px",
@@ -4211,7 +4211,7 @@ class Migration(migrations.Migration):
                                                             ),
                                                             (
                                                                 "text",
-                                                                waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                                                waggylabs.blocks.markdown.MarkdownBlock(
                                                                     help_text=""
                                                                 ),
                                                             ),
@@ -4280,7 +4280,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "caption",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4308,7 +4308,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "equation",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="false",
                                         easymde_max_height="150px",
                                         easymde_min_height="150px",
@@ -4320,7 +4320,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "caption",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4355,7 +4355,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "caption",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4421,7 +4421,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "caption",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4449,7 +4449,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "caption",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4471,7 +4471,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "footer",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4499,7 +4499,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "caption",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="150px",
                                         easymde_min_height="150px",
@@ -4518,7 +4518,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "footer",
-                                    waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock(
+                                    waggylabs.blocks.markdown.MarkdownBlock(
                                         easymde_combine="true",
                                         easymde_max_height="100px",
                                         easymde_min_height="100px",
@@ -4540,7 +4540,7 @@ class Migration(migrations.Migration):
                             ]
                         ),
                     ),
-                    ("text", waggylabs.blocks.mathjax_markdown.MathJaxMarkdownBlock()),
+                    ("text", waggylabs.blocks.markdown.MarkdownBlock()),
                 ],
                 use_json_field=True,
             ),

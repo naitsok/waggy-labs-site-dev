@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.blocks import StructBlock
 from wagtail.images.blocks import ImageChooserBlock
 
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .label import LabelBlock
 
 
@@ -13,7 +13,7 @@ class FigureBlock(StructBlock):
         required=True,
         label=_('Graphic'),
         )
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Figure caption'),
         help_text=None,

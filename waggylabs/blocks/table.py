@@ -10,13 +10,13 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets import TableInput
 
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .label import LabelBlock
 
 
 class TableFigureBlock(StructBlock):
     """Add Table as picture."""
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Table caption'),
         help_text=None,
@@ -33,7 +33,7 @@ class TableFigureBlock(StructBlock):
         label='Table image',
         # help_text=_('Choose an image'),
         )
-    footer = MathJaxMarkdownBlock(
+    footer = MarkdownBlock(
         required=False,
         label=_('Table footer'),
         help_text=None,
@@ -188,7 +188,7 @@ class BareTableBlock(WagtailTableBlock):
 
 class TableBlock(StructBlock):
     """Table block with caption provided by markdown block."""
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Table caption'),
         help_text=None,
@@ -209,7 +209,7 @@ class TableBlock(StructBlock):
         keep_table_tag=False,
         # table_options = None, # see https://github.com/wagtail/wagtail/blob/main/wagtail/contrib/table_block/blocks.py
     )
-    footer = MathJaxMarkdownBlock(
+    footer = MarkdownBlock(
         required=False,
         label=_('Table footer'),
         help_text=None,

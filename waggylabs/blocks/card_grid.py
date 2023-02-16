@@ -13,7 +13,7 @@ from .links import (
     ExternalLinkBlock, InternalLinkBlock, IconEmailBlock,
     InfoTextBlock
 )
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 
 
 class LinksBlock(StreamBlock):
@@ -32,7 +32,7 @@ class CardBlock(StructBlock):
     image = ImageChooserBlock(required=False, label=_('Image'))
     title = CharBlock(required=True, label=_('Title'))
     subtitle = CharBlock(required=False, label=_('Subtitle'))
-    text = MathJaxMarkdownBlock(
+    text = MarkdownBlock(
         required=False,
         help_text=None,
         easymde_min_height='100px',

@@ -1,8 +1,5 @@
-import re
-
 from django import forms
 from django.utils.functional import cached_property
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import TextBlock
@@ -10,18 +7,20 @@ from wagtail.core.blocks import TextBlock
 from wagtailmarkdown.blocks import render_markdown
 
 from waggylabs.utils import pk_to_markdown
-from waggylabs.widgets import MathJaxMarkdownTextarea
+from waggylabs.widgets import MarkdownTextarea
 
 
-class MathJaxMarkdownBlock(TextBlock):
+class MarkdownBlock(TextBlock):
     """Replaces wagtail-markdown MarkdownBlock with this one in order to add LaTeX syntax highlighting
     and MathJax equations rendering during preview."""
     
     def __init__(self,
                  required=True,
                  help_text=_('Use this general text field to write paragraphs using Markdown syntax. '
-                             'The links to the pages of this website are added using the specific '
-                             'syntax described at https://github.com/torchbox/wagtail-markdown#inline-links. '
+                             'This markdown editor supports Emojis, LaTeX equation, referencing '
+                             'figures, tables, equations, embeds, and listings. Emojies can be added '
+                             'either directly with a Unicode code or using an alias that can be '
+                             'found at https://www.webfx.com/tools/emoji-cheat-sheet/.'
                              'Inline and block equation can be added using standard LaTeX syntax, '
                              'references to equation are supproted using \\\u3164ref{...} or '
                              '\\\u3164eqref{...} syntax. Similarly \\\u3164ref{...} and '
@@ -29,7 +28,9 @@ class MathJaxMarkdownBlock(TextBlock):
                              'tables, blockquotes, listings, documents, as well as cite literature. '
                              'Note that final references and citing literature numbers will be '
                              'correctly generated on the published page, which can be previewed '
-                             'before publishing Wagtail button at the bottom of the current web page.'),
+                             'before publishing Wagtail button at the bottom of the current web page. '
+                             'The links to the pages of this website are added using the specific '
+                             'syntax described at https://github.com/torchbox/wagtail-markdown#inline-links.'),
                  rows=1,
                  max_length=None,
                  min_length=None,
@@ -52,16 +53,12 @@ class MathJaxMarkdownBlock(TextBlock):
         self.easymde_combine = easymde_combine
         self.easymde_toolbar_config = easymde_toolbar_config
         self.easymde_status = easymde_status
-        self.re_label = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
-        self.re_ref = re.compile(r'\\ref\{(.*?)\}', re.IGNORECASE)
-        self.re_eqref = re.compile(r'\\eqref\{(.*?)\}', re.IGNORECASE)
-        self.re_cite = re.compile(r'\\cite\{(.*?)\}', re.IGNORECASE)
         super().__init__(required, help_text, rows, max_length, min_length, validators, **kwargs)
     
     @cached_property
     def field(self):
         field_kwargs = {
-            'widget': MathJaxMarkdownTextarea(attrs={
+            'widget': MarkdownTextarea(attrs={
                 'rows': self.rows,
                 'easymde-min-height': self.easymde_min_height,
                 'easymde-max-height': self.easymde_max_height,

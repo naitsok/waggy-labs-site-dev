@@ -3,14 +3,14 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.core.blocks import StructBlock
 
 from .code import CodeBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .label import LabelBlock
 
 
 class ListingBlock(StructBlock):
     """A code block with caption."""
     code = CodeBlock(label=None)
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Listing caption'),
         help_text=None,

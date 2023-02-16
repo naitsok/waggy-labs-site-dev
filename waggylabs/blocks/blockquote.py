@@ -7,12 +7,12 @@ from wagtail.blocks import (
 from waggylabs.widgets import DisabledOptionSelect
 
 from .label import LabelBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 
 
 class BlockQuoteBlock(StructBlock):
     """Quote block with text, author and source."""
-    quote = MathJaxMarkdownBlock(
+    quote = MarkdownBlock(
         required=True,
         label=_('Quote text.'),
         help_text='',

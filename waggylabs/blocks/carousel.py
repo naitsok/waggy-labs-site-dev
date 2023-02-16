@@ -7,7 +7,7 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 
 
 class CarouselItem(StructBlock):
@@ -16,7 +16,7 @@ class CarouselItem(StructBlock):
         required=True,
         label=_('Picture for carousel'),
     )
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Text in front of the picture'),
         help_text='',

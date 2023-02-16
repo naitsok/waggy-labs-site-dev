@@ -88,7 +88,7 @@ function blockMath() {
         },
         renderer(token) {
             return token.raw;
-      }
+        }
     };
 }
 
@@ -125,22 +125,22 @@ function blockMath2() {
  */
 function beginMath() {
     return {
-      name: 'beginMath',
-      level: 'block',
-      start(src) {  return src.indexOf('\\begin{'); },
-      tokenizer(src, tokens) {
-        const match = src.match(/^\\begin{(.*?)}([\s\S]*?)\\end{\1}/);
-        if (match) {
-          return {
-            type: 'beginMath',
-            raw: match[0],
-            text: match[1].trim()
-          };
+        name: 'beginMath',
+        level: 'block',
+        start(src) {  return src.indexOf('\\begin{'); },
+        tokenizer(src, tokens) {
+            const match = src.match(/^\\begin{(.*?)}([\s\S]*?)\\end{\1}/);
+            if (match) {
+                return {
+                    type: 'beginMath',
+                    raw: match[0],
+                    text: match[1].trim()
+                };
+            }
+        },
+        renderer(token) {
+            return token.raw;
         }
-      },
-      renderer(token) {
-        return token.raw;
-      }
     };
 }
 
@@ -177,39 +177,13 @@ function refLabel() {
 }
 
 /**
- * Processes figure, table, listing, blockquote labels before 
- * MathJax does the same for equations.
- * @returns marked.js extension object
- */
-function citeLabel() {
-    return {
-        name: 'citeLabel',
-        level: 'inline',
-        start(src) {return src.indexOf('\\cite{'); },
-        tokenizer(src, tokens) {
-            const match = src.match(/^\\cite{(.*?)}/);
-            if (match) {
-                return {
-                    type: 'citeLabel',
-                    raw: match[0],
-                    text: match[1]
-                }
-            }
-        },
-        renderer(token) {
-            return '[' + processCite(token.text) + ']';
-        }
-    }
-}
-
-/**
  * Processes figure, table, listing, blockquote references before 
  * MathJax does the same for equations.
  * @param {string} ref - reference to be processed, e.g. content inside curly brackets of \ref{...}
  * ref can contain only one reference to the certain type of an item to be referenced
  * @returns - span element if the reference id was found or undefined if not
  */
- function processRef(ref) {
+function processRef(ref) {
     const refTypes = ['blockquote', 'figure', 'listing', 'table', 'embed'];
     for (let i in refTypes) {
         var processedRef = processRefbyType(ref, refTypes[i]);
@@ -233,6 +207,32 @@ function processRefbyType(ref, refType) {
         var el = labelElements[i].getElementsByTagName('input')[0];
         if (el.value === ref) {
             return `<span class="reference"><a href="#${el.getAttribute('id')}">${i + 1}</a></span>`;
+        }
+    }
+}
+
+/**
+ * Processes figure, table, listing, blockquote labels before 
+ * MathJax does the same for equations.
+ * @returns marked.js extension object
+ */
+function citeLabel() {
+    return {
+        name: 'citeLabel',
+        level: 'inline',
+        start(src) { return src.indexOf('\\cite{'); },
+        tokenizer(src, tokens) {
+            const match = src.match(/^\\cite{(.*?)}/);
+            if (match) {
+                return {
+                    type: 'citeLabel',
+                    raw: match[0],
+                    text: match[1]
+                }
+            }
+        },
+        renderer(token) {
+            return '[' + processCite(token.text) + ']';
         }
     }
 }
@@ -267,6 +267,56 @@ function processCite(cite) {
         }
     }
     return citeHTML.slice(0, -1);
+}
+
+/**
+ * Creates marked.js extension to process emojis
+ * @returns - marked.js extension
+ */
+function emoji() {
+    // from https://github.com/UziTech/marked-emoji/blob/main/src/index.js
+    options = {
+        emojis: get_emojis(),
+        unicode: true,
+    };
+  
+    if (!options.emojis) {
+        throw new Error('Must provide emojis to markedEmoji');
+    }
+  
+    return {
+        name: 'emoji',
+        level: 'inline',
+        start(src) { return src.indexOf(':'); },
+        tokenizer(src, tokens) {
+            const rule = /^:(.+?):/;
+            const match = rule.exec(src);
+            if (!match) {
+                return;
+            }
+  
+            const name = match[0];
+            const emoji = options.emojis[name];
+  
+            if (!emoji) {
+                return;
+            }
+  
+            return {
+                type: 'emoji',
+                raw: match[0],
+                name,
+                emoji
+            };
+        },
+        renderer(token) {
+            if (options.unicode) {
+                return token.emoji;
+            } else {
+                return `<img alt="${token.name}" src="${token.emoji}"${this.parser.options.xhtml ? ' /' : ''}>`;
+            }
+        }
+    };
 }
 
 var anchorToExternalRegex = new RegExp(/(<a.*?https?:\/\/.*?[^a]>)+?/g);
@@ -324,7 +374,7 @@ function removeListStyleWhenCheckbox(htmlText) {
  * @param {EasyMDE} mde - EasyMDE object
  * @return {string} The modified HTML text.
 */
-function mathjaxMarkdown(text, mde) {
+function renderMarkdown(text, mde) {
     var easymdeOptions = {};
     if (mde) { easymdeOptions = mde.options; }
     // First check if the editor is in LaTeX or not, it means that we are in the Equation block.
@@ -386,7 +436,7 @@ function mathjaxMarkdown(text, mde) {
         marked.setOptions(markedOptions);
 
         // Set extensions
-        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath(), refLabel(), citeLabel()] });
+        marked.use({ extensions: [inlineMath(), inlineMath2(), blockMath(), blockMath2(), beginMath(), refLabel(), citeLabel(), emoji()] });
 
         // Convert the markdown to HTML
         var htmlText = marked.parse(text);

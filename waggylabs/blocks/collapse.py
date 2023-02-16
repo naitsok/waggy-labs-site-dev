@@ -19,7 +19,7 @@ from .icon import IconBlock, IconLocationBlock
 from .link_style import LinkStyleChoiceBlock
 from .listing import ListingBlock
 from .table import TableBlock, TableFigureBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 
 
 class CollapseContentBlock(StreamBlock):
@@ -34,7 +34,7 @@ class CollapseContentBlock(StreamBlock):
     listing = ListingBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
-    text = MathJaxMarkdownBlock(
+    text = MarkdownBlock(
         required=False,
         help_text='',
         easymde_combine='true',

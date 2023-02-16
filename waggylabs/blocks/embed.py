@@ -4,7 +4,7 @@ from wagtail.blocks import StructBlock
 from wagtail.embeds.blocks import EmbedBlock as WagtailEmbedBlock
 
 from .label import LabelBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 
 
 class EmbedBlock(StructBlock):
@@ -12,7 +12,7 @@ class EmbedBlock(StructBlock):
     embed = WagtailEmbedBlock(
         label=_('URL of embedding')
     )
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Embed caption'),
         help_text=None,

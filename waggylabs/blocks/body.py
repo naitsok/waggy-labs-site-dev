@@ -17,7 +17,7 @@ from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .table import TableBlock, TableFigureBlock
 
 
@@ -38,7 +38,7 @@ class BodyBlock(StreamBlock):
     listing = ListingBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
-    text = MathJaxMarkdownBlock()
+    text = MarkdownBlock()
     
     
     @classmethod

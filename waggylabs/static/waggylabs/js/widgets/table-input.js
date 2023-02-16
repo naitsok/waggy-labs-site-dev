@@ -93,7 +93,7 @@ function initTable(id, tableOptions) {
                 if (data[row][col] && cell) {
                     MathJax.typesetClear([cell]);
                     // removal of <p></p> elemens is needed for correct display of cell data
-                    cell.innerHTML = mathjaxMarkdown(data[row][col], {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
+                    cell.innerHTML = renderMarkdown(data[row][col], {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
                     try {
                         MathJax.typeset([cell]);
                     }
@@ -110,7 +110,7 @@ function initTable(id, tableOptions) {
             MathJax.typesetClear([cell]);
             if (value) {
                 // removal of <p></p> elemens is needed for correct display of cell data
-                cell.innerHTML = mathjaxMarkdown(value, {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
+                cell.innerHTML = renderMarkdown(value, {}).replace(/\<p\>/g, "").replace(/\<\/p\>/g, "");
                 try {
                     MathJax.typeset([cell]);
                 }

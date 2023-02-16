@@ -8,7 +8,7 @@ from wagtail.utils.widgets import WidgetWithScript
 
 DEFAULT_CODEMIRROR_VER = '5.65.9'
 
-class MathJaxMarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
+class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
     """Replaces wagtail-markdown MarkdownTextarea with the one that is able to render MathJax."""
     
     codemirror_ver = settings.WAGGYLABS_CODEMIRROR_VER if hasattr(settings, 'WAGGYLABS_CODEMIRROR_VER') else DEFAULT_CODEMIRROR_VER
@@ -29,7 +29,8 @@ class MathJaxMarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
             js=(
                 "waggylabs/js/widgets/easymde-min.js",
                 "waggylabs/js/widgets/easymde-attach.js",
-                "waggylabs/js/widgets/mathjax-markdown.js",
+                "waggylabs/js/widgets/markdown.js",
+                "waggylabs/js/widgets/markdown-emoji.js",
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
                 "https://cdn.jsdelivr.net/npm/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/codemirror.min.js", # For latex highlighting
@@ -54,7 +55,7 @@ class MathJaxMarkdownTextareaAdapter(WidgetAdapter):
     js_constructor = "waggylabs.widgets.MarkdownTextarea"
 
     class Media:
-        js = ["waggylabs/js/blocks/mathjax-markdown-adapter.js"]
+        js = ["waggylabs/js/blocks/markdown-adapter.js"]
 
 
-register(MathJaxMarkdownTextareaAdapter(), MathJaxMarkdownTextarea)
+register(MathJaxMarkdownTextareaAdapter(), MarkdownTextarea)

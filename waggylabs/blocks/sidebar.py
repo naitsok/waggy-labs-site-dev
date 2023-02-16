@@ -5,7 +5,7 @@ from wagtail.blocks import (
     StreamBlock, StructBlock, BooleanBlock, ChoiceBlock, CharBlock
 )
 
-from waggylabs.blocks.mathjax_markdown import MathJaxMarkdownBlock
+from waggylabs.blocks.markdown import MarkdownBlock
 from waggylabs.blocks.page_info import PageInfoBlock
 from waggylabs.blocks.sidebar_tabs import SidebarTabsBlock
 from waggylabs.widgets import DisabledOptionSelect
@@ -13,7 +13,7 @@ from waggylabs.widgets import DisabledOptionSelect
 
 class SidebarItemBlock(StreamBlock):
     """Block that contains different sidebar items."""
-    text = MathJaxMarkdownBlock(
+    text = MarkdownBlock(
         required=True,
         label=_('Sidebar text'),
         help_text=None,

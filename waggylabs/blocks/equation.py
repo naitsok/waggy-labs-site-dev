@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StructBlock
 
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .label import LabelBlock
 
 
@@ -12,7 +12,7 @@ class EquationBlock(StructBlock):
     """A standalone equation block with (skippable) caption. Edit equation via CodeMirror with LaTeX mode. According to 
     https://docs.wagtail.org/en/stable/advanced_topics/customisation/streamfield_blocks.html#additional-javascript-on-structblock-forms.
     """
-    equation = MathJaxMarkdownBlock(
+    equation = MarkdownBlock(
         required=True,
         help_text=_('Write or paste LaTeX style equation (equation, '
                     'matrix, align, etc. environments are supported).'),
@@ -24,7 +24,7 @@ class EquationBlock(StructBlock):
                                 'flalign,|,preview,side-by-side,fullscreen'),
         easymde_status='false',
     )
-    caption = MathJaxMarkdownBlock(
+    caption = MarkdownBlock(
         required=False,
         label=_('Equation caption'),
         help_text=_('Caption that will be displayed when the equation is shown '

@@ -57,5 +57,5 @@ if __name__ == '__main__':
 
     for emoji_name, emoji_code in sorted(total.items()):
         emoji_code = emoji_code.replace('\\U', '&#x')
-        print(f"    ':{emoji_name}:': '{emoji_code}'", end=',\n')
+        print(f"':{emoji_name}:': '{emoji_code}'", end=', ')
     print('\nTotal count of emojis: ', len(total))

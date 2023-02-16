@@ -15,7 +15,7 @@ from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
-from .mathjax_markdown import MathJaxMarkdownBlock
+from .markdown import MarkdownBlock
 from .table import TableBlock, TableFigureBlock
 
 
@@ -31,7 +31,7 @@ class AccordionContentBlock(StreamBlock):
     listing = ListingBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
-    text = MathJaxMarkdownBlock(
+    text = MarkdownBlock(
         required=False,
         help_text='',
         easymde_combine='true',
