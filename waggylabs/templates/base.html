@@ -24,14 +24,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         {# WaggyLabs CSS #}
         <link href="{% static 'waggylabs/css/waggylabs.css' %}" rel="stylesheet">
-        {# Font awesome icons #}
-        {% comment "" %}
-        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'fontawesomefree/css/regular.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-        {% endcomment %}
-        {% block extra_css %}
+        {% block css %}
         {# Overwrite this in templates to add extra stylesheets #}
         {% endblock %}
         {# browser tab icon #}
@@ -260,7 +253,7 @@
             };
         </script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        {% block extra_js %}
+        {% block js %}
         {# Overwrite this in templates to add extra javascript #}
         {% endblock %}
         {% endwith %}

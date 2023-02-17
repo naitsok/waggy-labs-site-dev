@@ -8,28 +8,24 @@ from urllib.parse import urlparse
 from wagtailmarkdown.utils import render_markdown
 
 from waggylabs.utils import pk_to_markdown
-from waggylabs.widgets import DEFAULT_BOOTSTRAP_ICONS
+from waggylabs.widgets import BOOTSTRAP_ICONS
 
 
 register = template.Library()
 
 
-ICONS = (settings.WAGGYLABS_FONTAWESOME_ICONS if
-         hasattr(settings, 'WAGGYLABS_FONTAWESOME_ICONS')
-         else DEFAULT_BOOTSTRAP_ICONS)
-
 @register.filter(name='is_icon')
 @stringfilter
 def is_icon(value):
     """Checks if valus is in icons keys."""
-    return value in ICONS
+    return value in BOOTSTRAP_ICONS
 
 
 @register.filter(name='icon_class')
 @stringfilter
 def icon_class(value):
     """Gets Font Awesome icon class from its name."""
-    return ICONS[value]
+    return BOOTSTRAP_ICONS[value]
 
 
 @register.filter(name='link_https')

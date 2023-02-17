@@ -112,15 +112,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         help_text=_('For example, Table. The label will be used to create '
                     'table labels before caption. Leave empty for no label.'),
     )
-    
-    # Sidebar settings fields
-    # show_sidebar = models.BooleanField(
-    #     blank=True,
-    #     default=False,
-    #     help_text=_('If checked, sidebar with the selected panels '
-    #                 'appears on the page.'),
-    #     verbose_name=_('Show sidebar'),
-    # )
     show_sidebar = models.BooleanField(
         blank=True,
         default=False,
@@ -222,22 +213,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     subpage_types = ['waggylabs.SitePage'] #, 'main.FormPage']
 
     # Methods
-    
-    def citation_blocks(self):
-        """Returns citations and documents found in body StreamField and
-        its sub blocks."""   
-        return BodyBlock.blocks_by_types(self.body, ['citation', 'document'])
-    
-    def visuals(self):
-        """Returns visual blocks (embeds, equations, figures, listings, tables)
-        to render modals if sidebar is present. It is necessary to do this
-        rendering separately, because some of the visuals might have display:none
-        and thus modal will not open correctly in this case."""
-        return BodyBlock.blocks_by_types(
-            self.body,
-            ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
-        )
-            
 
     def hit_counts(self):
         """Displays hitcounts for the page if it has been created."""
