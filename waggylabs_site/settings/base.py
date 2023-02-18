@@ -70,6 +70,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    # WaggyLabs middlewares
+    "waggylabs.middleware.DjangoAdminAccessMiddleware",
 ]
 
 ROOT_URLCONF = "waggylabs_site.urls"
@@ -215,5 +217,20 @@ HITCOUNT_KEEP_HIT_ACTIVE  = {"days" : 30 }
 
 
 # Waggy Labs settings
+
+# Urls configuration
+
+# WAGGYLABS_BASE_URL sets the base url for the whole WaggyLabs site
+# i.e. the total url will be WAGGYLABS_BASE_URL + all other parts
+# (For example, Django admin base url will be WAGGYLABS_BASE_URL +
+# WAGGYLABS_DJANGO_ADMIN_BASE_URL). This is needed when a WaggyLabs
+# site is added to an existing Django project.
+WAGGYLABS_BASE_URL = ''
+WAGGYLABS_DJANGO_ADMIN_BASE_URL = 'django-admin/'
+WAGGYLABS_WAGTAIL_ADMIN_BASE_URL = 'admin/'
+WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL = 'documents/'
+
+# WaggyLabs blocks configuraiton
+WAGGYLABS_CODEMIRROR_VERSION = '5.69.5'
 
 # Setting for upgrading to newer version of the components?

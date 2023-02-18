@@ -6,12 +6,10 @@ from wagtail.widget_adapters import WidgetAdapter
 from wagtail.utils.widgets import WidgetWithScript
 
 
-DEFAULT_CODEMIRROR_VER = '5.65.9'
+CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
 
 class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
     """Replaces wagtail-markdown MarkdownTextarea with the one that is able to render MathJax."""
-    
-    codemirror_ver = settings.WAGGYLABS_CODEMIRROR_VER if hasattr(settings, 'WAGGYLABS_CODEMIRROR_VER') else DEFAULT_CODEMIRROR_VER
     
     @property
     def media(self):
@@ -33,8 +31,8 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
                 "waggylabs/js/widgets/markdown-emoji.js",
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
                 "https://cdn.jsdelivr.net/npm/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
-                f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/codemirror.min.js", # For latex highlighting
-                f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{self.codemirror_ver}/mode/stex/stex.min.js", # For latex highlighting
+                f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js", # For latex highlighting
+                f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/stex/stex.min.js", # For latex highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/clike/clike.min.js", # For C++/C/C#/Java/Kotlin highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/css/css.min.js", # For CSS highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/django/django.min.js", # For Django highlighting

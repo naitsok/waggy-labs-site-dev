@@ -105,15 +105,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         help_text=_('For example, Table. The label will be used to create '
                     'table labels before caption. Leave empty for no label.'),
     )
-    
-    # Sidebar settings fields
-    # show_sidebar = models.BooleanField(
-    #     blank=True,
-    #     default=False,
-    #     help_text=_('If checked, sidebar with the selected panels '
-    #                 'appears on the page.'),
-    #     verbose_name=_('Show sidebar'),
-    # )
     show_sidebar = models.BooleanField(
         blank=True,
         default=False,
@@ -215,7 +206,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     subpage_types = ['waggylabs.SitePage'] #, 'main.FormPage']
 
     # Methods
-            
+
     def hit_counts(self):
         """Displays hitcounts for the page if it has been created."""
         if self.pk is not None:
