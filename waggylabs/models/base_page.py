@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -7,9 +8,6 @@ from wagtail.models import Page
 from wagtail.fields import StreamField
 from wagtail.search import index
 
-from wagtailmenus.models import MenuPageMixin
-from wagtailmenus.panels import menupage_panel
-
 from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
@@ -18,43 +16,27 @@ from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
 
 
-class SitePage(Page, MenuPageMixin, HitCountMixin):
-    """A generic site page to contain content pages,
-    such as Home, About, Research, Publications, etc.
-    It can also list and filter posts if the site is used as a blog.
-    """
+class BasePage(Page, HitCountMixin):
+    """BasePage class for the all the specific pages of WaggyLabs.
+    Specific pages are SitePage, PostPage, etc. BasePage instances
+    cannot be added directly in the Wagtail admin interface."""
 
-    page_description = _('A generic site page to contain content, '
-                        'such as Home, About, Research, Publications, etc. '
-                        'It can also list and filter posts if the site is used as a blog.')
-    template = 'waggylabs/pages/site_page.html'
-
-    # Common fields
-
-    show_in_menus_default = True
+    page_description = ''
+    template = 'waggylabs/pages/base_page.html'
 
     # Database fields
     
-    # Header image fields
-    header_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        help_text=_('Image, that appears right after the title.')
-    )
-    show_header_image_on_page = models.BooleanField(
-        blank=True,
-        # default=False,
-        verbose_name=_('Show header image on page'),
-        help_text=_('If true, the header image appears on top of the page '
-                    'after the title. If false, header image is used only '
-                    'situatively, e.g. when it appears in a list or a card '
-                    'grid.')
+    # Hitcount
+    hit_count_generic = GenericRelation(
+        HitCount,
+        object_id_field='pk',
+        related_query_name='hit_count_relation',
     )
     
     # Content fields
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
     body = StreamField(
         BodyBlock(),
         use_json_field=True,
@@ -112,6 +94,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         blank=True,
         use_json_field=True
     )
+    
 
     # Search index configuration
 
@@ -145,16 +128,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         FieldPanel('body'),
         ]
 
-    promote_panels = Page.promote_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel('header_image'),
-                FieldPanel('show_header_image_on_page'),
-            ],
-            heading=_('Header image')
-        ),
-    ]
-
     settings_panels = Page.settings_panels + [
         MultiFieldPanel(
             [
@@ -173,7 +146,6 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
             ],
             heading=_('Sidebar settings'),
         ),
-        menupage_panel,
         # MultiFieldPanel(
         #     [
         #         FieldPanel('show_search'),
@@ -184,6 +156,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
         # ),
         MultiFieldPanel(
             [
+                ReadOnlyPanel('created_at', heading='Firsr created at'),
                 ReadOnlyPanel('first_published_at', heading='First published at'),
                 ReadOnlyPanel('last_published_at', heading='Last published at'),
                 ReadOnlyPanel('hit_counts', heading='Number of views'),
@@ -193,10 +166,11 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     ]
     
     # Parent page / subpage type rules
+    # Empty parent_page_types prevents page creation in the
+    # Wagtail admin editor interface
+    parent_page_types = []
+    subpage_types = []
     
-    parent_page_types = ['wagtail.models.Page', 'waggylabs.SitePage']
-    subpage_types = ['waggylabs.SitePage']
-
     # Methods
 
     def hit_counts(self):
