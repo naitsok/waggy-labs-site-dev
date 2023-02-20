@@ -8,7 +8,14 @@ from wagtail.telepath import register
 from waggylabs.blocks.code import CodeBlock, DEFAULT_CODEBLOCK_LANGS
 
 
-DEFAULT_CODEMIRROR_VER = '5.65.9'
+CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
+CODEBLOCK_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', DEFAULT_CODEBLOCK_LANGS)
+CODEBLOCK_LANGS = list(
+    [
+        f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/{mode[0]}/{mode[0]}.min.js' 
+        for mode in CODEBLOCK_LANGS
+    ]
+)
 
 class CodeBlockAdapter(StructBlockAdapter):
     """Telepath adapter for the CodeBlock. According to
@@ -21,18 +28,14 @@ class CodeBlockAdapter(StructBlockAdapter):
     @cached_property
     def media(self):
         structblock_media = super().media
-        codemirror_ver = settings.WAGGYLABS_CODEMIRROR_VER if hasattr(settings, 'WAGGYLABS_CODEMIRROR_VER') else DEFAULT_CODEMIRROR_VER
-        codemirror_langs = settings.WAGGYLABS_CODEBLOCK_LANGS if hasattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS') else DEFAULT_CODEBLOCK_LANGS
-        codemirror_js = f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{codemirror_ver}/codemirror.min.js'
-        codemirror_modes = list([f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{codemirror_ver}/mode/{mode[0]}/{mode[0]}.min.js' for mode in codemirror_langs])
         return forms.Media(
             js = structblock_media._js + [
                 'waggylabs/js/blocks/code-adapter.js',
-                codemirror_js,
-                ] + codemirror_modes,
+                f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js',
+                ] + CODEBLOCK_LANGS,
             css = {
                 "all": (
-                    f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{codemirror_ver}/codemirror.min.css',
+                    f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.css',
                     'waggylabs/css/blocks/codemirror-tweaks.css',
                 )
             }

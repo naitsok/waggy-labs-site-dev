@@ -1,13 +1,15 @@
 
-(() => {
-    window.addEventListener("DOMContentLoaded", () => {
-        createColorWidgets();
-    });
-})();
+// Not needed for now because WidgetWithScript handles the initialization
+// (() => {
+//     window.addEventListener("DOMContentLoaded", () => {
+//         createColorWidgets();
+//     });
+// })();
 
 
 /**
  * Creates color widgets if they are not in StreamField
+ * Not needed for now because WidgetWithScript handles the initialization
  */
 function createColorWidgets() {
     var elements = document.querySelectorAll('input.waggylabs-color-input');
@@ -46,6 +48,7 @@ function createColorWidgets() {
 
 /**
  * Update color widgets if more color inputs are dynamically added
+ * Not needed for now because WidgetWithScript handles the initialization
  * @param {string} id - id of element inside which color widgets are updated
  */
 function updateColorWidgets(id) {

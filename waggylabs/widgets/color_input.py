@@ -14,6 +14,10 @@ class ColorInput(WidgetWithScript, forms.widgets.HiddenInput):
             'class': 'waggylabs-color-input',
         }):
         super().__init__(attrs)
+        
+    def render_js_init(self, id_, name, value):
+        """Attaches javascript init function to the widget."""
+        return f'colorAttach("{id_}");'
     
     @property
     def media(self):

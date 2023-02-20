@@ -10,7 +10,30 @@ CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
 
 class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
     """Replaces wagtail-markdown MarkdownTextarea with the one that is able to render MathJax."""
-    
+    def __init__(
+        self,
+        attrs={
+            'rows': 1,
+            'easymde-min-height': '100px', # e.g. 300px, valid CSS string
+            'easymde-max-height': '100px', # e.g. 500px, valid CSS string
+            'easymde-combine': 'true', # combine or not stex mode with markdown mode
+            # valid string that contains list of valid EasyMDE buttons + math patterns
+            # seprated by comma, see the easymde-attach.js for availabe math patterns
+            'easymde-toolbar': ('bold,italic,strikethrough,heading,|,'
+                                'unordered-list,ordered-list,link,|,code,'
+                                'subscript,superscript,equation,matrix,'
+                                'align,|,preview,side-by-side,fullscreen,guide'),
+            # status bar: true for default status bar, false for no status bar,
+            # string of comma-separated names for custom status bar
+            'easymde-status': 'true',
+        }
+    ):
+        super().__init__(attrs)
+
+    def render_js_init(self, id_, name, value):
+        """Attaches javascript init function to the widget."""
+        return f'easymdeAttach("{id_}");'
+
     @property
     def media(self):
         """Adds static files nessary for work"""
@@ -25,14 +48,14 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
                 )
             },
             js=(
-                "waggylabs/js/widgets/easymde-min.js",
-                "waggylabs/js/widgets/easymde-attach.js",
-                "waggylabs/js/widgets/markdown.js",
-                "waggylabs/js/widgets/markdown-emoji.js",
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
                 "https://cdn.jsdelivr.net/npm/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js", # For latex highlighting
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/stex/stex.min.js", # For latex highlighting
+                "waggylabs/js/widgets/easymde-min.js",
+                "waggylabs/js/widgets/easymde-attach.js",
+                "waggylabs/js/widgets/markdown.js",
+                "waggylabs/js/widgets/markdown-emoji.js",
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/clike/clike.min.js", # For C++/C/C#/Java/Kotlin highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/css/css.min.js", # For CSS highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/django/django.min.js", # For Django highlighting

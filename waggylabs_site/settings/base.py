@@ -231,6 +231,6 @@ WAGGYLABS_WAGTAIL_ADMIN_BASE_URL = 'admin/'
 WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL = 'documents/'
 
 # WaggyLabs blocks configuraiton
-WAGGYLABS_CODEMIRROR_VERSION = '5.69.5'
+WAGGYLABS_CODEMIRROR_VERSION = '5.65.9'
 
 # Setting for upgrading to newer version of the components?

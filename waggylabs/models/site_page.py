@@ -194,8 +194,8 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     
     # Parent page / subpage type rules
     
-    parent_page_types = ['wagtail.models.Page', 'waggylabs.SitePage']
-    subpage_types = ['waggylabs.SitePage']
+    parent_page_types = ['wagtailcore.Page', 'waggylabs.SitePage']
+    subpage_types = ['waggylabs.SitePage', 'waggylabs.PostListPage']
 
     # Methods
 

@@ -30,15 +30,10 @@ class PostListPage(BasePage, MenuPageMixin):
     show_in_menus_default = True
     
     # Databse fields
-    pin_in_list = models.BooleanField(
-        default=False,
-        help_text=_('Indicates if the post is pinned on the post list page.'),
-        verbose_name=_('Pin in list'),
-    )
     
     # Parent page / subpage type rules
     
-    parent_page_types = ['wagtail.models.Page', 'waggylabs.SitePage']
+    parent_page_types = ['wagtailcore.Page', 'waggylabs.SitePage']
     subpage_types = ['waggylabs.PostPage']
     
     # Methods

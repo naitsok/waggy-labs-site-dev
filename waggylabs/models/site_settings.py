@@ -203,7 +203,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     
     # Content settings
     class ContentWidth(models.TextChoices):
-        """Width of the main content. Final width depends on the presence of 
+        """Width of the main content. Final width depends on the presence of
         the sidebar. See waggylabs_tags.py for width calculation."""
         NARROW = 'narrow', _('Narrow')
         MEDIUM = 'medium', _('Medium')

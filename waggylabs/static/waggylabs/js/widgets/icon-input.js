@@ -7,14 +7,17 @@
  * initialized when DOM is loaded, because telepath in this case is not
  * available. 
  */
-(() => {
-    window.addEventListener("DOMContentLoaded", () => {
-        createAutocompleteWidgets();
-    });
-})();
+
+//  Not needed for now because WidgetWithScript handles the initialization
+// (() => {
+//     window.addEventListener("DOMContentLoaded", () => {
+//         createAutocompleteWidgets();
+//     });
+// })();
 
 
 /**
+ * Not needed for now because WidgetWithScript handles the initialization
  * Creates autocomplete widgets if they are not in StreamField
  */
 function createAutocompleteWidgets() {
@@ -53,7 +56,8 @@ function createAutocompleteWidgets() {
 }
 
 /**
- * Update autocomplete widgets if more autocomplete inputs are dynamically added
+ * Not needed for now because WidgetWithScript handles the initialization
+ * Updates autocomplete widgets if more autocomplete inputs are dynamically added
  * @param {string} id - id of element inside which autocomplete widgets are updated
  */
 function updateAutocompleteWidgets(id) {

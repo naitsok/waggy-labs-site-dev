@@ -39,6 +39,10 @@ class IconInput(WidgetWithScript, forms.widgets.TextInput):
         }):
         super().__init__(attrs)
         self.attrs['iconsjson'] = json.dumps(icons)
+        
+    def render_js_init(self, id_, name, value):
+        """Attaches javascript init function to the widget."""
+        return f'autocompleteAttach("{id_}");'
     
     @property
     def media(self):

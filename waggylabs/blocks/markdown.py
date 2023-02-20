@@ -20,7 +20,7 @@ class MarkdownBlock(TextBlock):
                              'This markdown editor supports Emojis, LaTeX equation, referencing '
                              'figures, tables, equations, embeds, and listings. Emojies can be added '
                              'either directly with a Unicode code or using an alias that can be '
-                             'found at https://www.webfx.com/tools/emoji-cheat-sheet/.'
+                             'found at https://www.webfx.com/tools/emoji-cheat-sheet/. '
                              'Inline and block equation can be added using standard LaTeX syntax, '
                              'references to equation are supproted using \\\u3164ref{...} or '
                              '\\\u3164eqref{...} syntax. Similarly \\\u3164ref{...} and '

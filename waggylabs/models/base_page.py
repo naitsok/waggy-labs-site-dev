@@ -99,9 +99,11 @@ class BasePage(Page, HitCountMixin):
     # Search index configuration
 
     search_fields = Page.search_fields + [
+        index.SearchField('title', partial_match=True, boost=2),
+        index.AutocompleteField('title', boost=2),
         index.SearchField('body', partial_match=True, boost=2),
         index.AutocompleteField('body', boost=2),
-        ]
+    ]
 
     # Widgets for panels
   

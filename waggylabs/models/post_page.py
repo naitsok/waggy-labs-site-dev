@@ -1,14 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from modelcluster.fields import ParentalManyToManyField
+from modelcluster.contrib.taggit import ClusterTaggableManager
+
 from wagtail.admin import widgets
-from wagtail.admin.panels import FieldPanel, HelpPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from wagtail.search import index
 
-from hitcount.models import HitCountMixin, HitCount
-from hitcount.views import HitCountMixin as ViewHitCountMixin
 
 from waggylabs.blocks.body import BodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
@@ -17,7 +18,7 @@ from waggylabs.panels import ReadOnlyPanel
 from .base_page import BasePage
 
 
-class PostPage(BasePage, HitCountMixin):
+class PostPage(BasePage):
     """Post page keeps posts content, such as blog posts or
     news posts. It has series functionality to combine posts
     within series of topic-related posts."""
@@ -27,9 +28,46 @@ class PostPage(BasePage, HitCountMixin):
                         'within series of topic-related posts.')
     template = 'waggylabs/pages/post_page.html'
     
+    # Database fields
+    
+    pin_in_list = models.BooleanField(
+        default=False,
+        help_text=_('Indicates if the post is pinned on the post list page.'),
+        verbose_name=_('Pin in list'),
+    )
+    categories = ParentalManyToManyField(
+        'waggylabs.PostCategory',
+        verbose_name=_('Categories'),
+        blank=True,
+    )
+    tags = ClusterTaggableManager(
+        through='waggylabs.PostPageTag',
+        help_text=None,
+        blank=True,
+    )
+    
+    # Search index configuration
+
+    search_fields = BasePage.search_fields + [
+        index.SearchField('body', partial_match=True, boost=2),
+        index.AutocompleteField('body', boost=2),
+        index.FilterField('pin_in_list'),
+        index.FilterField('categories'),
+        index.FilterField('tags'),
+    ]
+    
+    # Editor panels configuration
+    
+    content_panels = BasePage.content_panels
+    promote_panels = BasePage.promote_panels + [
+        FieldPanel('tags'),
+        InlinePanel('post_categories', label=_('Categories'))
+    ]
+    settings_panels = BasePage.settings_panels
+    
     # Parent page / subpage type rules
     
-    parent_page_types = ['waggylabs.PostsListPage']
+    parent_page_types = ['waggylabs.PostListPage']
     subpage_types = ['waggylabs.PostPage']
     
     # Methods
@@ -114,3 +152,8 @@ class PostPage(BasePage, HitCountMixin):
                     first_published_at__gt=self.first_published_at
                 ).order_by('first_published_at').first(),
         }
+        
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context.update(self.sibling_posts())
+        return context
