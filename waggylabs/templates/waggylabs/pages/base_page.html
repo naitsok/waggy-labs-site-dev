@@ -2,13 +2,9 @@
 
 {% load static %}
 {% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailuserbar %}
-{% load wagtailmarkdown %}
-{% load menu_tags %}
 
 
-{% block extra_css %}
+{% block css %}
 <link href="{% static 'waggylabs/css/codehilite-styles.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -29,6 +25,10 @@
 {% endif %}
 
 {% endblock sidebar %}
+
+{% block js %}
+
+{% endblock %}
 
 
 

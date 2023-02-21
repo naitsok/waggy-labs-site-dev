@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -6,10 +7,10 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from wagtail.admin import widgets
 from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.contrib.routable_page.models import RoutablePageMixin, re_path, path
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from wagtail.search import index
-
 
 from waggylabs.blocks.body import BodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
@@ -18,7 +19,9 @@ from waggylabs.panels import ReadOnlyPanel
 from .base_page import BasePage
 
 
-class PostPage(BasePage):
+WAGGYLABS_BASE_URL = getattr(settings, 'WAGGYLABS_BASE_URL', '')
+
+class PostPage(RoutablePageMixin, BasePage):
     """Post page keeps posts content, such as blog posts or
     news posts. It has series functionality to combine posts
     within series of topic-related posts."""
@@ -95,6 +98,23 @@ class PostPage(BasePage):
         if parent.get_parent().specific_class == PostPage:
             return False
         return super().can_move_to(parent)
+    
+    def get_url_parts(self, request=None):
+        """Adds date before slug into the path to avoid collisions."""
+        (site_id, site_root_url, page_path) = super().get_url_parts(request)
+        if self.live:
+            return (
+                site_id,
+                site_root_url,
+                WAGGYLABS_BASE_URL + self.first_published_at.strftime('%Y-%b-%d/').lower() + self.slug
+            )
+        return None # (site_id, site_root_url, page_path)
+    
+    @path('')
+    @re_path(r'^(\d{4})-(\d{2})-(\d{2})/(.+)/$')
+    @re_path(r'^(\d{4})-(jan?|feb?|mar?|apr?|may?|jun?|jul?|aug?|sep?|oct?|nov?|dec?)-(\d{2})/(.+)/$')
+    def serve_own(self, request, *args, **kwargs):
+        return self.serve(request)
     
     def is_series(self):
         """Verifies that post is in the series of topic-related posts."""

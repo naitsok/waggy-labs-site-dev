@@ -1,0 +1,34 @@
+{% extends 'waggylabs/pages/base_page.html' %}
+
+{% load static %}
+{% load wagtailcore_tags %}
+
+
+{% block content %}
+
+<h1>{{ page.title }}</h1>
+
+{% pageurl page %}
+
+{% include_block page.body %}
+
+{% comment %} {% if previous_post or next_post %}
+    <div class="row justify-content-between">
+        <div class="col-md-5">
+            {% if previous_post %}
+                <p class="font-italic">Previous post:</p>
+                <h3><a href="{% post_date_url previous_post root_page %}" class="text-dark">{{ previous_post.title }}</a></h3>
+            {% endif %}
+        </div>
+        <div class="col-md-5 text-right">
+            {% if next_post %}
+                <p class="font-italic">Next post:</p>
+                <h3><a href="{% post_date_url next_post root_page %}" class="text-dark">{{ next_post.title }}</a></h3>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr />
+{% endif %} {% endcomment %}
+
+{% endblock content %}

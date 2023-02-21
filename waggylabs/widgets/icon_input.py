@@ -16,7 +16,13 @@ from wagtail.utils.widgets import WidgetWithScript
 
 def collect_icons():
     """Collects icon classes from the CSS file."""
-    with open(os.path.join(settings.STATIC_ROOT, 'waggylabs/css/vendor/bootstrap-icons-input.css'), 'r') as f:
+    icons_css_path = os.path.join(settings.STATIC_ROOT, 'waggylabs/css/vendor/bootstrap-icons-input.css')
+    if not os.path.exists(icons_css_path):
+        icons_css_path = os.path.join(
+            getattr(settings, 'BASE_DIR'),
+            'waggylabs/static/waggylabs/css/vendor/bootstrap-icons-input.css'
+        )
+    with open(icons_css_path, 'r') as f:
         matches = [m.group(0).lstrip('.').rstrip(':')
                 for m in re.finditer(r'\.bi-[a-z\-]*\:', f.read())]
     matches.sort()
