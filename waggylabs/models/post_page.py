@@ -14,9 +14,8 @@ from wagtail.search import index
 
 from waggylabs.blocks.body import BodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
+from waggylabs.models.base_page import BasePage
 from waggylabs.panels import ReadOnlyPanel
-
-from .base_page import BasePage
 
 
 WAGGYLABS_BASE_URL = getattr(settings, 'WAGGYLABS_BASE_URL', '')
@@ -79,8 +78,8 @@ class PostPage(RoutablePageMixin, BasePage):
     def can_create_at(cls, parent):
         """If the specific class of the parent page is PostPage,
         the hierarchy of the newly added post will be:
-        PostPage -> PostPage -> new PostPage. This is too deep 
-        heararchy. Series of posts allows only one time ancestor 
+        PostPage -> PostPage -> new PostPage. This is too deep
+        heararchy. Series of posts allows only one time ancestor
         for a PostPage in series."""
         if parent.get_parent().specific_class == PostPage:
             return False
@@ -101,12 +100,26 @@ class PostPage(RoutablePageMixin, BasePage):
     
     def get_url_parts(self, request=None):
         """Adds date before slug into the path to avoid collisions."""
-        (site_id, site_root_url, page_path) = super().get_url_parts(request)
+        parent = self.get_parent()
+        while True:
+            # comparing as string is necessary to avoid circular imports
+            if parent.specific_class.__name__ == 'PostListPage':
+                break
+        
+        (site_id, site_root_url, page_path) = parent.get_url_parts(request)
         if self.live:
             return (
                 site_id,
                 site_root_url,
-                WAGGYLABS_BASE_URL + self.first_published_at.strftime('%Y-%b-%d/').lower() + self.slug
+                page_path + parent.specific.reverse_subpage(
+                    'post_by_slug',
+                    args=(
+                        self.first_published_at.year,
+                        self.first_published_at.strftime('%b').lower(),
+                        self.first_published_at.strftime('%d'),
+                        self.slug,
+                    ),
+                )
             )
         return None # (site_id, site_root_url, page_path)
     

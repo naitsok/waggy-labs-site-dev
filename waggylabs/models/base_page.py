@@ -158,7 +158,7 @@ class BasePage(Page, HitCountMixin):
         # ),
         MultiFieldPanel(
             [
-                ReadOnlyPanel('created_at', heading='Firsr created at'),
+                ReadOnlyPanel('created_at', heading='First created at'),
                 ReadOnlyPanel('first_published_at', heading='First published at'),
                 ReadOnlyPanel('last_published_at', heading='Last published at'),
                 ReadOnlyPanel('hit_counts', heading='Number of views'),
