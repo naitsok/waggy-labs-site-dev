@@ -110,12 +110,6 @@ class PostPage(RoutablePageMixin, BasePage):
             )
         return None # (site_id, site_root_url, page_path)
     
-    @path('')
-    @re_path(r'^(\d{4})-(\d{2})-(\d{2})/(.+)/$')
-    @re_path(r'^(\d{4})-(jan?|feb?|mar?|apr?|may?|jun?|jul?|aug?|sep?|oct?|nov?|dec?)-(\d{2})/(.+)/$')
-    def serve_own(self, request, *args, **kwargs):
-        return self.serve(request)
-    
     def is_series(self):
         """Verifies that post is in the series of topic-related posts."""
         # parent_page = self.get_parent().specific
