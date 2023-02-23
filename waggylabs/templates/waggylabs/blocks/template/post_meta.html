@@ -14,4 +14,51 @@
         {% endfor %}
     </dd>
     {% endif %}
+    {% if page.tags and value.show_tags %}
+    {% if value.show_header %}<dt class="col-sm-4 {{ value.tags_header_style }}">{{ value.tags_header }}</dt>{% endif %}
+    <dd class="{{ value.dd_width }}">
+        {% for tag in page.tags %}
+            <a class="{% if 'link' in value.tags_style %}nav-link{% endif %} {{ value.tags_style }} {% if 'btn' in value.tags_style %}mt-1{% endif %} mb-2 me-2" 
+                href="{% routablepageurl post_list_page 'posts_by_tag' tag.slug %}">
+                {{ tag }}
+            </a>
+        {% endfor %}
+    </dd>
+    {% endif %}
 </dl>
+{% if value.show_sibling_posts %}
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    {% if previous_post %}
+    <div class="card {{ value.previous_post.value.style }} {{ value.previous_post.value.alignment }} mb-3">
+        {% if value.previous_post.value.header %}
+            {% if value.previous_post.value.header_icon_location == 'end' %}
+                {{ value.previous_post.value.header }}
+                {% if value.previous_post.value.header_icon|is_icon %}<i class="{{ value.previous_post.value.header_icon|icon_class }}{% if value.previous_post.value.header %} ms-1{% endif %}"></i>{% endif %}
+            {% else %}
+                {% if value.previous_post.value.header_icon|is_icon %}<i class="{{ value.previous_post.value.header_icon|icon_class }}{% if value.previous_post.value.header %} me-1{% endif %}"></i>{% endif %}
+                {{ value.previous_post.value.header }}
+            {% endif %}      
+        {% endif %}
+        <div class="card-body {% if 'border' in value.previous_post.value.style %}text-{{ value.previous_post.value.style|slice:'6:' }}{% endif %}">
+            <h5 class="card-title"><a href="{% pageurl previous_post %}" class="nav-link">{{ previous_post.title }}</a></h5>
+        </div>
+    </div>
+    {% endif %}
+    {% if next_post %}
+    <div class="card {{ value.next_post.value.style }} {{ value.next_post.value.alignment }} mb-3">
+        {% if value.next_post.value.header %}
+            {% if value.next_post.value.header_icon_location == 'end' %}
+                {{ value.next_post.value.header }}
+                {% if value.next_post.value.header_icon|is_icon %}<i class="{{ value.next_post.value.header_icon|icon_class }}{% if value.next_post.value.header %} ms-1{% endif %}"></i>{% endif %}
+            {% else %}
+                {% if value.next_post.value.header_icon|is_icon %}<i class="{{ value.next_post.value.header_icon|icon_class }}{% if value.next_post.value.header %} me-1{% endif %}"></i>{% endif %}
+                {{ value.next_post.value.header }}
+            {% endif %}      
+        {% endif %}
+        <div class="card-body {% if 'border' in value.next_post.value.style %}text-{{ value.next_post.value.style|slice:'6:' }}{% endif %}">
+            <h5 class="card-title"><a href="{% pageurl next_post %}" class="nav-link">{{ next_post.title }}</a></h5>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

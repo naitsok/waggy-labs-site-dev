@@ -13,17 +13,17 @@ from waggylabs.widgets import DisabledOptionSelect
 class SiblingPostBlock(StructBlock):
     """Defines the appearance of previous and next posts in
     the post footer block."""
-    sibling_post_title = CharBlock(
+    header = CharBlock(
         required=False,
-        label=_('Title for "sibling post" text'),
-        help_text=_('Title for the sibling post, e.g. "sibling post".')
+        label=_('Header for "sibling post" text'),
+        help_text=_('Header for the sibling post, e.g. "sibling post".')
     )
-    sibling_post_icon = IconBlock(
+    header_icon = IconBlock(
         required=False,
         label=_('sibling post icon')
     )
-    sibling_post_icon_location = IconLocationBlock(required=False)
-    sibling_post_style = ChoiceBlock(
+    header_icon_location = IconLocationBlock(required=False)
+    style = ChoiceBlock(
         required=False,
         choices=[
             ('', _('Choose style')),
@@ -48,7 +48,7 @@ class SiblingPostBlock(StructBlock):
         label=_('sibling post style'),
         widget=DisabledOptionSelect,
     )
-    sibling_post_alignment = ChoiceBlock(
+    alignment = ChoiceBlock(
         required=False,
         choices=[
             ('', 'Choose text alignment'),
@@ -119,9 +119,11 @@ class PostMetaBlock(StructBlock):
     previous_post = SiblingPostBlock('Previous')
     next_post = SiblingPostBlock('Next')
     
-    def render(self, value, context=None):
+    def render(self, value, context):
         value['show_header'] = value['categories_header'] or value['tags_header']
         value['dd_width'] = 'col-sm-8' if value['show_header'] else 'col-sm-12'
+        value['show_sibling_posts'] = value['show_sibling_posts'] and \
+            (context['previous_post'] or context['next_post'])
         
         return super().render(value, context)
     
