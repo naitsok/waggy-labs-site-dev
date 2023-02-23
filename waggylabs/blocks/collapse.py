@@ -16,7 +16,7 @@ from .embed import EmbedBlock
 from .equation import EquationBlock
 from .figure import FigureBlock
 from .icon import IconBlock, IconLocationBlock
-from .link_style import LinkStyleChoiceBlock
+from .styling import LinkStyleChoiceBlock
 from .listing import ListingBlock
 from .table import TableBlock, TableFigureBlock
 from .markdown import MarkdownBlock

@@ -20,6 +20,7 @@ from wagtailmenus.panels import menupage_panel
 from waggylabs.blocks.body import BodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.models.base_page import BasePage
+from waggylabs.models.post_category import PostCategory
 from waggylabs.models.post_page import PostPage
 from waggylabs.models.post_tags import TagProxy
 from waggylabs.panels import ReadOnlyPanel
@@ -110,6 +111,16 @@ class PostListPage(RoutablePageMixin, BasePage, MenuPageMixin):
             self.filter_term = date_format(date(int(year), int(month), int(day)))
 
         self.posts = self.posts.order_by('-first_published_at')
+        return self.serve(request, *args, **kwargs)
+    
+    @re_path(r'^category/(?P<category>[-\w]+)/$')
+    def posts_by_category(self, request, category, *args, **kwargs):
+        """The PostPages are listed by tag. No pinned posts after tag select."""
+        self.pinned_posts = None
+        self.posts = PostPage.objects.live().filter(post_categories__post_category__slug=category).order_by('-first_published_at')
+        self.filter_header = _('Posts in category:')
+        self.filter_term = PostCategory.objects.get(slug=category).name
+
         return self.serve(request, *args, **kwargs)
     
     @re_path(r'^tag/(?P<tag>[-\w]+)/$')

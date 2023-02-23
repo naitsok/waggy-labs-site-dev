@@ -9,7 +9,7 @@ from wagtail.blocks import (
 
 from .body import BodyBlock
 from .icon import IconBlock, IconLocationBlock
-from .link_style import LinkStyleChoiceBlock
+from .styling import LinkStyleChoiceBlock
 
 
 class TableOfContentsTabBlock(StructBlock):

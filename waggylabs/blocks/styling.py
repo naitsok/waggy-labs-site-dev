@@ -52,3 +52,53 @@ class LinkStyleChoiceBlock(ChoiceBlock):
             validators,
             label=label,
             **kwargs)
+        
+        
+class TextStyleChoiceBlock(ChoiceBlock):
+    """Block to choose style for text for different blocks."""
+    def __init__(
+        self,
+        choices=[
+            ('', 'Choose row header style'),
+            ('fst-normal', 'Default'),
+            ('fw-bold', 'Bold'),
+            ('fw-bolder', 'Bolder'),
+            ('fw-semibold', 'Semibold'),
+            ('fw-normal', 'Normal'),
+            ('fw-light', 'Light'),
+            ('fw-lighter', 'Lighter'),
+            ('fst-italic', 'Italic'),
+            ('fw-bold fst-italic', 'Bold italic'),
+            ('fw-bolder fst-italic', 'Bolder italic'),
+            ('fw-semibold fst-italic', 'Semibold italic'),
+            ('fw-light fst-italic', 'Light italic'),
+            ('fw-lighter fst-italic', 'Lighter italic'),
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
+        ],
+        default='',
+        label=_('Header style'),
+        required=True,
+        help_text=None,
+        widget=DisabledOptionSelect,
+        validators=(),
+        **kwargs):
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            widget,
+            validators,
+            label=label,
+            **kwargs)

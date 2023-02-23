@@ -92,6 +92,15 @@ class PostPage(RoutablePageMixin, BasePage):
             return False
         return super().can_exist_under(parent)
     
+    def __init__(self):
+        super().__init__()
+        parent = self.get_parent()
+        while True:
+            # comparing as string is necessary to avoid circular imports
+            if parent.specific_class.__name__ == 'PostListPage':
+                break
+        self.post_list_page = parent.specific
+    
     def can_move_to(self, parent):
         """Same as PostPage.can_creat_at(parent) classmethod."""
         if parent.get_parent().specific_class == PostPage:
@@ -99,19 +108,13 @@ class PostPage(RoutablePageMixin, BasePage):
         return super().can_move_to(parent)
     
     def get_url_parts(self, request=None):
-        """Adds date before slug into the path to avoid collisions."""
-        parent = self.get_parent()
-        while True:
-            # comparing as string is necessary to avoid circular imports
-            if parent.specific_class.__name__ == 'PostListPage':
-                break
-        
-        (site_id, site_root_url, page_path) = parent.get_url_parts(request)
+        """Adds date before slug into the path to avoid collisions."""        
+        (site_id, site_root_url, page_path) = self.post_list_page.get_url_parts(request)
         if self.live:
             return (
                 site_id,
                 site_root_url,
-                page_path + parent.specific.reverse_subpage(
+                page_path + self.post_list_page.specific.reverse_subpage(
                     'post_by_slug',
                     args=(
                         self.first_published_at.year,
@@ -183,4 +186,7 @@ class PostPage(RoutablePageMixin, BasePage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context.update(self.sibling_posts())
+        context.update({
+            'post_list_page': self.post_list_page,
+        })
         return context

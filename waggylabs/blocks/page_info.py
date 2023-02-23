@@ -5,6 +5,7 @@ from wagtail.blocks import (
     StructBlock, BooleanBlock, ChoiceBlock, CharBlock
 )
 
+from waggylabs.blocks.styling import TextStyleChoiceBlock
 from waggylabs.widgets import DisabledOptionSelect
 
 
@@ -70,69 +71,13 @@ class PageInfoBlock(StructBlock):
         label=_('Time format'),
         widget=DisabledOptionSelect,
     )
-    header_style = ChoiceBlock(
+    header_style = TextStyleChoiceBlock(
         required=True,
-        choices=[
-            ('', 'Choose row header style'),
-            ('fst-normal', 'Default'),
-            ('fw-bold', 'Bold'),
-            ('fw-bolder', 'Bolder'),
-            ('fw-semibold', 'Semibold'),
-            ('fw-normal', 'Normal'),
-            ('fw-light', 'Light'),
-            ('fw-lighter', 'Lighter'),
-            ('fst-italic', 'Italic'),
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-        ],
-        label=_('Row header style'),
-        widget=DisabledOptionSelect,
+        label=_('Header style'),
     )
-    data_style = ChoiceBlock(
+    data_style = TextStyleChoiceBlock(
         required=True,
-        choices=[
-            ('', 'Choose row header style'),
-            ('fst-normal', 'Default'),
-            ('fw-bold', 'Bold'),
-            ('fw-bolder', 'Bolder'),
-            ('fw-semibold', 'Semibold'),
-            ('fw-normal', 'Normal'),
-            ('fw-light', 'Light'),
-            ('fw-lighter', 'Lighter'),
-            ('fst-italic', 'Italic'),
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-            ('link-primary', _('Primary link')),
-            ('link-secondary', _('Secondary link')),
-            ('link-success', _('Success link')),
-            ('link-danger', _('Danger link')),
-            ('link-warning', _('Warning link')),
-            ('link-info', _('Info link')),
-            ('link-light', _('Light link')),
-            ('link-dark', _('Dark link')),
-        ],
         label=_('Row style'),
-        widget=DisabledOptionSelect,
     )
     
     def __init__(self, local_blocks=None, **kwargs):
@@ -152,6 +97,9 @@ class PageInfoBlock(StructBlock):
         
     def render(self, value, context):
         owner = context['page'].owner
+        value['show_header'] = value['user_header'] or value['email_header'] or \
+            value['first_published_at_header'] or value['last_published_at_header']
+        value['dd_width'] = 'col-sm-8' if value['show_header'] else 'col-sm-12'
         value['username'] = owner.get_username()
         value['full_name'] = owner.get_full_name()
         value['email'] = owner.email

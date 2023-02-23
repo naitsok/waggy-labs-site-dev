@@ -6,37 +6,27 @@ from wagtail.blocks import (
 )
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.page_info import PageInfoBlock
+from waggylabs.blocks.styling import LinkStyleChoiceBlock, TextStyleChoiceBlock
 from waggylabs.widgets import DisabledOptionSelect
 
-
-class PostFooterBlock(StructBlock):
-    """Post footer block defines how post siblings, tags and
-    categories are displayed on the PostPage."""
-    show_sibling_posts = BooleanBlock(
+class SiblingPostBlock(StructBlock):
+    """Defines the appearance of previous and next posts in
+    the post footer block."""
+    sibling_post_title = CharBlock(
         required=False,
-        default=True,
-        label=_('Show previous and next posts'),
-        help_text=_(
-            'Shows previous and next posts for the current post. '
-            'Previous means either previously (chronologically) published or '
-            'previous post from the series. Next means either (chronologically) '
-            'published next or next post from the series.'
-        ),
+        label=_('Title for "sibling post" text'),
+        help_text=_('Title for the sibling post, e.g. "sibling post".')
     )
-    previous_post_title = CharBlock(
+    sibling_post_icon = IconBlock(
         required=False,
-        label=_('Title for "previous post" text'),
-        help_text=_('Title for the previous post, e.g. "Previous post".')
+        label=_('sibling post icon')
     )
-    previous_post_icon = IconBlock(
+    sibling_post_icon_location = IconLocationBlock(required=False)
+    sibling_post_style = ChoiceBlock(
         required=False,
-        label=_('Previous post icon')
-    )
-    previous_post_icon_location = IconLocationBlock(required=False)
-    previous_post_style = ChoiceBlock(
-        required=True,
         choices=[
-            ('', _('Choose previous post style')),
+            ('', _('Choose style')),
             ('text-bg-primary', _('Primary')),
             ('text-bg-secondary', _('Secondary')),
             ('text-bg-success', _('Success')),
@@ -55,40 +45,90 @@ class PostFooterBlock(StructBlock):
             ('border-dark', _('Border dark')),
         ],
         default='',
-        label=_('Previous post style'),
+        label=_('sibling post style'),
         widget=DisabledOptionSelect,
     )
-    previous_post_alignment = ChoiceBlock(
-        required=True,
+    sibling_post_alignment = ChoiceBlock(
+        required=False,
         choices=[
-            ('', 'Choose text alignment for previous post'),
+            ('', 'Choose text alignment'),
             ('text-start', 'Left'),
             ('text-center', 'Center'),
             ('text-end', 'Right'),
         ],
         default='',
-        label=_('Previous post text alignment'),
+        label=_('Sibling post text alignment'),
         widget=DisabledOptionSelect,
     )
-    next_post_title = CharBlock(
+    def __init__(self, post_label, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        for block in self.child_blocks.values():
+            block.label = block.label.replace('sibling', post_label)
+
+class PostMetaBlock(StructBlock):
+    """Post meta block describes post metadata, e.g. post author,
+    post siblings, tags, categories. If it is las block in BodyBlock,
+    then it is displayed after references."""
+    show_categories = BooleanBlock(
         required=False,
-        label=_('Title for "next post" text'),
-        help_text=_('Title for the next post, e.g. "Next post".')
+        default=True,
+        label=_('Show post categories'),
     )
-    next_post_icon = IconBlock(
+    categories_header = CharBlock(
         required=False,
-        label=_('Previous post icon')
+        label=_('Categories header'),
+        help_text=_('Text to display before categories list.')
     )
-    next_post_icon_location = IconLocationBlock(required=False)
-    next_post_alignment = ChoiceBlock(
-        required=True,
-        choices=[
-            ('', 'Choose text alignment for next post'),
-            ('text-start', 'Left'),
-            ('text-center', 'Center'),
-            ('text-end', 'Right'),
-        ],
-        default='',
-        label=_('Next post text alignment'),
-        widget=DisabledOptionSelect,
+    categories_header_style = TextStyleChoiceBlock(
+        required=False,
+        label=_('Categories header style'),
     )
+    categories_style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Categories link style')
+    )
+    show_tags = BooleanBlock(
+        required=False,
+        default=True,
+        label=_('Show post tags'),
+    )
+    tags_header = CharBlock(
+        required=False,
+        label=_('Tags header'),
+        help_text=_('Text to display before tag list.')
+    )
+    tags_header_style = TextStyleChoiceBlock(
+        required=False,
+        label=_('Tags header style'),
+    )
+    tags_style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Tags link style')
+    )
+    show_sibling_posts = BooleanBlock(
+        required=False,
+        default=True,
+        label=_('Show previous and next posts'),
+        help_text=_(
+            'Shows previous and next posts for the current post. '
+            'Previous means either previously (chronologically) published or '
+            'previous post from the series. Next means either (chronologically) '
+            'published next or next post from the series.'
+        ),
+    )
+    previous_post = SiblingPostBlock('Previous')
+    next_post = SiblingPostBlock('Next')
+    
+    def render(self, value, context=None):
+        value['show_header'] = value['categories_header'] or value['tags_header']
+        value['dd_width'] = 'col-sm-8' if value['show_header'] else 'col-sm-12'
+        
+        return super().render(value, context)
+    
+    class Meta:
+        label = _('Post metadata')
+        icon = 'form'
+        template = 'waggylabs/blocks/template/page_meta.html'
+        help_text = _('Post metadata block displays information '
+                      'about the post, such as tags, categories, '
+                      'links to previous and next posts.')
