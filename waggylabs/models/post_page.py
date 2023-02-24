@@ -8,11 +8,10 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail.admin import widgets
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, re_path, path
-from wagtail.models import Page
-from wagtail.fields import StreamField
+from wagtail.fields import StreamField, StreamValue
 from wagtail.search import index
 
-from waggylabs.blocks.body import BodyBlock
+from waggylabs.blocks.body import PostBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.models.base_page import BasePage
 from waggylabs.panels import ReadOnlyPanel
@@ -20,7 +19,7 @@ from waggylabs.panels import ReadOnlyPanel
 
 WAGGYLABS_BASE_URL = getattr(settings, 'WAGGYLABS_BASE_URL', '')
 
-class PostPage(RoutablePageMixin, BasePage):
+class PostPage(BasePage):
     """Post page keeps posts content, such as blog posts or
     news posts. It has series functionality to combine posts
     within series of topic-related posts."""
@@ -32,6 +31,11 @@ class PostPage(RoutablePageMixin, BasePage):
     
     # Database fields
     
+    body = StreamField(
+        PostBodyBlock(),
+        use_json_field=True,
+        blank=True,
+    )
     pin_in_list = models.BooleanField(
         default=False,
         help_text=_('Indicates if the post is pinned on the post list page.'),
@@ -60,7 +64,9 @@ class PostPage(RoutablePageMixin, BasePage):
     
     # Editor panels configuration
     
-    content_panels = BasePage.content_panels
+    content_panels = BasePage.content_panels + [
+        FieldPanel('body'),
+    ]
     promote_panels = BasePage.promote_panels + [
         FieldPanel('tags'),
         InlinePanel('post_categories', label=_('Categories'))
@@ -92,14 +98,16 @@ class PostPage(RoutablePageMixin, BasePage):
             return False
         return super().can_exist_under(parent)
     
-    def __init__(self):
-        super().__init__()
-        parent = self.get_parent()
-        while True:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.post_list_page = None
+        ancestors = self.get_ancestors(inclusive=False)
+        for parent in ancestors:
             # comparing as string is necessary to avoid circular imports
             if parent.specific_class.__name__ == 'PostListPage':
+                self.post_list_page = parent.specific
                 break
-        self.post_list_page = parent.specific
+        
     
     def can_move_to(self, parent):
         """Same as PostPage.can_creat_at(parent) classmethod."""
@@ -108,13 +116,13 @@ class PostPage(RoutablePageMixin, BasePage):
         return super().can_move_to(parent)
     
     def get_url_parts(self, request=None):
-        """Adds date before slug into the path to avoid collisions."""        
-        (site_id, site_root_url, page_path) = self.post_list_page.get_url_parts(request)
-        if self.live:
+        """Adds date before slug into the path to avoid collisions."""
+        if self.live and self.post_list_page:
+            (site_id, site_root_url, page_path) = self.post_list_page.get_url_parts(request)
             return (
                 site_id,
                 site_root_url,
-                page_path + self.post_list_page.specific.reverse_subpage(
+                page_path + self.post_list_page.reverse_subpage(
                     'post_by_slug',
                     args=(
                         self.first_published_at.year,

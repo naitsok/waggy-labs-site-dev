@@ -13,7 +13,7 @@ from wagtailmenus.panels import menupage_panel
 from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
-from waggylabs.blocks.body import BodyBlock
+from waggylabs.blocks.body import BaseBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
 
@@ -56,7 +56,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     
     # Content fields
     body = StreamField(
-        BodyBlock(),
+        BaseBodyBlock(),
         use_json_field=True,
     )
     

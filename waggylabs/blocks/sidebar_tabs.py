@@ -7,7 +7,7 @@ from wagtail.blocks import (
     ChoiceBlock
     )
 
-from .body import BodyBlock
+from .body import BaseBodyBlock
 from .icon import IconBlock, IconLocationBlock
 from .styling import LinkStyleChoiceBlock
 
@@ -113,7 +113,7 @@ class VisualsTabBlock(StructBlock):
         if value['include_tables']:
             block_types.append('table_figure')
         
-        value['visuals'] = BodyBlock.blocks_by_types(
+        value['visuals'] = BaseBodyBlock.blocks_by_types(
             context['page'].body,
             block_types
         )

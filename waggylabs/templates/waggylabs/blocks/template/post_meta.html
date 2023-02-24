@@ -3,10 +3,10 @@
 {% load waggylabs_filters %}
 
 <dl class="row">
-    {% if page.categories and value.show_categories %}
+    {% if page.categories.all and value.show_categories %}
     {% if value.show_header %}<dt class="col-sm-4 {{ value.categories_header_style }}">{{ value.categories_header }}</dt>{% endif %}
     <dd class="{{ value.dd_width }}">
-        {% for category in page.categories %}
+        {% for category in page.categories.all %}
             <a class="{% if 'link' in value.categories_style %}nav-link{% endif %} {{ value.categories_style }} {% if 'btn' in value.categories_style %}mt-1{% endif %} mb-2 me-2" 
                 href="{% routablepageurl post_list_page 'posts_by_category' category.post_category.slug %}">
                 {{ category.post_category.name|markdown|safe }}
@@ -14,10 +14,10 @@
         {% endfor %}
     </dd>
     {% endif %}
-    {% if page.tags and value.show_tags %}
+    {% if page.tags.all and value.show_tags %}
     {% if value.show_header %}<dt class="col-sm-4 {{ value.tags_header_style }}">{{ value.tags_header }}</dt>{% endif %}
     <dd class="{{ value.dd_width }}">
-        {% for tag in page.tags %}
+        {% for tag in page.tags.all %}
             <a class="{% if 'link' in value.tags_style %}nav-link{% endif %} {{ value.tags_style }} {% if 'btn' in value.tags_style %}mt-1{% endif %} mb-2 me-2" 
                 href="{% routablepageurl post_list_page 'posts_by_tag' tag.slug %}">
                 {{ tag }}

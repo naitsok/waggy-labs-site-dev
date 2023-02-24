@@ -11,7 +11,7 @@ from wagtail.search import index
 from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
-from waggylabs.blocks.body import BodyBlock
+# from waggylabs.blocks.body import BaseBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
 
@@ -37,10 +37,12 @@ class BasePage(Page, HitCountMixin):
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
-    body = StreamField(
-        BodyBlock(),
-        use_json_field=True,
-    )
+    # body field must be added for each subclass page
+    # body field differs for each type of subclass page
+    # body = StreamField(
+    #     BaseBodyBlock(),
+    #     use_json_field=True,
+    # )
     
     # Content settings fields
     embed_caption_label = models.CharField(
@@ -101,8 +103,6 @@ class BasePage(Page, HitCountMixin):
     search_fields = Page.search_fields + [
         index.SearchField('title', partial_match=True, boost=2),
         index.AutocompleteField('title', boost=2),
-        index.SearchField('body', partial_match=True, boost=2),
-        index.AutocompleteField('body', boost=2),
     ]
 
     # Widgets for panels
@@ -127,7 +127,6 @@ class BasePage(Page, HitCountMixin):
                             'and will have nor caption nor reference. '),
                   heading=_('Tips for editing the Body field'),
                   classname='title'),
-        FieldPanel('body'),
         ]
 
     settings_panels = Page.settings_panels + [

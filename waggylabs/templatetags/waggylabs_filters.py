@@ -53,7 +53,7 @@ def col_class(value):
 
 
 @register.filter(name='markdown')
-def markdown(value, arg):
+def markdown(value, arg=None):
     """Returns the markdown with label, ref, eqref, cite
     updated with page primary key if it arg is not empty."""
     if arg:

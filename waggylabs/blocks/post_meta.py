@@ -130,7 +130,7 @@ class PostMetaBlock(StructBlock):
     class Meta:
         label = _('Post metadata')
         icon = 'form'
-        template = 'waggylabs/blocks/template/page_meta.html'
+        template = 'waggylabs/blocks/template/post_meta.html'
         help_text = _('Post metadata block displays information '
                       'about the post, such as tags, categories, '
                       'links to previous and next posts.')

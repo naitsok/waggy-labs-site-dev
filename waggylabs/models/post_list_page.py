@@ -17,7 +17,7 @@ from wagtail.search.models import Query
 from wagtailmenus.models import MenuPageMixin
 from wagtailmenus.panels import menupage_panel
 
-from waggylabs.blocks.body import BodyBlock
+from waggylabs.blocks.body import BaseBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.models.base_page import BasePage
 from waggylabs.models.post_category import PostCategory

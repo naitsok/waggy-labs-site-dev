@@ -18,10 +18,12 @@ from .equation import EquationBlock
 from .figure import FigureBlock
 from .listing import ListingBlock
 from .markdown import MarkdownBlock
+from .page_info import PageInfoBlock
+from .post_meta import PostMetaBlock
 from .table import TableBlock, TableFigureBlock
 
 
-class BodyBlock(StreamBlock):
+class BaseBodyBlock(StreamBlock):
     """General body field to add content to site pages and
      post pages."""
     accordion = AccordionBlock()
@@ -73,13 +75,14 @@ class BodyBlock(StreamBlock):
         return blocks_by_types
     
     def render(self, value, context):
-        value = { 'body': value }
-        value['literature'] = BodyBlock.blocks_by_types(
+        if type(value) is not dict:
+            value = { 'body': value }
+        value['literature'] = BaseBodyBlock.blocks_by_types(
             value['body'],
             ['citation', 'document']
         )
         if context['page'].show_sidebar:
-            value['modals'] = BodyBlock.blocks_by_types(
+            value['modals'] = BaseBodyBlock.blocks_by_types(
                 value['body'],
                 ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
             )
@@ -108,6 +111,33 @@ class BodyBlock(StreamBlock):
     class Meta:
         icon = 'doc'
         label = _('Page content')
-        template = 'waggylabs/blocks/template/body.html'
+        template = 'waggylabs/blocks/template/base_body.html'
                 
+
+class PostBodyBlock(BaseBodyBlock):
+    """Post body block has additional blocks."""
+    post_meta = PostMetaBlock()
+    page_info = PageInfoBlock()
     
+    def render(self, value, context):
+        # if post_meta and page_info blocks are at the end of body
+        # before them references must be rendered
+        # the
+        info_meta = []
+        for i in range(0, 2):
+            if value[-1].block_type == 'page_meta' or value[-1].block_type == 'page_info':
+                info_meta.append(value[-1])
+                value = value[:-1]
+                
+        value = {
+            'body': value,
+            'info_meta': info_meta,
+        }
+        
+        return super().render(value, context)
+    
+    class Meta:
+        block_counts = {
+            'post_meta': { 'max_num': 1 },
+            'page_info': { 'max_num': 1 },
+        }

@@ -33,6 +33,11 @@
                 {% include_block block with id=block.id %}
             {% endfor %}
         </div>
+        {% if value.info_meta %}
+            {% for block in value.info_meta %}
+                {% include_block block with id=block.id %}
+            {% endfor %}
+        {% endif %}
     </div>
     {% endif %}
 
