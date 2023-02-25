@@ -6,7 +6,6 @@ from wagtail.blocks import (
 )
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
-from waggylabs.blocks.page_info import PageInfoBlock
 from waggylabs.blocks.styling import LinkStyleChoiceBlock, TextStyleChoiceBlock
 from waggylabs.widgets import DisabledOptionSelect
 
@@ -15,12 +14,11 @@ class SiblingPostBlock(StructBlock):
     the post footer block."""
     header = CharBlock(
         required=False,
-        label=_('Header for "sibling post" text'),
-        help_text=_('Header for the sibling post, e.g. "sibling post".')
+        label=_('Header: e.g. "sibling post"'),
     )
     header_icon = IconBlock(
         required=False,
-        label=_('sibling post icon')
+        label=_('sibling post icon - start typing'),
     )
     header_icon_location = IconLocationBlock(required=False)
     style = ChoiceBlock(
@@ -57,13 +55,21 @@ class SiblingPostBlock(StructBlock):
             ('text-end', 'Right'),
         ],
         default='',
-        label=_('Sibling post text alignment'),
+        label=_('sibling post text alignment'),
         widget=DisabledOptionSelect,
     )
+    
     def __init__(self, post_label, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
         for block in self.child_blocks.values():
             block.label = block.label.replace('sibling', post_label)
+            block.field.widget.attrs.update({
+                'placeholder': block.label,
+            })
+            
+    class Meta:
+        icon = 'list-ul'
+        form_template = 'waggylabs/blocks/form_template/sibling_post.html'
 
 class PostMetaBlock(StructBlock):
     """Post meta block describes post metadata, e.g. post author,
@@ -119,18 +125,24 @@ class PostMetaBlock(StructBlock):
     previous_post = SiblingPostBlock('Previous')
     next_post = SiblingPostBlock('Next')
     
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+    
     def render(self, value, context):
         value['show_header'] = value['categories_header'] or value['tags_header']
         value['dd_width'] = 'col-sm-8' if value['show_header'] else 'col-sm-12'
         value['show_sibling_posts'] = value['show_sibling_posts'] and \
             (context['previous_post'] or context['next_post'])
+        value['next_post_style'] = value['next_post']['style']
         
         return super().render(value, context)
     
     class Meta:
         label = _('Post metadata')
-        icon = 'form'
+        icon = 'doc-full-inverse'
         template = 'waggylabs/blocks/template/post_meta.html'
         help_text = _('Post metadata block displays information '
                       'about the post, such as tags, categories, '
-                      'links to previous and next posts.')
+                      'links to previous and next posts. If this block '
+                      'is at the end, it will be rendered after (possible) '
+                      'references.')

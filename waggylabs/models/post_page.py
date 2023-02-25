@@ -75,7 +75,7 @@ class PostPage(BasePage):
     
     # Parent page / subpage type rules
     
-    parent_page_types = ['waggylabs.PostListPage']
+    parent_page_types = ['waggylabs.PostListPage', 'waggylabs.PostPage']
     subpage_types = ['waggylabs.PostPage']
     
     # Methods
@@ -162,7 +162,7 @@ class PostPage(BasePage):
         series = self.post_series()
         if series:
             series_len = series.count()
-            for post, idx in enumerate(series):
+            for idx, post in enumerate(series):
                 if self.pk == post.pk:
                     if idx == 0:
                         return {

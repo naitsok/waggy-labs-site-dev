@@ -37,12 +37,13 @@ class LinkStyleChoiceBlock(ChoiceBlock):
             ('link-dark', _('Dark link')),
         ],
         default='',
-        label=_('Style of the link'),
+        label=_('Choose style'),
         required=True,
         help_text=None,
         widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
+        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
@@ -59,7 +60,7 @@ class TextStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', 'Choose row header style'),
+            ('', 'Choose style'),
             ('fst-normal', 'Default'),
             ('fw-bold', 'Bold'),
             ('fw-bolder', 'Bolder'),
@@ -87,12 +88,13 @@ class TextStyleChoiceBlock(ChoiceBlock):
             ('btn btn-outline-info', _('Button outline info')),
         ],
         default='',
-        label=_('Header style'),
+        label=_('Choose style'),
         required=True,
         help_text=None,
         widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
+        choices[0] = ('', label)
         super().__init__(
             choices,
             default,

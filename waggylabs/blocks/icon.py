@@ -17,6 +17,7 @@ class IconBlock(FieldBlock):
         max_length=None,
         min_length=None,
         validators=(),
+        label=_('Icon - start tying'),
         **kwargs,
     ):
         self.field_options = {
@@ -26,11 +27,23 @@ class IconBlock(FieldBlock):
             "min_length": min_length,
             "validators": validators,
         }
-        super().__init__(**kwargs)
+        self.label = label
+        super().__init__(
+            required=required,
+            help_text=help_text,
+            max_length=max_length,
+            min_length=min_length,
+            validators=validators,
+            label=label,
+            **kwargs)
     
     @cached_property
     def field(self):
-        field_kwargs = { 'widget': IconInput() }
+        field_kwargs = { 
+            'widget': IconInput(attrs={
+                'placeholder': self.label
+            }), 
+        }
         field_kwargs.update(self.field_options)
         return CharField(**field_kwargs)
     
@@ -51,6 +64,7 @@ class IconLocationBlock(ChoiceBlock):
         widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
+        choices[0] = ('', label)
         super().__init__(
             choices,
             default,

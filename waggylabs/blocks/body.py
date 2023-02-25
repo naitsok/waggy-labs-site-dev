@@ -122,15 +122,18 @@ class PostBodyBlock(BaseBodyBlock):
     def render(self, value, context):
         # if post_meta and page_info blocks are at the end of body
         # before them references must be rendered
-        # the
+        page_body = []
         info_meta = []
-        for i in range(0, 2):
-            if value[-1].block_type == 'page_meta' or value[-1].block_type == 'page_info':
-                info_meta.append(value[-1])
-                value = value[:-1]
+        for idx, block in enumerate(value):
+            if (idx >= len(value) - 2) and \
+                (value.raw_data[-1]['type'] in ['post_meta', 'page_info']) and \
+                (block.block_type in ['post_meta', 'page_info']):
+                info_meta.append(block)
+            else:
+                page_body.append(block)
                 
         value = {
-            'body': value,
+            'body': page_body,
             'info_meta': info_meta,
         }
         
