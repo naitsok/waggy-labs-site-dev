@@ -39,7 +39,7 @@ class BlockQuoteBlock(StructBlock):
     )
     text_justify = ChoiceBlock(
         choices=[
-            ('', _('Choose text alignment')),
+            ('', _('Text alignment')),
             ('text-start', _('Left')),
             ('text-center', _('Center')),
             ('text-end', _('Right')),

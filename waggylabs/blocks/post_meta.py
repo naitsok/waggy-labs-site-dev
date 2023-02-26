@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
@@ -14,17 +13,17 @@ class SiblingPostBlock(StructBlock):
     the post footer block."""
     header = CharBlock(
         required=False,
-        label=_('Header: e.g. "sibling post"'),
+        label=_('Header: e.g. "Next post"'),
     )
     header_icon = IconBlock(
         required=False,
-        label=_('sibling post icon - start typing'),
+        label=_('Header icon - start typing'),
     )
     header_icon_location = IconLocationBlock(required=False)
     style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Choose style')),
+            ('', _('Style')),
             ('text-bg-primary', _('Primary')),
             ('text-bg-secondary', _('Secondary')),
             ('text-bg-success', _('Success')),
@@ -43,30 +42,33 @@ class SiblingPostBlock(StructBlock):
             ('border-dark', _('Border dark')),
         ],
         default='',
-        label=_('sibling post style'),
+        label=_('Sibling post style'),
         widget=DisabledOptionSelect,
     )
     alignment = ChoiceBlock(
         required=False,
         choices=[
-            ('', 'Choose text alignment'),
+            ('', 'Text alignment'),
             ('text-start', 'Left'),
             ('text-center', 'Center'),
             ('text-end', 'Right'),
         ],
         default='',
-        label=_('sibling post text alignment'),
+        label=_('Sibling post text alignment'),
         widget=DisabledOptionSelect,
     )
+    post_link_style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Post link style'),
+    )
     
-    def __init__(self, post_label, local_blocks=None, **kwargs):
+    def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
         for block in self.child_blocks.values():
-            block.label = block.label.replace('sibling', post_label)
             block.field.widget.attrs.update({
                 'placeholder': block.label,
             })
-            
+
     class Meta:
         icon = 'list-ul'
         form_template = 'waggylabs/blocks/form_template/sibling_post.html'
@@ -122,11 +124,8 @@ class PostMetaBlock(StructBlock):
             'published next or next post from the series.'
         ),
     )
-    previous_post = SiblingPostBlock('Previous')
-    next_post = SiblingPostBlock('Next')
-    
-    def __init__(self, local_blocks=None, **kwargs):
-        super().__init__(local_blocks, **kwargs)
+    previous_post = SiblingPostBlock()
+    next_post = SiblingPostBlock()
     
     def render(self, value, context):
         value['show_header'] = value['categories_header'] or value['tags_header']
@@ -141,6 +140,7 @@ class PostMetaBlock(StructBlock):
         label = _('Post metadata')
         icon = 'doc-full-inverse'
         template = 'waggylabs/blocks/template/post_meta.html'
+        form_template = 'waggylabs/blocks/form_template/post_meta.html'
         help_text = _('Post metadata block displays information '
                       'about the post, such as tags, categories, '
                       'links to previous and next posts. If this block '

@@ -81,7 +81,7 @@ class AccordionBlock(StructBlock):
     
     style = ChoiceBlock(
         choices=[
-            ('', _('Choose item collapse style')),
+            ('', _('Item collapse style')),
             ('collapsible', _('Items collapse')),
             ('stays_open', _('Items stay open')),
         ],

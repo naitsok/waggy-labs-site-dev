@@ -11,7 +11,7 @@ class LinkStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', _('Choose style')),
+            ('', _('Link style')),
             ('btn btn-primary', _('Button primary')),
             ('btn btn-secondary', _('Button secondary')),
             ('btn btn-success', _('Button success')),
@@ -37,7 +37,7 @@ class LinkStyleChoiceBlock(ChoiceBlock):
             ('link-dark', _('Dark link')),
         ],
         default='',
-        label=_('Choose style'),
+        label=_('Link style'),
         required=True,
         help_text=None,
         widget=DisabledOptionSelect,
@@ -60,7 +60,7 @@ class TextStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', 'Choose style'),
+            ('', 'Text style'),
             ('fst-normal', 'Default'),
             ('fw-bold', 'Bold'),
             ('fw-bolder', 'Bolder'),
@@ -88,7 +88,7 @@ class TextStyleChoiceBlock(ChoiceBlock):
             ('btn btn-outline-info', _('Button outline info')),
         ],
         default='',
-        label=_('Choose style'),
+        label=_('Text style'),
         required=True,
         help_text=None,
         widget=DisabledOptionSelect,

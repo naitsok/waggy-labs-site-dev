@@ -181,7 +181,7 @@ class SidebarTabsBlock(StructBlock):
     tabs_style = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Choose tabs style')),
+            ('', _('Tabs style')),
             ('nav nav-tabs', _('Tabs')),
             ('nav nav-pills', _('Pills')),
             ('nav nav-pills nav-fill', _('Wide pills')),
@@ -192,7 +192,7 @@ class SidebarTabsBlock(StructBlock):
     buttons_style = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Choose button style')),
+            ('', _('Tab buttons style')),
             ('btn btn-primary', _('Button primary')),
             ('btn btn-secondary', _('Button secondary')),
             ('btn btn-success', _('Button success')),
@@ -221,7 +221,7 @@ class SidebarTabsBlock(StructBlock):
     tabs_font_size = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Choose font size')),
+            ('', _('Tabs font size')),
             ('fs-6', _('Normal')),
             ('fs-5', _('Bigger')),
             ('fs-4', _('Big')),
@@ -234,7 +234,7 @@ class SidebarTabsBlock(StructBlock):
     tabs_orientation = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Choose button orientation')),
+            ('', _('Tabs button orientation')),
             ('tabs-default', _('Horizontal')),
             ('flex-column', _('Vertical')),
         ],
@@ -244,7 +244,7 @@ class SidebarTabsBlock(StructBlock):
     tabs_justify = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Choose horizontal alignment')),
+            ('', _('Tabs horizontal alignment')),
             ('justify-content-start', _('Align left')),
             ('justify-content-center', _('Align center')),
             ('justify-content-end', _('Align right')),

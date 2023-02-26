@@ -39,7 +39,7 @@ class CarouselItem(StructBlock):
     text_justify = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Choose text alignment')),
+            ('', _('Text alignment')),
             ('text-start', _('Left')),
             ('text-center', _('Center')),
             ('text-end', _('Right')),
@@ -51,7 +51,7 @@ class CarouselItem(StructBlock):
     text_color = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Choose text color')),
+            ('', _('Text color')),
             ('text-light', _('Light')),
             ('text-dark', _('Dark')),
         ],
@@ -62,7 +62,7 @@ class CarouselItem(StructBlock):
     text_size = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Choose text size')),
+            ('', _('Text size')),
             ('fs-6', _('Normal')),
             ('fs-5', _('Bigger')),
             ('fs-4', _('Big')),
@@ -85,7 +85,7 @@ class ImageCarouselBlock(StructBlock):
     """Carousel Block with images with possible caption."""
     color = ChoiceBlock(
         choices=[
-            ('', _('Choose color style')),
+            ('', _('Color')),
             (' ', _('Light')),
             ('carousel-dark', _('Dark')),
         ],
@@ -95,7 +95,7 @@ class ImageCarouselBlock(StructBlock):
     )
     switch = ChoiceBlock(
         choices=[
-            ('', _('Choose switching style')),
+            ('', _('Switching style')),
             ('false', _('Change on button')),
             ('false-fade', _('Fade on button')),
             ('carousel', _('Change after interval')),
@@ -107,7 +107,7 @@ class ImageCarouselBlock(StructBlock):
     )
     controls = ChoiceBlock(
         choices=[
-            ('', _('Choose controls')),
+            ('', _('Controls')),
             ('none', _('No controls')),
             ('buttons', _('Left and right buttons')),
             ('indicators', _('Items indicators')),

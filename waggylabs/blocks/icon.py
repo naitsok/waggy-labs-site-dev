@@ -53,7 +53,7 @@ class IconLocationBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', _('Choose icon location')),
+            ('', _('Icon location')),
             ('start', _('Before text')),
             ('end', _('After text')),
         ],

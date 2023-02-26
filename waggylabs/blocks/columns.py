@@ -45,7 +45,7 @@ class ColumnsItemBlock(StructBlock):
     vertical_align = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Choose vertical alignment')),
+            ('', _('Vertical alignment')),
             ('align-self-start', _('Top')),
             ('align-self-center', _('Center')),
             ('align-self-end', _('Bottom')),

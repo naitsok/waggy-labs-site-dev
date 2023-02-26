@@ -56,7 +56,7 @@ class CardGridBlock(StructBlock):
     """Card grid block for StreamField."""
     height_style = ChoiceBlock(
         choices=[
-            ('', _('Choose height style')),
+            ('', _('Height style')),
             ('equal', _('Equal height')),
             ('not_equal', _('Height wraps to content')),
         ],
@@ -66,7 +66,7 @@ class CardGridBlock(StructBlock):
     )
     grouping_style = ChoiceBlock(
         choices=[
-            ('', _('Choose grouping style')),
+            ('', _('Grouping style')),
             ('separate', _('Separate')),
             ('grouped', _('Grouped')),
         ],
@@ -76,7 +76,7 @@ class CardGridBlock(StructBlock):
     )
     orientation_style = ChoiceBlock(
         choices=[
-            ('', _('Choose orientation')),
+            ('', _('Orientation')),
             ('vertical', _('Vertical')),
             ('horizontal', _('Horizontal')),
         ],
@@ -86,7 +86,7 @@ class CardGridBlock(StructBlock):
     )
     columns = ChoiceBlock(
         choices=[
-            ('', _('Choose columns')),
+            ('', _('Columns')),
             (1, _('1 column')),
         ] + [
             (i + 1, str(i + 1) + _(' columns')) for i in

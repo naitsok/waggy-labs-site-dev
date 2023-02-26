@@ -64,7 +64,7 @@ class PageInfoBlock(StructBlock):
     time_format = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Choose time format')),
+            ('', _('Time format')),
             ('G:i', _('24-hour format')),
             ('g:i A', _('12-hour format')),
         ],
