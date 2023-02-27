@@ -5,7 +5,7 @@
     {% if value.show_user %}
     {% if value.show_header %}
         <dt class="col-sm-4">
-            <a href="#" class="{{ value.header_style }}">>{{ value.user_header }}</a>
+            <a href="#" class="{{ value.header_style }}">{{ value.user_header }}</a>
         </dt>
     {% endif %}
     {# TODO: add correct link after developing #}
@@ -16,7 +16,7 @@
     {% if value.email_header %}
     {% if value.show_header %}
         <dt class="col-sm-4">
-            <a href="#" class="{{ value.header_style }}">>{{ value.email_header }}</a>
+            <a href="#" class="{{ value.header_style }}">{{ value.email_header }}</a>
         </dt>
     {% endif %}
     <dd class="{{ value.dd_width }}"><a href="mailto:{{ value.email }}" class="{{ value.data_style }}">{{ value.email }}</a></dd>
@@ -24,7 +24,7 @@
     {% if value.show_first_published_at %}
     {% if value.show_header %}
         <dt class="col-sm-4">
-            <a href="#" class="{{ value.header_style }}">>{{ value.first_published_at_header }}</a>
+            <a href="#" class="{{ value.header_style }}">{{ value.first_published_at_header }}</a>
         </dt>
     {% endif %}
     <dd class="{{ value.dd_width }}">
@@ -36,7 +36,7 @@
     {% if value.show_last_published_at %}
     {% if value.show_header %}
         <dt class="col-sm-4">
-            <a href="#" class="{{ value.header_style }}">>{{ value.last_published_at_header }}</a>
+            <a href="#" class="{{ value.header_style }}">{{ value.last_published_at_header }}</a>
         </dt>
     {% endif %}
     <dd class="{{ value.dd_width }}">

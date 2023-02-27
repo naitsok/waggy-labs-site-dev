@@ -1,0 +1,27 @@
+{% load wagtailcore_tags %}
+{% load waggylabs_filters %}
+
+
+{% if page.is_series %}
+<div class="{% if not sidebar %}card {{ value.style }}{% endif %} {{ value.alignment }} mb-3">
+    {% if value.header and not sidebar %}
+    <div class="card-header">
+        {% if value.header_icon_location == 'end' %}
+            {{ value.header }}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        {% else %}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {{ value.header }}
+        {% endif %}
+    </div>
+    {% endif %}
+    <div {% if not sidebar %}class="card-body"{% endif %}>
+        {% for post in page.post_series %}
+        <a href="{% pageurl post %}"
+            class="{% if 'link' in value.post_link_style %}nav-link{% endif %} {{ value.post_link_style }} {% if 'btn' in value.post_link_style %}mt-1{% endif %} {% if forloop.counter0 != 0 %}ms-3{% endif %} {% if post.pk == page.pk %}{{ value.current_post_style }}{% endif %}">
+            {{ post.title }}
+        </a>{% if 'btn' in value.post_link_style %}<br />{% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

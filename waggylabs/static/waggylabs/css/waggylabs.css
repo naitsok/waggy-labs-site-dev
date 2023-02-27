@@ -18,6 +18,7 @@
 .figure-caption p { display: inline; }
 /* Tables */
 .table p { margin-bottom: 0px; }
+.table { border: none !important; }
 /* links in navigation bar and car grid */
 /* .card-footer a.nav-link:hover { text-decoration: underline; } */
 /* Sidebar */

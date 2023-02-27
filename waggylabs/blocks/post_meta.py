@@ -5,12 +5,15 @@ from wagtail.blocks import (
 )
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
-from waggylabs.blocks.styling import LinkStyleChoiceBlock, TextStyleChoiceBlock
+from waggylabs.blocks.styling import (
+    LinkStyleChoiceBlock, TextStyleChoiceBlock, CardStyleChoiceBlock
+)
 from waggylabs.widgets import DisabledOptionSelect
 
 class SiblingPostBlock(StructBlock):
     """Defines the appearance of previous and next posts in
     the post footer block."""
+    style = CardStyleChoiceBlock(required=False)
     header = CharBlock(
         required=False,
         label=_('Header: e.g. "Next post"'),
@@ -20,31 +23,6 @@ class SiblingPostBlock(StructBlock):
         label=_('Header icon - start typing'),
     )
     header_icon_location = IconLocationBlock(required=False)
-    style = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Style')),
-            ('text-bg-primary', _('Primary')),
-            ('text-bg-secondary', _('Secondary')),
-            ('text-bg-success', _('Success')),
-            ('text-bg-danger', _('Danger')),
-            ('text-bg-warning', _('Warning')),
-            ('text-bg-info', _('Info')),
-            ('text-bg-light', _('Light')),
-            ('text-bg-dark', _('Dark')),
-            ('border-primary', _('Border primary')),
-            ('border-secondary', _('Border secondary')),
-            ('border-success', _('Border success')),
-            ('border-danger', _('Border danger')),
-            ('border-warning', _('Border warning')),
-            ('border-info', _('Border info')),
-            ('border-light', _('Border light')),
-            ('border-dark', _('Border dark')),
-        ],
-        default='',
-        label=_('Sibling post style'),
-        widget=DisabledOptionSelect,
-    )
     alignment = ChoiceBlock(
         required=False,
         choices=[
@@ -54,7 +32,7 @@ class SiblingPostBlock(StructBlock):
             ('text-end', 'Right'),
         ],
         default='',
-        label=_('Sibling post text alignment'),
+        label=_('Text alignment'),
         widget=DisabledOptionSelect,
     )
     post_link_style = LinkStyleChoiceBlock(

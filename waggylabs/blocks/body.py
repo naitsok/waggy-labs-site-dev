@@ -4,23 +4,24 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamValue
 
-from .accordion import AccordionBlock
-from .blockquote import BlockQuoteBlock
-from .card_grid import CardGridBlock
-from .carousel import ImageCarouselBlock
-from .collapse import CollapseBlock
-from .columns import ColumnsBlock
-from .cut import CutBlock
-from .document import DocumentBlock
-from .citation import CitationBlock
-from .embed import EmbedBlock
-from .equation import EquationBlock
-from .figure import FigureBlock
-from .listing import ListingBlock
-from .markdown import MarkdownBlock
-from .page_info import PageInfoBlock
-from .post_meta import PostMetaBlock
-from .table import TableBlock, TableFigureBlock
+from waggylabs.blocks.accordion import AccordionBlock
+from waggylabs.blocks.blockquote import BlockQuoteBlock
+from waggylabs.blocks.card_grid import CardGridBlock
+from waggylabs.blocks.carousel import ImageCarouselBlock
+from waggylabs.blocks.collapse import CollapseBlock
+from waggylabs.blocks.columns import ColumnsBlock
+from waggylabs.blocks.cut import CutBlock
+from waggylabs.blocks.document import DocumentBlock
+from waggylabs.blocks.citation import CitationBlock
+from waggylabs.blocks.embed import EmbedBlock
+from waggylabs.blocks.equation import EquationBlock
+from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.listing import ListingBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.page_info import PageInfoBlock
+from waggylabs.blocks.post_meta import PostMetaBlock
+from waggylabs.blocks.post_series import PostSeriesBlock
+from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
 class BaseBodyBlock(StreamBlock):
@@ -118,6 +119,7 @@ class PostBodyBlock(BaseBodyBlock):
     """Post body block has additional blocks."""
     post_meta = PostMetaBlock()
     page_info = PageInfoBlock()
+    post_series = PostSeriesBlock()
     
     def render(self, value, context):
         # if post_meta and page_info blocks are at the end of body

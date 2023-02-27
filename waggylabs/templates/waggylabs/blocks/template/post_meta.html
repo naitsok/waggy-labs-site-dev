@@ -47,7 +47,7 @@
             <div class="card-body {% if 'border' in value.previous_post.style %}text-{{ value.previous_post.style|slice:'6:' }}{% endif %}">
                 <h5 class="card-title">
                     <a href="{% pageurl previous_post %}"
-                        class="{% if 'link' in value.previous_post.post_link_style %}nav-link{% endif %} {{ value.previous_post.post_link_style }} {% if 'btn' in value.previous_post.post_link_style %}mt-1{% endif %} mb-2 me-2">
+                        class="{% if 'link' in value.previous_post.post_link_style %}nav-link{% endif %} {{ value.previous_post.post_link_style }} {% if 'btn' in value.previous_post.post_link_style %}mt-1{% endif %}">
                         {{ previous_post.title }}
                     </a>
                 </h5>
@@ -72,7 +72,7 @@
             <div class="card-body {% if 'border' in value.next_post.style %}text-{{ value.next_post.style|slice:'7:' }}{% endif %}">
                 <h5 class="card-title">
                     <a href="{% pageurl next_post %}"
-                        class="{% if 'link' in value.next_post.post_link_style %}nav-link{% endif %} {{ value.next_post.post_link_style }} {% if 'btn' in value.next_post.post_link_style %}mt-1{% endif %} mb-2 me-2">
+                        class="{% if 'link' in value.next_post.post_link_style %}nav-link{% endif %} {{ value.next_post.post_link_style }} {% if 'btn' in value.next_post.post_link_style %}mt-1{% endif %}">
                         {{ next_post.title }}
                     </a>
                 </h5>

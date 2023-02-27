@@ -1,10 +1,12 @@
 .linenodiv { color: var(--bs-light-text); background-color: var(--bs-secondary-bg-subtle); }
-.linenodiv pre { border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);}
+/* .linenodiv pre { border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color); } */
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 td.code { padding-left: 5px; background-color: var(--bs-tertiary-bg); }
+td.code pre { border: none !important; }
 span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+/* .codehilite { border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color); } */ 
 .codehilite pre { margin-bottom: 0px !important; padding-bottom: 0px !important; }
 .codehilite .hll { background-color: #ffffcc }
 .codehilite { background: var(--bs-tertiary-bg); }

@@ -2,24 +2,23 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    StreamBlock, StructBlock, ChoiceBlock, CharBlock,
-    StructValue
+    StreamBlock, StructBlock, CharBlock, StructValue, ChoiceBlock
 )
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .blockquote import BlockQuoteBlock
-from .carousel import ImageCarouselBlock
-from .citation import CitationBlock
-from .document import DocumentBlock
-from .embed import EmbedBlock
-from .equation import EquationBlock
-from .figure import FigureBlock
-from .icon import IconBlock, IconLocationBlock
-from .styling import LinkStyleChoiceBlock
-from .listing import ListingBlock
-from .table import TableBlock, TableFigureBlock
-from .markdown import MarkdownBlock
+from waggylabs.blocks.blockquote import BlockQuoteBlock
+from waggylabs.blocks.carousel import ImageCarouselBlock
+from waggylabs.blocks.citation import CitationBlock
+from waggylabs.blocks.document import DocumentBlock
+from waggylabs.blocks.embed import EmbedBlock
+from waggylabs.blocks.equation import EquationBlock
+from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.styling import LinkStyleChoiceBlock, CardStyleChoiceBlock
+from waggylabs.blocks.listing import ListingBlock
+from waggylabs.blocks.table import TableBlock, TableFigureBlock
+from waggylabs.blocks.markdown import MarkdownBlock
 
 
 class CollapseContentBlock(StreamBlock):
@@ -56,7 +55,20 @@ class CollapseBlock(StructBlock):
         required=False,
         label=_('Text on the button')
     )
-    style = LinkStyleChoiceBlock()
+    style = CardStyleChoiceBlock(required=False)
+    alignment = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', 'Text alignment'),
+            ('text-start', 'Left'),
+            ('text-center', 'Center'),
+            ('text-end', 'Right'),
+        ],
+        default='',
+        label=_('Sibling post text alignment'),
+        widget=DisabledOptionSelect,
+    )
+    button_style = LinkStyleChoiceBlock()
     icon = IconBlock(required=False)
     icon_location = IconLocationBlock(required=False)
     body = CollapseContentBlock(requred=True)

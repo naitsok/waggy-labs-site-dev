@@ -2,7 +2,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    StructBlock, CharBlock, ChoiceBlock
+    StructBlock, CharBlock
 )
 
 from waggylabs.widgets import DisabledOptionSelect

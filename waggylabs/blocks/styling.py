@@ -104,3 +104,45 @@ class TextStyleChoiceBlock(ChoiceBlock):
             validators,
             label=label,
             **kwargs)
+        
+        
+class CardStyleChoiceBlock(ChoiceBlock):
+    """Block to choose style of Bootstrap card."""
+    def __init__(
+        self,
+        choices=[
+            ('', _('Card style')),
+            ('text-bg-primary', _('Primary')),
+            ('text-bg-secondary', _('Secondary')),
+            ('text-bg-success', _('Success')),
+            ('text-bg-danger', _('Danger')),
+            ('text-bg-warning', _('Warning')),
+            ('text-bg-info', _('Info')),
+            ('text-bg-light', _('Light')),
+            ('text-bg-dark', _('Dark')),
+            ('border-primary', _('Border primary')),
+            ('border-secondary', _('Border secondary')),
+            ('border-success', _('Border success')),
+            ('border-danger', _('Border danger')),
+            ('border-warning', _('Border warning')),
+            ('border-info', _('Border info')),
+            ('border-light', _('Border light')),
+            ('border-dark', _('Border dark')),
+        ],
+        default='',
+        label=_('Card style'),
+        required=True,
+        help_text=None,
+        widget=DisabledOptionSelect,
+        validators=(),
+        **kwargs):
+        choices[0] = ('', label)
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            widget,
+            validators,
+            label=label,
+            **kwargs)

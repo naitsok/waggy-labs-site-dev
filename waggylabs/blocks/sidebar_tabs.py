@@ -7,9 +7,30 @@ from wagtail.blocks import (
     ChoiceBlock
     )
 
-from .body import BaseBodyBlock
-from .icon import IconBlock, IconLocationBlock
-from .styling import LinkStyleChoiceBlock
+from waggylabs.blocks.body import BaseBodyBlock
+from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.post_series import PostSeriesBlock
+from waggylabs.blocks.styling import LinkStyleChoiceBlock
+
+
+class PostSeriesTabBlock(StructBlock):
+    """Tab to display series contents."""
+    title = CharBlock(
+        required=False,
+        label=_('Tab title'),
+        help_text=_('Title to appear on the tab.'),
+    )
+    icon = IconBlock(
+        required=False,
+        label=_('Tab icon - start typing'),
+    )
+    icon_location = IconLocationBlock(required=False)
+    post_series = PostSeriesBlock()
+    
+    class Meta:
+        icon = 'list-ul'
+        label = _('Post series')
+        template = 'waggylabs/blocks/template/post_series_tab.html'
 
 
 class TableOfContentsTabBlock(StructBlock):
@@ -21,15 +42,9 @@ class TableOfContentsTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon'),
+        label=_('Tab icon - start typing'),
     )
     icon_location = IconLocationBlock(required=False)
-    
-    def __init__(self, local_blocks=None, **kwargs):
-        super().__init__(local_blocks, **kwargs)
-        self.child_blocks['icon'].field.widget.attrs.update({
-            'placeholder': _('Tab icon - start typing'),
-        })
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div><hr>')
@@ -52,7 +67,7 @@ class VisualsTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon'),
+        label=_('Tab icon - start typing'),
     )
     icon_location = IconLocationBlock(required=False)
     preview_buttons_text = CharBlock(
@@ -62,7 +77,7 @@ class VisualsTabBlock(StructBlock):
     )
     preview_buttons_icon = IconBlock(
         required=False,
-        label=_('Preview buttons icon'),
+        label=_('Preview buttons icon - start typing'),
     )
     preview_buttons_icon_location = IconLocationBlock(
         required=False,
@@ -97,12 +112,6 @@ class VisualsTabBlock(StructBlock):
         })
         self.child_blocks['preview_buttons_text'].field.widget.attrs.update({
             'placeholder': _('Preview button text'),
-        })
-        self.child_blocks['icon'].field.widget.attrs.update({
-            'placeholder': _('Tab icon - start typing'),
-        })
-        self.child_blocks['preview_buttons_icon'].field.widget.attrs.update({
-            'placeholder': _('Preview button icon - start typing'),
         })
     
     def render(self, value, context):
@@ -141,15 +150,9 @@ class CitationsTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon'),
+        label=_('Tab icon - start typing'),
     )
     icon_location = IconLocationBlock(required=False)
-    
-    def __init__(self, local_blocks=None, **kwargs):
-        super().__init__(local_blocks, **kwargs)
-        self.child_blocks['icon'].field.widget.attrs.update({
-            'placeholder': _('Tab icon - start typing'),
-        })
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-literature"></div>')
@@ -165,6 +168,7 @@ class SidebarTabItemBlock(StreamBlock):
     table_of_contents = TableOfContentsTabBlock()
     visuals = VisualsTabBlock()
     citations = CitationsTabBlock()
+    post_series = PostSeriesTabBlock()
     
     class Meta:
         icon = 'clipboard-list'
@@ -172,6 +176,7 @@ class SidebarTabItemBlock(StreamBlock):
         block_counts = {
             'table_of_contents': {'max_num': 1},
             'citations': {'max_num': 1},
+            'post_series': {'max_num': 1},
         }
 
         
