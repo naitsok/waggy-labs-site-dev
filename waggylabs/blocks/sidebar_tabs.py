@@ -10,7 +10,7 @@ from wagtail.blocks import (
 from waggylabs.blocks.body import BaseBodyBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
-from waggylabs.blocks.styling import LinkStyleChoiceBlock
+from waggylabs.blocks.styling import LinkStyleChoiceBlock, CardStyleChoiceBlock
 
 
 class PostSeriesTabBlock(StructBlock):
@@ -183,6 +183,7 @@ class SidebarTabItemBlock(StreamBlock):
 class SidebarTabsBlock(StructBlock):
     """Sidebar block with tabs for the the page. Tabs can contain
     contents (generated from headers on page), page visuals"""
+    style = CardStyleChoiceBlock(required=False)
     tabs_style = ChoiceBlock(
         required=True,
         choices=[
@@ -232,11 +233,11 @@ class SidebarTabsBlock(StructBlock):
         default='',
         label=_('Tabs orientation'),
     )
-    tabs_close = BooleanBlock(
-        required=False,
-        label=_('Show close button'),
-        help_text=_('Allows to collapse sidebar and use full page with for content.'),
-    )
+    # tabs_close = BooleanBlock(
+    #     required=False,
+    #     label=_('Show close button'),
+    #     help_text=_('Allows to collapse sidebar and use full page with for content.'),
+    # )
     
     
     items = SidebarTabItemBlock()
