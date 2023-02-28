@@ -7,7 +7,8 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .markdown import MarkdownBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.styling import TextAlignmentChoiceBlock
 
 
 class CarouselItem(StructBlock):
@@ -36,17 +37,9 @@ class CarouselItem(StructBlock):
                     'during this interval'),
         default=1000,
     )
-    text_justify = ChoiceBlock(
+    text_justify = TextAlignmentChoiceBlock(
         required=False,
-        choices=[
-            ('', _('Text alignment')),
-            ('text-start', _('Left')),
-            ('text-center', _('Center')),
-            ('text-end', _('Right')),
-        ],
-        default='',
         label=_('Text alignment'),
-        widget=DisabledOptionSelect,
     )
     text_color = ChoiceBlock(
         required=False,

@@ -3,7 +3,9 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.blocks import StructBlock, CharBlock, ChoiceBlock
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
-from waggylabs.blocks.styling import LinkStyleChoiceBlock, CardStyleChoiceBlock
+from waggylabs.blocks.styling import (
+    LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
+)
 from waggylabs.widgets import DisabledOptionSelect
 
 
@@ -23,18 +25,7 @@ class PostSeriesBlock(StructBlock):
         label=_('Header icon - start typing'),
     )
     header_icon_location = IconLocationBlock(required=False)
-    alignment = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', 'Text alignment'),
-            ('text-start', 'Left'),
-            ('text-center', 'Center'),
-            ('text-end', 'Right'),
-        ],
-        default='',
-        label=_('Text alignment'),
-        widget=DisabledOptionSelect,
-    )
+    alignment = TextAlignmentChoiceBlock(required=False)
     post_link_style = LinkStyleChoiceBlock(
         required=False,
         label=_('Post link style'),

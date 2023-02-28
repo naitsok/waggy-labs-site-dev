@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.blocks import StructBlock
 from wagtail.embeds.blocks import EmbedBlock as WagtailEmbedBlock
 
-from .label import LabelBlock
-from .markdown import MarkdownBlock
+from waggylabs.blocks.label import LabelBlock
+from waggylabs.blocks.markdown import MarkdownBlock
 
 
 class EmbedBlock(StructBlock):

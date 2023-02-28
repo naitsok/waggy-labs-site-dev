@@ -3,7 +3,7 @@
 {% load waggylabs_filters %}
 
 {% if orientation_style == 'horizontal' %}
-<div class="card mb-3 {% if height_style == 'equal' %}h-100{% endif %}">
+<div class="card mb-3 {{ height_style }} {{ value.style }} {{ value.alignment }}">
   <div class="row g-0">
     <div class="col-md-4">
       {% if not after_cut %}
@@ -25,7 +25,7 @@
   </div>
 </div>
 {% else %}
-<div class="card{% if height_style == 'equal' %} h-100{% endif %}">
+<div class="card {{ height_style }} {{ value.style }} {{ value.alignment }}">
   {% if not after_cut %}
   {% image value.image original class='img-fluid card-img-top' %}
   {% endif %}

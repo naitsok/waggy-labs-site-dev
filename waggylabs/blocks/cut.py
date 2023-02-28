@@ -5,9 +5,8 @@ from wagtail.blocks import (
     StructBlock, CharBlock
 )
 
-from waggylabs.widgets import DisabledOptionSelect
-from .icon import IconBlock, IconLocationBlock
-from .styling import LinkStyleChoiceBlock
+from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.styling import LinkStyleChoiceBlock
 
 class CutBlock(StructBlock):
     """Block to cut the page content after it. For example,

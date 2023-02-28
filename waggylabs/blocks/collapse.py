@@ -15,7 +15,9 @@ from waggylabs.blocks.embed import EmbedBlock
 from waggylabs.blocks.equation import EquationBlock
 from waggylabs.blocks.figure import FigureBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
-from waggylabs.blocks.styling import LinkStyleChoiceBlock, CardStyleChoiceBlock
+from waggylabs.blocks.styling import (
+    LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
+)
 from waggylabs.blocks.listing import ListingBlock
 from waggylabs.blocks.table import TableBlock, TableFigureBlock
 from waggylabs.blocks.markdown import MarkdownBlock
@@ -56,17 +58,9 @@ class CollapseBlock(StructBlock):
         label=_('Text on the button')
     )
     style = CardStyleChoiceBlock(required=False)
-    alignment = ChoiceBlock(
+    alignment = TextAlignmentChoiceBlock(
         required=False,
-        choices=[
-            ('', 'Text alignment'),
-            ('text-start', 'Left'),
-            ('text-center', 'Center'),
-            ('text-end', 'Right'),
-        ],
-        default='',
-        label=_('Sibling post text alignment'),
-        widget=DisabledOptionSelect,
+        label=_('Text alignment'),
     )
     button_style = LinkStyleChoiceBlock()
     icon = IconBlock(required=False)

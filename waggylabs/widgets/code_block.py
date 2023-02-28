@@ -5,11 +5,11 @@ from django.utils.functional import cached_property
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.telepath import register
 
-from waggylabs.blocks.code import CodeBlock, DEFAULT_CODEBLOCK_LANGS
+from waggylabs.blocks.code import CodeBlock, CODEBLOCK_LANGS
 
 
 CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
-CODEBLOCK_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', DEFAULT_CODEBLOCK_LANGS)
+CODEBLOCK_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', CODEBLOCK_LANGS)
 CODEBLOCK_LANGS = list(
     [
         f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/{mode[0]}/{mode[0]}.min.js' 

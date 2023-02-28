@@ -128,9 +128,40 @@ class CardStyleChoiceBlock(ChoiceBlock):
             ('border-info', _('Border info')),
             ('border-light', _('Border light')),
             ('border-dark', _('Border dark')),
+            ('border-0', _('No border')),
+            ('border-0 mp-0', _('No border, no margin')),
         ],
         default='',
         label=_('Card style'),
+        required=True,
+        help_text=None,
+        widget=DisabledOptionSelect,
+        validators=(),
+        **kwargs):
+        choices[0] = ('', label)
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            widget,
+            validators,
+            label=label,
+            **kwargs)
+        
+        
+class TextAlignmentChoiceBlock(ChoiceBlock):
+    """Block for text alignment."""
+    def __init__(
+        self,
+        choices=[
+            ('', 'Text alignment'),
+            ('text-start', _('Left')),
+            ('text-center', _('Center')),
+            ('text-end', _('Right')),
+        ],
+        default='',
+        label=_('Text alignment'),
         required=True,
         help_text=None,
         widget=DisabledOptionSelect,

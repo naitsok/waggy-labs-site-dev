@@ -10,8 +10,8 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets import TableInput
 
-from .markdown import MarkdownBlock
-from .label import LabelBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.label import LabelBlock
 
 
 class TableFigureBlock(StructBlock):

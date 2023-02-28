@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.blocks import StructBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 
-from .label import LabelBlock
+from waggylabs.blocks.label import LabelBlock
 
 class DocumentBlock(StructBlock):
     """Block to add documents and cite them using \cite{...} syntax."""

@@ -1,14 +1,14 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    StructBlock, BooleanBlock, ChoiceBlock, CharBlock
+    StructBlock, BooleanBlock, CharBlock
 )
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    LinkStyleChoiceBlock, TextStyleChoiceBlock, CardStyleChoiceBlock
+    LinkStyleChoiceBlock, TextStyleChoiceBlock, CardStyleChoiceBlock, 
+    TextAlignmentChoiceBlock
 )
-from waggylabs.widgets import DisabledOptionSelect
 
 class SiblingPostBlock(StructBlock):
     """Defines the appearance of previous and next posts in
@@ -23,18 +23,7 @@ class SiblingPostBlock(StructBlock):
         label=_('Header icon - start typing'),
     )
     header_icon_location = IconLocationBlock(required=False)
-    alignment = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', 'Text alignment'),
-            ('text-start', 'Left'),
-            ('text-center', 'Center'),
-            ('text-end', 'Right'),
-        ],
-        default='',
-        label=_('Text alignment'),
-        widget=DisabledOptionSelect,
-    )
+    alignment = TextAlignmentChoiceBlock(required=False)
     post_link_style = LinkStyleChoiceBlock(
         required=False,
         label=_('Post link style'),
@@ -55,6 +44,16 @@ class PostMetaBlock(StructBlock):
     """Post meta block describes post metadata, e.g. post author,
     post siblings, tags, categories. If it is las block in BodyBlock,
     then it is displayed after references."""
+    style = CardStyleChoiceBlock(required=False)
+    header = CharBlock(
+        required=False,
+        label=_('Header'),
+    )
+    header_icon = IconBlock(
+        required=False,
+        label=_('Header icon - start typing'),
+    )
+    header_icon_location = IconLocationBlock(required=False)
     show_categories = BooleanBlock(
         required=False,
         default=True,
@@ -104,6 +103,14 @@ class PostMetaBlock(StructBlock):
     )
     previous_post = SiblingPostBlock()
     next_post = SiblingPostBlock()
+    
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        for block in self.child_blocks.values():
+            if block.name != 'previous_post' and block.name != 'next_post':
+                block.field.widget.attrs.update({
+                    'placeholder': block.label,
+                })
     
     def render(self, value, context):
         value['show_header'] = value['categories_header'] or value['tags_header']

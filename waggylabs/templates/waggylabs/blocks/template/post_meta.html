@@ -3,30 +3,45 @@
 {% load waggylabs_filters %}
 
 {% if page.categories.all or page.tags.all %}
-<dl class="row">
-    {% if page.categories.all and value.show_categories %}
-    {% if value.show_header %}<dt class="col-sm-4 {{ value.categories_header_style }}">{{ value.categories_header }}</dt>{% endif %}
-    <dd class="{{ value.dd_width }}">
-        {% for category in page.categories.all %}
-            <a class="{% if 'link' in value.categories_style %}nav-link{% endif %} {{ value.categories_style }} {% if 'btn' in value.categories_style %}mt-1{% endif %} mb-2 me-2" 
-                href="{% routablepageurl post_list_page 'posts_by_category' category.post_category.slug %}">
-                {{ category.post_category.name|markdown|safe }}
-            </a>
-        {% endfor %}
-    </dd>
+<div class="card {{ value.style }} {{ value.alignment }} mb-3">
+    {% if value.header %}
+    <div class="card-header">
+        {% if value.header_icon_location == 'end' %}
+            {{ value.header }}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        {% else %}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {{ value.header }}
+        {% endif %}   
+    </div>
     {% endif %}
-    {% if page.tags.all and value.show_tags %}
-    {% if value.show_header %}<dt class="col-sm-4 {{ value.tags_header_style }}">{{ value.tags_header }}</dt>{% endif %}
-    <dd class="{{ value.dd_width }}">
-        {% for tag in page.tags.all %}
-            <a class="{% if 'link' in value.tags_style %}nav-link{% endif %} {{ value.tags_style }} {% if 'btn' in value.tags_style %}mt-1{% endif %} mb-2 me-2" 
-                href="{% routablepageurl post_list_page 'posts_by_tag' tag.slug %}">
-                {{ tag }}
-            </a>
-        {% endfor %}
-    </dd>
-    {% endif %}
-</dl>
+    <div class="card-body">
+        <dl class="row">
+            {% if page.categories.all and value.show_categories %}
+            {% if value.show_header %}<dt class="col-sm-4 {{ value.categories_header_style }}">{{ value.categories_header }}</dt>{% endif %}
+            <dd class="{{ value.dd_width }}">
+                {% for category in page.categories.all %}
+                    <a class="{% if 'link' in value.categories_style %}nav-link{% endif %} {{ value.categories_style }} {% if 'btn' in value.categories_style %}mt-1{% endif %} mb-2 me-2" 
+                        href="{% routablepageurl post_list_page 'posts_by_category' category.post_category.slug %}">
+                        {{ category.post_category.name|markdown|safe }}
+                    </a>
+                {% endfor %}
+            </dd>
+            {% endif %}
+            {% if page.tags.all and value.show_tags %}
+            {% if value.show_header %}<dt class="col-sm-4 {{ value.tags_header_style }}">{{ value.tags_header }}</dt>{% endif %}
+            <dd class="{{ value.dd_width }}">
+                {% for tag in page.tags.all %}
+                    <a class="{% if 'link' in value.tags_style %}nav-link{% endif %} {{ value.tags_style }} {% if 'btn' in value.tags_style %}mt-1{% endif %} mb-2 me-2" 
+                        href="{% routablepageurl post_list_page 'posts_by_tag' tag.slug %}">
+                        {{ tag }}
+                    </a>
+                {% endfor %}
+            </dd>
+            {% endif %}
+        </dl>
+    </div>
+</div>
 {% endif %}
 {% if value.show_sibling_posts %}
 <div class="row row-cols-1 row-cols-md-2 g-4">

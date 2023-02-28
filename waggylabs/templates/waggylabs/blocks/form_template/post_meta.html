@@ -9,6 +9,28 @@
         </div>
     </span>
     {% endif %}
+    <div class="waggylabs-grid-container-3">
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.style.block.name }}">
+            {{ children.style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header.block.name }}">
+            {{ children.header.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_icon.block.name }}">
+            {{ children.header_icon.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header_icon.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_icon_location.block.name }}">
+            {{ children.header_icon_location.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header_icon_location.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.alignment.block.name }}">
+            {{ children.alignment.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.alignment.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+    </div>
     <div class="waggylabs-flex-container" data-contentpath="{{ children.show_categories.block.name }}">
         {{ children.show_categories.render_form }}
         <label class="w-field__label" {% if children.show_categories.id_for_label %}for="{{ children.show_categories.id_for_label }}"{% endif %}>{{ children.show_categories.block.label }}{% if children.show_categories.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>

@@ -6,8 +6,9 @@ from wagtail.blocks import (
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .label import LabelBlock
-from .markdown import MarkdownBlock
+from waggylabs.blocks.label import LabelBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.styling import TextAlignmentChoiceBlock
 
 
 class BlockQuoteBlock(StructBlock):
@@ -37,17 +38,7 @@ class BlockQuoteBlock(StructBlock):
         required=False,
         form_classname='waggylabs-label-blockquote',
     )
-    text_justify = ChoiceBlock(
-        choices=[
-            ('', _('Text alignment')),
-            ('text-start', _('Left')),
-            ('text-center', _('Center')),
-            ('text-end', _('Right')),
-        ],
-        default='',
-        label=_('Text alignment'),
-        widget=DisabledOptionSelect,
-    )
+    aligntment = TextAlignmentChoiceBlock(required=False)
     show_icon = BooleanBlock(
         required=False,
         label=_('Show quote icon'),

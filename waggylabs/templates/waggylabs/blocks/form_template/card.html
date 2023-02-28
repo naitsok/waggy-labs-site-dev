@@ -1,0 +1,41 @@
+{% load wagtailadmin_tags  %}
+
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
+    {% endif %}
+    <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.image.block.name }}">
+        {{ children.image.render_form }}
+        <div class="w-field"><span class="w-required-mark{% if not children.image.block.required %} op-0{% endif %}">*</span></div>
+    </div>
+    <div class="waggylabs-grid-container-3">
+        <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.style.block.name }}">
+            {{ children.style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.title.block.name }}">
+            {{ children.title.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.title.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.subtitle.block.name }}">
+            {{ children.subtitle.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.subtitle.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.alignment.block.name }}">
+            {{ children.alignment.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.alignment.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+    </div>
+    <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.text.block.name }}">
+        {{ children.text.render_form }}
+        <div class="w-field"><span class="w-required-mark{% if not children.text.block.required %} op-0{% endif %}">*</span></div>
+    </div>
+    <div data-contentpath="{{ children.links.block.name }}">
+        {{ children.links.render_form }}
+    </div>
+</div>

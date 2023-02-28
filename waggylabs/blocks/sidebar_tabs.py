@@ -194,33 +194,8 @@ class SidebarTabsBlock(StructBlock):
         default='',
         label=_('Tabs style'),
     )
-    buttons_style = ChoiceBlock(
+    buttons_style = LinkStyleChoiceBlock(
         required=True,
-        choices=[
-            ('', _('Tab buttons style')),
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-            ('link-default', _('Default link')),
-            ('link-primary', _('Primary link')),
-            ('link-secondary', _('Secondary link')),
-            ('link-success', _('Success link')),
-            ('link-danger', _('Danger link')),
-            ('link-warning', _('Warning link')),
-            ('link-info', _('Info link')),
-            ('link-light', _('Light link')),
-            ('link-dark', _('Dark link')),
-        ],
-        default='',
         label=_('Tab buttons style'),
     )
     tabs_font_size = ChoiceBlock(

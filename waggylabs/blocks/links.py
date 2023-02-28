@@ -7,8 +7,8 @@ from wagtail.blocks import (
     )
 
 from waggylabs.widgets import DisabledOptionSelect
-from .icon import IconBlock, IconLocationBlock
-from .styling import LinkStyleChoiceBlock
+from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.styling import LinkStyleChoiceBlock
 
 
 class ExternalLinkBlock(StructBlock):

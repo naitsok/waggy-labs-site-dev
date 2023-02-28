@@ -31,12 +31,14 @@
     {% endif %}
 </p>
 <div class="collapse" id="id-{{ id }}">
-    <div class="card card-body {{ value.style }} {{ value.alignment }} mb-3">
-    {% for block in value.body %}
-        {% if block.block_type != 'citation' and block.block_type != 'document' %}
-        {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
-        {% include_block block with id=block.id %}
-        {% endif %}
-    {% endfor %}
+    <div class="card {{ value.style }} {{ value.alignment }} mb-3">
+        <div class="card-body">
+            {% for block in value.body %}
+                {% if block.block_type != 'citation' and block.block_type != 'document' %}
+                {% comment %}these blocks a rendedered at the end of the page as references{% endcomment %}
+                {% include_block block with id=block.id %}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </div>

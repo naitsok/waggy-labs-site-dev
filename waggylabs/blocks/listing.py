@@ -2,9 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.core.blocks import StructBlock
 
-from .code import CodeBlock
-from .markdown import MarkdownBlock
-from .label import LabelBlock
+from waggylabs.blocks.code import CodeBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.label import LabelBlock
 
 
 class ListingBlock(StructBlock):

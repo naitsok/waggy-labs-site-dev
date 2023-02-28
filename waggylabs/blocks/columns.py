@@ -9,18 +9,18 @@ from wagtail.blocks import (
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .accordion import AccordionBlock
-from .blockquote import BlockQuoteBlock
-from .carousel import ImageCarouselBlock
-from .citation import CitationBlock
-from .collapse import CollapseBlock
-from .document import DocumentBlock
-from .embed import EmbedBlock
-from .equation import EquationBlock
-from .figure import FigureBlock
-from .listing import ListingBlock
-from .markdown import MarkdownBlock
-from .table import TableBlock, TableFigureBlock
+from waggylabs.blocks.accordion import AccordionBlock
+from waggylabs.blocks.blockquote import BlockQuoteBlock
+from waggylabs.blocks.carousel import ImageCarouselBlock
+from waggylabs.blocks.citation import CitationBlock
+from waggylabs.blocks.collapse import CollapseBlock
+from waggylabs.blocks.document import DocumentBlock
+from waggylabs.blocks.embed import EmbedBlock
+from waggylabs.blocks.equation import EquationBlock
+from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.listing import ListingBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
 class ColumnsContentBlock(StreamBlock):

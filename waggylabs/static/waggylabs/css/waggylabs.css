@@ -19,8 +19,9 @@
 /* Tables */
 .table p { margin-bottom: 0px; }
 .table { border: none !important; }
-/* links in navigation bar and car grid */
-/* .card-footer a.nav-link:hover { text-decoration: underline; } */
+/* Card with no border, padding and marging */
+.mp-0 .card-body { margin-right: 0; padding-right: 0; margin-left: 0; padding-left: 0; }
+.mp-0 .card-header { margin-right: 0; padding-right: 0; margin-left: 0; padding-left: 0; }
 /* Sidebar */
 /* .nav-tabs { border-bottom: 0; }
 .nav-tabs li.nav-item { border-bottom: 0; } */

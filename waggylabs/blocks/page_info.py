@@ -5,14 +5,29 @@ from wagtail.blocks import (
     StructBlock, BooleanBlock, ChoiceBlock, CharBlock
 )
 
-from waggylabs.blocks.styling import TextStyleChoiceBlock
 from waggylabs.widgets import DisabledOptionSelect
+
+from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.styling import (
+    TextStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
+) 
 
 
 class PageInfoBlock(StructBlock):
     """A block to show page details such as author, creation
     date, etc. Rendered as a description list. Can be used in
     Sidebar."""
+    style = CardStyleChoiceBlock(required=False)
+    header = CharBlock(
+        required=False,
+        label=_('Header'),
+    )
+    header_icon = IconBlock(
+        required=False,
+        label=_('Header icon - start typing'),
+    )
+    header_icon_location = IconLocationBlock(required=False)
+    alignment = TextAlignmentChoiceBlock(required=False)
     show_user = BooleanBlock(
         required=False,
         label=_('Show the name of page creator'),
@@ -82,18 +97,10 @@ class PageInfoBlock(StructBlock):
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
-        self.child_blocks['user_header'].field.widget.attrs.update({
-            'placeholder': self.child_blocks['user_header'].label,
-        })
-        self.child_blocks['email_header'].field.widget.attrs.update({
-            'placeholder': self.child_blocks['email_header'].label,
-        })
-        self.child_blocks['first_published_at_header'].field.widget.attrs.update({
-            'placeholder': self.child_blocks['first_published_at_header'].label,
-        })
-        self.child_blocks['last_published_at_header'].field.widget.attrs.update({
-            'placeholder': self.child_blocks['last_published_at_header'].label,
-        })
+        for block in self.child_blocks.values():
+            block.field.widget.attrs.update({
+                'placeholder': block.label,
+            })
         
     def render(self, value, context):
         owner = context['page'].owner

@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import CharBlock, StructBlock
-from .label import LabelBlock
+from waggylabs.blocks.label import LabelBlock
 
 
 class CitationBlock(StructBlock):

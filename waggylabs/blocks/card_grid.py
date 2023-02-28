@@ -9,11 +9,13 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .links import (
+
+from waggylabs.blocks.links import (
     ExternalLinkBlock, InternalLinkBlock, IconEmailBlock,
     InfoTextBlock
 )
-from .markdown import MarkdownBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.styling import CardStyleChoiceBlock, TextAlignmentChoiceBlock
 
 
 class LinksBlock(StreamBlock):
@@ -30,8 +32,10 @@ class LinksBlock(StreamBlock):
 class CardBlock(StructBlock):
     """A one card block."""
     image = ImageChooserBlock(required=False, label=_('Image'))
-    title = CharBlock(required=True, label=_('Title'))
-    subtitle = CharBlock(required=False, label=_('Subtitle'))
+    style = CardStyleChoiceBlock(required=False, label=_('Card style'))
+    title = CharBlock(required=True, label=_('Card title'))
+    subtitle = CharBlock(required=False, label=_('Card subtitle'))
+    alignment = TextAlignmentChoiceBlock(required=False)
     text = MarkdownBlock(
         required=False,
         help_text=None,
@@ -48,16 +52,17 @@ class CardBlock(StructBlock):
         icon = 'form'
         label = _('Item of the card grid')
         template = 'waggylabs/blocks/template/card.html'
+        form_template = 'waggylabs/blocks/form_template/card.html'
         label_format = _('Card: {title}')
         
 
-DEFAULT_CARD_GRID_COLUMNS = 5
+CARD_GRID_COLUMNS = getattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS', 5)
 class CardGridBlock(StructBlock):
     """Card grid block for StreamField."""
     height_style = ChoiceBlock(
         choices=[
             ('', _('Height style')),
-            ('equal', _('Equal height')),
+            ('h-100', _('Equal height')),
             ('not_equal', _('Height wraps to content')),
         ],
         default='',
@@ -90,9 +95,7 @@ class CardGridBlock(StructBlock):
             (1, _('1 column')),
         ] + [
             (i + 1, str(i + 1) + _(' columns')) for i in
-            range(1, (settings.WAGGYLABS_CARD_GRID_COLUMNS if
-                      hasattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS')
-                      else DEFAULT_CARD_GRID_COLUMNS))
+            range(1, CARD_GRID_COLUMNS)
         ],
         default='',
         label=_('Number of columns'),

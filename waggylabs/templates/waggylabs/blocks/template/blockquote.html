@@ -5,10 +5,10 @@
     <blockquote class="blockquote">
         <div class="d-flex">
             {% if value.show_icon %}<div class="me-3"><i class="bi bi-quote"></i></div>{% endif %}
-            <div class="{{ value.text_justify }} w-100">{{ value.quote|markdown:page.pk|safe }}</div>
+            <div class="{{ value.alignment }} w-100">{{ value.quote|markdown:page.pk|safe }}</div>
         </div>       
         {% if value.author or value.source %}
-            <figcaption class="{{ value.text_justify }} blockquote-footer ps-5">
+            <figcaption class="{{ value.alignment }} blockquote-footer ps-5">
                 {{ value.author }} {% if value.source %}in <cite title="Source Title">{{ value.source }}</cite>{% endif %}
             </figcaption>
         {% endif %}

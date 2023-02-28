@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StructBlock
 
-from .markdown import MarkdownBlock
-from .label import LabelBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.label import LabelBlock
 
 
 class EquationBlock(StructBlock):

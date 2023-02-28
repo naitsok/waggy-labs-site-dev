@@ -8,21 +8,25 @@ from wagtailmarkdown.blocks import render_markdown
 # list of pairs for code block; first value must indicate the valid
 # codemirror mode file (e.g., stex, clike, etc), https://codemirror.net/5/mode/;
 # second value is the display text
-DEFAULT_CODEBLOCK_LANGS = [
-    ('python', _('Python')),
-    ('clike', _('C, C++, C#')),
-    ('clike', _('Java')),
-    ('javascript', _('Javascript')),
-    ('xml', _('HTML, XML')),
-    ('octave', _('MATLAB')),
-    ('mathematica', _('Mathematica')),
-    ('r', _('R')),
-    ('clike', _('Kotlin')),
-    ('swift', _('Swift')),
-    ('powershell', _('Powershell')),
-    ('sql', _('SQL')),
-    ('css', _('CSS')),
-]
+CODEBLOCK_LANGS = getattr(
+    settings, 
+    'WAGGYLABS_CODEBLOCK_LANGS', 
+    [
+        ('python', _('Python')),
+        ('clike', _('C, C++, C#')),
+        ('clike', _('Java')),
+        ('javascript', _('Javascript')),
+        ('xml', _('HTML, XML')),
+        ('octave', _('MATLAB')),
+        ('mathematica', _('Mathematica')),
+        ('r', _('R')),
+        ('clike', _('Kotlin')),
+        ('swift', _('Swift')),
+        ('powershell', _('Powershell')),
+        ('sql', _('SQL')),
+        ('css', _('CSS')),
+    ],
+)
 
 class CodeBlock(StructBlock):
     """Code block to enter code with highlighting using CodeMirror editor. According to 
@@ -32,7 +36,7 @@ class CodeBlock(StructBlock):
     mode = ChoiceBlock(
         choices=(settings.WAGGYLABS_CODEBLOCK_LANGS if
                  hasattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS')
-                 else DEFAULT_CODEBLOCK_LANGS),
+                 else CODEBLOCK_LANGS),
         required=True,
         default='python',
         label=_('Code language'),

@@ -17,11 +17,11 @@
         {{ children.caption.render_form }}
         <div class="w-field"><span class="w-required-mark{% if not children.caption.block.required %} op-0{% endif %}">*</span></div>
     </div>
-    <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.interval.block.name }}">
-        {{ children.interval.render_form }}
-        <div class="w-field"><span class="w-required-mark{% if not children.interval.block.required %} op-0{% endif %}">*</span></div>
-    </div>
-    <div class="waggylabs-grid-container-3">
+    <div class="waggylabs-grid-container-2">
+        <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.interval.block.name }}">
+            {{ children.interval.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.interval.block.required %} op-0{% endif %}">*</span></div>
+        </div>
         <div class="w-field waggylabs-flex-container w-100" data-contentpath="{{ children.text_justify.block.name }}">
             {{ children.text_justify.render_form }}
             <div class="w-field"><span class="w-required-mark{% if not children.text_justify.block.required %} op-0{% endif %}">*</span></div>

@@ -2,7 +2,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    StreamBlock, StructBlock, BooleanBlock, ChoiceBlock, CharBlock
+    StreamBlock, StructBlock, ChoiceBlock
 )
 
 from waggylabs.blocks.markdown import MarkdownBlock
