@@ -4,7 +4,7 @@
 
 {% if page.is_series %}
 <div class="{% if not sidebar %}card {{ value.style }}{% endif %} {{ value.alignment }} mb-3">
-    {% if value.header and not sidebar %}
+    {% if value.header or value.header_icon and not sidebar %}
     <div class="card-header">
         {% if value.header_icon_location == 'end' %}
             {{ value.header }}

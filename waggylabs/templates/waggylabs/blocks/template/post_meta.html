@@ -4,7 +4,7 @@
 
 {% if page.categories.all or page.tags.all %}
 <div class="card {{ value.style }} {{ value.alignment }} mb-3">
-    {% if value.header %}
+    {% if value.header or value.header_icon %}
     <div class="card-header">
         {% if value.header_icon_location == 'end' %}
             {{ value.header }}
@@ -48,7 +48,7 @@
     <div class="col">
         {% if previous_post %}
         <div class="card {{ value.previous_post.style }} {{ value.previous_post.alignment }} mb-3">
-            {% if value.previous_post.header %}
+            {% if value.previous_post.header or value.previous_post.header_icon %}
             <div class="card-header">
                 {% if value.previous_post.header_icon_location == 'end' %}
                     {{ value.previous_post.header }}
@@ -73,7 +73,7 @@
     <div class="col">
         {% if next_post %}
         <div class="card {{ value.next_post.style }} {{ value.next_post.alignment }} mb-3">
-            {% if value.next_post.header %}
+            {% if value.next_post.header or value.next_post.header_icon %}
             <div class="card-header">
                 {% if value.next_post.header_icon_location == 'end' %}
                     {{ value.next_post.header }}

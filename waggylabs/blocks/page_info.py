@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.blocks import (
     StructBlock, BooleanBlock, ChoiceBlock, CharBlock
 )
+from wagtail.users.models import UserProfile
 
 from waggylabs.widgets import DisabledOptionSelect
 
@@ -110,6 +111,7 @@ class PageInfoBlock(StructBlock):
         value['username'] = owner.get_username()
         value['full_name'] = owner.get_full_name()
         value['email'] = owner.email
+        value['avatar'] = UserProfile.get_for_user(owner).avatar
         value['first_published_at'] = context['page'].first_published_at
         value['last_published_at'] = context['page'].last_published_at
         return super().render(value, context)

@@ -3,7 +3,7 @@
 {% load waggylabs_filters %}
 
 <div class="card {{ value.style }} {{ value.alignment }} mb-3">
-    {% if value.header %}
+    {% if value.header or value.header_icon %}
     <div class="card-header">
         {% if value.header_icon_location == 'end' %}
             {{ value.header }}
