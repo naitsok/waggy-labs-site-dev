@@ -110,10 +110,6 @@ class PostListBlock(StructBlock):
         required=False,
         label=_('Date of page publication'),
     )
-    show_time = BooleanBlock(
-        required=False,
-        label=_('Show time in the date fields'),
-    )
     datetime_style = ChoiceBlock(
         required=False,
         choices=[
@@ -125,6 +121,10 @@ class PostListBlock(StructBlock):
         default='',
         label=_('Date style'),
         widget=DisabledOptionSelect,
+    )
+    show_time = BooleanBlock(
+        required=False,
+        label=_('Show time in the date fields'),
     )
     time_format = ChoiceBlock(
         required=False,
@@ -150,10 +150,12 @@ class PostListBlock(StructBlock):
             
     def render(self, value, context):
         page = context['page']
-        value['pinned_posts'] = page.get_descendants(inclusive=False).live()\
+        value['pinned_posts'] = page.get_descendants(inclusive=False).live() \
             .filter(pin_in_list=True).order_by('-first_published_at')
-        value['posts'] = page.get_descendants(inclusive=False).live()\
+        value['posts'] = page.get_descendants(inclusive=False).live() \
             .filter(pin_in_list=False).order_by('-first_published_at')
+        value['show_footer'] = value['show_username'] or value['show_avatar'] or \
+            value['show_first_published_at'] or value['show_time']
         return super().render(value, context)
     
     class Meta:

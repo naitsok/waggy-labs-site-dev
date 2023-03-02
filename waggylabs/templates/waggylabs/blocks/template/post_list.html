@@ -1,4 +1,5 @@
 {% load wagtailcore_tags %}
+{% load wagtailroutablepage_tags %}
 {% load waggylabs_filters %}
 
 {% if value.show_pinned_posts %}
@@ -23,9 +24,23 @@
         <div class="card-body">
             {% include_block post.body with page=post, page_in_list=True %}
         </div>
+        {% if value.show_footer %}
         <div class="card-footer">
-            
+            {% if value.show_avatar %}{{ post.owner.userprofile.avatar }}&nbsp;{% endif %}
+            {% if value.show_username %}
+            <a href="{% routablepageurl page 'posts_by_owner' post.owner.get_username %}" class="nav-link">
+                {% if post.owner.get_full_name %}{{ post.owner.get_full_name }}{% else %}{{ post.owner.get_username }}{% endif %}
+            </a>&nbsp;
+            {% endif %}
+            {% if value.show_first_published_at %}
+                {% if value.datatime_style == 'timesince' %} 
+                    {{ value.last_published_at|timesince }} {{ value.timesince_text }}
+                    {% else %}
+                    {{ value.last_published_at|date:'j E, Y' }} {% if value.datatime_style == 'datetime' %}{{ value.last_published_at|time:value.time_format }}{% endif %}
+                {% endif %}
+            {% endif %}
         </div>
+        {% endif %}
     </div>
     {% endfor %}
 {% endif %}
