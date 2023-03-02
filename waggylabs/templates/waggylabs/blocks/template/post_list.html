@@ -1,0 +1,31 @@
+{% load wagtailcore_tags %}
+{% load waggylabs_filters %}
+
+{% if value.show_pinned_posts %}
+    {% if value.pinned_posts_header or value.pinned_posts_icon %}
+        {% if value.pinned_posts_icon_location == 'end' %}
+        <p class="{{ value.pinned_posts_header_style }}">
+            {{ value.pinned_posts_header }}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        </p>
+        {% else %}
+        <p class="{{ value.pinned_posts_header_style }}">
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {{ value.pinned_posts_header }}
+        </p>
+        {% endif %}
+    {% endif %}
+    {% for post in value.pinned_posts %}
+    <div class="card {{ post_style }} mb-3">
+        <div class="card-header">
+            <p class="{{ value.post_title_style }}">{{ post.title }}</p>
+        </div>
+        <div class="card-body">
+            {% include_block post.body with page=post, page_in_list=True %}
+        </div>
+        <div class="card-footer">
+            
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}

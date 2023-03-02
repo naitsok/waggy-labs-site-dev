@@ -24,7 +24,11 @@
             {% endif %}
             {# TODO: add correct link after developing #}
             <dd class="{{ value.dd_width }}">
-                <a href="#" class="{{ value.data_style }}">{% if value.full_name %}{{ value.full_name }}{% else %}{{ value.username }}{% endif %}</a>
+                <a href="#" class="{{ value.data_style }}">
+                    {% if value.show_avatar and value.avatar_location != 'end' %}<span class="me-1">{{ value.avatar }}</span>{% endif %}
+                    {% if value.full_name %}{{ value.full_name }}{% else %}{{ value.username }}{% endif %}
+                    {% if value.show_avatar and value.avatar_location == 'end' %}<span class="ms-1">{{ value.avatar }}</span>{% endif %}
+                </a>
             </dd>
             {% endif %}
             {% if value.email_header %}
@@ -43,7 +47,11 @@
             {% endif %}
             <dd class="{{ value.dd_width }}">
                 <div class="{{ value.header_style }}">
-                    {{ value.first_published_at|date:'j E, Y' }} {% if value.show_time %}{{ value.first_published_at|time:value.time_format }}{% endif %}
+                    {% if value.datatime_style == 'timesince' %}
+                    {{ value.first_published_at|timesince }} {{ value.timesince_text }}
+                    {% else %}
+                    {{ value.first_published_at|date:'j E, Y' }} {% if value.datatime_style == 'datetime' %}{{ value.first_published_at|time:value.time_format }}{% endif %}
+                    {% endif %}
                 </div>
             </dd>
             {% endif %}
@@ -55,7 +63,11 @@
             {% endif %}
             <dd class="{{ value.dd_width }}">
                 <div class="{{ value.header_style }}">
-                    {{ value.last_published_at|date:'j E, Y' }} {% if value.show_time %}{{ value.last_published_at|time:value.time_format }}{% endif %}
+                    {% if value.datatime_style == 'timesince' %} {{ value.timesince_text }}
+                    {{ value.last_published_at|timesince }}
+                    {% else %}
+                    {{ value.last_published_at|date:'j E, Y' }} {% if value.datatime_style == 'datetime' %}{{ value.last_published_at|time:value.time_format }}{% endif %}
+                    {% endif %}
                 </div>
             </dd>
             {% endif %}

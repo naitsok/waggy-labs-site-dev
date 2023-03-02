@@ -40,6 +40,21 @@ class PageInfoBlock(StructBlock):
                     'in which the page creator name is '
                     'displayed.'),
     )
+    show_avatar = BooleanBlock(
+        required=False,
+        label=_('Show avatar')
+    )
+    avatar_location = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Avatar location')),
+            ('start', _('Before username')),
+            ('end', _('After username')),
+        ],
+        default='',
+        label=_('Avatar location'),
+        widget=DisabledOptionSelect,
+    )
     show_email = BooleanBlock(
         required=False,
         label=_('Show the email of page creator'),
@@ -53,13 +68,13 @@ class PageInfoBlock(StructBlock):
     )
     show_first_published_at = BooleanBlock(
         required=False,
-        label=_('Date of page creation'),
+        label=_('Date of page publication'),
     )
     first_published_at_header = CharBlock(
         required=False,
-        label=_('Header of the page creation date'),
+        label=_('Header of the page publication date'),
         help_text=_('Displays the header of the row '
-                    'in which the page creator date is '
+                    'in which the page publciation date is '
                     'displayed.'),
     )
     show_last_published_at = BooleanBlock(
@@ -73,9 +88,17 @@ class PageInfoBlock(StructBlock):
                     'in which the last page update is '
                     'displayed.'),
     )
-    show_time = BooleanBlock(
+    datetime_style = ChoiceBlock(
         required=False,
-        label=_('Show time in the date fields'),
+        choices=[
+            ('', _('Date style')),
+            ('date', _('Only date')),
+            ('datetime', _('Date and time')),
+            ('timesince', _('Time since')),
+        ],
+        default='',
+        label=_('Date style'),
+        widget=DisabledOptionSelect,
     )
     time_format = ChoiceBlock(
         required=False,
@@ -86,6 +109,10 @@ class PageInfoBlock(StructBlock):
         ],
         label=_('Time format'),
         widget=DisabledOptionSelect,
+    )
+    timesince_text = CharBlock(
+        required=False,
+        label=_('Time since text, e.g. ago'),
     )
     header_style = TextStyleChoiceBlock(
         required=True,
