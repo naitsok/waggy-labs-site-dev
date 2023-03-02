@@ -91,6 +91,10 @@
             <div class="w-field"><span class="w-required-mark{% if not children.post_title_style.block.required %} op-0{% endif %}">*</span></div>
         </div>
     </div>
+    <div class="waggylabs-flex-container" data-contentpath="{{ children.show_scrollspy.block.name }}">
+        {{ children.show_scrollspy.render_form }}
+        <label class="w-field__label" {% if children.show_scrollspy.id_for_label %}for="{{ children.show_scrollspy.id_for_label }}"{% endif %}>{{ children.show_scrollspy.block.label }}{% if children.show_scrollspy.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
+    </div>
     <div class="waggylabs-grid-container-2">
         <div class="waggylabs-flex-container" data-contentpath="{{ children.show_username.block.name }}">
             {{ children.show_username.render_form }}

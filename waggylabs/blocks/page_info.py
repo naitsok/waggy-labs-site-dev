@@ -42,7 +42,7 @@ class PageInfoBlock(StructBlock):
     )
     show_avatar = BooleanBlock(
         required=False,
-        label=_('Show avatar')
+        label=_('Show avatar'),
     )
     avatar_location = ChoiceBlock(
         required=False,

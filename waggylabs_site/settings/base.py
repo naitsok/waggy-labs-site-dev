@@ -190,9 +190,7 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 
 
 # Wagtail menus settings
-
 WAGTAILMENUS_ACTIVE_ANCESTOR_CLASS = "active"
-
 WAGTAILMENUS_SECTION_ROOT_DEPTH = 2
 
 # Wagtail markdown settings
@@ -215,6 +213,9 @@ WAGTAILMARKDOWN = {
 HITCOUNT_KEEP_HIT_ACTIVE  = {"days" : 30 }
 # time to keep hits in database - now the hits are stored indefinitely
 # HITCOUNT_KEEP_HIT_IN_DATABASE = {'days': 30}
+
+# El-pagination settings
+EL_PAGINATION_PAGE_LIST_CALLABLE = 'el_pagination.utils.get_elastic_page_numbers' # get_page_numbers
 
 
 # Waggy Labs settings

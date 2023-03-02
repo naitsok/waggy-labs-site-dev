@@ -1,17 +1,20 @@
 {% load wagtailcore_tags %}
 {% load wagtailroutablepage_tags %}
+{% load el_pagination_tags %}
 {% load waggylabs_filters %}
 
-{% if value.show_pinned_posts %}
+{% show_current_number as current_page_number %}
+
+{% if value.show_pinned_posts and current_page_number == 1 %}
     {% if value.pinned_posts_header or value.pinned_posts_icon %}
         {% if value.pinned_posts_icon_location == 'end' %}
         <p class="{{ value.pinned_posts_header_style }}">
             {{ value.pinned_posts_header }}
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+            {% if value.pinned_posts_icon|is_icon %}<i class="{{ value.pinned_posts_icon|icon_class }}{% if value.pinned_posts_header %} ms-1{% endif %}"></i>{% endif %}
         </p>
         {% else %}
         <p class="{{ value.pinned_posts_header_style }}">
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {% if value.pinned_posts_icon|is_icon %}<i class="{{ value.pinned_posts_icon|icon_class }}{% if value.pinned_posts_header %} me-1{% endif %}"></i>{% endif %}
             {{ value.pinned_posts_header }}
         </p>
         {% endif %}
@@ -44,3 +47,52 @@
     </div>
     {% endfor %}
 {% endif %}
+
+{% if value.posts_header or value.posts_icon %}
+    {% if value.posts_icon_location == 'end' %}
+    <p class="{{ value.posts_header_style }}">
+        {{ value.posts_header }}
+        {% if value.posts_icon|is_icon %}<i class="{{ value.posts_icon|icon_class }}{% if value.posts_header %} ms-1{% endif %}"></i>{% endif %}
+    </p>
+    {% else %}
+    <p class="{{ value.posts_header_style }}">
+        {% if value.posts_icon|is_icon %}<i class="{{ value.posts_icon|icon_class }}{% if value.posts_header %} me-1{% endif %}"></i>{% endif %}
+        {{ value.posts_header }}
+    </p>
+    {% endif %}
+{% endif %}
+
+{% paginate value.posts_per_page posts %}
+{% for post in posts %}
+<div class="card {{ post_style }} mb-3">
+    <div class="card-header">
+        <p class="{{ value.post_title_style }}">{{ post.title }}</p>
+    </div>
+    <div class="card-body">
+        {% include_block post.body with page=post, page_in_list=True %}
+    </div>
+    {% if value.show_footer %}
+    <div class="card-footer">
+        {% if value.show_avatar %}{{ post.owner.userprofile.avatar }}&nbsp;{% endif %}
+        {% if value.show_username %}
+        <a href="{% routablepageurl page 'posts_by_owner' post.owner.get_username %}" class="nav-link">
+            {% if post.owner.get_full_name %}{{ post.owner.get_full_name }}{% else %}{{ post.owner.get_username }}{% endif %}
+        </a>&nbsp;
+        {% endif %}
+        {% if value.show_first_published_at %}
+            {% if value.datatime_style == 'timesince' %}
+                {{ value.last_published_at|timesince }} {{ value.timesince_text }}
+                {% else %}
+                {{ value.last_published_at|date:'j E, Y' }} {% if value.datatime_style == 'datetime' %}{{ value.last_published_at|time:value.time_format }}{% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+<nav aria-label="Post list navigation">
+    <ul class="pagination {{ value.page_alignment }} {{ value.page_size }}">
+        {% show_pages with value=value %}
+    </ul>
+</nav>

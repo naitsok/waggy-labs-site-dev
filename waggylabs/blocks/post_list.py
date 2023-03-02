@@ -98,6 +98,11 @@ class PostListBlock(StructBlock):
         required=False,
         label=_('Post title style'),
     )
+    show_scrollspy = BooleanBlock(
+        required=False,
+        label=_('Highlight post categories and tags when '
+                'corresponding sidebar blocks are present')
+    )
     show_username = BooleanBlock(
         required=False,
         label=_('Show username'),
@@ -150,10 +155,18 @@ class PostListBlock(StructBlock):
             
     def render(self, value, context):
         page = context['page']
-        value['pinned_posts'] = page.get_descendants(inclusive=False).live() \
-            .filter(pin_in_list=True).order_by('-first_published_at')
-        value['posts'] = page.get_descendants(inclusive=False).live() \
-            .filter(pin_in_list=False).order_by('-first_published_at')
+        
+        pinned_posts_query = page.get_descendants(inclusive=False).live() \
+            .select_related('owner__userprofile').filter(pin_in_list=True)
+        posts_query = page.get_descendants(inclusive=False).live() \
+                .select_related('owner__userprofile')
+        if value['show_scrollspy']:
+            posts_query = posts_query.prefetch_related('categories', 'tags')
+        if value['show_pinned_posts']:
+            posts_query = posts_query.filter(pin_in_list=False)
+            
+        value['pinned_posts'] = pinned_posts_query
+        value['posts'] = posts_query
         value['show_footer'] = value['show_username'] or value['show_avatar'] or \
             value['show_first_published_at'] or value['show_time']
         return super().render(value, context)
