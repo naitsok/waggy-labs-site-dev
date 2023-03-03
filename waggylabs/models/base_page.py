@@ -14,6 +14,7 @@ from hitcount.views import HitCountMixin as ViewHitCountMixin
 # from waggylabs.blocks.body import BaseBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
+from waggylabs.widgets import DisabledOptionSelect
 
 
 class BasePage(Page, HitCountMixin):
@@ -25,6 +26,27 @@ class BasePage(Page, HitCountMixin):
     template = 'waggylabs/pages/base_page.html'
 
     # Database fields
+    title_style = models.CharField(
+        blank=True,
+        max_length=10,
+        choices=[
+            ('', _('Page title style')),
+            ('h1', _('Header 1')),
+            ('h2', _('Header 2')),
+            ('h3', _('Header 3')),
+            ('h4', _('Header 4')),
+            ('h5', _('Header 5')),
+            ('h6', _('Header 6')),
+            ('display-1', _('Display header 1')),
+            ('display-2', _('Display header 2')),
+            ('display-3', _('Display header 3')),
+            ('display-4', _('Display header 4')),
+            ('display-5', _('Display header 5')),
+            ('display-6', _('Display header 6')),
+        ],
+        default='',
+        verbose_name=_('Page title style'),
+    )
     
     # Hitcount
     hit_count_generic = GenericRelation(
@@ -130,6 +152,7 @@ class BasePage(Page, HitCountMixin):
         ]
 
     settings_panels = Page.settings_panels + [
+        FieldPanel('title_style', widget=DisabledOptionSelect),
         MultiFieldPanel(
             [
                 FieldPanel('embed_caption_label'),
