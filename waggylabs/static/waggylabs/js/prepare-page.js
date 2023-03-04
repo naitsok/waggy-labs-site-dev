@@ -1,3 +1,22 @@
+/**
+ * Removes label elements from child page bodies. It happens when there are several
+ * page bodies in page list on one page.
+ * @param {DOM element} bodyElement - parent .waggylabs-page-body element
+ * @param {DOM element} blockElements - selected .waggylabs-label-{type} element in
+ * the parent .waggylabs-page-body element, contains unnecessary .waggylabs-label-{type} element
+ * from child .waggylabs-page-body elements
+ * @param {String} blockType - type of .waggylabs-label-{type} element, e.g. figure, listing, etc
+ * @returns 
+ */
+function removePageBodyElements(bodyElement, blockElements, blockType) {
+    blockElements = Array.from(blockElements);
+    bodyElement.querySelectorAll('.waggylabs-page-body').forEach((childBodyElem) => {
+        childBodyElem.querySelectorAll('.waggylabs-label-' + blockType).forEach((labelElem) => {
+            blockElements = blockElements.filter((val) => { return val !== labelElem; });
+        });
+    });
+    return blockElements;
+}
 
 /**
  * Processes figure, table, listing, blockquote references before 
@@ -7,18 +26,22 @@
 function prepareReferences(element) {
     const blockTypes = ['blockquote', 'embed', 'figure', 'listing', 'table'];
     blockTypes.forEach((blockType) => {
-        const blockElements = element.getElementsByClassName('waggylabs-label-' + blockType);
-        for(var i = 0; i < blockElements.length; i++) {
-            // Add numbers to the elements if caption is present
-            const blockLabelElem = blockElements[i].getElementsByClassName('waggylabs-entity-label')[0];
+        let labelElements = element.querySelectorAll('.waggylabs-label-' + blockType);
+        labelElements = removePageBodyElements(element, labelElements, blockType);
+        labelElements.forEach((blockElem, i) => {
+            const blockLabelElem = blockElem.querySelector('.waggylabs-entity-label');
             if (blockLabelElem) {
                 blockLabelElem.innerHTML = blockLabelElem.innerHTML.trim() + ' ' + String(i + 1) + '.';
             }
+        });
+        // Two separate loops are needed because the loop below changes all the innerHTML and 
+        // it conflicts with updating innerHTML of label element
+        labelElements.forEach((blockElem, i) => {
             // Replace \ref{...} blocks with numbers of corresponding blocks
-            const regex = new RegExp('\\\\ref\{' + blockElements[i].id + '\}', 'g');
-            element.innerHTML = element.innerHTML.replace(regex, 
-               `<span class="reference"><a href="#${blockElements[i].id}">${i + 1}</a></span>`);
-        }
+            const re = new RegExp('\\\\ref\{' + blockElem.id + '\}', 'g');
+            element.innerHTML = element.innerHTML.replace(re, 
+                `<span class="reference"><a href="#${blockElem.id}">${i + 1}</a></span>`);
+        });
     });
 }
 
@@ -28,7 +51,9 @@ function prepareReferences(element) {
  */
 function prepareCitations(element) {
     const labelIds = []; // needed to collect the ids of the elements containing citations
-    element.querySelectorAll('.waggylabs-label-cite').forEach((citeElem, idx) => {
+    let labelElements = element.querySelectorAll('.waggylabs-label-cite');
+    labelElements = removePageBodyElements(element, labelElements, 'cite');
+    labelElements.forEach((citeElem, idx) => {
         citeElem.innerHTML = idx + 1;
         labelIds.push(citeElem.id);
     });
@@ -138,7 +163,7 @@ function prepareSidebarVisuals(element) {
  * @param {DOM element} element - element from where to take headers
  */
 function prepareSidebarContents(element) {
-    const toc = document.getElementsByClassName('waggylabs-sidebar-toc')[0];
+    const toc = document.querySelector('.waggylabs-sidebar-toc');
     const headerTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
     const navbar = document.getElementById('navbar-header');
     var navbarHeight = '10px';
@@ -166,8 +191,8 @@ function prepareSidebarContents(element) {
  * @param {DOM element} element - element from where to take headers
  */
 function prepareSidebarCitations(element) {
-    const literatureElem = element.getElementsByClassName('waggylabs-literature')[0];
-    const literatureSidebarElem = document.getElementsByClassName('waggylabs-sidebar-literature')[0];
+    const literatureElem = element.querySelector('.waggylabs-literature');
+    const literatureSidebarElem = document.querySelector('.waggylabs-sidebar-literature');
     if (!literatureElem && literatureSidebarElem) {
         const noLiteratureElem = document.createElement('p');
         noLiteratureElem.innerHTML = 'No references found.';
@@ -187,4 +212,60 @@ function prepareSidebar(element) {
     prepareSidebarContents(element);
     prepareSidebarVisuals(element);
     prepareSidebarCitations(element);
+}
+
+function mathJaxPageReady() {
+    let pageBodies = document.querySelectorAll('.waggylabs-page-body');
+    // first process page bodies that come in list
+    for (let i = 1; i < pageBodies.length; i++) {
+        prepareReferences(pageBodies[i]);
+        prepareCitations(pageBodies[i]);
+        // MathJax.texReset([0]);
+        MathJax.typeset([pageBodies[i]]);
+        prepareScrollMarginTop(pageBodies[i]);
+        MathJax.config.lastSectionNumber = MathJax.config.currentEquationNumber;
+    }
+    // finally process the main page body and sidebar
+    prepareReferences(pageBodies[0]);
+    prepareCitations(pageBodies[0]);
+    MathJax.typeset([pageBodies[0]]);
+    prepareScrollMarginTop(pageBodies[0]);
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+        MathJax.typeset([sidebar]);
+        prepareSidebar(pageBodies[0]);
+    }
+    return new Promise((resolve, reject) => {});
+}
+
+function mathJaxReady() {
+    const Configuration = MathJax._.input.tex.Configuration.Configuration;
+    const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+    new CommandMap('sections', {
+        nextSection: 'NextSection',
+        setSection: 'SetSection',
+    }, {
+        NextSection(parser, name) {
+          MathJax.config.section++;
+          parser.tags.counter = parser.tags.allCounter = 0;
+        },
+        SetSection(parser, name) {
+          const n = parser.GetArgument(name);
+          MathJax.config.section = parseInt(n);
+        }
+    });
+    Configuration.create(
+        'sections', {handler: {macro: ['sections']}}
+    );
+    MathJax.startup.defaultReady();
+    MathJax.startup.input[0].preFilters.add(({math}) => {
+        if (math.inputData.recompile) {
+            MathJax.config.section = math.inputData.recompile.section;
+        }
+    });
+    MathJax.startup.input[0].postFilters.add(({math}) => {
+        if (math.inputData.recompile) {
+            math.inputData.recompile.section = MathJax.config.section;
+        }
+    });
 }

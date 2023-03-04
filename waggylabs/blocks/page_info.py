@@ -134,7 +134,7 @@ class PageInfoBlock(StructBlock):
         owner = context['page'].owner
         value['show_header'] = value['user_header'] or value['email_header'] or \
             value['first_published_at_header'] or value['last_published_at_header']
-        value['dd_width'] = 'col-sm-8' if value['show_header'] else 'col-sm-12'
+        value['dd_width'] = 'col-sm-9' if value['show_header'] else 'col-sm-12'
         value['username'] = owner.get_username()
         value['full_name'] = owner.get_full_name()
         value['email'] = owner.email

@@ -9,7 +9,7 @@ from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     HeaderStyleChoiceBlock, CardStyleChoiceBlock
 ) 
-
+from waggylabs.models.post_page import PostPage
 from waggylabs.widgets import DisabledOptionSelect
 
 
@@ -74,6 +74,14 @@ class PostListBlock(StructBlock):
         label=_('Paginator text size'),
         widget=DisabledOptionSelect,
     )
+    first_page_text = CharBlock(
+        required=False,
+        label=_('First page text'),
+    )
+    first_page_icon = IconBlock(
+        required=False,
+        label=_('First page icon - start typing'),
+    )
     previous_page_text = CharBlock(
         required=False,
         label=_('Previous page text'),
@@ -89,6 +97,14 @@ class PostListBlock(StructBlock):
     next_page_icon = IconBlock(
         required=False,
         label=_('Next page icon - start typing'),
+    )
+    last_page_text = CharBlock(
+        required=False,
+        label=_('Last page text'),
+    )
+    last_page_icon = IconBlock(
+        required=False,
+        label=_('Last page icon - start typing'),
     )
     post_style = CardStyleChoiceBlock(
         required=False,
@@ -156,10 +172,10 @@ class PostListBlock(StructBlock):
     def render(self, value, context):
         page = context['page']
         
-        pinned_posts_query = page.get_descendants(inclusive=False).live() \
-            .select_related('owner__userprofile').filter(pin_in_list=True)
-        posts_query = page.get_descendants(inclusive=False).live() \
-                .select_related('owner__userprofile')
+        pinned_posts_query = PostPage.objects.descendant_of(page).live() \
+            .select_related('owner__wagtail_userprofile').filter(pin_in_list=True)
+        posts_query = PostPage.objects.descendant_of(page).live() \
+                .select_related('owner__wagtail_userprofile')
         if value['show_scrollspy']:
             posts_query = posts_query.prefetch_related('categories', 'tags')
         if value['show_pinned_posts']:
@@ -172,7 +188,7 @@ class PostListBlock(StructBlock):
         return super().render(value, context)
     
     class Meta:
-        icon = 'list'
+        icon = 'clipboard-list'
         label = _('Post list')
         template = 'waggylabs/blocks/template/post_list.html'
         form_template = 'waggylabs/blocks/form_template/post_list.html'

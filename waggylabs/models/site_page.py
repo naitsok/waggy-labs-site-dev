@@ -13,7 +13,7 @@ from wagtailmenus.panels import menupage_panel
 from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
-from waggylabs.blocks.body import BaseBodyBlock
+from waggylabs.blocks.base_body import BaseBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
 

@@ -7,7 +7,7 @@ from wagtail.blocks import (
     ChoiceBlock
     )
 
-from waggylabs.blocks.body import BaseBodyBlock
+from waggylabs.blocks.base_body import BaseBodyBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
 from waggylabs.blocks.styling import LinkStyleChoiceBlock, CardStyleChoiceBlock

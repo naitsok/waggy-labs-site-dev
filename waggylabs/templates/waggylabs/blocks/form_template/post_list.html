@@ -63,6 +63,15 @@
         </div>
     </div>
     <div class="waggylabs-grid-container-2">
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.first_page_text.block.name }}">
+            {{ children.first_page_text.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.first_page_text.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.first_page_icon.block.name }}">
+            {{ children.first_page_icon.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.first_page_icon.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+
         <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.previous_page_text.block.name }}">
             {{ children.previous_page_text.render_form }}
             <div class="w-field"><span class="w-required-mark{% if not children.previous_page_text.block.required %} op-0{% endif %}">*</span></div>
@@ -79,6 +88,15 @@
         <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.next_page_icon.block.name }}">
             {{ children.next_page_icon.render_form }}
             <div class="w-field"><span class="w-required-mark{% if not children.next_page_icon.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.last_page_text.block.name }}">
+            {{ children.last_page_text.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.last_page_text.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.last_page_icon.block.name }}">
+            {{ children.last_page_icon.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.last_page_icon.block.required %} op-0{% endif %}">*</span></div>
         </div>
     </div>
     <div class="waggylabs-grid-container-2">

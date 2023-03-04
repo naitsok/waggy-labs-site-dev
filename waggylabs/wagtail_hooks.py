@@ -21,8 +21,8 @@ def editor_css():
     )
     
 
-@hooks.register('insert_editor_js')
-def editor_js():
+@hooks.register('insert_global_admin_js')
+def global_editor_js():
     """Loads and initializes MathJax when Pages are edited in the Admin."""
     mathjax_js= (
         # below not needed for now as just using default MathJax inpu processor

@@ -114,9 +114,9 @@ class PostMetaBlock(StructBlock):
     
     def render(self, value, context):
         value['show_header'] = value['categories_header'] or value['tags_header']
-        value['dd_width'] = 'col-sm-8' if value['show_header'] else 'col-sm-12'
+        value['dd_width'] = 'col-sm-9' if value['show_header'] else 'col-sm-12'
         value['show_sibling_posts'] = value['show_sibling_posts'] and \
-            (context['previous_post'] or context['next_post'])
+            ('previous_post' in context or 'next_post' in context)
         value['next_post_style'] = value['next_post']['style']
         
         return super().render(value, context)

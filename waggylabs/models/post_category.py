@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.safestring import mark_safe
 
 from modelcluster.fields import ParentalKey
 
@@ -28,7 +29,7 @@ class PostCategory(models.Model):
         ]
 
     def __str__(self):
-        return render_markdown(self.name)
+        return mark_safe(render_markdown(self.name))
 
     class Meta:
         verbose_name = _('Category')

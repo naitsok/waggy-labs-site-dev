@@ -17,13 +17,11 @@ from wagtail.search.models import Query
 from wagtailmenus.models import MenuPageMixin
 from wagtailmenus.panels import menupage_panel
 
-from waggylabs.blocks.body import BaseBodyBlock
-from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.models.base_page import BasePage
 from waggylabs.models.post_category import PostCategory
+from waggylabs.blocks.post_list_body import PostListBodyBlock
 from waggylabs.models.post_page import PostPage
 from waggylabs.models.post_tags import TagProxy
-from waggylabs.panels import ReadOnlyPanel
 
 
 class PostListPage(RoutablePageMixin, BasePage, MenuPageMixin):
@@ -41,6 +39,28 @@ class PostListPage(RoutablePageMixin, BasePage, MenuPageMixin):
     show_in_menus_default = True
     
     # Databse fields
+    body = StreamField(
+        PostListBodyBlock(),
+        use_json_field=True,
+        blank=True,
+    )
+    
+    # Search index configuration
+
+    search_fields = BasePage.search_fields + [
+        index.SearchField('body', partial_match=True, boost=2),
+        index.AutocompleteField('body', boost=2),
+    ]
+    
+    # Editor panels configuration
+    
+    content_panels = BasePage.content_panels + [
+        FieldPanel('body'),
+    ]
+    promote_panels = BasePage.promote_panels + [
+        menupage_panel,
+    ]
+    settings_panels = BasePage.settings_panels
     
     # Parent page / subpage type rules
     

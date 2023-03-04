@@ -82,6 +82,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             os.path.join(PROJECT_DIR, "templates"),
+            os.path.join(BASE_DIR, 'waggylabs', 'templates', 'waggylabs'),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -216,6 +217,10 @@ HITCOUNT_KEEP_HIT_ACTIVE  = {"days" : 30 }
 
 # El-pagination settings
 EL_PAGINATION_PAGE_LIST_CALLABLE = 'el_pagination.utils.get_elastic_page_numbers' # get_page_numbers
+
+# Taggit settings
+TAGGIT_CASE_INSENSITIVE = True
+TAG_SPACES_ALLOWED = True
 
 
 # Waggy Labs settings

@@ -18,9 +18,6 @@ from waggylabs.blocks.equation import EquationBlock
 from waggylabs.blocks.figure import FigureBlock
 from waggylabs.blocks.listing import ListingBlock
 from waggylabs.blocks.markdown import MarkdownBlock
-from waggylabs.blocks.page_info import PageInfoBlock
-from waggylabs.blocks.post_meta import PostMetaBlock
-from waggylabs.blocks.post_series import PostSeriesBlock
 from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
@@ -34,6 +31,7 @@ class BaseBodyBlock(StreamBlock):
     collapse = CollapseBlock()
     columns = ColumnsBlock()
     citation = CitationBlock()
+    cut = CutBlock()
     document = DocumentBlock()
     embed = EmbedBlock()
     equation = EquationBlock()
@@ -47,7 +45,7 @@ class BaseBodyBlock(StreamBlock):
     @classmethod
     def blocks_by_types(cls, body: StreamValue, types: list):
         """Returns blocks specificed by types (e.g., citation and document)
-         ordered by the appearance in the body StreamValue 
+         ordered by the appearance in the body StreamValue
          (body = StreamField(BodyBlock())) in a Page model."""
         blocks_by_types = []
         for block in body:
@@ -113,36 +111,6 @@ class BaseBodyBlock(StreamBlock):
         icon = 'doc'
         label = _('Page content')
         template = 'waggylabs/blocks/template/base_body.html'
-                
-
-class PostBodyBlock(BaseBodyBlock):
-    """Post body block has additional blocks."""
-    post_meta = PostMetaBlock()
-    page_info = PageInfoBlock()
-    post_series = PostSeriesBlock()
-    
-    def render(self, value, context):
-        # if post_meta and page_info blocks are at the end of body
-        # before them references must be rendered
-        page_body = []
-        info_meta = []
-        for idx, block in enumerate(value):
-            if (idx >= len(value) - 2) and \
-                (value.raw_data[-1]['type'] in ['post_meta', 'page_info']) and \
-                (block.block_type in ['post_meta', 'page_info']):
-                info_meta.append(block)
-            else:
-                page_body.append(block)
-                
-        value = {
-            'body': page_body,
-            'info_meta': info_meta,
-        }
-        
-        return super().render(value, context)
-    
-    class Meta:
         block_counts = {
-            'post_meta': { 'max_num': 1 },
-            'page_info': { 'max_num': 1 },
+            'cut': { 'max_num': 1 },
         }

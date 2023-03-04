@@ -68,7 +68,7 @@
                         <h5 class="offcanvas-title" id="bdNavbarOffcanvasLabel">{{ current_site.site_name }}</h5>
                         <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
-                    <div class="offcanvas-body p-4 pt-0 p-lg-0">
+                    <div class="offcanvas-body p-4 pt-0 p-lg-0 mt-1">
                         <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'left' %}ms-md-auto{% endif %}">
                             {% main_menu template="waggylabs/menus/main_menu.html" %}
                             <li class="nav-item"><a href="#" class="nav-link py-2 px-0 px-lg-2">Link</a></li>
@@ -207,45 +207,36 @@
         {# Page preparation scripts and MathJax typesetting #}
         <script src="{% static 'waggylabs/js/prepare-page.js' %}"></script>
         <script>
-            window.MathJax =   { 
+            window.MathJax =   {
+                lastSectionNumber: 0,
+                currentEquationNumber: 0,
                 loader: {
-                    load: ['[tex]/autoload'],
+                    load: ['[tex]/autoload', '[tex]/tagformat'],
                 },
                 tex: {
-                    packages: {"[+]": ["autoload"]},
-                    tags: "ams",
+                    packages: {'[+]': ['autoload', 'tagformat']},
+                    tags: 'ams',
+                    tagformat: {
+                        number: (n) => {
+                            MathJax.config.currentEquationNumber = n;
+                            return (n - MathJax.config.lastSectionNumber) + '';
+                        },
+                    }
                 },
                 startup: {
                     pageReady: () => {
-                        const pageBodies = document.getElementsByClassName('waggylabs-page-body');
-                        for (let i = 0; i < pageBodies.length; i++) {
-                            prepareReferences(pageBodies[i]);
-                            prepareCitations(pageBodies[i]);
-                            MathJax.typeset([pageBodies[i]]);
-                            // MathJax.texReset([1]);
-                            prepareScrollMarginTop(pageBodies[i]);
-                        }
-                        const sidebar = document.getElementById('sidebar');
-                        if (sidebar && (pageBodies.length === 1)) {
-                            MathJax.typeset([sidebar]);
-                            prepareSidebar(pageBodies[0]);
-                        }
-                        return new Promise((resolve, reject) => {});
-                    }
+                        return mathJaxPageReady();
+                    },
                     {% comment %} ready: () => {
-                        const pageBodies = document.getElementsByClassName('waggylabs-page-body');
-                        for (let i = 0; i < pageBodies.length; i++) {
-                            prepareReferences(pageBodies[i]);
-                            prepareCitations(pageBodies[i]);
-                            
-                        }
                         MathJax.startup.defaultReady();
-                        MathJax.startup.promise.then(() => {
-                            for (let i = 0; i < pageBodies.length; i++) {
-                                prepareScrollMarginTop(pageBodies[i]);
+                        MathJax.startup.input[0].preFilters.add(({math}) => {
+                            if (math.inputData.recompile) {
+                                MathJax.config.section = math.inputData.recompile.section;
                             }
-                            if (pageBodies.length === 1) {
-                                prepareSidebar(pageBodies[0]);
+                        });
+                        MathJax.startup.input[0].postFilters.add(({math}) => {
+                            if (math.inputData.recompile) {
+                                math.inputData.recompile.section = MathJax.config.section;
                             }
                         });
                     } {% endcomment %}

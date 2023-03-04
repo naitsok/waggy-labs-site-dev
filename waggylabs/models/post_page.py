@@ -5,16 +5,12 @@ from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
-from wagtail.admin import widgets
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.contrib.routable_page.models import RoutablePageMixin, re_path, path
-from wagtail.fields import StreamField, StreamValue
+from wagtail.fields import StreamField
 from wagtail.search import index
 
-from waggylabs.blocks.body import PostBodyBlock
-from waggylabs.blocks.sidebar import SidebarBlock
+from waggylabs.blocks.post_body import PostBodyBlock
 from waggylabs.models.base_page import BasePage
-from waggylabs.panels import ReadOnlyPanel
 
 
 WAGGYLABS_BASE_URL = getattr(settings, 'WAGGYLABS_BASE_URL', '')
