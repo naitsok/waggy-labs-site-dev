@@ -23,6 +23,7 @@
         {# Bootstrap icons #}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         {# WaggyLabs CSS #}
+        <link href="{% static 'waggylabs/css/codehilite-styles.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'waggylabs/css/waggylabs.css' %}" rel="stylesheet">
         {% block css %}
         {# Overwrite this in templates to add extra stylesheets #}
@@ -162,12 +163,17 @@
         <div class="container mt-5">
             <div class="row" role="main">
                 <main class="{% main_class site_settings page %}">
+                    <h1 class="{{ page.title_style }}">{{ page.title }}</h1>
                     {% block content %}
                     {# Overwrite this in the page template to display page content #}
                     {% endblock %}
                 </main>
                 {% block sidebar %}
-                {# Overwrite this in the page template to display page sidebar #}
+                    {% if page.show_sidebar %}
+                        {% for block in page.sidebar %}
+                            {% include_block block %}
+                        {% endfor %}
+                    {% endif %}
                 {% endblock %}
             </div>
         </div>

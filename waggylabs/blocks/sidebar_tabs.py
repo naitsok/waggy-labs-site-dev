@@ -174,9 +174,9 @@ class SidebarTabItemBlock(StreamBlock):
         icon = 'clipboard-list'
         label = _('Sidebar tabs')
         block_counts = {
-            'table_of_contents': {'max_num': 1},
-            'citations': {'max_num': 1},
-            'post_series': {'max_num': 1},
+            'table_of_contents': { 'max_num': 1 },
+            'citations': { 'max_num': 1 },
+            'post_series': { 'max_num': 1 },
         }
 
         

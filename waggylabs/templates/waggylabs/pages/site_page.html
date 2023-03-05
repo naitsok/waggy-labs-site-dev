@@ -7,34 +7,11 @@
 {% load wagtailmarkdown %}
 {% load menu_tags %}
 
-
-{% block css %}
-<link href="{% static 'waggylabs/css/codehilite-styles.css' %}" rel="stylesheet" type="text/css">
-{% endblock %}
-
 {% block content %}
-
-<h1>{{ page.title }}</h1>
-
-{% if page.show_header_image_on_page %}
-<figure class="figure">
-    {% image page.header_image original class='img-fluid' %}
-</figure>
-{% endif %}
 
 {% include_block page.body %}
 
 {% endblock content %}
-
-{% block sidebar %}
-
-{% if page.show_sidebar %}
-    {% for block in page.sidebar %}
-        {% include_block block %}
-    {% endfor %}
-{% endif %}
-
-{% endblock sidebar %}
 
 
 

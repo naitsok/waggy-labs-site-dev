@@ -191,7 +191,10 @@ function prepareSidebarContents(element) {
  * @param {DOM element} element - element from where to take headers
  */
 function prepareSidebarCitations(element) {
-    const literatureElem = element.querySelector('.waggylabs-literature');
+    // We need to select the last element of all literature elements
+    // in case there is more than one on a post list page
+    const literatureElems = element.querySelectorAll('.waggylabs-literature');
+    const literatureElem = literatureElems[literatureElems.length - 1];
     const literatureSidebarElem = document.querySelector('.waggylabs-sidebar-literature');
     if (!literatureElem && literatureSidebarElem) {
         const noLiteratureElem = document.createElement('p');
