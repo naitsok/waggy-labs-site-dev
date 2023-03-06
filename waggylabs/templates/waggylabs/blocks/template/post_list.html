@@ -20,12 +20,24 @@
         {% endif %}
     {% endif %}
     {% for post in value.pinned_posts %}
-    <div class="card {{ post_style }} mb-3">
+    <div class="waggylabs-post-list card {{ value.post_style }} mb-3">
         <div class="card-header">
             <p class="{{ value.post_title_style }}"><a href="{% pageurl post %}" class="nav-link">{{ post.title }}</a></p>
         </div>
         <div class="card-body">
             {% include_block post.body with page=post post_list_page=page page_in_list=True %}
+            {% if value.show_scrollspy %}
+            <div class="waggylabs-post-categories d-none">
+                {% for category in post.post_categories %}
+                <span>{{ category.slug }}</span>
+                {% endfor %}
+            </div>
+            <div class="waggylabs-post-tags d-none">
+                {% for tag in post.tags %}
+                <span>{{ tag.slug }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% if value.show_footer %}
         <div class="card-footer d-inline-flex align-items-center">
@@ -74,12 +86,24 @@
 
 {% paginate value.posts_per_page posts %}
 {% for post in posts %}
-<div class="card {{ post_style }} mb-3">
+<div class="waggylabs-post-list card {{ value.post_style }} mb-3">
     <div class="card-header">
         <p class="{{ value.post_title_style }}"><a href="{% pageurl post %}" class="nav-link">{{ post.title }}</a></p>
     </div>
     <div class="card-body">
         {% include_block post.body with page=post post_list_page=page page_in_list=True %}
+        {% if value.show_scrollspy %}
+        <div class="waggylabs-post-categories d-none">
+            {% for category in post.post_categories %}
+            <span>{{ category.slug }}</span>
+            {% endfor %}
+        </div>
+        <div class="waggylabs-post-tags d-none">
+            {% for tag in post.tags %}
+            <span>{{ tag.slug }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
     {% if value.show_footer %}
     <div class="card-footer d-inline-flex align-items-center">

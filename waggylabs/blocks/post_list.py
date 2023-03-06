@@ -177,7 +177,7 @@ class PostListBlock(StructBlock):
         posts_query = PostPage.objects.descendant_of(page).live() \
                 .select_related('owner__wagtail_userprofile')
         if value['show_scrollspy']:
-            posts_query = posts_query.prefetch_related('categories', 'tags')
+            posts_query = posts_query.prefetch_related('post_categories', 'tags')
         if value['show_pinned_posts']:
             posts_query = posts_query.filter(pin_in_list=False)
             
