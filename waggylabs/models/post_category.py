@@ -20,6 +20,7 @@ class PostCategory(models.Model):
 
     name = MarkdownField(blank=False)
     slug = models.SlugField(unique=True, max_length=255, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     # Editor panels configuration
 

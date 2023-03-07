@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
@@ -75,6 +76,19 @@ class PostCategoriesBlock(StructBlock):
         label=_('Category item style'),
         widget=DisabledOptionSelect,
     )
+    order_by = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Categories ordering')),
+            ('created_at', _('Older first')),
+            ('-created_at'), _('Newer first'),
+            ('slug', _('By slug acsending')),
+            ('-slug', _('By slug descending')),
+        ],
+        default='',
+        label=_('Categories ordering'),
+        widget=DisabledOptionSelect,
+    )
     show_badges = BooleanBlock(
         required=False,
         label=_('Show number of posts per category'),
@@ -113,14 +127,26 @@ class PostCategoriesBlock(StructBlock):
         })
         
     def render(self, value, context):
-        # value['post_categories'] = None
-        # if value['post_list_page']:
-            
-        # else:
-        #     if context['page'].specific_class.__name__ == 'PostListPage':
-        #         value['post_list_page'] = context['page']
-        #     else:
-        #         va
+        
+        if value['post_list_page']:
+            category_query = PostCategory.objects.filter(
+                post_pages__in=PostPage.objects.descendant_of(value['post_list_page']).live()
+            ).distinct()
+        elif context['page'].specific_class.__name__ == 'PostListPage':
+            category_query = PostCategory.objects.filter(
+                post_pages__in=PostPage.objects.descendant_of(context['page']).live()
+            ).distinct()
+        else:
+            category_query = PostCategory.objects.all()
+        
+        if value['show_badges']:
+            category_query = category_query.annotate(num_posts=Count('post_pages'))
+        
+        if value['order_by']:
+            category_query = category_query.order_by(value['order_by'])
+        else:
+            category_query = category_query.order_by('-created_at')
+        value['categories'] = category_query
         return super().render(value, context)
         
     class Meta:
