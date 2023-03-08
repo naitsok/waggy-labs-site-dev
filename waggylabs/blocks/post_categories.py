@@ -142,10 +142,10 @@ class PostCategoriesBlock(StructBlock):
         if value['show_badges']:
             category_query = category_query.annotate(num_posts=Count('post_pages'))
         
-        if value['order_by']:
-            category_query = category_query.order_by(value['order_by'])
-        else:
-            category_query = category_query.order_by('-created_at')
+        if not value['order_by']:
+            value['order_by'] = '-created_at'
+            
+        category_query = category_query.order_by(value['order_by'])
         value['categories'] = category_query
         return super().render(value, context)
         

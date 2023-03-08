@@ -114,6 +114,19 @@ class PostListBlock(StructBlock):
         required=False,
         label=_('Post title style'),
     )
+    order_by = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Categories ordering')),
+            ('created_at', _('Older first')),
+            ('-created_at'), _('Newer first'),
+            ('slug', _('By slug acsending')),
+            ('-slug', _('By slug descending')),
+        ],
+        default='',
+        label=_('Categories ordering'),
+        widget=DisabledOptionSelect,
+    )
     show_scrollspy = BooleanBlock(
         required=False,
         label=_('Highlight post categories and tags when '
@@ -180,6 +193,12 @@ class PostListBlock(StructBlock):
             posts_query = posts_query.prefetch_related('post_categories', 'tags')
         if value['show_pinned_posts']:
             posts_query = posts_query.filter(pin_in_list=False)
+            
+        if not value['order_by']:
+            value['order_by'] = '-created_at'
+            
+        pinned_posts_query = pinned_posts_query.order_by(value['order_by'])
+        posts_query = posts_query.order_by(value['order_by'])
             
         value['pinned_posts'] = pinned_posts_query
         value['posts'] = posts_query
