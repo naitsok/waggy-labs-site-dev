@@ -21,7 +21,8 @@
 .table { border: none !important; }
 /* Card with no border, padding and marging */
 .mp-0 .card-body { margin-right: 0; padding-right: 0; margin-left: 0; padding-left: 0; }
-.mp-0 .card-header { margin-right: 0; padding-right: 0; margin-left: 0; padding-left: 0; background-color: var(--bs-secondary-bg); }
+.mp-0 .card-header { border: 0; margin-right: 0; padding-right: 0; margin-left: 0; padding-left: 0; background-color: var(--bs-body-bg) !important; }
+.p-mb-0 p { margin-bottom: 0; }
 /* Sidebar */
 /* .nav-tabs { border-bottom: 0; }
 .nav-tabs li.nav-item { border-bottom: 0; } */

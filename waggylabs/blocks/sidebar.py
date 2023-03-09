@@ -7,6 +7,7 @@ from wagtail.blocks import (
 
 from waggylabs.blocks.markdown import MarkdownBlock
 from waggylabs.blocks.page_info import PageInfoBlock
+from waggylabs.blocks.post_category_list import PostCategoryListBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
 from waggylabs.blocks.sidebar_tabs import SidebarTabsBlock
 from waggylabs.widgets import DisabledOptionSelect
@@ -27,6 +28,7 @@ class SidebarItemBlock(StreamBlock):
         easymde_status='false',
     )
     page_info = PageInfoBlock()
+    post_category_list = PostCategoryListBlock()
     post_series = PostSeriesBlock()
     tabs = SidebarTabsBlock()
     
@@ -34,9 +36,10 @@ class SidebarItemBlock(StreamBlock):
         icon = 'tasks'
         label = _('Item of the sidebar')
         block_counts = {
-            'page_info': {'max_num': 1},
-            'post_series': {'max_num': 1},
-            'tabs': {'max_num': 1},
+            'page_info': { 'max_num': 1 },
+            'post_category_list': { 'max_num': 1},
+            'post_series': { 'max_num': 1 },
+            'tabs': { 'max_num': 1 },
         }
 
 class SidebarBlock(StructBlock):

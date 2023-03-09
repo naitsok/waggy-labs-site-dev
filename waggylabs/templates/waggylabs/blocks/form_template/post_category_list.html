@@ -1,0 +1,61 @@
+{% load wagtailadmin_tags  %}
+
+<div class="{{ classname }}">
+    {% if help_text %}
+    <span>
+        <div class="help">
+            {% icon name="help" class_name="default" %}
+            {{ help_text }}
+        </div>
+    </span>
+    {% endif %}
+    <div class="w-field waggylabs-flex-container" data-contentpath="{{ children.post_list_page.block.name }}">
+        {{ children.post_list_page.render_form }}{% if children.post_list_page.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}
+    </div>
+    <div class="waggylabs-grid-container-2">
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.block_style.block.name }}">
+            {{ children.block_style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.block_style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header.block.name }}">
+            {{ children.header.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_style.block.name }}">
+            {{ children.header_style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header_style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_icon.block.name }}">
+            {{ children.header_icon.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header_icon.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_icon_location.block.name }}">
+            {{ children.header_icon_location.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.header_icon_location.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.categories_style.block.name }}">
+            {{ children.categories_style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.categories_style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.category_style.block.name }}">
+            {{ children.category_style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.category_style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.order_by.block.name }}">
+            {{ children.order_by.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.order_by.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+        
+        <div class="waggylabs-flex-container" data-contentpath="{{ children.show_badges.block.name }}">
+            {{ children.show_badges.render_form }}
+            <label class="w-field__label" {% if children.show_badges.id_for_label %}for="{{ children.show_badges.id_for_label }}"{% endif %}>{{ children.show_badges.block.label }}{% if children.show_badges.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
+        </div>
+        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.badge_style.block.name }}">
+            {{ children.badge_style.render_form }}
+            <div class="w-field"><span class="w-required-mark{% if not children.badge_style.block.required %} op-0{% endif %}">*</span></div>
+        </div>
+    </div>
+</div>

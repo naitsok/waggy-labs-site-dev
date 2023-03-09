@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 
@@ -10,26 +11,26 @@ from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     CardStyleChoiceBlock, HeaderStyleChoiceBlock
 )
-from waggylabs.models.post_category import PostCategory
-from waggylabs.models.post_page import PostPage
+from waggylabs.models.post_category import PostCategory, PostPagePostCategory
+# from waggylabs.models.post_page import PostPage
 from waggylabs.widgets import DisabledOptionSelect
 
 
-class PostCategoriesBlock(StructBlock):
+class PostCategoryListBlock(StructBlock):
     """Block to show post categories."""
     post_list_page = PageChooserBlock(
         required=False,
-        page_type='waggylabs.models.post_list_page.PostListPage',
+        page_type='waggylabs.PostListPage',
         label=_('Root post list page'),
         help_text=_('Shows post categories for the posts, which are '
                     'children of the selected post list page. '
                     'If left empty, the currently browsed post list page will '
                     'be used, or all categories will be displayed if the '
-                    ' currently browsed page is not a post lit page.')
+                    ' currently browsed page is not a post lit page.'),
     )
     block_style = CardStyleChoiceBlock(
         required=False,
-        label=_('Block style')
+        label=_('Block style'),
     )
     header = CharBlock(
         required=False,
@@ -45,7 +46,7 @@ class PostCategoriesBlock(StructBlock):
     )
     header_icon_location = IconLocationBlock(
         required=False,
-        label=_('Header icon location')
+        label=_('Header icon location'),
     )
     categories_style = ChoiceBlock(
         required=False,
@@ -53,6 +54,8 @@ class PostCategoriesBlock(StructBlock):
             ('', _('Categories style')),
             ('list-group-default', _('Default')),
             ('list-group-flush', _('No outer borders')),
+            ('list-group-numbered', _('Numbers before category')),
+            ('list-group-numbered list-group-flush', _('Numbers and no outer border')),
         ],
         default='',
         label=_('Categories style'),
@@ -81,7 +84,7 @@ class PostCategoriesBlock(StructBlock):
         choices=[
             ('', _('Categories ordering')),
             ('created_at', _('Older first')),
-            ('-created_at'), _('Newer first'),
+            ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
         ],
@@ -127,15 +130,18 @@ class PostCategoriesBlock(StructBlock):
         })
         
     def render(self, value, context):
-        
+        # needed to avoid circular imports
+        post_page_model = apps.get_model('waggylabs', 'PostPage')
         if value['post_list_page']:
             category_query = PostCategory.objects.filter(
-                post_pages__in=PostPage.objects.descendant_of(value['post_list_page']).live()
+                post_pages__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
             ).distinct()
         elif context['page'].specific_class.__name__ == 'PostListPage':
-            category_query = PostCategory.objects.filter(
-                post_pages__in=PostPage.objects.descendant_of(context['page']).live()
-            ).distinct()
+            value['post_list_page'] = context['page']
+            category_query =  PostCategory.objects.all()
+            # PostPagePostCategory.objects.filter(
+            #     post_page__in=post_page_model.objects.descendant_of(context['page']).live()
+            # ).distinct()
         else:
             category_query = PostCategory.objects.all()
         
@@ -152,5 +158,5 @@ class PostCategoriesBlock(StructBlock):
     class Meta:
         icon = 'list-ul'
         label = _('Post categories')
-        template = 'waggylabs/blocks/template/post_categories.html'
-        form_template = 'waggylabs/blocks/form_template/post_categories.html'
+        template = 'waggylabs/blocks/template/post_category_list.html'
+        form_template = 'waggylabs/blocks/form_template/post_category_list.html'

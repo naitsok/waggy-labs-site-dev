@@ -119,7 +119,7 @@ class PostListBlock(StructBlock):
         choices=[
             ('', _('Categories ordering')),
             ('created_at', _('Older first')),
-            ('-created_at'), _('Newer first'),
+            ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
         ],
