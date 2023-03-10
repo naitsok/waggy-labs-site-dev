@@ -60,44 +60,41 @@ CARD_GRID_COLUMNS = getattr(settings, 'WAGGYLABS_CARD_GRID_COLUMNS', 5)
 class CardGridBlock(StructBlock):
     """Card grid block for StreamField."""
     height_style = ChoiceBlock(
+        required=False,
         choices=[
-            ('', _('Height style')),
             ('h-100', _('Equal height')),
-            ('not_equal', _('Height wraps to content')),
+            ('', _('Height wraps to content')),
         ],
-        default='',
-        label=_('Height'),
-        widget=DisabledOptionSelect,
+        default='h-100',
+        label=_('Card height style'),
     )
     grouping_style = ChoiceBlock(
+        required=False,
         choices=[
-            ('', _('Grouping style')),
             ('separate', _('Separate')),
             ('grouped', _('Grouped')),
         ],
-        default='',
-        label=_('Grouping'),
-        widget=DisabledOptionSelect,
+        default='separate',
+        label=_('Card grouping style'),
     )
     orientation_style = ChoiceBlock(
+        required=False,
         choices=[
-            ('', _('Orientation')),
             ('vertical', _('Vertical')),
             ('horizontal', _('Horizontal')),
         ],
-        default='',
-        label=_('Orientation'),
-        widget=DisabledOptionSelect,
+        default='vertical',
+        label=_('Card orientation'),
     )
     columns = ChoiceBlock(
+        required=False,
         choices=[
-            ('', _('Columns')),
             (1, _('1 column')),
         ] + [
             (i + 1, str(i + 1) + _(' columns')) for i in
             range(1, CARD_GRID_COLUMNS)
         ],
-        default='',
+        default=1,
         label=_('Number of columns'),
     )
     items = ListBlock(CardBlock())

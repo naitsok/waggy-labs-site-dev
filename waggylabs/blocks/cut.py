@@ -17,8 +17,14 @@ class CutBlock(StructBlock):
         label=_('Text on the cut button'),
     )
     style = LinkStyleChoiceBlock()
-    icon = IconBlock(required=False)
-    icon_location = IconLocationBlock(required=False)
+    icon = IconBlock(
+        required=False,
+        label=_('Button icon'),
+    )
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Button icon location'),
+    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)

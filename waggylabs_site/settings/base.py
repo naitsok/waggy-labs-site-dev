@@ -238,11 +238,11 @@ WAGGYLABS_WAGTAIL_ADMIN_BASE_URL = 'admin/'
 WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL = 'documents/'
 
 # WaggyLabs blocks configuraiton
-WAGGYLABS_CARD_GRID_COLUMNS = 5
+WAGGYLABS_CARD_GRID_COLUMNS = 3
 WAGGYLABS_CODEMIRROR_VERSION = '5.65.9'
 # the first element of tuple must be equal to one of the
 # CodeMirror modes, e.g. python from .../python/python.min.js mode
-WAGGYLABS_CODEBLOCK_LANGS =  [
+WAGGYLABS_CODE_LANGS =  [
     ('python', 'Python'),
     ('clike', 'C, C++, C#'),
     ('clike', 'Java'),
@@ -257,5 +257,6 @@ WAGGYLABS_CODEBLOCK_LANGS =  [
     ('sql', 'SQL'),
     ('css', 'CSS'),
 ]
+WAGGYLABS_COLUMNS_MAX = 3
 
 # Setting for upgrading to newer version of the components?

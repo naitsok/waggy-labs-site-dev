@@ -12,7 +12,7 @@ class CitationBlock(StructBlock):
     )
     link = URLBlock(
         required=False,
-        label=_('Citation link - optional'),
+        label=_('Citation link'),
     )
     label = LabelBlock(
         required=False,
@@ -26,7 +26,7 @@ class CitationBlock(StructBlock):
             'placeholder': 'e.g. Author A, Author B, Title, Year, Journal.',
         })
         self.child_blocks['link'].field.widget.attrs.update({
-            'placeholder': 'Citation link - optional',
+            'placeholder': 'https://example.com',
         })
     
     class Meta:

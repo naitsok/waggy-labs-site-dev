@@ -5,15 +5,15 @@ from django.utils.functional import cached_property
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.telepath import register
 
-from waggylabs.blocks.code import CodeBlock, CODEBLOCK_LANGS
+from waggylabs.blocks.code import CodeBlock, CODEB_LANGS
 
 
 CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
-CODEBLOCK_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', CODEBLOCK_LANGS)
-CODEBLOCK_LANGS = list(
+CODEB_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', CODEB_LANGS)
+CODEB_LANGS = list(
     [
         f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/{mode[0]}/{mode[0]}.min.js' 
-        for mode in CODEBLOCK_LANGS
+        for mode in CODEB_LANGS
     ]
 )
 
@@ -32,7 +32,7 @@ class CodeBlockAdapter(StructBlockAdapter):
             js = structblock_media._js + [
                 'waggylabs/js/blocks/code-adapter.js',
                 f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js',
-                ] + CODEBLOCK_LANGS,
+                ] + CODEB_LANGS,
             css = {
                 "all": (
                     f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.css',

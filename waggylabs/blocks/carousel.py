@@ -44,27 +44,23 @@ class CarouselItem(StructBlock):
     text_color = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Text color')),
             ('text-light', _('Light')),
             ('text-dark', _('Dark')),
         ],
-        default='',
+        default='text-light',
         label=_('Text color'),
-        widget=DisabledOptionSelect,
     )
     text_size = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Text size')),
             ('fs-6', _('Normal')),
             ('fs-5', _('Bigger')),
             ('fs-4', _('Big')),
             ('fs-3', _('Larger')),
             ('fs-2', _('Large')),
         ],
-        default='',
+        default='fs-6',
         label=_('Text size'),
-        widget=DisabledOptionSelect,
     )
     
     class Meta:
@@ -76,39 +72,37 @@ class CarouselItem(StructBlock):
 
 class ImageCarouselBlock(StructBlock):
     """Carousel Block with images with possible caption."""
+    # color deprecated - remove
     color = ChoiceBlock(
+        required=False,
         choices=[
-            ('', _('Color')),
-            (' ', _('Light')),
+            ('', _('Light')),
             ('carousel-dark', _('Dark')),
         ],
         default='',
         label=_('Carousel color'),
-        widget=DisabledOptionSelect,
     )
     switch = ChoiceBlock(
+        required=True,
         choices=[
-            ('', _('Switching style')),
+            ('carousel-fade', _('Fade after interval')),
+            ('carousel', _('Change after interval')),
             ('false', _('Change on button')),
             ('false-fade', _('Fade on button')),
-            ('carousel', _('Change after interval')),
-            ('carousel-fade', _('Fade after interval'))
         ],
-        default='',
+        default='carousel-fade',
         label=_('Carousel switch type'),
-        widget=DisabledOptionSelect,
     )
     controls = ChoiceBlock(
+        required=False,
         choices=[
-            ('', _('Controls')),
-            ('none', _('No controls')),
+            ('', _('No controls')),
             ('buttons', _('Left and right buttons')),
             ('indicators', _('Items indicators')),
             ('buttons_indicators', _('Buttons and indicators')),
         ],
         default='',
         label=_('Controls of the carousel'),
-        widget=DisabledOptionSelect,
     )
     items = ListBlock(CarouselItem(), min_num=1)
         

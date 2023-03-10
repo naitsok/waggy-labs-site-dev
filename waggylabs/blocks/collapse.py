@@ -55,16 +55,24 @@ class CollapseBlock(StructBlock):
     """Collapse block to e.g. put content under spoiler."""
     text = CharBlock(
         required=False,
-        label=_('Text on the button')
+        label=_('Text on the button'),
     )
-    style = CardStyleChoiceBlock(required=False)
-    alignment = TextAlignmentChoiceBlock(
+    icon = IconBlock(
         required=False,
-        label=_('Text alignment'),
+        label=_('Button icon'),
+    )
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Button icon location'),
     )
     button_style = LinkStyleChoiceBlock()
-    icon = IconBlock(required=False)
-    icon_location = IconLocationBlock(required=False)
+    style = CardStyleChoiceBlock(
+        label=_('Block style'),
+    )
+    alignment = TextAlignmentChoiceBlock(
+        label=_('Text alignment'),
+    )
+    
     body = CollapseContentBlock(requred=True)
     
     def __init__(self, local_blocks=None, **kwargs):

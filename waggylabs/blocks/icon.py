@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import FieldBlock, ChoiceBlock
 
-from waggylabs.widgets import IconInput, DisabledOptionSelect
+from waggylabs.widgets import IconInput
 
 
 class IconBlock(FieldBlock):
@@ -41,7 +41,7 @@ class IconBlock(FieldBlock):
     def field(self):
         field_kwargs = { 
             'widget': IconInput(attrs={
-                'placeholder': self.label
+                'placeholder': _('Icon - start typing')
             }), 
         }
         field_kwargs.update(self.field_options)
@@ -53,24 +53,20 @@ class IconLocationBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', _('Icon location')),
-            ('start', _('Before text')),
+            ('', _('Before text')),
             ('end', _('After text')),
         ],
         default='',
         label=_('Icon location'),
-        required=True,
+        required=False,
         help_text=None,
-        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
-        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
             required,
             help_text,
-            widget,
             validators,
             label=label,
             **kwargs)

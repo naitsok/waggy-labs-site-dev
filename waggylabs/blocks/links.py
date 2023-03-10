@@ -2,11 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
     StructBlock, CharBlock,
-    PageChooserBlock, URLBlock,
-    ChoiceBlock, EmailBlock
+    PageChooserBlock, URLBlock, EmailBlock
     )
 
-from waggylabs.widgets import DisabledOptionSelect
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import LinkStyleChoiceBlock
 
@@ -21,9 +19,18 @@ class ExternalLinkBlock(StructBlock):
         required=False,
         label=_('Text of the link'),
     )
-    icon = IconBlock(label=_('Icon'), required=False)
-    icon_location = IconLocationBlock(required=False)
-    style = LinkStyleChoiceBlock()
+    icon = IconBlock(
+        label=_('Link icon'),
+        required=False,
+    )
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Link icon location')
+    )
+    style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Link style'),
+    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -51,9 +58,18 @@ class InternalLinkBlock(StructBlock):
         required=False,
         label=_('Text instead of page title'),
     )
-    icon = IconBlock(label=_('Icon'), required=False)
-    icon_location = IconLocationBlock(required=False)
-    style = LinkStyleChoiceBlock()
+    icon = IconBlock(
+        label=_('Link icon'),
+        required=False,
+    )
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Link icon location'),
+    )
+    style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Link style'),
+    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -77,11 +93,20 @@ class IconEmailBlock(StructBlock):
     )
     text = CharBlock(
         required=False,
-        label=_('Text to be displayed instead of address'),
+        label=_('Text instead of email'),
     )
-    icon = IconBlock(required=False)
-    icon_location = IconLocationBlock(required=False)
-    style = LinkStyleChoiceBlock()
+    icon = IconBlock(
+        required=False,
+        label=_('Email icon'),
+    )
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Email icon location')
+    )
+    style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Email style'),
+    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -106,9 +131,18 @@ class InfoTextBlock(StructBlock):
         required=True,
         label=_('Phone, address, etc.'),
     )
-    style = LinkStyleChoiceBlock()
-    icon = IconBlock(required=False)
-    icon_location = IconLocationBlock(required=False)
+    style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Style'),
+    )
+    icon = IconBlock(
+        required=False,
+        label=_('Icon'),
+    )
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Icon location'),
+    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)

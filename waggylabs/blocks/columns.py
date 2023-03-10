@@ -45,11 +45,12 @@ class ColumnsItemBlock(StructBlock):
     vertical_align = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Vertical alignment')),
             ('align-self-start', _('Top')),
             ('align-self-center', _('Center')),
             ('align-self-end', _('Bottom')),
-        ]
+        ],
+        label=_('Column content vertical alignment'),
+        default='align-self-start',
     )
     body = ColumnsContentBlock(required=True)
     
@@ -59,15 +60,17 @@ class ColumnsItemBlock(StructBlock):
         label_format = _('Column: {body}')
         
 
-DEFAULT_MAX_COLUMNS = 3
+DEFAULT_COLUMNS_MAX = (
+    settings.WAGGYLABS_COLUMNS_MAX if
+    hasattr(settings, 'WAGGYLABS_COLUMNS_MAX')
+    else 3
+)
 class ColumnsBlock(StructBlock):
     """Block to add multiple columns."""
     items = ListBlock(
         ColumnsItemBlock(),
         min_num=1,
-        max_num=(settings.WAGGYLABS_MAX_COLUMNS if
-                 hasattr(settings, 'WAGGYLABS_MAX_COLUMNS')
-                 else DEFAULT_MAX_COLUMNS),
+        max_num=DEFAULT_COLUMNS_MAX,
     )
     
     @classmethod
@@ -91,5 +94,5 @@ class ColumnsBlock(StructBlock):
         icon = 'duplicate'
         label = _('Multiple columns')
         template = 'waggylabs/blocks/template/columns.html'
-        form_template = 'waggylabs/blocks/form_template/columns.html'
+        # form_template = 'waggylabs/blocks/form_template/columns.html'
         label_format = _('Columns: {items}')
