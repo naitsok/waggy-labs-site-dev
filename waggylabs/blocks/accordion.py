@@ -51,12 +51,12 @@ class AccordionItemBlock(StructBlock):
     """One accordion item block with heading."""
     heading = CharBlock(
         required=True,
-        label=_('Item Heading'),
+        label=_('Item heading'),
         classname='full subtitle'
     )
     is_open = BooleanBlock(
         required=False,
-        label=_('Check if the item is displayed expanded')
+        label=_('Item is displayed expanded')
     )
     body = AccordionContentBlock(
         required=True,

@@ -11,7 +11,7 @@ from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     CardStyleChoiceBlock, HeaderStyleChoiceBlock
 )
-from waggylabs.models.post_category import PostCategory, PostPagePostCategory
+from waggylabs.models.post_tags import PostPageTag
 # from waggylabs.models.post_page import PostPage
 from waggylabs.widgets import DisabledOptionSelect
 
@@ -30,7 +30,7 @@ class PostCategoryListBlock(StructBlock):
     )
     block_style = CardStyleChoiceBlock(
         required=False,
-        label=_('Post categories block style'),
+        label=_('Block style'),
     )
     header = CharBlock(
         required=False,
@@ -42,7 +42,7 @@ class PostCategoryListBlock(StructBlock):
     )
     header_icon = IconBlock(
         required=False,
-        label=_('Header icon'),
+        label=_('Header icon - start typing'),
     )
     header_icon_location = IconLocationBlock(
         required=False,
@@ -51,18 +51,21 @@ class PostCategoryListBlock(StructBlock):
     categories_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Default')),
+            ('', _('Categories style')),
+            ('list-group-default', _('Default')),
             ('list-group-flush', _('No outer borders')),
             ('list-group-numbered', _('Numbers before category')),
             ('list-group-numbered list-group-flush', _('Numbers and no outer border')),
         ],
         default='',
         label=_('Categories style'),
+        widget=DisabledOptionSelect,
     )
     category_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Default')),
+            ('', _('Category item style')),
+            ('list-group-item-default', _('Default')),
             ('list-group-item-primary', _('Primary')),
             ('list-group-item-secondary', _('Secondary')),
             ('list-group-item-success', _('Success')),
@@ -74,17 +77,20 @@ class PostCategoryListBlock(StructBlock):
         ],
         default='',
         label=_('Category item style'),
+        widget=DisabledOptionSelect,
     )
     order_by = ChoiceBlock(
         required=False,
         choices=[
+            ('', _('Categories ordering')),
             ('created_at', _('Older first')),
             ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
         ],
-        default='created_at',
+        default='',
         label=_('Categories ordering'),
+        widget=DisabledOptionSelect,
     )
     show_badges = BooleanBlock(
         required=False,
@@ -94,6 +100,7 @@ class PostCategoryListBlock(StructBlock):
     badge_style = ChoiceBlock(
         required=False,
         choices=[
+            ('', _('Post number style')),
             ('text-bg-primary', _('Primary')),
             ('text-bg-secondary', _('Secondary')),
             ('text-bg-success', _('Success')),
@@ -111,8 +118,9 @@ class PostCategoryListBlock(StructBlock):
             ('rounded-pill text-bg-light', _('Rounded light')),
             ('rounded-pill text-bg-dark', _('Rounded dark')),
         ],
-        default='text-bg-primary',
+        default='',
         label=_('Post number style'),
+        widget=DisabledOptionSelect,
     )
     
     def __init__(self, local_blocks=None, **kwargs):
@@ -124,25 +132,24 @@ class PostCategoryListBlock(StructBlock):
     def render(self, value, context):
         # needed to avoid circular imports
         post_page_model = apps.get_model('waggylabs', 'PostPage')
-        category_query =  None
+        tag_query =  None
         if not value['post_list_page'] and \
             context['page'].specific_class.__name__ == 'PostListPage':
             value['post_list_page'] = context['page']
             
         if value['post_list_page']:
-            category_query = PostCategory.objects.filter(
-                id__in=PostPagePostCategory.objects.filter(
-                    post_page__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
-                ).values('post_category__id').distinct())
+            tag_query = PostPageTag.objects.filter(
+                content_object_id__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
+                ).values('tag__slug').distinct()
 
             if value['show_badges']:
-                category_query = category_query.annotate(num_posts=Count('post_pages'))
+                tag_query = tag_query.annotate(num_posts=Count('post_pages'))
         
             if not value['order_by']:
                 value['order_by'] = '-created_at'
             
-            category_query = category_query.order_by(value['order_by'])
-        value['categories'] = category_query
+            tag_query = tag_query.order_by(value['order_by'])
+        value['tags'] = tag_query
         return super().render(value, context)
         
     class Meta:

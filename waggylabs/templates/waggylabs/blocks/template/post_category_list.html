@@ -17,6 +17,11 @@
         {% endif %}
     </div>
     <div class="card-body">
+        {% if not value.categories %}
+        <p>The post list page is not correctly specified.</p>
+        {% elif value.categories.count == 0 %}
+        <p>No categories</p>
+        {% else %}
         <div class="waggylabs-post-category-list list-group {{ value.categories_style }}">
             {% for category in value.categories %}
             <a href="{% routablepageurl value.post_list_page 'posts_by_category' category.slug %}" 
@@ -31,5 +36,6 @@
             </a>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 </div>

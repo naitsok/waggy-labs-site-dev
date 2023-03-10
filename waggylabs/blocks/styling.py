@@ -11,7 +11,7 @@ class LinkStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', _('Link style')),
+            ('', _('Default')),
             ('btn btn-primary', _('Button primary')),
             ('btn btn-secondary', _('Button secondary')),
             ('btn btn-success', _('Button success')),
@@ -35,12 +35,19 @@ class LinkStyleChoiceBlock(ChoiceBlock):
             ('link-info', _('Info link')),
             ('link-light', _('Light link')),
             ('link-dark', _('Dark link')),
+            ('nav-link link-primary', _('Primary link, no underline')),
+            ('nav-link link-secondary', _('Secondary link, no underline')),
+            ('nav-link link-success', _('Success link, no underline')),
+            ('nav-link link-danger', _('Danger link, no underline')),
+            ('nav-link link-warning', _('Warning link, no underline')),
+            ('nav-link link-info', _('Info link, no underline')),
+            ('nav-link link-light', _('Light link, no underline')),
+            ('nav-link link-dark', _('Dark link, no underline')),
         ],
         default='',
         label=_('Link style'),
-        required=True,
+        required=False,
         help_text=None,
-        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
         choices[0] = ('', label)
@@ -49,7 +56,6 @@ class LinkStyleChoiceBlock(ChoiceBlock):
             default,
             required,
             help_text,
-            widget,
             validators,
             label=label,
             **kwargs)
@@ -60,8 +66,7 @@ class TextStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', 'Text style'),
-            ('fst-normal', 'Default'),
+            ('', 'Default'),
             ('fw-bold', 'Bold'),
             ('fw-bolder', 'Bolder'),
             ('fw-semibold', 'Semibold'),
@@ -89,9 +94,8 @@ class TextStyleChoiceBlock(ChoiceBlock):
         ],
         default='',
         label=_('Text style'),
-        required=True,
+        required=False,
         help_text=None,
-        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
         choices[0] = ('', label)
@@ -100,7 +104,6 @@ class TextStyleChoiceBlock(ChoiceBlock):
             default,
             required,
             help_text,
-            widget,
             validators,
             label=label,
             **kwargs)
@@ -111,7 +114,7 @@ class CardStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', _('Card style')),
+            ('', _('Default')),
             ('text-bg-primary', _('Primary')),
             ('text-bg-secondary', _('Secondary')),
             ('text-bg-success', _('Success')),
@@ -133,18 +136,15 @@ class CardStyleChoiceBlock(ChoiceBlock):
         ],
         default='',
         label=_('Card style'),
-        required=True,
+        required=False,
         help_text=None,
-        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
-        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
             required,
             help_text,
-            widget,
             validators,
             label=label,
             **kwargs)
@@ -155,25 +155,21 @@ class TextAlignmentChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', 'Text alignment'),
-            ('text-start', _('Left')),
+            ('', _('Left')),
             ('text-center', _('Center')),
             ('text-end', _('Right')),
         ],
         default='',
         label=_('Text alignment'),
-        required=True,
+        required=False,
         help_text=None,
-        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
-        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
             required,
             help_text,
-            widget,
             validators,
             label=label,
             **kwargs)
@@ -184,8 +180,7 @@ class HeaderStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', _('Pinned posts header style')),
-            ('fst-normal', 'Default'),
+            ('', _('Default')),
             ('h1', _('Header 1')),
             ('h2', _('Header 2')),
             ('h3', _('Header 3')),
@@ -213,18 +208,15 @@ class HeaderStyleChoiceBlock(ChoiceBlock):
         ],
         default='',
         label=_('Header style'),
-        required=True,
+        required=False,
         help_text=None,
-        widget=DisabledOptionSelect,
         validators=(),
         **kwargs):
-        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
             required,
             help_text,
-            widget,
             validators,
             label=label,
             **kwargs)

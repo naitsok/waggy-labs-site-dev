@@ -4,19 +4,23 @@
     {% if help_text %}
     <span>
         <div class="help">
-            {% icon name="help" class_name="default" %}
+            {% icon name="help" classname="default" %}
             {{ help_text }}
         </div>
     </span>
     {% endif %}
     <div class="waggylabs-grid-container-2">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.heading.block.name }}">
+        <div class="w-field w-100" data-contentpath="{{ children.heading.block.name }}">
+            {% if children.heading.block.label %}
+            <label class="w-field__label" {% if children.heading.id_for_label %}for="{{ children.heading.id_for_label }}"{% endif %}>{{ children.heading.block.label }}{% if children.heading.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+            {% endif %}
             {{ children.heading.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.heading.block.required %} op-0{% endif %}">*</span></div>
         </div>
-        <div class="waggylabs-flex-container" data-contentpath="{{ children.is_open.block.name }}">
+        <div class="w-field w-100" data-contentpath="{{ children.is_open.block.name }}">
+            {% if children.is_open.block.label %}
+            <label class="w-field__label" {% if children.is_open.id_for_label %}for="{{ children.is_open.id_for_label }}"{% endif %}>{{ children.is_open.block.label }}{% if children.is_open.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+            {% endif %}
             {{ children.is_open.render_form }}
-            <label class="w-field__label" {% if children.is_open.id_for_label %}for="{{ children.is_open.id_for_label }}"{% endif %}>{{ children.is_open.block.label }}{% if children.is_open.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
         </div>
     </div>
     <div data-contentpath="{{ children.body.block.name }}">
