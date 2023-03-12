@@ -72,16 +72,6 @@ class CarouselItem(StructBlock):
 
 class ImageCarouselBlock(StructBlock):
     """Carousel Block with images with possible caption."""
-    # color deprecated - remove
-    color = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Light')),
-            ('carousel-dark', _('Dark')),
-        ],
-        default='',
-        label=_('Carousel color'),
-    )
     switch = ChoiceBlock(
         required=True,
         choices=[

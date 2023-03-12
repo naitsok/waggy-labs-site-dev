@@ -3,7 +3,7 @@
 {% load waggylabs_filters %}
 
 <div class="mb-3">
-    <div id="id-{{ id }}" class="carousel {{ value.color }} slide{% if value.switch == 'false-fade' or value.switch == 'carousel-fade' %} carousel-fade{% endif %}" data-bs-ride="{% if value.switch == 'false' or value.switch == 'false-fade' %}false{% else %}carousel{% endif %}">
+    <div id="id-{{ id }}" class="carousel slide{% if value.switch == 'false-fade' or value.switch == 'carousel-fade' %} carousel-fade{% endif %}" data-bs-ride="{% if value.switch == 'false' or value.switch == 'false-fade' %}false{% else %}carousel{% endif %}">
         {% if value.controls == 'none' or value.controls != 'buttons' %}
         <div class="carousel-indicators">
             {% for item in value.items %}

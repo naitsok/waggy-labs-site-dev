@@ -18,20 +18,25 @@ class PageInfoBlock(StructBlock):
     """A block to show page details such as author, creation
     date, etc. Rendered as a description list. Can be used in
     Sidebar."""
-    style = CardStyleChoiceBlock(required=False)
+    style = CardStyleChoiceBlock(
+        required=False,
+        label=_('Block style'),
+    )
     header = CharBlock(
         required=False,
         label=_('Header'),
     )
     header_icon = IconBlock(
         required=False,
-        label=_('Header icon - start typing'),
+        label=_('Header icon'),
     )
-    header_icon_location = IconLocationBlock(required=False)
-    alignment = TextAlignmentChoiceBlock(required=False)
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location'),
+    )
     show_user = BooleanBlock(
         required=False,
-        label=_('Show the name of page creator'),
+        label=_('Show the name of the page creator'),
     )
     user_header = CharBlock(
         required=False,
@@ -47,13 +52,11 @@ class PageInfoBlock(StructBlock):
     avatar_location = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Avatar location')),
             ('start', _('Before username')),
             ('end', _('After username')),
         ],
-        default='',
+        default='start',
         label=_('Avatar location'),
-        widget=DisabledOptionSelect,
     )
     show_email = BooleanBlock(
         required=False,
@@ -91,32 +94,33 @@ class PageInfoBlock(StructBlock):
     datetime_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Date style')),
             ('date', _('Only date')),
             ('datetime', _('Date and time')),
             ('timesince', _('Time since')),
         ],
-        default='',
+        default='date',
         label=_('Date style'),
-        widget=DisabledOptionSelect,
     )
     time_format = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Time format')),
             ('G:i', _('24-hour format')),
             ('g:i A', _('12-hour format')),
         ],
+        default='G:i',
         label=_('Time format'),
-        widget=DisabledOptionSelect,
     )
     timesince_text = CharBlock(
         required=False,
         label=_('Time since text, e.g. ago'),
     )
+    alignment = TextAlignmentChoiceBlock(
+        required=False,
+        label=_('Text alignment'),
+    )
     header_style = TextStyleChoiceBlock(
         required=True,
-        label=_('Header style'),
+        label=_('Row header style'),
     )
     data_style = TextStyleChoiceBlock(
         required=True,

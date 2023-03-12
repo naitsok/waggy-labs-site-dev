@@ -9,6 +9,7 @@ from waggylabs.blocks.markdown import MarkdownBlock
 from waggylabs.blocks.page_info import PageInfoBlock
 from waggylabs.blocks.post_category_list import PostCategoryListBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
+from waggylabs.blocks.post_tag_list import PostTagListBlock
 from waggylabs.blocks.sidebar_tabs import SidebarTabsBlock
 from waggylabs.widgets import DisabledOptionSelect
 
@@ -30,6 +31,7 @@ class SidebarItemBlock(StreamBlock):
     page_info = PageInfoBlock()
     post_category_list = PostCategoryListBlock()
     post_series = PostSeriesBlock()
+    post_tag_list = PostTagListBlock()
     tabs = SidebarTabsBlock()
     
     class Meta:
@@ -38,6 +40,7 @@ class SidebarItemBlock(StreamBlock):
         block_counts = {
             'page_info': { 'max_num': 1 },
             'post_category_list': { 'max_num': 1},
+            'post_tag_list': { 'max_num': 1},
             'post_series': { 'max_num': 1 },
             'tabs': { 'max_num': 1 },
         }

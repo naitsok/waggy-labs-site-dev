@@ -25,9 +25,12 @@ class PostListBlock(StructBlock):
     )
     pinned_posts_icon = IconBlock(
         required=False,
-        label=_('Pinned posts icon - start typing'),
+        label=_('Pinned posts icon'),
     )
-    pinned_posts_icon_location = IconLocationBlock(required=False)
+    pinned_posts_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Pinned posts icon location'),
+    )
     pinned_posts_header_style = HeaderStyleChoiceBlock(
         required=False,
         label=_('Pinned posts header style'),
@@ -38,41 +41,15 @@ class PostListBlock(StructBlock):
     )
     posts_icon = IconBlock(
         required=False,
-        label=_('Post list icon - start typing'),
+        label=_('Post list icon'),
     )
-    posts_icon_location = IconLocationBlock(required=False)
+    posts_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Post list icon location'),
+    )
     posts_header_style = HeaderStyleChoiceBlock(
         required=False,
         label=_('Post list header style'),
-    )
-    posts_per_page = IntegerBlock(
-        required=True,
-        min_value=1,
-        label=_('Posts per page'),
-    )
-    page_alignment = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', 'Paginator alignment'),
-            ('justify-content-start', _('Left')),
-            ('justify-content-center', _('Center')),
-            ('justify-content-end', _('Right')),
-        ],
-        default='',
-        label=_('Paginator alignment'),
-        widget=DisabledOptionSelect,
-    )
-    page_size = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', 'Paginator text size'),
-            ('pagination-sm', _('Small')),
-            ('pagination-normal', _('Normal')),
-            ('pagination-lg', _('Large')),
-        ],
-        default='',
-        label=_('Paginator text size'),
-        widget=DisabledOptionSelect,
     )
     first_page_text = CharBlock(
         required=False,
@@ -80,7 +57,7 @@ class PostListBlock(StructBlock):
     )
     first_page_icon = IconBlock(
         required=False,
-        label=_('First page icon - start typing'),
+        label=_('First page icon'),
     )
     previous_page_text = CharBlock(
         required=False,
@@ -88,7 +65,7 @@ class PostListBlock(StructBlock):
     )
     previous_page_icon = IconBlock(
         required=False,
-        label=_('Prev page icon - start typing'),
+        label=_('Prev page icon'),
     )
     next_page_text = CharBlock(
         required=False,
@@ -96,7 +73,7 @@ class PostListBlock(StructBlock):
     )
     next_page_icon = IconBlock(
         required=False,
-        label=_('Next page icon - start typing'),
+        label=_('Next page icon'),
     )
     last_page_text = CharBlock(
         required=False,
@@ -104,7 +81,7 @@ class PostListBlock(StructBlock):
     )
     last_page_icon = IconBlock(
         required=False,
-        label=_('Last page icon - start typing'),
+        label=_('Last page icon'),
     )
     post_style = CardStyleChoiceBlock(
         required=False,
@@ -114,18 +91,41 @@ class PostListBlock(StructBlock):
         required=False,
         label=_('Post title style'),
     )
+    page_alignment = ChoiceBlock(
+        required=False,
+        choices=[
+            ('justify-content-start', _('Left')),
+            ('justify-content-center', _('Center')),
+            ('justify-content-end', _('Right')),
+        ],
+        default='justify-content-center',
+        label=_('Paginator alignment'),
+    )
+    page_size = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Normal')),
+            ('pagination-sm', _('Small')),
+            ('pagination-lg', _('Large')),
+        ],
+        default='',
+        label=_('Paginator text size'),
+    )
+    posts_per_page = IntegerBlock(
+        required=True,
+        min_value=1,
+        label=_('Posts per page'),
+    )
     order_by = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Categories ordering')),
             ('created_at', _('Older first')),
             ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
         ],
-        default='',
+        default='-created_at',
         label=_('Categories ordering'),
-        widget=DisabledOptionSelect,
     )
     show_scrollspy = BooleanBlock(
         required=False,
@@ -147,14 +147,12 @@ class PostListBlock(StructBlock):
     datetime_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Date style')),
             ('date', _('Only date')),
             ('datetime', _('Date and time')),
             ('timesince', _('Time since')),
         ],
-        default='',
+        default='date',
         label=_('Date style'),
-        widget=DisabledOptionSelect,
     )
     show_time = BooleanBlock(
         required=False,
@@ -163,12 +161,11 @@ class PostListBlock(StructBlock):
     time_format = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Time format')),
             ('G:i', _('24-hour format')),
             ('g:i A', _('12-hour format')),
         ],
+        default='G:i',
         label=_('Time format'),
-        widget=DisabledOptionSelect,
     )
     timesince_text = CharBlock(
         required=False,

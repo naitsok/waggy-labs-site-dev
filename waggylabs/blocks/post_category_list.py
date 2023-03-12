@@ -12,8 +12,6 @@ from waggylabs.blocks.styling import (
     CardStyleChoiceBlock, HeaderStyleChoiceBlock
 )
 from waggylabs.models.post_category import PostCategory, PostPagePostCategory
-# from waggylabs.models.post_page import PostPage
-from waggylabs.widgets import DisabledOptionSelect
 
 
 class PostCategoryListBlock(StructBlock):
@@ -30,7 +28,7 @@ class PostCategoryListBlock(StructBlock):
     )
     block_style = CardStyleChoiceBlock(
         required=False,
-        label=_('Post categories block style'),
+        label=_('Block style'),
     )
     header = CharBlock(
         required=False,
@@ -82,6 +80,8 @@ class PostCategoryListBlock(StructBlock):
             ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
+            ('num_posts', _('By post number acsending')),
+            ('-num_posts', _('By post number descending')),
         ],
         default='created_at',
         label=_('Categories ordering'),

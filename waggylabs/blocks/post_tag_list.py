@@ -4,19 +4,18 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
     ChoiceBlock, StructBlock, CharBlock, PageChooserBlock,
-    BooleanBlock
+    BooleanBlock, IntegerBlock
 )
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    CardStyleChoiceBlock, HeaderStyleChoiceBlock
+    CardStyleChoiceBlock, HeaderStyleChoiceBlock, LinkStyleChoiceBlock
 )
 from waggylabs.models.post_tags import PostPageTag
 # from waggylabs.models.post_page import PostPage
-from waggylabs.widgets import DisabledOptionSelect
 
 
-class PostCategoryListBlock(StructBlock):
+class PostTagListBlock(StructBlock):
     """Block to show post categories."""
     post_list_page = PageChooserBlock(
         required=False,
@@ -42,65 +41,43 @@ class PostCategoryListBlock(StructBlock):
     )
     header_icon = IconBlock(
         required=False,
-        label=_('Header icon - start typing'),
+        label=_('Header icon'),
     )
     header_icon_location = IconLocationBlock(
         required=False,
         label=_('Header icon location'),
     )
-    categories_style = ChoiceBlock(
+    tags_style = LinkStyleChoiceBlock(
         required=False,
-        choices=[
-            ('', _('Categories style')),
-            ('list-group-default', _('Default')),
-            ('list-group-flush', _('No outer borders')),
-            ('list-group-numbered', _('Numbers before category')),
-            ('list-group-numbered list-group-flush', _('Numbers and no outer border')),
-        ],
-        default='',
-        label=_('Categories style'),
-        widget=DisabledOptionSelect,
+        label=_('Tags style'),
     )
-    category_style = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Category item style')),
-            ('list-group-item-default', _('Default')),
-            ('list-group-item-primary', _('Primary')),
-            ('list-group-item-secondary', _('Secondary')),
-            ('list-group-item-success', _('Success')),
-            ('list-group-item-danger', _('Danger')),
-            ('list-group-item-warning', _('Warning')),
-            ('list-group-item-info', _('Info')),
-            ('list-group-item-light', _('Light')),
-            ('list-group-item-dark', _('Dark')),
-        ],
-        default='',
-        label=_('Category item style'),
-        widget=DisabledOptionSelect,
+    tags_number = IntegerBlock(
+        required=True,
+        default=10,
+        min_value=0,
+        label=_('Number of the most popular tags to show'),
+        help_text=_('If equals to zero, then all tags '
+                    'are shown.')
     )
     order_by = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Categories ordering')),
-            ('created_at', _('Older first')),
-            ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
+            ('num_posts', _('By post number acsending')),
+            ('-num_posts', _('By post number descending')),
         ],
-        default='',
-        label=_('Categories ordering'),
-        widget=DisabledOptionSelect,
+        default='slug',
+        label=_('Tags ordering'),
     )
     show_badges = BooleanBlock(
         required=False,
-        label=_('Show number of posts per category'),
+        label=_('Show number of posts per tag'),
         
     )
     badge_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Post number style')),
             ('text-bg-primary', _('Primary')),
             ('text-bg-secondary', _('Secondary')),
             ('text-bg-success', _('Success')),
@@ -118,9 +95,8 @@ class PostCategoryListBlock(StructBlock):
             ('rounded-pill text-bg-light', _('Rounded light')),
             ('rounded-pill text-bg-dark', _('Rounded dark')),
         ],
-        default='',
+        default='text-bg-primary',
         label=_('Post number style'),
-        widget=DisabledOptionSelect,
     )
     
     def __init__(self, local_blocks=None, **kwargs):
@@ -155,5 +131,5 @@ class PostCategoryListBlock(StructBlock):
     class Meta:
         icon = 'list-ul'
         label = _('Post categories')
-        template = 'waggylabs/blocks/template/post_category_list.html'
-        form_template = 'waggylabs/blocks/form_template/post_category_list.html'
+        template = 'waggylabs/blocks/template/post_tag_list.html'
+        form_template = 'waggylabs/blocks/form_template/post_tag_list.html'

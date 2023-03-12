@@ -14,7 +14,7 @@ class PostSeriesBlock(StructBlock):
     and its subposts."""
     style = CardStyleChoiceBlock(
         required=False,
-        label=_('Style'),
+        label=_('Block style'),
     )
     header = CharBlock(
         required=False,
@@ -22,10 +22,16 @@ class PostSeriesBlock(StructBlock):
     )
     header_icon = IconBlock(
         required=False,
-        label=_('Header icon - start typing'),
+        label=_('Header icon'),
     )
-    header_icon_location = IconLocationBlock(required=False)
-    alignment = TextAlignmentChoiceBlock(required=False)
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location'),
+    )
+    alignment = TextAlignmentChoiceBlock(
+        required=False,
+        label=_('Text alignment'),
+    )
     post_link_style = LinkStyleChoiceBlock(
         required=False,
         label=_('Post link style'),
@@ -33,8 +39,7 @@ class PostSeriesBlock(StructBlock):
     current_post_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Current post style')),
-            ('fst-normal', 'Default'),
+            ('', 'Default'),
             ('fw-bold', 'Bold'),
             ('fw-bolder', 'Bolder'),
             ('fw-semibold', 'Semibold'),
@@ -50,7 +55,6 @@ class PostSeriesBlock(StructBlock):
         ],
         default='',
         label=_('Current post style'),
-        widget=DisabledOptionSelect,
     )
     
     def __init__(self, local_blocks=None, **kwargs):

@@ -11,12 +11,11 @@
     {% endif %}
     <div class="waggylabs-grid-container-3">
     {% for child in children.values %}
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ child.block.name }}">
-            {% comment "" %}{% if child.block.label %}
+        <div class="w-field w-100" data-contentpath="{{ child.block.name }}">
+            {% if child.block.label %}
                 <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
-            {% endif %}{% endcomment %}
+            {% endif %}
             {{ child.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not child.block.required %} op-0{% endif %}">*</span></div>
         </div>
     {% endfor %}
     </div>

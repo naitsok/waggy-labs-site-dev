@@ -4,97 +4,19 @@
     {% if help_text %}
     <span>
         <div class="help">
-            {% icon name="help" class_name="default" %}
+            {% icon name="help" classname="default" %}
             {{ help_text }}
         </div>
     </span>
     {% endif %}
-    <div class="waggylabs-grid-container-3">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.style.block.name }}">
-            {{ children.style.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.style.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header.block.name }}">
-            {{ children.header.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.header.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_icon.block.name }}">
-            {{ children.header_icon.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.header_icon.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_icon_location.block.name }}">
-            {{ children.header_icon_location.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.header_icon_location.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.alignment.block.name }}">
-            {{ children.alignment.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.alignment.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-    </div>
     <div class="waggylabs-grid-container-2">
-        <div class="waggylabs-flex-container" data-contentpath="{{ children.show_user.block.name }}">
-            {{ children.show_user.render_form }}
-            <label class="w-field__label" {% if children.show_user.id_for_label %}for="{{ children.show_user.id_for_label }}"{% endif %}>{{ children.show_user.block.label }}{% if children.show_user.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.user_header.block.name }}">
-            {{ children.user_header.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.user_header.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container" data-contentpath="{{ children.show_avatar.block.name }}">
-            {{ children.show_avatar.render_form }}
-            <label class="w-field__label" {% if children.show_avatar.id_for_label %}for="{{ children.show_avatar.id_for_label }}"{% endif %}>{{ children.show_avatar.block.label }}{% if children.show_avatar.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.avatar_location.block.name }}">
-            {{ children.avatar_location.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.avatar_location.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container" data-contentpath="{{ children.show_email.block.name }}">
-            {{ children.show_email.render_form }}
-            <label class="w-field__label" {% if children.show_email.id_for_label %}for="{{ children.show_email.id_for_label }}"{% endif %}>{{ children.show_email.block.label }}{% if children.show_email.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.email_header.block.name }}">
-            {{ children.email_header.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.email_header.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container" data-contentpath="{{ children.show_first_published_at.block.name }}">
-            {{ children.show_first_published_at.render_form }}
-            <label class="w-field__label" {% if children.show_first_published_at.id_for_label %}for="{{ children.show_first_published_at.id_for_label }}"{% endif %}>{{ children.show_first_published_at.block.label }}{% if children.show_first_published_at.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.first_published_at_header.block.name }}">
-            {{ children.first_published_at_header.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.first_published_at_header.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container" data-contentpath="{{ children.show_last_published_at.block.name }}">
-            {{ children.show_last_published_at.render_form }}
-            <label class="w-field__label" {% if children.show_last_published_at.id_for_label %}for="{{ children.show_last_published_at.id_for_label }}"{% endif %}>{{ children.show_last_published_at.block.label }}{% if children.show_last_published_at.block.required %}<div class="w-field"><span class="w-required-mark">*</span></div>{% endif %}</label>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.last_published_at_header.block.name }}">
-            {{ children.last_published_at_header.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.last_published_at_header.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-    </div>
-    <div class="waggylabs-grid-container-3">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.datetime_style.block.name }}">
-            {{ children.datetime_style.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.datetime_style.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.time_format.block.name }}">
-            {{ children.time_format.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.time_format.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.timesince_text.block.name }}">
-            {{ children.timesince_text.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.timesince_text.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-    </div>
-    <div class="waggylabs-grid-container-2">
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.header_style.block.name }}">
-            {{ children.header_style.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.header_style.block.required %} op-0{% endif %}">*</span></div>
-        </div>
-        <div class="waggylabs-flex-container w-100" data-contentpath="{{ children.data_style.block.name }}">
-            {{ children.data_style.render_form }}
-            <div class="w-field"><span class="w-required-mark{% if not children.data_style.block.required %} op-0{% endif %}">*</span></div>
-        </div>
+        {% for child in children.values %}
+            <div class="w-field w-100" data-contentpath="{{ child.block.name }}">
+                {% if child.block.label %}
+                    <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>
+                {% endif %}
+                {{ child.render_form }}
+            </div>
+    {% endfor %}
     </div>
 </div>

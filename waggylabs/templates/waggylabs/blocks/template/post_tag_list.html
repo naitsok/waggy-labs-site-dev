@@ -1,0 +1,39 @@
+{% load wagtailcore_tags %}
+{% load wagtailroutablepage_tags %}
+{% load waggylabs_filters %}
+
+<div class="card {{ value.block_style }} mb-3">
+    <div class="card-header">
+        {% if value.header_icon_location == 'end' %}
+        <p class="{{ value.header_style }}">
+            {{ value.header }}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        </p>
+        {% else %}
+        <p class="{{ value.header_style }}">
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {{ value.header }}
+        </p>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {% if not value.tags %}
+        <p>The post list page is not correctly specified.</p>
+        {% elif value.tags.count == 0 %}
+        <p>No tags</p>
+        {% else %}
+        <div class="waggylabs-post-tag-list">
+            {% for tag in value.tags %}
+            <a href="{% routablepageurl value.post_list_page 'posts_by_tag' tag.slug %}" 
+                class="{{ value.style }} {% if 'btn' in value.style %}mt-1{% endif %} mb-2 me-2"
+                data-slug="{{ tag.slug }}">
+                    {{ tag }}
+                    {% if value.show_badges %}
+                    <span class="badge {{ value.badge_style }}">{{ tag.num_posts }}</span>
+                    {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>

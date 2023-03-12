@@ -1,7 +1,18 @@
 {% load wagtailcore_tags %}
 {% load waggylabs_filters %}
 
-<div class="card {{ value.style }}">
+<div class="card {{ value.style }} mb-3">
+    {% if value.header or value.header_icon %}
+    <div class="card-header">
+        {% if value.header_icon_location == 'end' %}
+            {{ value.header }}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        {% else %}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {{ value.header }}
+        {% endif %}   
+    </div>
+    {% endif %}
     <div class="card-body">
         <ul class="{{ value.tabs_style }} {{ value.tabs_justify }} {{ value.tabs_orientation }}" id="sidebar-tabs" role="tablist">
             {% for item in value.items %}

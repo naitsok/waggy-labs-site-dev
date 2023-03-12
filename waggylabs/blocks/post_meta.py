@@ -13,17 +13,26 @@ from waggylabs.blocks.styling import (
 class SiblingPostBlock(StructBlock):
     """Defines the appearance of previous and next posts in
     the post footer block."""
-    style = CardStyleChoiceBlock(required=False)
+    style = CardStyleChoiceBlock(
+        required=False,
+        label=_('Block style'),
+    )
     header = CharBlock(
         required=False,
         label=_('Header: e.g. "Next post"'),
     )
     header_icon = IconBlock(
         required=False,
-        label=_('Header icon - start typing'),
+        label=_('Header icon'),
     )
-    header_icon_location = IconLocationBlock(required=False)
-    alignment = TextAlignmentChoiceBlock(required=False)
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location'),
+    )
+    alignment = TextAlignmentChoiceBlock(
+        required=False,
+        label=_('Text alignment'),
+    )
     post_link_style = LinkStyleChoiceBlock(
         required=False,
         label=_('Post link style'),
@@ -44,16 +53,22 @@ class PostMetaBlock(StructBlock):
     """Post meta block describes post metadata, e.g. post author,
     post siblings, tags, categories. If it is las block in BodyBlock,
     then it is displayed after references."""
-    style = CardStyleChoiceBlock(required=False)
+    style = CardStyleChoiceBlock(
+        required=False,
+        label=_('Block style')
+    )
     header = CharBlock(
         required=False,
         label=_('Header'),
     )
     header_icon = IconBlock(
         required=False,
-        label=_('Header icon - start typing'),
+        label=_('Header icon'),
     )
-    header_icon_location = IconLocationBlock(required=False)
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location')
+    )
     show_categories = BooleanBlock(
         required=False,
         default=True,
@@ -80,7 +95,7 @@ class PostMetaBlock(StructBlock):
     tags_header = CharBlock(
         required=False,
         label=_('Tags header'),
-        help_text=_('Text to display before tag list.')
+        help_text=_('Text to display before tag list.'),
     )
     tags_header_style = TextStyleChoiceBlock(
         required=False,
@@ -88,7 +103,7 @@ class PostMetaBlock(StructBlock):
     )
     tags_style = LinkStyleChoiceBlock(
         required=False,
-        label=_('Tags link style')
+        label=_('Tags link style'),
     )
     show_sibling_posts = BooleanBlock(
         required=False,
@@ -101,8 +116,12 @@ class PostMetaBlock(StructBlock):
             'published next or next post from the series.'
         ),
     )
-    previous_post = SiblingPostBlock()
-    next_post = SiblingPostBlock()
+    previous_post = SiblingPostBlock(
+        label=_('Previous post'),
+    )
+    next_post = SiblingPostBlock(
+        label=_('Next post'),
+    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)

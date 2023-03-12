@@ -22,9 +22,12 @@ class PostSeriesTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon - start typing'),
+        label=_('Tab icon'),
     )
-    icon_location = IconLocationBlock(required=False)
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Tab icon location'),
+    )
     post_series = PostSeriesBlock()
     
     class Meta:
@@ -42,9 +45,12 @@ class TableOfContentsTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon - start typing'),
+        label=_('Tab icon'),
     )
-    icon_location = IconLocationBlock(required=False)
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Tab icon location'),
+    )
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div><hr>')
@@ -67,9 +73,12 @@ class VisualsTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon - start typing'),
+        label=_('Tab icon'),
     )
-    icon_location = IconLocationBlock(required=False)
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Tab icon location'),
+    )
     preview_buttons_text = CharBlock(
         required=False,
         label=_('Preview buttons text'),
@@ -77,13 +86,16 @@ class VisualsTabBlock(StructBlock):
     )
     preview_buttons_icon = IconBlock(
         required=False,
-        label=_('Preview buttons icon - start typing'),
+        label=_('Preview buttons icon'),
     )
     preview_buttons_icon_location = IconLocationBlock(
         required=False,
         label=_('Preview buttons icon location'),
     )
-    preview_buttons_style = LinkStyleChoiceBlock()
+    preview_buttons_style = LinkStyleChoiceBlock(
+        required=False,
+        label=_('Preview buttons style'),
+    )
     include_embeds = BooleanBlock(
         required=False,
         label=_('Include embeds'),
@@ -150,9 +162,12 @@ class CitationsTabBlock(StructBlock):
     )
     icon = IconBlock(
         required=False,
-        label=_('Tab icon - start typing'),
+        label=_('Tab icon'),
     )
-    icon_location = IconLocationBlock(required=False)
+    icon_location = IconLocationBlock(
+        required=False,
+        label=_('Tab icon location'),
+    )
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-literature"></div>')
@@ -183,26 +198,40 @@ class SidebarTabItemBlock(StreamBlock):
 class SidebarTabsBlock(StructBlock):
     """Sidebar block with tabs for the the page. Tabs can contain
     contents (generated from headers on page), page visuals"""
-    style = CardStyleChoiceBlock(required=False)
+    style = CardStyleChoiceBlock(
+        required=False,
+        label=_('Block style'),
+    )
+    header = CharBlock(
+        required=False,
+        label=_('Header: e.g. "Next post"'),
+    )
+    header_icon = IconBlock(
+        required=False,
+        label=_('Header icon'),
+    )
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location'),
+    )
     tabs_style = ChoiceBlock(
-        required=True,
+        required=False,
         choices=[
-            ('', _('Tabs style')),
             ('nav nav-tabs', _('Tabs')),
             ('nav nav-pills', _('Pills')),
             ('nav nav-pills nav-fill', _('Wide pills')),
         ],
-        default='',
+        default='nav nav-tabs',
         label=_('Tabs style'),
     )
     buttons_style = LinkStyleChoiceBlock(
-        required=True,
+        required=False,
         label=_('Tab buttons style'),
     )
     tabs_font_size = ChoiceBlock(
-        required=True,
+        required=False,
         choices=[
-            ('', _('Tabs font size')),
+            ('', _('Default')),
             ('fs-6', _('Normal')),
             ('fs-5', _('Bigger')),
             ('fs-4', _('Big')),
@@ -213,10 +242,9 @@ class SidebarTabsBlock(StructBlock):
         label=_('Tabs font size'),
     )
     tabs_orientation = ChoiceBlock(
-        required=True,
+        required=False,
         choices=[
-            ('', _('Tabs button orientation')),
-            ('tabs-default', _('Horizontal')),
+            ('', _('Horizontal')),
             ('flex-column', _('Vertical')),
         ],
         default='',
@@ -225,13 +253,12 @@ class SidebarTabsBlock(StructBlock):
     tabs_justify = ChoiceBlock(
         required=True,
         choices=[
-            ('', _('Tabs horizontal alignment')),
             ('justify-content-start', _('Align left')),
             ('justify-content-center', _('Align center')),
             ('justify-content-end', _('Align right')),
         ],
-        default='',
-        label=_('Tabs orientation'),
+        default='justify-content-start',
+        label=_('Tabs horizontal alignment'),
     )
     # tabs_close = BooleanBlock(
     #     required=False,
