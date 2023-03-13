@@ -20,7 +20,7 @@
         {% endif %}
     {% endif %}
     {% for post in value.pinned_posts %}
-    <div class="waggylabs-post-list card {{ value.post_style }} mb-3">
+    <div class="waggylabs-post-list-item card {{ value.post_style }} mb-3">
         <div class="card-header">
             <p class="{{ value.post_title_style }}"><a href="{% pageurl post %}" class="nav-link">{{ post.title }}</a></p>
         </div>
@@ -86,7 +86,7 @@
 
 {% paginate value.posts_per_page posts %}
 {% for post in posts %}
-<div class="waggylabs-post-list card {{ value.post_style }} mb-3">
+<div class="waggylabs-post-list-item card {{ value.post_style }} mb-3">
     <div class="card-header">
         <p class="{{ value.post_title_style }}"><a href="{% pageurl post %}" class="nav-link">{{ post.title }}</a></p>
     </div>
@@ -95,7 +95,7 @@
         {% if value.show_scrollspy %}
         <div class="waggylabs-post-categories d-none">
             {% for category in post.post_categories.all %}
-            <span data-slug="{{ category.slug }}">{{ category.slug }}</span>
+            <span data-slug="{{ category.post_category.slug }}">{{ category.post_category.slug }}</span>
             {% endfor %}
         </div>
         <div class="waggylabs-post-tags d-none">

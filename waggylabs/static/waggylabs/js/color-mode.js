@@ -4,61 +4,61 @@
  * Licensed under the Creative Commons Attribution 3.0 Unported License.
  */
 
-(function () {
+(() => {
     'use strict'
   
     const storedTheme = localStorage.getItem('theme');
   
     const getPreferredTheme = function ()  {
-      if (storedTheme) {
-        return storedTheme;
-      }
+        if (storedTheme) {
+            return storedTheme;
+        }
   
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
   
     const setTheme = function (theme) {
-      if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-bs-theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-bs-theme', theme);
-      }
+        if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        }
     }
   
     setTheme(getPreferredTheme());
   
     const showActiveTheme = function (theme) {
-      const activeThemeIcon = document.querySelector('.theme-icon-active i');
-      const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
-      const iOfActiveBtn = btnToActive.querySelector('span i').getAttribute('class');
+        const activeThemeIcon = document.querySelector('.theme-icon-active i');
+        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+        const iOfActiveBtn = btnToActive.querySelector('span i').getAttribute('class');
+    
+        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+            element.classList.remove('active');
+            element.querySelector('.theme-icon-check i').setAttribute('style', '');
+        })
   
-      document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-        element.classList.remove('active');
-        element.querySelector('.theme-icon-check i').setAttribute('style', '');
-      })
-  
-      btnToActive.classList.add('active');
-      btnToActive.querySelector('.theme-icon-check i').setAttribute('style', 'display: block !important;');
-      activeThemeIcon.setAttribute('class', iOfActiveBtn);
+        btnToActive.classList.add('active');
+        btnToActive.querySelector('.theme-icon-check i').setAttribute('style', 'display: block !important;');
+        activeThemeIcon.setAttribute('class', iOfActiveBtn);
     }
   
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
-      if (storedTheme !== 'light' || storedTheme !== 'dark') {
-        setTheme(getPreferredTheme());
-      }
-    })
+        if (storedTheme !== 'light' || storedTheme !== 'dark') {
+            setTheme(getPreferredTheme());
+        }
+    });
   
     window.addEventListener('DOMContentLoaded', function () {
-      showActiveTheme(getPreferredTheme());
-  
-      document.querySelectorAll('[data-bs-theme-value]')
-        .forEach(toggle => {
-          toggle.addEventListener('click', function () {
-            const theme = toggle.getAttribute('data-bs-theme-value');
-            localStorage.setItem('theme', theme);
-            setTheme(theme);
-            showActiveTheme(theme);
-          });
-        })
-    })
-  })()
+        showActiveTheme(getPreferredTheme());
+    
+        document.querySelectorAll('[data-bs-theme-value]')
+            .forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    const theme = toggle.getAttribute('data-bs-theme-value');
+                    localStorage.setItem('theme', theme);
+                    setTheme(theme);
+                    showActiveTheme(theme);
+                });
+            });
+    });
+})()

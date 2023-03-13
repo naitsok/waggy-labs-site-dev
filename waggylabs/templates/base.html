@@ -227,26 +227,13 @@
                             MathJax.config.currentEquationNumber = n;
                             return (n - MathJax.config.lastSectionNumber) + '';
                         },
-                    }
+                    },
                 },
                 startup: {
                     pageReady: () => {
                         return mathJaxPageReady();
                     },
-                    {% comment %} ready: () => {
-                        MathJax.startup.defaultReady();
-                        MathJax.startup.input[0].preFilters.add(({math}) => {
-                            if (math.inputData.recompile) {
-                                MathJax.config.section = math.inputData.recompile.section;
-                            }
-                        });
-                        MathJax.startup.input[0].postFilters.add(({math}) => {
-                            if (math.inputData.recompile) {
-                                math.inputData.recompile.section = MathJax.config.section;
-                            }
-                        });
-                    } {% endcomment %}
-                }
+                },
             };
         </script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

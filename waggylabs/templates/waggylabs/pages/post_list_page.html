@@ -9,3 +9,9 @@
 {% include_block page.body %}
 
 {% endblock content %}
+
+
+{% block js %}
+<script src="{% static 'waggylabs/js/most-visible.js' %}"></script>
+<script src="{% static 'waggylabs/js/scroll-spy.js' %}"></script>
+{% endblock %}
