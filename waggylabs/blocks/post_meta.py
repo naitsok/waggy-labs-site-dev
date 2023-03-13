@@ -6,8 +6,8 @@ from wagtail.blocks import (
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    LinkStyleChoiceBlock, TextStyleChoiceBlock, CardStyleChoiceBlock, 
-    TextAlignmentChoiceBlock
+    LinkStyleChoiceBlock, TextStyleChoiceBlock, CardStyleChoiceBlock,
+    TextAlignmentChoiceBlock, HeaderStyleChoiceBlock
 )
 
 class SiblingPostBlock(StructBlock):
@@ -60,6 +60,10 @@ class PostMetaBlock(StructBlock):
     header = CharBlock(
         required=False,
         label=_('Header'),
+    )
+    header_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Header style'),
     )
     header_icon = IconBlock(
         required=False,

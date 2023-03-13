@@ -24,12 +24,12 @@
         {% else %}
         <div class="waggylabs-post-tag-list">
             {% for tag in value.tags %}
-            <a href="{% routablepageurl value.post_list_page 'posts_by_tag' tag.slug %}" 
-                class="{{ value.style }} {% if 'btn' in value.style %}mt-1{% endif %} mb-2 me-2"
-                data-slug="{{ tag.slug }}">
-                    {{ tag }}
+            <a href="{% routablepageurl value.post_list_page 'posts_by_tag' tag.tag__slug %}" 
+                class="{{ value.tags_style }} {% if 'btn' in value.tags_style %}mt-1{% endif %} mb-2 me-2"
+                data-slug="{{ tag.tag__slug }}">
+                    {{ tag.tag__name }}
                     {% if value.show_badges %}
-                    <span class="badge {{ value.badge_style }}">{{ tag.num_posts }}</span>
+                    <span class="badge {{ value.badge_style }}">{{ tag.tag__num_posts }}</span>
                     {% endif %}
             </a>
             {% endfor %}

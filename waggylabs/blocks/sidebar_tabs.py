@@ -10,7 +10,9 @@ from wagtail.blocks import (
 from waggylabs.blocks.base_body import BaseBodyBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
-from waggylabs.blocks.styling import LinkStyleChoiceBlock, CardStyleChoiceBlock
+from waggylabs.blocks.styling import (
+    LinkStyleChoiceBlock, CardStyleChoiceBlock, HeaderStyleChoiceBlock
+)
 
 
 class PostSeriesTabBlock(StructBlock):
@@ -205,6 +207,10 @@ class SidebarTabsBlock(StructBlock):
     header = CharBlock(
         required=False,
         label=_('Header: e.g. "Next post"'),
+    )
+    header_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Header style'),
     )
     header_icon = IconBlock(
         required=False,

@@ -21,7 +21,7 @@ class PostPageTag(TaggedItemBase):
 @register_snippet
 class TagProxy(Tag):
     """Proxy for tags for Wagtail admin."""
-    
+
     class Meta:
         proxy = True
         verbose_name = _('Tag')

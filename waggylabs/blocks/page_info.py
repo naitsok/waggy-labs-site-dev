@@ -6,11 +6,10 @@ from wagtail.blocks import (
 )
 from wagtail.users.models import UserProfile
 
-from waggylabs.widgets import DisabledOptionSelect
-
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    TextStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
+    TextStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock,
+    HeaderStyleChoiceBlock
 ) 
 
 
@@ -25,6 +24,10 @@ class PageInfoBlock(StructBlock):
     header = CharBlock(
         required=False,
         label=_('Header'),
+    )
+    header_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Header style'),
     )
     header_icon = IconBlock(
         required=False,

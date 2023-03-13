@@ -23,8 +23,7 @@ class PostCategoryListBlock(StructBlock):
         help_text=_('Shows post categories for the posts, which are '
                     'children of the selected post list page. '
                     'If left empty, the currently browsed post list page will '
-                    'be used, or all categories will be displayed if the '
-                    ' currently browsed page is not a post lit page.'),
+                    'be used, . Otherwise, no categories will be displayed.'),
     )
     block_style = CardStyleChoiceBlock(
         required=False,
@@ -147,6 +146,8 @@ class PostCategoryListBlock(StructBlock):
         
     class Meta:
         icon = 'list-ul'
-        label = _('Post categories')
+        label = _('Categories for posts')
         template = 'waggylabs/blocks/template/post_category_list.html'
         form_template = 'waggylabs/blocks/form_template/post_category_list.html'
+        help_text = _('Block to show categories for posts that are childern of the specified post list page. '
+                      'If post list page is not specified, the block must be located on a post list page.')

@@ -21,11 +21,10 @@ class PostTagListBlock(StructBlock):
         required=False,
         page_type='waggylabs.PostListPage',
         label=_('Root post list page'),
-        help_text=_('Shows post categories for the posts, which are '
+        help_text=_('Shows post tags for the posts, which are '
                     'children of the selected post list page. '
                     'If left empty, the currently browsed post list page will '
-                    'be used, or all categories will be displayed if the '
-                    ' currently browsed page is not a post lit page.'),
+                    'be used. Otherwise, no categories will be displayed.'),
     )
     block_style = CardStyleChoiceBlock(
         required=False,
@@ -56,12 +55,15 @@ class PostTagListBlock(StructBlock):
         default=10,
         min_value=0,
         label=_('Number of the most popular tags to show'),
-        help_text=_('If equals to zero, then all tags '
+        help_text=_(' Choice of what will be shown depends on '
+                    'the selected order. If equals to zero, then all tags '
                     'are shown.')
     )
     order_by = ChoiceBlock(
         required=False,
         choices=[
+            ('created_at', _('Older first')),
+            ('-created_at', _('Newer first')),
             ('slug', _('By slug acsending')),
             ('-slug', _('By slug descending')),
             ('num_posts', _('By post number acsending')),
@@ -116,20 +118,24 @@ class PostTagListBlock(StructBlock):
         if value['post_list_page']:
             tag_query = PostPageTag.objects.filter(
                 content_object_id__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
-                ).values('tag__slug').distinct()
+            ).values('tag__id', 'tag__slug', 'tag__name')
 
             if value['show_badges']:
-                tag_query = tag_query.annotate(num_posts=Count('post_pages'))
+                tag_query = tag_query.annotate(tag__num_posts=Count('tag__id'))
         
             if not value['order_by']:
                 value['order_by'] = '-created_at'
             
+            value['order_by'] = '-tag__' + value['order_by'][1:] if value['order_by'][0] == '-' else \
+                'tag__' + value['order_by']
             tag_query = tag_query.order_by(value['order_by'])
         value['tags'] = tag_query
         return super().render(value, context)
         
     class Meta:
         icon = 'list-ul'
-        label = _('Post categories')
+        label = _('Tags for posts')
         template = 'waggylabs/blocks/template/post_tag_list.html'
         form_template = 'waggylabs/blocks/form_template/post_tag_list.html'
+        help_text = _('Block to show tags for posts that are childern of the specified post list page. '
+                      'If post list page is not specified, the block must be located on a post list page.')

@@ -4,9 +4,9 @@ from wagtail.blocks import StructBlock, CharBlock, ChoiceBlock
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
+    LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock,
+    HeaderStyleChoiceBlock
 )
-from waggylabs.widgets import DisabledOptionSelect
 
 
 class PostSeriesBlock(StructBlock):
@@ -19,6 +19,10 @@ class PostSeriesBlock(StructBlock):
     header = CharBlock(
         required=False,
         label=_('Header: e.g. "Series"'),
+    )
+    header_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Header style'),
     )
     header_icon = IconBlock(
         required=False,

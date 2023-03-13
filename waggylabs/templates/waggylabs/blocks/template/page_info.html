@@ -6,12 +6,16 @@
     {% if value.header or value.header_icon %}
     <div class="card-header">
         {% if value.header_icon_location == 'end' %}
+        <p class="{{ value.header_style }}">
             {{ value.header }}
             {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        </p>
         {% else %}
+        <p class="{{ value.header_style }}">
             {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
             {{ value.header }}
-        {% endif %}   
+        </p>
+        {% endif %}
     </div>
     {% endif %}
     <div class="card-body">
