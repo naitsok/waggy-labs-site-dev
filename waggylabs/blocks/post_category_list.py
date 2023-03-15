@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
     ChoiceBlock, StructBlock, CharBlock, PageChooserBlock,
-    BooleanBlock
+    BooleanBlock, IntegerBlock
 )
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
@@ -23,7 +23,7 @@ class PostCategoryListBlock(StructBlock):
         help_text=_('Shows post categories for the posts, which are '
                     'children of the selected post list page. '
                     'If left empty, the currently browsed post list page will '
-                    'be used, . Otherwise, no categories will be displayed.'),
+                    'be used. Otherwise, no categories will be displayed.'),
     )
     block_style = CardStyleChoiceBlock(
         required=False,
@@ -48,28 +48,70 @@ class PostCategoryListBlock(StructBlock):
     categories_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Default')),
-            ('list-group-flush', _('No outer borders')),
-            ('list-group-numbered', _('Numbers before category')),
-            ('list-group-numbered list-group-flush', _('Numbers and no outer border')),
+            ('', _('Default list')),
+            ('list-unstyled', _('Unstyled list')),
+            ('list-numbered', _('Numbered list')),
+            ('list-group', _('List group')),
+            ('list-group list-group-flush', _('List group, no outer borders')),
+            ('list-group list-group-numbered', _('Numbered list group')),
+            ('list-group list-group-numbered list-group-flush', _('Numbered list group, no outer borders')),
         ],
         default='',
         label=_('Categories style'),
     )
+    categories_number = IntegerBlock(
+        required=True,
+        default=10,
+        min_value=0,
+        label=_('Number of categories to show'),
+        help_text=_('Depends on the selected order. '
+                    'If equals to zero, then all categories are shown.'),
+    )
     category_style = ChoiceBlock(
         required=False,
         choices=[
-            ('', _('Default')),
-            ('list-group-item-primary', _('Primary')),
-            ('list-group-item-secondary', _('Secondary')),
-            ('list-group-item-success', _('Success')),
-            ('list-group-item-danger', _('Danger')),
-            ('list-group-item-warning', _('Warning')),
-            ('list-group-item-info', _('Info')),
-            ('list-group-item-light', _('Light')),
-            ('list-group-item-dark', _('Dark')),
+            ('list-group-item list-group-item-action', _('List group default')),
+            ('list-group-item list-group-item-action list-group-item-primary', _('List group primary')),
+            ('list-group-item list-group-item-action list-group-item-secondary', _('List group secondary')),
+            ('list-group-item list-group-item-action list-group-item-success', _('List group success')),
+            ('list-group-item list-group-item-action list-group-item-danger', _('List group danger')),
+            ('list-group-item list-group-item-action list-group-item-warning', _('List group warning')),
+            ('list-group-item list-group-item-action list-group-item-info', _('List group info')),
+            ('list-group-item list-group-item-action list-group-item-light', _('List group light')),
+            ('list-group-item list-group-item-action list-group-item-dark', _('List group dark')),
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
+            ('card-link', _('Card link')),
+            ('nav-link', _('Navigation bar link')),
+            ('nav-link active', _('Navigation bar active link')),
+            ('link-primary', _('Primary link')),
+            ('link-secondary', _('Secondary link')),
+            ('link-success', _('Success link')),
+            ('link-danger', _('Danger link')),
+            ('link-warning', _('Warning link')),
+            ('link-info', _('Info link')),
+            ('link-light', _('Light link')),
+            ('link-dark', _('Dark link')),
+            ('nav-link link-primary', _('Primary link, no underline')),
+            ('nav-link link-secondary', _('Secondary link, no underline')),
+            ('nav-link link-success', _('Success link, no underline')),
+            ('nav-link link-danger', _('Danger link, no underline')),
+            ('nav-link link-warning', _('Warning link, no underline')),
+            ('nav-link link-info', _('Info link, no underline')),
+            ('nav-link link-light', _('Light link, no underline')),
+            ('nav-link link-dark', _('Dark link, no underline')),
         ],
-        default='',
+        default='list-group-item',
         label=_('Category item style'),
     )
     order_by = ChoiceBlock(
@@ -88,7 +130,6 @@ class PostCategoryListBlock(StructBlock):
     show_badges = BooleanBlock(
         required=False,
         label=_('Show number of posts per category'),
-        
     )
     badge_style = ChoiceBlock(
         required=False,
@@ -112,6 +153,18 @@ class PostCategoryListBlock(StructBlock):
         ],
         default='text-bg-primary',
         label=_('Post number style'),
+    )
+    badge_location = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Default')),
+            ('position-absolute top-0 start-100 translate-middle', _('Top right corner')),
+            ('position-absolute top-0 start-0 translate-middle', _('Top left corner')),
+            ('position-absolute top-100 start-100 translate-middle', _('Bottom right corner')),
+            ('position-absolute top-100 start-0 translate-middle', _('Bottom left corner')),
+        ],
+        default='',
+        label=_('Post number location'),
     )
     
     def __init__(self, local_blocks=None, **kwargs):
@@ -140,6 +193,9 @@ class PostCategoryListBlock(StructBlock):
             if not value['order_by']:
                 value['order_by'] = '-created_at'
             
+            if value['categories_number'] > 0:
+                category_query = category_query[0:value['categories_number']]
+                
             category_query = category_query.order_by(value['order_by'])
         value['categories'] = category_query
         return super().render(value, context)

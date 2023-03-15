@@ -9,22 +9,19 @@ from wagtail.blocks import (
 
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    CardStyleChoiceBlock, HeaderStyleChoiceBlock, LinkStyleChoiceBlock
+    CardStyleChoiceBlock, HeaderStyleChoiceBlock
 )
-from waggylabs.models.post_tags import PostPageTag
-# from waggylabs.models.post_page import PostPage
+from waggylabs.models.post_category import PostCategory, PostPagePostCategory
 
 
-class PostTagListBlock(StructBlock):
-    """Block to show post categories."""
+class PostHighlightsBlock(StructBlock):
+    """Lists the selected numner of posts based on the """
     post_list_page = PageChooserBlock(
         required=False,
         page_type='waggylabs.PostListPage',
         label=_('Root post list page'),
-        help_text=_('Shows post tags for the posts, which are '
-                    'children of the selected post list page. '
-                    'If left empty, the currently browsed post list page will '
-                    'be used. Otherwise, no categories will be displayed.'),
+        help_text=_('Shows only posts that are descendant of this page. '
+                    'If left empty, posts selected from all the posts are shown.'),
     )
     block_style = CardStyleChoiceBlock(
         required=False,
@@ -46,17 +43,74 @@ class PostTagListBlock(StructBlock):
         required=False,
         label=_('Header icon location'),
     )
-    tags_style = LinkStyleChoiceBlock(
-        required=False,
-        label=_('Tags style'),
-    )
-    tags_number = IntegerBlock(
+    posts_number = IntegerBlock(
         required=True,
-        default=10,
         min_value=0,
-        label=_('Number of tags to show'),
-        help_text=_('Depends on the selected order. '
-                    'If equals to zero, then all tags are shown.')
+        label=_('Number of posts to show'),
+    )
+    posts_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Style of the post titles'),
+    )
+    # list_style = 
+
+class PostCategoryListBlock(StructBlock):
+    """Block to show post categories."""
+    post_list_page = PageChooserBlock(
+        required=False,
+        page_type='waggylabs.PostListPage',
+        label=_('Root post list page'),
+        help_text=_('Shows post categories for the posts, which are '
+                    'children of the selected post list page. '
+                    'If left empty, the currently browsed post list page will '
+                    'be used, . Otherwise, no categories will be displayed.'),
+    )
+    block_style = CardStyleChoiceBlock(
+        required=False,
+        label=_('Block style'),
+    )
+    header = CharBlock(
+        required=False,
+        label=_('Header'),
+    )
+    header_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Header style'),
+    )
+    header_icon = IconBlock(
+        required=False,
+        label=_('Header icon'),
+    )
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location'),
+    )
+    categories_style = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Default')),
+            ('list-group-flush', _('No outer borders')),
+            ('list-group-numbered', _('Numbers before category')),
+            ('list-group-numbered list-group-flush', _('Numbers and no outer border')),
+        ],
+        default='',
+        label=_('Categories style'),
+    )
+    category_style = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Default')),
+            ('list-group-item-primary', _('Primary')),
+            ('list-group-item-secondary', _('Secondary')),
+            ('list-group-item-success', _('Success')),
+            ('list-group-item-danger', _('Danger')),
+            ('list-group-item-warning', _('Warning')),
+            ('list-group-item-info', _('Info')),
+            ('list-group-item-light', _('Light')),
+            ('list-group-item-dark', _('Dark')),
+        ],
+        default='',
+        label=_('Category item style'),
     )
     order_by = ChoiceBlock(
         required=False,
@@ -68,13 +122,13 @@ class PostTagListBlock(StructBlock):
             ('num_posts', _('By post number acsending')),
             ('-num_posts', _('By post number descending')),
         ],
-        default='slug',
-        label=_('Tags ordering'),
+        default='created_at',
+        label=_('Categories ordering'),
     )
     show_badges = BooleanBlock(
         required=False,
-        label=_('Show number of posts per tag'),
-
+        label=_('Show number of posts per category'),
+        
     )
     badge_style = ChoiceBlock(
         required=False,
@@ -99,18 +153,6 @@ class PostTagListBlock(StructBlock):
         default='text-bg-primary',
         label=_('Post number style'),
     )
-    badge_location = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Default')),
-            ('position-absolute top-0 start-100 translate-middle', _('Top right corner')),
-            ('position-absolute top-0 start-0 translate-middle', _('Top left corner')),
-            ('position-absolute top-100 start-100 translate-middle', _('Bottom right corner')),
-            ('position-absolute top-100 start-0 translate-middle', _('Bottom left corner')),
-        ],
-        default='',
-        label=_('Post number location'),
-    )
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
@@ -121,36 +163,31 @@ class PostTagListBlock(StructBlock):
     def render(self, value, context):
         # needed to avoid circular imports
         post_page_model = apps.get_model('waggylabs', 'PostPage')
-        tag_query =  None
+        category_query =  None
         if not value['post_list_page'] and \
             context['page'].specific_class.__name__ == 'PostListPage':
             value['post_list_page'] = context['page']
             
         if value['post_list_page']:
-            tag_query = PostPageTag.objects.filter(
-                content_object_id__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
-            ).values('tag__id', 'tag__slug', 'tag__name')
+            category_query = PostCategory.objects.filter(
+                id__in=PostPagePostCategory.objects.filter(
+                    post_page__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
+                ).values('post_category__id').distinct())
 
             if value['show_badges']:
-                tag_query = tag_query.annotate(tag__num_posts=Count('tag__id'))
+                category_query = category_query.annotate(num_posts=Count('post_pages'))
         
             if not value['order_by']:
                 value['order_by'] = '-created_at'
             
-            value['order_by'] = '-tag__' + value['order_by'][1:] if value['order_by'][0] == '-' else \
-                'tag__' + value['order_by']
-                
-            if value['tags_number'] > 0:
-                tag_query = tag_query[0:value['tags_number']]
-                
-            tag_query = tag_query.order_by(value['order_by'])
-        value['tags'] = tag_query
+            category_query = category_query.order_by(value['order_by'])
+        value['categories'] = category_query
         return super().render(value, context)
         
     class Meta:
         icon = 'list-ul'
-        label = _('Tags for posts')
-        template = 'waggylabs/blocks/template/post_tag_list.html'
-        form_template = 'waggylabs/blocks/form_template/post_tag_list.html'
-        help_text = _('Block to show tags for posts that are childern of the specified post list page. '
+        label = _('Categories for posts')
+        template = 'waggylabs/blocks/template/post_category_list.html'
+        form_template = 'waggylabs/blocks/form_template/post_category_list.html'
+        help_text = _('Block to show categories for posts that are childern of the specified post list page. '
                       'If post list page is not specified, the block must be located on a post list page.')
