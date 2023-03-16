@@ -1,0 +1,48 @@
+{% load wagtailcore_tags %}
+{% load wagtailroutablepage_tags %}
+{% load waggylabs_filters %}
+
+<div class="card {{ value.block_style }} mb-3">
+    <div class="card-header">
+        {% if value.header_icon_location == 'end' %}
+        <p class="{{ value.header_style }}">
+            {{ value.header }}
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
+        </p>
+        {% else %}
+        <p class="{{ value.header_style }}">
+            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
+            {{ value.header }}
+        </p>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {% if value.posts.count == 0 %}
+        <p>No posts</p>
+        {% else %}
+            {% if 'group' in value.posts_style %}
+            <div class="{{ value.posts_style }}">
+                {% for post in value.posts %}
+                <a href="{% pageurl post %}" 
+                    class="{{ value.post_style }} {% if 'btn' in value.post_style %}mt-1 mb-1{% endif %}">
+                    <div class="d-flex justify-content-between align-items-center p-mb-0">
+                        {{ post.title }}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <{% if 'number' in value.posts_style %}ol{% else %}ul{% endif %} class="{{ value.posts_style }}">
+                {% for post in value.posts %}
+                <li>
+                    <a href="{% pageurl post %}" 
+                        class="{{ value.post_style }} {% if 'btn' in value.post_style %}mt-1 mb-1{% endif %}">
+                        {{ post.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </{% if 'number' in value.posts_style %}ol{% else %}ul{% endif %}>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
