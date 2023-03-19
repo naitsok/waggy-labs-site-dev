@@ -5,11 +5,13 @@
             element.classList.remove('active');
         });
         const mostVisibleElem = mostVisible('.waggylabs-post-list-item');
-        const postCategoriesElem = mostVisibleElem.querySelector('.waggylabs-post-categories');
-        postCategoriesElem.querySelectorAll('span').forEach(element => {
-            let catElem = categoriesElem.querySelector('a[data-slug="' + element.getAttribute('data-slug') + '"]');
-            catElem.classList.add('active');
-        });
+        if (mostVisibleElem) {
+            const postCategoriesElem = mostVisibleElem.querySelector('.waggylabs-post-categories');
+            postCategoriesElem.querySelectorAll('span').forEach(element => {
+                let catElem = categoriesElem.querySelector('a[data-slug="' + element.getAttribute('data-slug') + '"]');
+                catElem.classList.add('active');
+            });
+        }
     }
 
     const highlightTags = function(tagsElem) {
@@ -17,11 +19,13 @@
             element.classList.remove('active');
         });
         const mostVisibleElem = mostVisible('.waggylabs-post-list-item');
-        const postTagsElem = mostVisibleElem.querySelector('.waggylabs-post-tags');
-        postTagsElem.querySelectorAll('span').forEach(element => {
-            let tagElem = tagsElem.querySelector('a[data-slug="' + element.getAttribute('data-slug') + '"]');
-            tagElem.classList.add('active');
-        });
+        if (mostVisibleElem) {
+            const postTagsElem = mostVisibleElem.querySelector('.waggylabs-post-tags');
+            postTagsElem.querySelectorAll('span').forEach(element => {
+                let tagElem = tagsElem.querySelector('a[data-slug="' + element.getAttribute('data-slug') + '"]');
+                tagElem.classList.add('active');
+            });
+        }
     }
 
     window.addEventListener('DOMContentLoaded', function() {

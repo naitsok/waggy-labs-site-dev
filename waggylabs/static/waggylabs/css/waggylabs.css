@@ -45,6 +45,11 @@ button p { display: inline; margin-bottom: 0 !important; }
 .waggylabs-sidebar-toc .ps-3 { padding-left: 3rem !important; }
 .waggylabs-sidebar-toc .ps-4 { padding-left: 4rem !important; }
 .waggylabs-sidebar-toc .ps-5 { padding-left: 5rem !important; }
+
+/* Footer */
+.footer a { color: var(--bs-body-color); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
 /* MathJax menu tweaks */
 div.CtxtMenu_MenuFrame { z-index: 1501 !important;} /* Change of z-index for menu to appear above Bootstrap tab panes */
 div.CtxtMenu_MenuFrame div,span { z-index: 1502 !important;} /* Change of z-index for menu to appear above Bootstrap tab panes */

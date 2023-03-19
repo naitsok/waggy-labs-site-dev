@@ -126,7 +126,7 @@ class PostTagListBlock(StructBlock):
             context['page'].specific_class.__name__ == 'PostListPage':
             value['post_list_page'] = context['page']
             
-        if value['post_list_page']:
+        if 'post_list_page' in value and value['post_list_page']:
             tag_query = PostPageTag.objects.filter(
                 content_object_id__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
             ).values('tag__id', 'tag__slug', 'tag__name')
@@ -139,11 +139,11 @@ class PostTagListBlock(StructBlock):
             
             value['order_by'] = '-tag__' + value['order_by'][1:] if value['order_by'][0] == '-' else \
                 'tag__' + value['order_by']
+            tag_query = tag_query.order_by(value['order_by'])
                 
             if value['tags_number'] > 0:
                 tag_query = tag_query[0:value['tags_number']]
                 
-            tag_query = tag_query.order_by(value['order_by'])
         value['tags'] = tag_query
         return super().render(value, context)
         

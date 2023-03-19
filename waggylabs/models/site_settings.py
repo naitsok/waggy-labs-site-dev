@@ -1,81 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import (
     FieldPanel, HelpPanel, ObjectList, TabbedInterface, MultiFieldPanel)
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
-from wagtail.models import Orderable
 
-from waggylabs.widgets import IconInput, ColorInput
+from waggylabs.blocks.footer import FooterPostHighlightsBlock
 from waggylabs.blocks.links import ExternalLinkBlock, InternalLinkBlock
-
-
-# class SiteLink(models.Model):
-#     """Class to add links on the navbar. For example, links
-#     to social websites."""
-#     link = models.URLField(
-#         max_length=255,
-#         blank=False,
-#         help_text=_('Full URL to the website'),
-#         verbose_name=_('Link to the website'),
-#     )
-#     text = models.CharField(
-#         max_length=255,
-#         blank=True,
-#         help_text=_('Text for the link to be displayed. Can be empty '
-#                     ' if only the icon to be displayed,'),
-#         verbose_name=_('Text of the link'),
-#     )
-#     icon = models.CharField(
-#         max_length=50,
-#         blank=True,
-#         help_text=_('Icon for the link. Can be empty if no icon '
-#                     'to be displayed.'),
-#         verbose_name=_('Link icon'),
-#     )
-#     style = models.CharField(
-#         max_length=50,
-#         blank=False,
-#         choices=[
-#             ('btn btn-primary', _('Button primary')),
-#             ('btn btn-secondary', _('Button secondary')),
-#             ('btn btn-success', _('Button success')),
-#             ('btn btn-danger', _('Button danger')),
-#             ('btn btn-warning', _('Button warning')),
-#             ('btn btn-info', _('Button info')),
-#             ('btn btn-outline-primary', _('Button outline primary')),
-#             ('btn btn-outline-secondary', _('Button outline secondary')),
-#             ('btn btn-outline-success', _('Button outline success')),
-#             ('btn btn-outline-danger', _('Button outline danger')),
-#             ('btn btn-outline-warning', _('Button outline warning')),
-#             ('btn btn-outline-info', _('Button outline info')),
-#             ('nav-link', _('Link')),
-#             ('nav-link active', _('Link active')),
-#         ],
-#         help_text=_('Select the style for the link. See '
-#                     'Bootstrap documentation.'),
-#         verbose_name=_('Link style'),
-#     )
-    
-#     panels = [
-#         FieldPanel('link'),
-#         FieldPanel('text'),
-#         FieldPanel('icon', widget=IconInput),
-#         FieldPanel('style'),
-#     ]
-    
-#     class Meta:
-#         abstract = True
-    
-    
-# class WaggyLabsSettingsSiteLinks(Orderable, SiteLink):
-#     pass
-# #     """Class that connects SiteLink with Waggy Labs Settings model."""
-# #     page = ParentalKey('waggylabs.WaggyLabsSettings', on_delete=models.CASCADE, related_name='site_links')
+from waggylabs.widgets import IconInput, ColorInput
 
 
 @register_setting
@@ -253,6 +188,16 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('Text to put for the license link'),
         verbose_name=_('Text of the license link'),
     )
+    footer = StreamField(
+        [
+            ('post_highlights', FooterPostHighlightsBlock()),
+        ],
+        block_counts={
+            'post_highlights': { 'max_num': 1 },
+        },
+        blank=True,
+        use_json_field=True,
+    )
 
     # Panels for the Wagtail admin
     site_name_panels = [
@@ -311,6 +256,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
             FieldPanel('content_license_link'),
             FieldPanel('content_license_text'),
         ], heading=_('Content license settings')),
+        FieldPanel('footer'),
     ]
     
     edit_handler = TabbedInterface([

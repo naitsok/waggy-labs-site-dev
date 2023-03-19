@@ -11,7 +11,6 @@ from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     CardStyleChoiceBlock, HeaderStyleChoiceBlock
 )
-from waggylabs.models.post_page import PostPage
 
 
 class PostHighlightsBlock(StructBlock):
@@ -110,6 +109,15 @@ class PostHighlightsBlock(StructBlock):
         default='list-group-item',
         label=_('Post title style'),
     )
+    text_wrap = ChoiceBlock(
+        required=False,
+        choices=[
+            ('', _('Text wrap')),
+            ('text-nowrap', _('No text wrapping')),
+        ],
+        default='',
+        label=_('Text wrapping'),
+    )
     order_by = ChoiceBlock(
         required=False,
         choices=[
@@ -131,14 +139,18 @@ class PostHighlightsBlock(StructBlock):
         })
         
     def render(self, value, context=None):
+        post_page_model = apps.get_model('waggylabs', 'PostPage')
         post_query = None
-        if value['post_page_list']:
-            post_query = PostPage.objects.descendant_of(value['post_list_page']).live()
+        if 'post_page_list' in value and value['post_page_list']:
+            post_query = post_page_model.objects.descendant_of(value['post_list_page']).live()
         else:
-            post_query = PostPage.objects.live()
+            post_query = post_page_model.objects.live()
+            
         post_query = post_query.order_by(value['order_by'])
+        
         if value['posts_number'] > 0:
             post_query = post_query[0:value['posts_number']]
+            
         value['posts'] = post_query
         return super().render(value, context)
     

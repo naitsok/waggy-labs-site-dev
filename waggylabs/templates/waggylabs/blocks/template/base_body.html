@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<div class="waggylabs-page-body" {# data-waggylabs-page="page-{{ page.pk }}" #}>
+<div class="waggylabs-page-body overflow-hidden" {# data-waggylabs-page="page-{{ page.pk }}" #}>
     {% if page_in_list %}
         {% for block in value.before_cut %}
             {% if block.block_type != 'citation' and block.block_type != 'document' %}

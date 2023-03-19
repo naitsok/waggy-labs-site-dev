@@ -36,6 +36,8 @@ class PostSeriesTabBlock(StructBlock):
         icon = 'list-ul'
         label = _('Post series')
         template = 'waggylabs/blocks/template/post_series_tab.html'
+        help_text = _('Header and header icon in the post series blocks '
+                      'settings will be ignored.')
 
 
 class TableOfContentsTabBlock(StructBlock):

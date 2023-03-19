@@ -181,7 +181,7 @@ class PostCategoryListBlock(StructBlock):
             context['page'].specific_class.__name__ == 'PostListPage':
             value['post_list_page'] = context['page']
             
-        if value['post_list_page']:
+        if 'post_list_page' in value and value['post_list_page']:
             category_query = PostCategory.objects.filter(
                 id__in=PostPagePostCategory.objects.filter(
                     post_page__in=post_page_model.objects.descendant_of(value['post_list_page']).live()
@@ -192,11 +192,12 @@ class PostCategoryListBlock(StructBlock):
         
             if not value['order_by']:
                 value['order_by'] = '-created_at'
+            category_query = category_query.order_by(value['order_by'])
             
             if value['categories_number'] > 0:
                 category_query = category_query[0:value['categories_number']]
                 
-            category_query = category_query.order_by(value['order_by'])
+            
         value['categories'] = category_query
         return super().render(value, context)
         
