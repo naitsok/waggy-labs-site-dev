@@ -29,12 +29,12 @@
                     role="tab" 
                     aria-controls="id-{{ item.id }}-tab-pane-{{ forloop.counter0 }}" 
                     aria-selected="{% if forloop.counter0 == 0 %}true{% else %}false{% endif %}">
-                    {% if item.value.icon_location == 'end' %}
-                    {{ item.value.title }}
-                    {% if item.value.icon|is_icon %}<i class="{{ item.value.icon|icon_class }}{% if item.value.title %} ms-1{% endif %}"></i>{% endif %}
+                    {% if item.value.tab_header.icon_location == 'end' %}
+                    {{ item.value.tab_header.title }}
+                    {% if item.value.tab_header.icon|is_icon %}<i class="{{ item.value.tab_header.icon|icon_class }}{% if item.value.tab_header.title %} ms-1{% endif %}"></i>{% endif %}
                     {% else %}
-                    {% if item.value.icon|is_icon %}<i class="{{ item.value.icon|icon_class }}{% if item.value.title %} me-1{% endif %}"></i>{% endif %}
-                    {{ item.value.title }}
+                    {% if item.value.tab_header.icon|is_icon %}<i class="{{ item.value.tab_header.icon|icon_class }}{% if item.value.tab_header.title %} me-1{% endif %}"></i>{% endif %}
+                    {{ item.value.tab_header.title }}
                     {% endif %}
                 </button>
             </li>
@@ -48,7 +48,7 @@
                 role="tabpanel" 
                 aria-labelledby="id-{{ item.id }}-tab-{{ forloop.counter0 }}"
                 tabindex="0">
-                {% include_block item with sidebar=True %}
+                {% include_block item %}
             </div>
             {% endfor %}
         </div>

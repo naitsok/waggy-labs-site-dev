@@ -15,37 +15,8 @@ from waggylabs.blocks.styling import (
 )
 
 
-class PostSeriesTabBlock(StructBlock):
-    """Tab to display series contents."""
-    post_series = PostSeriesBlock()
-    
-    def __init__(self, local_blocks=None, **kwargs):
-        super().__init__(local_blocks, **kwargs)
-        self.child_blocks['post_series'].child_blocks['header'].label = _('Tab title')
-        self.child_blocks['post_series'].child_blocks['header'].field.widget.attrs.update({
-            'placeholder': _('Tab title'),
-        })
-        self.child_blocks['post_series'].child_blocks['header_icon'].label = _('Tab icon')
-        self.child_blocks['post_series'].child_blocks['header_icon_location'].label = _('Tab icon location')
-        
-    
-    def render(self, value, context):
-        value['title'] = value['post_series']['header']
-        value['icon'] = value['post_series']['header_icon']
-        value['icon_location'] = value['post_series']['header_icon_location']
-        return value.bound_blocks['post_series'].render(context)
-    
-    class Meta:
-        icon = 'list-ul'
-        label = _('Post series')
-        help_text = _('Header style will be ignored when the tab '
-                      'is displayed.')
-    #     template = 'waggylabs/blocks/template/post_series_tab.html'
-    
-
-
-class TableOfContentsTabBlock(StructBlock):
-    """Block to add table of contents in the sidebar."""
+class TabHeaderBlock(StructBlock):
+    """Block for tab title, icon, icon location."""
     title = CharBlock(
         required=False,
         label=_('Tab title'),
@@ -60,6 +31,35 @@ class TableOfContentsTabBlock(StructBlock):
         label=_('Tab icon location'),
     )
     
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        for block in self.child_blocks.values():
+            block.field.widget.attrs.update({
+                'placeholder': block.label,
+            })
+    
+    class Meta:
+        form_template = 'waggylabs/blocks/form_template/tab_header.html'
+        label = _('Tab header')
+
+class PostSeriesTabBlock(StructBlock):
+    """Tab to display series contents."""
+    tab_header = TabHeaderBlock()
+    item = PostSeriesBlock()
+    
+    class Meta:
+        icon = 'list-ul'
+        label = _('Post series')
+        help_text = _('Header, header icon and style will be ignored '
+                      'when the tab is rendered.')
+        template = 'waggylabs/blocks/template/tab_wrapper.html'
+    
+
+
+class TableOfContentsTabBlock(StructBlock):
+    """Block to add table of contents in the sidebar."""
+    tab_header = TabHeaderBlock()
+    
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-toc text-wrap"></div><hr>')
     
@@ -73,20 +73,8 @@ class TableOfContentsTabBlock(StructBlock):
         
 class VisualsTabBlock(StructBlock):
     """Block to add thumbnails on visuals to sidebar.
-    Embeds, equations, """
-    title = CharBlock(
-        required=False,
-        label=_('Tab title'),
-        # help_text=_('Title to appear on the tab.'),
-    )
-    icon = IconBlock(
-        required=False,
-        label=_('Tab icon'),
-    )
-    icon_location = IconLocationBlock(
-        required=False,
-        label=_('Tab icon location'),
-    )
+    Embeds, equations, figures, listings, tables can be included."""
+    tab_header = TabHeaderBlock()
     preview_buttons_text = CharBlock(
         required=False,
         label=_('Preview buttons text'),
@@ -127,9 +115,6 @@ class VisualsTabBlock(StructBlock):
     
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
-        self.child_blocks['title'].field.widget.attrs.update({
-            'placeholder': _('Tab title'),
-        })
         self.child_blocks['preview_buttons_text'].field.widget.attrs.update({
             'placeholder': _('Preview button text'),
         })
@@ -163,19 +148,7 @@ class VisualsTabBlock(StructBlock):
 class CitationsTabBlock(StructBlock):
     """Adds block with references to the side bar. Only one such block can be
     added."""
-    title = CharBlock(
-        required=False,
-        label=_('Tab title'),
-        help_text=_('Title to appear on the tab.'),
-    )
-    icon = IconBlock(
-        required=False,
-        label=_('Tab icon'),
-    )
-    icon_location = IconLocationBlock(
-        required=False,
-        label=_('Tab icon location'),
-    )
+    tab_header = TabHeaderBlock()
     
     def render_basic(self, value, context=None):
         return mark_safe('<div class="waggylabs-sidebar-literature"></div>')
