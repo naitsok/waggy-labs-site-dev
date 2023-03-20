@@ -20,10 +20,6 @@ class PostSeriesBlock(StructBlock):
         required=False,
         label=_('Header: e.g. "Series"'),
     )
-    header_style = HeaderStyleChoiceBlock(
-        required=False,
-        label=_('Header style'),
-    )
     header_icon = IconBlock(
         required=False,
         label=_('Header icon'),
@@ -31,6 +27,10 @@ class PostSeriesBlock(StructBlock):
     header_icon_location = IconLocationBlock(
         required=False,
         label=_('Header icon location'),
+    )
+    header_style = HeaderStyleChoiceBlock(
+        required=False,
+        label=_('Header style'),
     )
     alignment = TextAlignmentChoiceBlock(
         required=False,

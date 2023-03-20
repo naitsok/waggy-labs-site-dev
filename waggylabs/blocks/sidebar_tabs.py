@@ -17,27 +17,31 @@ from waggylabs.blocks.styling import (
 
 class PostSeriesTabBlock(StructBlock):
     """Tab to display series contents."""
-    title = CharBlock(
-        required=False,
-        label=_('Tab title'),
-        help_text=_('Title to appear on the tab.'),
-    )
-    icon = IconBlock(
-        required=False,
-        label=_('Tab icon'),
-    )
-    icon_location = IconLocationBlock(
-        required=False,
-        label=_('Tab icon location'),
-    )
     post_series = PostSeriesBlock()
+    
+    def __init__(self, local_blocks=None, **kwargs):
+        super().__init__(local_blocks, **kwargs)
+        self.child_blocks['post_series'].child_blocks['header'].label = _('Tab title')
+        self.child_blocks['post_series'].child_blocks['header'].field.widget.attrs.update({
+            'placeholder': _('Tab title'),
+        })
+        self.child_blocks['post_series'].child_blocks['header_icon'].label = _('Tab icon')
+        self.child_blocks['post_series'].child_blocks['header_icon_location'].label = _('Tab icon location')
+        
+    
+    def render(self, value, context):
+        value['title'] = value['post_series']['header']
+        value['icon'] = value['post_series']['header_icon']
+        value['icon_location'] = value['post_series']['header_icon_location']
+        return value.bound_blocks['post_series'].render(context)
     
     class Meta:
         icon = 'list-ul'
         label = _('Post series')
-        template = 'waggylabs/blocks/template/post_series_tab.html'
-        help_text = _('Header and header icon in the post series blocks '
-                      'settings will be ignored.')
+        help_text = _('Header style will be ignored when the tab '
+                      'is displayed.')
+    #     template = 'waggylabs/blocks/template/post_series_tab.html'
+    
 
 
 class TableOfContentsTabBlock(StructBlock):

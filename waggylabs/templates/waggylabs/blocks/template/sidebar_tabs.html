@@ -48,7 +48,7 @@
                 role="tabpanel" 
                 aria-labelledby="id-{{ item.id }}-tab-{{ forloop.counter0 }}"
                 tabindex="0">
-                {% include_block item %}
+                {% include_block item with sidebar=True %}
             </div>
             {% endfor %}
         </div>
