@@ -3,23 +3,9 @@
 
 
 {% if page.is_series %}
-<div class="{% if not sidebar %}card {{ value.style }}{% endif %} {{ value.alignment }} mb-3">
-    {% if value.header or value.header_icon and not sidebar %}
-    <div class="card-header">
-        {% if value.header_icon_location == 'end' %}
-        <p class="{{ value.header_style }}">
-            {{ value.header }}
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
-        </p>
-        {% else %}
-        <p class="{{ value.header_style }}">
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
-            {{ value.header }}
-        </p>
-        {% endif %}
-    </div>
-    {% endif %}
-    <div {% if not sidebar %}class="card-body"{% endif %}>
+<div class="{% if not sidebar_tabs %}card {{ value.style }}{% endif %} {{ value.alignment }} mb-3">
+    {% include_block value.header %}
+    <div {% if not sidebar_tabs %}class="card-body"{% endif %}>
         {% for post in page.post_series %}
         <a href="{% pageurl post %}"
             class="{% if 'link' in value.post_link_style %}nav-link{% endif %} {{ value.post_link_style }} {% if 'btn' in value.post_link_style %}mt-1{% endif %} {% if forloop.counter0 != 0 %}ms-3{% endif %} {% if post.pk == page.pk %}{{ value.current_post_style }}{% endif %}">

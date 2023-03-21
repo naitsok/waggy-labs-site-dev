@@ -39,20 +39,23 @@ class TabHeaderBlock(StructBlock):
             })
     
     class Meta:
-        form_template = 'waggylabs/blocks/form_template/tab_header.html'
+        form_template = 'waggylabs/blocks/form_template/sidebar_tab_header.html'
         label = _('Tab header')
 
 class PostSeriesTabBlock(StructBlock):
     """Tab to display series contents."""
-    tab_header = TabHeaderBlock()
+    tab_header = TabHeaderBlock(
+        help_text=_('Post series block style, header, header will be ignored '
+                      'when the tab is rendered.')
+    )
     item = PostSeriesBlock()
     
     class Meta:
         icon = 'list-ul'
         label = _('Post series')
-        help_text = _('Header, header icon and style will be ignored '
-                      'when the tab is rendered.')
-        template = 'waggylabs/blocks/template/tab_wrapper.html'
+        # help_text = _('Post series block style, header, header will be ignored '
+        #               'when the tab is rendered.')
+        template = 'waggylabs/blocks/template/sidebar_tab_wrapper.html'
     
 
 
@@ -264,5 +267,7 @@ class SidebarTabsBlock(StructBlock):
                       'Note that some settings are incompartible. If tabs style is '
                       '"Tabs", then only link styles will be used for titles. '
                       'Vertical orientation of tab buttons does not support "Tabs" '
-                      'style.')
+                      'style. When blocks are rendered within tabs, their header '
+                      'text and icon becomes the tab header and icon, while the '
+                      'header style is ignored.')
     

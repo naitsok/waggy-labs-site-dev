@@ -2,6 +2,7 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StructBlock, CharBlock, ChoiceBlock
 
+from waggylabs.blocks.header import HeaderBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock,
@@ -12,25 +13,10 @@ from waggylabs.blocks.styling import (
 class PostSeriesBlock(StructBlock):
     """Block to display contents for post series. E.g. main post
     and its subposts."""
+    header = HeaderBlock()
     style = CardStyleChoiceBlock(
         required=False,
         label=_('Block style'),
-    )
-    header = CharBlock(
-        required=False,
-        label=_('Header: e.g. "Series"'),
-    )
-    header_icon = IconBlock(
-        required=False,
-        label=_('Header icon'),
-    )
-    header_icon_location = IconLocationBlock(
-        required=False,
-        label=_('Header icon location'),
-    )
-    header_style = HeaderStyleChoiceBlock(
-        required=False,
-        label=_('Header style'),
     )
     alignment = TextAlignmentChoiceBlock(
         required=False,
@@ -64,7 +50,8 @@ class PostSeriesBlock(StructBlock):
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
         for block in self.child_blocks.values():
-            block.field.widget.attrs.update({
+            if (block.name != 'header'):
+                block.field.widget.attrs.update({
                 'placeholder': block.label,
             })
 
@@ -74,4 +61,4 @@ class PostSeriesBlock(StructBlock):
         form_template = 'waggylabs/blocks/form_template/post_series.html'
         template = 'waggylabs/blocks/template/post_series.html'
         help_text = _('If the post is included into a series, '
-                      'its contents is displayed.')
+                      'its title appears in this block.')

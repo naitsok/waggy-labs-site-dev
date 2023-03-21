@@ -136,6 +136,9 @@ class PostMetaBlock(StructBlock):
                 })
     
     def render(self, value, context):
+        value['show_categories_tags'] = value['show_categories'] and \
+            value['show_tags'] and context['page'].post_categories.count() > 0 and \
+                context['page'].tags.count() > 0
         value['show_header'] = value['categories_header'] or value['tags_header']
         value['dd_width'] = 'col-sm-9' if value['show_header'] else 'col-sm-12'
         value['show_sibling_posts'] = value['show_sibling_posts'] and \

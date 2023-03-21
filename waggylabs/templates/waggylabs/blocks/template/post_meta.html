@@ -2,7 +2,7 @@
 {% load wagtailroutablepage_tags %}
 {% load waggylabs_filters %}
 
-{% if page.post_categories.all.count > 0 or page.tags.all.count > 0 %}
+{% if value.show_categories_tags %}
 <div class="card {{ value.style }} {{ value.alignment }} mb-3">
     {% if value.header or value.header_icon %}
     <div class="card-header">
@@ -21,7 +21,7 @@
     {% endif %}
     <div class="card-body">
         <dl class="row mb-0">
-            {% if page.post_categories and value.show_categories %}
+            {% if value.show_categories and page.post_categories.count > 0 %}
             {% if value.show_header %}<dt class="col-sm-3 {{ value.categories_header_style }}">{{ value.categories_header }}</dt>{% endif %}
             <dd class="{{ value.dd_width }}">
                 {% for category in page.post_categories.all %}
@@ -32,7 +32,7 @@
                 {% endfor %}
             </dd>
             {% endif %}
-            {% if page.tags and value.show_tags %}
+            {% if value.show_tags and page.tags.count > 0 %}
             {% if value.show_header %}<dt class="col-sm-3 {{ value.tags_header_style }}">{{ value.tags_header }}</dt>{% endif %}
             <dd class="{{ value.dd_width }}">
                 {% for tag in page.tags.all %}

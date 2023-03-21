@@ -2,8 +2,6 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import ChoiceBlock
 
-from waggylabs.widgets import DisabledOptionSelect
-
 
 class LinkStyleChoiceBlock(ChoiceBlock):
     """Block to choose link style (button or link) from 
