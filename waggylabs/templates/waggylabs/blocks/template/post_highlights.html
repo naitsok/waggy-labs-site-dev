@@ -3,43 +3,19 @@
 {% load waggylabs_filters %}
 
 {% if footer %}
-{# Post highligts are in footer #}
-{% if value.header or value.header_icon %}
-<h5>
-{% if value.header_icon_location == 'end' %}
-    {{ value.header }}
-    {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
-{% else %}
-    {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
-    {{ value.header }}
-{% endif %}
-</h5>
-{% endif %}
-{% if value.posts.count > 0 %}
-<ul class="list-unstyled overflow-hidden {{ value.text_wrap }}">
-    {% for post in value.posts %}
-    <li class="mb-2"><a href="{% pageurl post %}" >{{ post.title }}</a></li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% else %}
-<div class="card {{ value.block_style }} mb-3">
-    {% if value.header or value.header_icon %}
-    <div class="card-header">
-        {% if value.header_icon_location == 'end' %}
-        <p class="{{ value.header_style }}">
-            {{ value.header }}
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
-        </p>
-        {% else %}
-        <p class="{{ value.header_style }}">
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
-            {{ value.header }}
-        </p>
-        {% endif %}
-    </div>
+    {% include_block value.header %}
+    {# Post highligts are in footer #}
+    {% if value.posts.count > 0 %}
+    <ul class="list-unstyled overflow-hidden {{ value.text_wrap }}">
+        {% for post in value.posts %}
+        <li class="mb-2"><a href="{% pageurl post %}" >{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
     {% endif %}
-    <div class="card-body overflow-hidden {{ value.text_wrap }}">
+{% else %}
+<div class="{% if not sidebar_tabs %}card {{ value.style }}{% endif %} mb-3">
+    {% include_block value.header %}
+    <div class="{% if not sidebar_tabs %}card-body{% endif %} overflow-hidden {{ value.text_wrap }}">
         {% if value.posts.count == 0 %}
         <p>No posts</p>
         {% else %}

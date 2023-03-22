@@ -7,6 +7,7 @@ from wagtail.blocks import (
     BooleanBlock, IntegerBlock
 )
 
+from waggylabs.blocks.card_header import CardHeaderBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     CardStyleChoiceBlock, HeaderStyleChoiceBlock
@@ -25,25 +26,10 @@ class PostCategoryListBlock(StructBlock):
                     'If left empty, the currently browsed post list page will '
                     'be used. Otherwise, no categories will be displayed.'),
     )
-    block_style = CardStyleChoiceBlock(
+    header = CardHeaderBlock()
+    style = CardStyleChoiceBlock(
         required=False,
         label=_('Block style'),
-    )
-    header = CharBlock(
-        required=False,
-        label=_('Header'),
-    )
-    header_style = HeaderStyleChoiceBlock(
-        required=False,
-        label=_('Header style'),
-    )
-    header_icon = IconBlock(
-        required=False,
-        label=_('Header icon'),
-    )
-    header_icon_location = IconLocationBlock(
-        required=False,
-        label=_('Header icon location'),
     )
     categories_style = ChoiceBlock(
         required=False,
@@ -166,12 +152,6 @@ class PostCategoryListBlock(StructBlock):
         default='',
         label=_('Post number location'),
     )
-    
-    def __init__(self, local_blocks=None, **kwargs):
-        super().__init__(local_blocks, **kwargs)
-        self.child_blocks['header'].field.widget.attrs.update({
-            'placeholder': self.child_blocks['header'].label,
-        })
         
     def render(self, value, context):
         # needed to avoid circular imports

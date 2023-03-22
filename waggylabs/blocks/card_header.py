@@ -37,5 +37,5 @@ class CardHeaderBlock(StructBlock):
     class Meta:
         icon = 'title'
         label = _('Header settings')
-        template = 'waggylabs/blocks/template/header.html'
-        form_template = 'waggylabs/blocks/form_template/header.html'
+        template = 'waggylabs/blocks/template/card_header.html'
+        form_template = 'waggylabs/blocks/form_template/card_header.html'

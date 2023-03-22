@@ -2,21 +2,9 @@
 {% load wagtailroutablepage_tags %}
 {% load waggylabs_filters %}
 
-<div class="card {{ value.block_style }} mb-3">
-    <div class="card-header">
-        {% if value.header_icon_location == 'end' %}
-        <p class="{{ value.header_style }}">
-            {{ value.header }}
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} ms-1{% endif %}"></i>{% endif %}
-        </p>
-        {% else %}
-        <p class="{{ value.header_style }}">
-            {% if value.header_icon|is_icon %}<i class="{{ value.header_icon|icon_class }}{% if value.header %} me-1{% endif %}"></i>{% endif %}
-            {{ value.header }}
-        </p>
-        {% endif %}
-    </div>
-    <div class="card-body">
+<div class="{% if not sidebar_tabs %}card {{ value.style }}{% endif %} mb-3">
+    {% include_block value.header %}
+    <div {% if not sidebar_tabs %}class="card-body"{% endif %}>
         {% if not value.categories %}
         <p>The post list page is not correctly specified.</p>
         {% elif value.categories.count == 0 %}
