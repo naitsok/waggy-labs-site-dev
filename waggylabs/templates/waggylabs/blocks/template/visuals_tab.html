@@ -1,5 +1,0 @@
-{% load wagtailcore_tags %}
-
-{% for block in value.visuals %}
-    {% include_block block with id=block.id sidebar=True visual_settings=value %}
-{% endfor %}

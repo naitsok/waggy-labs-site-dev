@@ -1,0 +1,11 @@
+{% load wagtailcore_tags %}
+
+
+<div class="{% if not sidebar_tabs %}card {{ value.style }}{% endif %} {{ value.alignment }} mb-3">
+    {% include_block value.header %}
+    <div {% if not sidebar_tabs %}class="card-body"{% endif %}>
+        {% for block in value.visuals %}
+            {% include_block block with id=block.id sidebar=True visual_settings=value %}
+        {% endfor %}
+    </div>
+</div>

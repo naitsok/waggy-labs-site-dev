@@ -8,6 +8,7 @@ from wagtail.blocks import (
     )
 
 from waggylabs.blocks.base_body import BaseBodyBlock
+from waggylabs.blocks.card_header import CardHeaderBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
 from waggylabs.blocks.styling import (
@@ -74,10 +75,11 @@ class TableOfContentsTabBlock(StructBlock):
                       'will appear as headers in the table of contents.')
  
         
-class VisualsTabBlock(StructBlock):
+class VisualsBlock(StructBlock):
     """Block to add thumbnails on visuals to sidebar.
     Embeds, equations, figures, listings, tables can be included."""
-    tab_header = TabHeaderBlock()
+    header = TabHeaderBlock()
+    style = CardStyleChoiceBlock()
     preview_buttons_text = CharBlock(
         required=False,
         label=_('Preview buttons text'),
@@ -140,12 +142,12 @@ class VisualsTabBlock(StructBlock):
     class Meta:
         icon = 'image'
         label = _('Visuals')
-        help_text = _('Adds sidebar tab with the selected visuals. More than '
-                      'one such sidebar tab can be added with different visuals '
+        help_text = _('Adds sidebar block with the selected visuals. More than '
+                      'one such block can be added with different visuals '
                       'selected. Selected visuals will appear as thumbnails '
                       'in the sidebar and open in a dialog box for the preview.')
-        template = 'waggylabs/blocks/template/visuals_tab.html'
-        form_template = 'waggylabs/blocks/form_template/visuals_tab.html'
+        template = 'waggylabs/blocks/template/visuals.html'
+        form_template = 'waggylabs/blocks/form_template/visuals.html'
         
         
 class CitationsTabBlock(StructBlock):
@@ -165,7 +167,7 @@ class CitationsTabBlock(StructBlock):
 class SidebarTabItemBlock(StreamBlock):
     """Block to add tabs to sidebar with different content."""
     table_of_contents = TableOfContentsTabBlock()
-    visuals = VisualsTabBlock()
+    visuals = VisualsBlock()
     citations = CitationsTabBlock()
     post_series = PostSeriesTabBlock()
     

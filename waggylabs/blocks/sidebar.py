@@ -5,7 +5,7 @@ from wagtail.blocks import (
     StreamBlock, StructBlock, ChoiceBlock
 )
 
-from waggylabs.blocks.header import HeaderBlock
+from waggylabs.blocks.card_header import CardHeaderBlock
 from waggylabs.blocks.markdown import MarkdownBlock
 from waggylabs.blocks.page_info import PageInfoBlock
 from waggylabs.blocks.post_category_list import PostCategoryListBlock
@@ -20,7 +20,7 @@ from waggylabs.widgets import DisabledOptionSelect
 class CitationsBlock(StructBlock):
     """Adds block with references to the side bar. Only one such block can be
     added."""
-    header = HeaderBlock()
+    header = CardHeaderBlock()
     style = CardStyleChoiceBlock()
     class Meta:
         icon = 'list-ol'
@@ -31,7 +31,7 @@ class CitationsBlock(StructBlock):
 
 class TableOfContentsBlock(StructBlock):
     """Block to add table of contents in the sidebar."""
-    header = HeaderBlock()
+    header = CardHeaderBlock()
     style = CardStyleChoiceBlock()
     
     class Meta:
@@ -44,7 +44,7 @@ class TableOfContentsBlock(StructBlock):
         
 class TextBlock(StructBlock):
     """Block to add a simple text piece in the sidebar."""
-    header = HeaderBlock()
+    header = CardHeaderBlock()
     style = CardStyleChoiceBlock()
     text = MarkdownBlock(
         required=True,

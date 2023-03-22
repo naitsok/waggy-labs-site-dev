@@ -7,7 +7,7 @@ from wagtail.blocks import (
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import HeaderStyleChoiceBlock
 
-class HeaderBlock(StructBlock):
+class CardHeaderBlock(StructBlock):
     """A general block to configure header for other blocks
     commonly used in page body, sidebar, footer."""
     header = CharBlock(

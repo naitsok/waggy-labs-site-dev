@@ -116,7 +116,7 @@ function prepareScrollMarginTop(element) {
 
 /**
  * Prepares wisuals sidebar tab
- * @param {DOM element} element - - element within which blocks for sidebar will be processed
+ * @param {DOM element} element - element within which blocks for sidebar will be processed
  */
 function prepareSidebarVisuals(element) {
     // Citations are processed separately as they are in another sidebar tab

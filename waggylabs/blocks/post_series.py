@@ -2,18 +2,16 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StructBlock, CharBlock, ChoiceBlock
 
-from waggylabs.blocks.header import HeaderBlock
-from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.card_header import CardHeaderBlock
 from waggylabs.blocks.styling import (
-    LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock,
-    HeaderStyleChoiceBlock
+    LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
 )
 
 
 class PostSeriesBlock(StructBlock):
     """Block to display contents for post series. E.g. main post
     and its subposts."""
-    header = HeaderBlock()
+    header = CardHeaderBlock()
     style = CardStyleChoiceBlock(
         required=False,
         label=_('Block style'),

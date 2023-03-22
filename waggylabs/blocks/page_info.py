@@ -6,6 +6,7 @@ from wagtail.blocks import (
 )
 from wagtail.users.models import UserProfile
 
+from waggylabs.blocks.card_header import CardHeaderBlock
 from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     TextStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock,
@@ -17,25 +18,10 @@ class PageInfoBlock(StructBlock):
     """A block to show page details such as author, creation
     date, etc. Rendered as a description list. Can be used in
     Sidebar."""
+    header = CardHeaderBlock()
     style = CardStyleChoiceBlock(
         required=False,
         label=_('Block style'),
-    )
-    header = CharBlock(
-        required=False,
-        label=_('Header'),
-    )
-    header_style = HeaderStyleChoiceBlock(
-        required=False,
-        label=_('Header style'),
-    )
-    header_icon = IconBlock(
-        required=False,
-        label=_('Header icon'),
-    )
-    header_icon_location = IconLocationBlock(
-        required=False,
-        label=_('Header icon location'),
     )
     show_user = BooleanBlock(
         required=False,
@@ -133,9 +119,10 @@ class PageInfoBlock(StructBlock):
     def __init__(self, local_blocks=None, **kwargs):
         super().__init__(local_blocks, **kwargs)
         for block in self.child_blocks.values():
-            block.field.widget.attrs.update({
-                'placeholder': block.label,
-            })
+            if block.name != 'header':
+                block.field.widget.attrs.update({
+                    'placeholder': block.label,
+                })
         
     def render(self, value, context):
         owner = context['page'].owner
