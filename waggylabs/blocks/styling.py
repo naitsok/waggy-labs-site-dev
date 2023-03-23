@@ -218,3 +218,160 @@ class HeaderStyleChoiceBlock(ChoiceBlock):
             validators,
             label=label,
             **kwargs)
+        
+        
+class ListStyleChoiceBlock(ChoiceBlock):
+    """Block for list style."""
+    def __init__(
+        self,
+        choices=[
+            ('', _('Default list')),
+            ('list-unstyled', _('Unstyled list')),
+            ('list-numbered', _('Numbered list')),
+            ('list-group', _('List group')),
+            ('list-group list-group-flush', _('List group, no outer borders')),
+            ('list-group list-group-numbered', _('Numbered list group')),
+            ('list-group list-group-numbered list-group-flush', _('Numbered list group, no outer borders')),
+        ],
+        default='',
+        label=_('List style'),
+        required=False,
+        help_text=None,
+        validators=(),
+        **kwargs):
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            validators,
+            label=label,
+            **kwargs)
+        
+        
+class ListItemStyleChoiceBlock(ChoiceBlock):
+    """Block for list item style."""
+    def __init__(
+        self,
+        choices=[
+            ('', 'Default list item'),
+            ('list-group-item list-group-item-action', _('List group item')),
+            ('list-group-item list-group-item-action list-group-item-primary', _('List group item primary')),
+            ('list-group-item list-group-item-action list-group-item-secondary', _('List group item secondary')),
+            ('list-group-item list-group-item-action list-group-item-success', _('List group item success')),
+            ('list-group-item list-group-item-action list-group-item-danger', _('List group item danger')),
+            ('list-group-item list-group-item-action list-group-item-warning', _('List group item warning')),
+            ('list-group-item list-group-item-action list-group-item-info', _('List group item info')),
+            ('list-group-item list-group-item-action list-group-item-light', _('List group item light')),
+            ('list-group-item list-group-item-action list-group-item-dark', _('List group item dark')),
+            ('btn btn-primary', _('Button primary')),
+            ('btn btn-secondary', _('Button secondary')),
+            ('btn btn-success', _('Button success')),
+            ('btn btn-danger', _('Button danger')),
+            ('btn btn-warning', _('Button warning')),
+            ('btn btn-info', _('Button info')),
+            ('btn btn-outline-primary', _('Button outline primary')),
+            ('btn btn-outline-secondary', _('Button outline secondary')),
+            ('btn btn-outline-success', _('Button outline success')),
+            ('btn btn-outline-danger', _('Button outline danger')),
+            ('btn btn-outline-warning', _('Button outline warning')),
+            ('btn btn-outline-info', _('Button outline info')),
+            ('card-link', _('Card link')),
+            ('nav-link', _('Navigation bar link')),
+            ('nav-link active', _('Navigation bar active link')),
+            ('link-primary', _('Primary link')),
+            ('link-secondary', _('Secondary link')),
+            ('link-success', _('Success link')),
+            ('link-danger', _('Danger link')),
+            ('link-warning', _('Warning link')),
+            ('link-info', _('Info link')),
+            ('link-light', _('Light link')),
+            ('link-dark', _('Dark link')),
+            ('nav-link link-primary', _('Primary link, no underline')),
+            ('nav-link link-secondary', _('Secondary link, no underline')),
+            ('nav-link link-success', _('Success link, no underline')),
+            ('nav-link link-danger', _('Danger link, no underline')),
+            ('nav-link link-warning', _('Warning link, no underline')),
+            ('nav-link link-info', _('Info link, no underline')),
+            ('nav-link link-light', _('Light link, no underline')),
+            ('nav-link link-dark', _('Dark link, no underline')),
+        ],
+        default='',
+        label=_('List item style'),
+        required=False,
+        help_text=None,
+        validators=(),
+        **kwargs):
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            validators,
+            label=label,
+            **kwargs)
+        
+        
+class BadgeStyleChoiceBlock(ChoiceBlock):
+    """Block for list style."""
+    def __init__(
+        self,
+        choices=[
+            ('text-bg-primary', _('Primary')),
+            ('text-bg-secondary', _('Secondary')),
+            ('text-bg-success', _('Success')),
+            ('text-bg-danger', _('Danger')),
+            ('text-bg-warning', _('Warning')),
+            ('text-bg-info', _('Info')),
+            ('text-bg-light', _('Light')),
+            ('text-bg-dark', _('Dark')),
+            ('rounded-pill text-bg-primary', _('Rounded primary')),
+            ('rounded-pill text-bg-secondary', _('Rounded secondary')),
+            ('rounded-pill text-bg-success', _('Rounded success')),
+            ('rounded-pill text-bg-danger', _('Rounded danger')),
+            ('rounded-pill text-bg-warning', _('Rounded warning')),
+            ('rounded-pill text-bg-info', _('Rounded info')),
+            ('rounded-pill text-bg-light', _('Rounded light')),
+            ('rounded-pill text-bg-dark', _('Rounded dark')),
+        ],
+        default='text-bg-primary',
+        label=_('Badge style'),
+        required=True,
+        help_text=None,
+        validators=(),
+        **kwargs):
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            validators,
+            label=label,
+            **kwargs)
+        
+
+class BadgeLocationChoiceBlock(ChoiceBlock):
+    """Block for list style."""
+    def __init__(
+        self,
+        choices=[
+            ('', _('Default')),
+            ('position-absolute top-0 start-100 translate-middle', _('Top right corner')),
+            ('position-absolute top-0 start-0 translate-middle', _('Top left corner')),
+            ('position-absolute top-100 start-100 translate-middle', _('Bottom right corner')),
+            ('position-absolute top-100 start-0 translate-middle', _('Bottom left corner')),
+        ],
+        default='',
+        label=_('Badge location'),
+        required=False,
+        help_text=None,
+        validators=(),
+        **kwargs):
+        super().__init__(
+            choices,
+            default,
+            required,
+            help_text,
+            validators,
+            label=label,
+            **kwargs)

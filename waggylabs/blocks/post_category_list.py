@@ -3,20 +3,20 @@ from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    ChoiceBlock, StructBlock, CharBlock, PageChooserBlock,
+    ChoiceBlock, StructBlock, PageChooserBlock,
     BooleanBlock, IntegerBlock
 )
 
-from waggylabs.blocks.card_header import CardHeaderBlock
-from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    CardStyleChoiceBlock, HeaderStyleChoiceBlock
+    LinkStyleChoiceBlock, ListItemStyleChoiceBlock, BadgeStyleChoiceBlock,
+    BadgeLocationChoiceBlock
 )
+from waggylabs.blocks.wrapper import WrapperBlock
 from waggylabs.models.post_category import PostCategory, PostPagePostCategory
 
 
-class PostCategoryListBlock(StructBlock):
-    """Block to show post categories."""
+class PostCategoryListItemBlock(StructBlock):
+    """Wrapper item to show post categories."""
     post_list_page = PageChooserBlock(
         required=False,
         page_type='waggylabs.PostListPage',
@@ -26,23 +26,7 @@ class PostCategoryListBlock(StructBlock):
                     'If left empty, the currently browsed post list page will '
                     'be used. Otherwise, no categories will be displayed.'),
     )
-    header = CardHeaderBlock()
-    style = CardStyleChoiceBlock(
-        required=False,
-        label=_('Block style'),
-    )
-    categories_style = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Default list')),
-            ('list-unstyled', _('Unstyled list')),
-            ('list-numbered', _('Numbered list')),
-            ('list-group', _('List group')),
-            ('list-group list-group-flush', _('List group, no outer borders')),
-            ('list-group list-group-numbered', _('Numbered list group')),
-            ('list-group list-group-numbered list-group-flush', _('Numbered list group, no outer borders')),
-        ],
-        default='',
+    categories_style = LinkStyleChoiceBlock(
         label=_('Categories style'),
     )
     categories_number = IntegerBlock(
@@ -53,51 +37,7 @@ class PostCategoryListBlock(StructBlock):
         help_text=_('Depends on the selected order. '
                     'If equals to zero, then all categories are shown.'),
     )
-    category_style = ChoiceBlock(
-        required=False,
-        choices=[
-            ('list-group-item list-group-item-action', _('List group default')),
-            ('list-group-item list-group-item-action list-group-item-primary', _('List group primary')),
-            ('list-group-item list-group-item-action list-group-item-secondary', _('List group secondary')),
-            ('list-group-item list-group-item-action list-group-item-success', _('List group success')),
-            ('list-group-item list-group-item-action list-group-item-danger', _('List group danger')),
-            ('list-group-item list-group-item-action list-group-item-warning', _('List group warning')),
-            ('list-group-item list-group-item-action list-group-item-info', _('List group info')),
-            ('list-group-item list-group-item-action list-group-item-light', _('List group light')),
-            ('list-group-item list-group-item-action list-group-item-dark', _('List group dark')),
-            ('btn btn-primary', _('Button primary')),
-            ('btn btn-secondary', _('Button secondary')),
-            ('btn btn-success', _('Button success')),
-            ('btn btn-danger', _('Button danger')),
-            ('btn btn-warning', _('Button warning')),
-            ('btn btn-info', _('Button info')),
-            ('btn btn-outline-primary', _('Button outline primary')),
-            ('btn btn-outline-secondary', _('Button outline secondary')),
-            ('btn btn-outline-success', _('Button outline success')),
-            ('btn btn-outline-danger', _('Button outline danger')),
-            ('btn btn-outline-warning', _('Button outline warning')),
-            ('btn btn-outline-info', _('Button outline info')),
-            ('card-link', _('Card link')),
-            ('nav-link', _('Navigation bar link')),
-            ('nav-link active', _('Navigation bar active link')),
-            ('link-primary', _('Primary link')),
-            ('link-secondary', _('Secondary link')),
-            ('link-success', _('Success link')),
-            ('link-danger', _('Danger link')),
-            ('link-warning', _('Warning link')),
-            ('link-info', _('Info link')),
-            ('link-light', _('Light link')),
-            ('link-dark', _('Dark link')),
-            ('nav-link link-primary', _('Primary link, no underline')),
-            ('nav-link link-secondary', _('Secondary link, no underline')),
-            ('nav-link link-success', _('Success link, no underline')),
-            ('nav-link link-danger', _('Danger link, no underline')),
-            ('nav-link link-warning', _('Warning link, no underline')),
-            ('nav-link link-info', _('Info link, no underline')),
-            ('nav-link link-light', _('Light link, no underline')),
-            ('nav-link link-dark', _('Dark link, no underline')),
-        ],
-        default='list-group-item',
+    category_style = ListItemStyleChoiceBlock(
         label=_('Category item style'),
     )
     order_by = ChoiceBlock(
@@ -117,39 +57,10 @@ class PostCategoryListBlock(StructBlock):
         required=False,
         label=_('Show number of posts per category'),
     )
-    badge_style = ChoiceBlock(
-        required=False,
-        choices=[
-            ('text-bg-primary', _('Primary')),
-            ('text-bg-secondary', _('Secondary')),
-            ('text-bg-success', _('Success')),
-            ('text-bg-danger', _('Danger')),
-            ('text-bg-warning', _('Warning')),
-            ('text-bg-info', _('Info')),
-            ('text-bg-light', _('Light')),
-            ('text-bg-dark', _('Dark')),
-            ('rounded-pill text-bg-primary', _('Rounded primary')),
-            ('rounded-pill text-bg-secondary', _('Rounded secondary')),
-            ('rounded-pill text-bg-success', _('Rounded success')),
-            ('rounded-pill text-bg-danger', _('Rounded danger')),
-            ('rounded-pill text-bg-warning', _('Rounded warning')),
-            ('rounded-pill text-bg-info', _('Rounded info')),
-            ('rounded-pill text-bg-light', _('Rounded light')),
-            ('rounded-pill text-bg-dark', _('Rounded dark')),
-        ],
-        default='text-bg-primary',
+    badge_style = BadgeStyleChoiceBlock(
         label=_('Post number style'),
     )
-    badge_location = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Default')),
-            ('position-absolute top-0 start-100 translate-middle', _('Top right corner')),
-            ('position-absolute top-0 start-0 translate-middle', _('Top left corner')),
-            ('position-absolute top-100 start-100 translate-middle', _('Bottom right corner')),
-            ('position-absolute top-100 start-0 translate-middle', _('Bottom left corner')),
-        ],
-        default='',
+    badge_location = BadgeLocationChoiceBlock(
         label=_('Post number location'),
     )
         
@@ -188,3 +99,12 @@ class PostCategoryListBlock(StructBlock):
         form_template = 'waggylabs/blocks/form_template/post_category_list.html'
         help_text = _('Block to show categories for posts that are childern of the specified post list page. '
                       'If post list page is not specified, the block must be located on a post list page.')
+        
+        
+class PostCategoryListBlock(WrapperBlock):
+    """Block to show post categories."""
+    item = PostCategoryListItemBlock()
+    
+    class Meta:
+        icon = 'list-ul'
+        label = _('Categories for posts')

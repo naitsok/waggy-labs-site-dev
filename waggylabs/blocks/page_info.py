@@ -6,14 +6,14 @@ from wagtail.blocks import (
 )
 from wagtail.users.models import UserProfile
 
-from waggylabs.blocks.wrapper import WrapperBlock
 from waggylabs.blocks.styling import (
     TextStyleChoiceBlock, TextAlignmentChoiceBlock
-) 
+)
+from waggylabs.blocks.wrapper import WrapperBlock
 
 
 class PageInfoItemBlock(StructBlock):
-    """A block item to show page details such as author, creation
+    """Wrapper item to show page details such as author, creation
     date, etc. Rendered as a description list. Can be used in
     Sidebar."""
     show_user = BooleanBlock(
@@ -140,7 +140,7 @@ class PageInfoItemBlock(StructBlock):
     
     
 class PageInfoBlock(WrapperBlock):
-    """Page info block."""
+    """Block to show page info."""
     item = PageInfoItemBlock()
         
     class Meta:
