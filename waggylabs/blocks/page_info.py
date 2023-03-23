@@ -135,8 +135,6 @@ class PageInfoItemBlock(StructBlock):
         label = _('Page info')
         template = 'waggylabs/blocks/template/page_info.html'
         form_template = 'waggylabs/blocks/form_template/page_info.html'
-        help_text = _('Page info block displays the information about '
-                      'page creator, created date, and last updated date.')
     
     
 class PageInfoBlock(WrapperBlock):
@@ -146,5 +144,6 @@ class PageInfoBlock(WrapperBlock):
     class Meta:
         icon = 'form'
         label = _('Page info')
-        
+        help_text = _('Page info block displays the information about '
+                      'page creator, created date, and last updated date.')
         

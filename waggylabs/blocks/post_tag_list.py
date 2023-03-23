@@ -7,16 +7,16 @@ from wagtail.blocks import (
     BooleanBlock, IntegerBlock
 )
 
-from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
-    CardStyleChoiceBlock, HeaderStyleChoiceBlock, LinkStyleChoiceBlock
+    LinkStyleChoiceBlock, BadgeStyleChoiceBlock, BadgeLocationChoiceBlock
 )
+from waggylabs.blocks.wrapper import WrapperBlock
 from waggylabs.models.post_tags import PostPageTag
 # from waggylabs.models.post_page import PostPage
 
 
-class PostTagListBlock(StructBlock):
-    """Block to show post categories."""
+class PostTagListItemBlock(StructBlock):
+    """Item block to show post tag."""
     post_list_page = PageChooserBlock(
         required=False,
         page_type='waggylabs.PostListPage',
@@ -25,26 +25,6 @@ class PostTagListBlock(StructBlock):
                     'children of the selected post list page. '
                     'If left empty, the currently browsed post list page will '
                     'be used. Otherwise, no categories will be displayed.'),
-    )
-    block_style = CardStyleChoiceBlock(
-        required=False,
-        label=_('Block style'),
-    )
-    header = CharBlock(
-        required=False,
-        label=_('Header'),
-    )
-    header_style = HeaderStyleChoiceBlock(
-        required=False,
-        label=_('Header style'),
-    )
-    header_icon = IconBlock(
-        required=False,
-        label=_('Header icon'),
-    )
-    header_icon_location = IconLocationBlock(
-        required=False,
-        label=_('Header icon location'),
     )
     tags_style = LinkStyleChoiceBlock(
         required=False,
@@ -76,47 +56,12 @@ class PostTagListBlock(StructBlock):
         label=_('Show number of posts per tag'),
 
     )
-    badge_style = ChoiceBlock(
-        required=False,
-        choices=[
-            ('text-bg-primary', _('Primary')),
-            ('text-bg-secondary', _('Secondary')),
-            ('text-bg-success', _('Success')),
-            ('text-bg-danger', _('Danger')),
-            ('text-bg-warning', _('Warning')),
-            ('text-bg-info', _('Info')),
-            ('text-bg-light', _('Light')),
-            ('text-bg-dark', _('Dark')),
-            ('rounded-pill text-bg-primary', _('Rounded primary')),
-            ('rounded-pill text-bg-secondary', _('Rounded secondary')),
-            ('rounded-pill text-bg-success', _('Rounded success')),
-            ('rounded-pill text-bg-danger', _('Rounded danger')),
-            ('rounded-pill text-bg-warning', _('Rounded warning')),
-            ('rounded-pill text-bg-info', _('Rounded info')),
-            ('rounded-pill text-bg-light', _('Rounded light')),
-            ('rounded-pill text-bg-dark', _('Rounded dark')),
-        ],
-        default='text-bg-primary',
+    badge_style = BadgeStyleChoiceBlock(
         label=_('Post number style'),
     )
-    badge_location = ChoiceBlock(
-        required=False,
-        choices=[
-            ('', _('Default')),
-            ('position-absolute top-0 start-100 translate-middle', _('Top right corner')),
-            ('position-absolute top-0 start-0 translate-middle', _('Top left corner')),
-            ('position-absolute top-100 start-100 translate-middle', _('Bottom right corner')),
-            ('position-absolute top-100 start-0 translate-middle', _('Bottom left corner')),
-        ],
-        default='',
+    badge_location = BadgeLocationChoiceBlock(
         label=_('Post number location'),
     )
-    
-    def __init__(self, local_blocks=None, **kwargs):
-        super().__init__(local_blocks, **kwargs)
-        self.child_blocks['header'].field.widget.attrs.update({
-            'placeholder': self.child_blocks['header'].label,
-        })
         
     def render(self, value, context):
         # needed to avoid circular imports
@@ -152,5 +97,17 @@ class PostTagListBlock(StructBlock):
         label = _('Tags for posts')
         template = 'waggylabs/blocks/template/post_tag_list.html'
         form_template = 'waggylabs/blocks/form_template/post_tag_list.html'
-        help_text = _('Block to show tags for posts that are childern of the specified post list page. '
-                      'If post list page is not specified, the block must be located on a post list page.')
+        
+        
+class PostTagListBlock(WrapperBlock):
+    """Block to display tags for the posts under
+    certain post list page."""
+    
+    item = PostTagListItemBlock()
+    
+    class Meta:
+        icon = 'list-ul'
+        label = _('Tags for posts')
+        help_text = _('Tag list shows tags for posts that are childern of the specified post list page. '
+                      'If post list page is not specified, post list page will be automatically selected '
+                      'if block is located on a post list page or tags for all posts will be listed.')

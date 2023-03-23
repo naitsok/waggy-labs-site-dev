@@ -19,10 +19,6 @@
                 {{ child.render_form }}
             </div>
         {% endif %}
-        {% if forloop.counter0 == 4 %}
-            {# Empty div for better looking grid layout of the block #}
-            <div class="w-field w-100"></div>
-        {% endif %}
     {% endfor %}
     </div>
     <div data-contentpath="{{ children.previous_post.block.name }}">

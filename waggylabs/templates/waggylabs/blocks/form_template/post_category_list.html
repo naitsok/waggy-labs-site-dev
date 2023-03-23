@@ -12,12 +12,9 @@
     <div class="w-field" data-contentpath="{{ children.post_list_page.block.name }}">
         {{ children.post_list_page.render_form }}{% if children.post_list_page.block.required %}<span class="w-required-mark">*</span>{% endif %}
     </div>
-    <div class="w-field" data-contentpath="{{ children.header.block.name }}">
-        {{ children.header.render_form }}{% if children.header.block.required %}<span class="w-required-mark">*</span>{% endif %}
-    </div>
     <div class="waggylabs-grid-container-2">
         {% for child in children.values %}
-        {% if child.block.name != 'post_list_page' and child.block.name != 'header' %}
+        {% if child.block.name != 'post_list_page' %}
         <div class="w-100" data-contentpath="{{ child.block.name }}">
             {% if child.block.label %}
                 <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>{{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}</label>

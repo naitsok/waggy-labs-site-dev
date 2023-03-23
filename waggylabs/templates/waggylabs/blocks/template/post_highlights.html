@@ -3,7 +3,6 @@
 {% load waggylabs_filters %}
 
 {% if footer %}
-    {% include_block value.header %}
     {# Post highligts are in footer #}
     {% if value.posts.count > 0 %}
     <ul class="list-unstyled overflow-hidden {{ value.text_wrap }}">
@@ -13,36 +12,31 @@
     </ul>
     {% endif %}
 {% else %}
-<div class="{% if not sidebar_tabs %}card {{ value.style }}{% endif %} mb-3">
-    {% include_block value.header %}
-    <div class="{% if not sidebar_tabs %}card-body{% endif %} overflow-hidden {{ value.text_wrap }}">
-        {% if value.posts.count == 0 %}
-        <p>No posts</p>
+    {% if value.posts.count == 0 %}
+    <p>No posts</p>
+    {% else %}
+        {% if 'group' in value.posts_style %}
+        <div class="{{ value.posts_style }}">
+            {% for post in value.posts %}
+            <a href="{% pageurl post %}" 
+                class="{{ value.post_style }} {% if 'btn' in value.post_style %}mt-1 mb-1{% endif %}">
+                <div class="d-flex justify-content-between align-items-center p-mb-0">
+                    {{ post.title }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
         {% else %}
-            {% if 'group' in value.posts_style %}
-            <div class="{{ value.posts_style }}">
-                {% for post in value.posts %}
+        <{% if 'number' in value.posts_style %}ol{% else %}ul{% endif %} class="{{ value.posts_style }}">
+            {% for post in value.posts %}
+            <li>
                 <a href="{% pageurl post %}" 
                     class="{{ value.post_style }} {% if 'btn' in value.post_style %}mt-1 mb-1{% endif %}">
-                    <div class="d-flex justify-content-between align-items-center p-mb-0">
-                        {{ post.title }}
-                    </div>
+                    {{ post.title }}
                 </a>
-                {% endfor %}
-            </div>
-            {% else %}
-            <{% if 'number' in value.posts_style %}ol{% else %}ul{% endif %} class="{{ value.posts_style }}">
-                {% for post in value.posts %}
-                <li>
-                    <a href="{% pageurl post %}" 
-                        class="{{ value.post_style }} {% if 'btn' in value.post_style %}mt-1 mb-1{% endif %}">
-                        {{ post.title }}
-                    </a>
-                </li>
-                {% endfor %}
-            </{% if 'number' in value.posts_style %}ol{% else %}ul{% endif %}>
-            {% endif %}
+            </li>
+            {% endfor %}
+        </{% if 'number' in value.posts_style %}ol{% else %}ul{% endif %}>
         {% endif %}
-    </div>
-</div>
+    {% endif %}
 {% endif %}

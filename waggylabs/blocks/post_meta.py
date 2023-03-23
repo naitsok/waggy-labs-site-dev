@@ -14,7 +14,6 @@ class SiblingPostBlock(StructBlock):
     """Defines the appearance of previous and next posts in
     the post footer block."""
     style = CardStyleChoiceBlock(
-        required=False,
         label=_('Block style'),
     )
     header = CharBlock(
@@ -22,19 +21,15 @@ class SiblingPostBlock(StructBlock):
         label=_('Header: e.g. "Next post"'),
     )
     header_icon = IconBlock(
-        required=False,
         label=_('Header icon'),
     )
     header_icon_location = IconLocationBlock(
-        required=False,
         label=_('Header icon location'),
     )
     alignment = TextAlignmentChoiceBlock(
-        required=False,
         label=_('Text alignment'),
     )
     post_link_style = LinkStyleChoiceBlock(
-        required=False,
         label=_('Post link style'),
     )
     
@@ -53,25 +48,23 @@ class PostMetaBlock(StructBlock):
     """Post meta block describes post metadata, e.g. post author,
     post siblings, tags, categories. If it is las block in BodyBlock,
     then it is displayed after references."""
-    style = CardStyleChoiceBlock(
-        required=False,
-        label=_('Block style')
-    )
     header = CharBlock(
-        required=False,
         label=_('Header'),
     )
     header_style = HeaderStyleChoiceBlock(
-        required=False,
         label=_('Header style'),
     )
     header_icon = IconBlock(
-        required=False,
         label=_('Header icon'),
     )
     header_icon_location = IconLocationBlock(
-        required=False,
-        label=_('Header icon location')
+        label=_('Header icon location'),
+    )
+    style = CardStyleChoiceBlock(
+        label=_('Block style'),
+    )
+    alignment = TextAlignmentChoiceBlock(
+        label=_('Text alignment'),
     )
     show_categories = BooleanBlock(
         required=False,
@@ -152,7 +145,7 @@ class PostMetaBlock(StructBlock):
         icon = 'doc-full-inverse'
         template = 'waggylabs/blocks/template/post_meta.html'
         form_template = 'waggylabs/blocks/form_template/post_meta.html'
-        help_text = _('Post metadata block displays information '
+        help_text = _('Post metadata displays information '
                       'about the post, such as tags, categories, '
                       'links to previous and next posts. If this block '
                       'is at the end, it will be rendered after (possible) '
