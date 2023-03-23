@@ -10,11 +10,10 @@ from waggylabs.blocks.markdown import MarkdownBlock
 from waggylabs.blocks.page_info import PageInfoBlock
 from waggylabs.blocks.post_category_list import PostCategoryListBlock
 from waggylabs.blocks.post_highlights import PostHighlightsBlock
-from waggylabs.blocks.post_series import PostSeriesBlock
+from waggylabs.blocks.post_series import PostSeriesBlock, PostSeries1Block, PostSeries2Block
 from waggylabs.blocks.post_tag_list import PostTagListBlock
 from waggylabs.blocks.sidebar_tabs import SidebarTabsBlock
 from waggylabs.blocks.styling import CardStyleChoiceBlock
-from waggylabs.widgets import DisabledOptionSelect
 
 
 class CitationsBlock(StructBlock):
@@ -74,6 +73,8 @@ class SidebarItemBlock(StreamBlock):
     post_category_list = PostCategoryListBlock()
     post_highlights = PostHighlightsBlock()
     post_series = PostSeriesBlock()
+    post_series1 = PostSeries1Block()
+    post_series2 = PostSeries2Block()
     post_tag_list = PostTagListBlock()
     tabs = SidebarTabsBlock()
     toc = TableOfContentsBlock()

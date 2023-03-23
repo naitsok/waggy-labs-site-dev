@@ -6,23 +6,16 @@ from wagtail.blocks import (
 )
 from wagtail.users.models import UserProfile
 
-from waggylabs.blocks.card_header import CardHeaderBlock
-from waggylabs.blocks.icon import IconBlock, IconLocationBlock
+from waggylabs.blocks.wrapper import WrapperBlock
 from waggylabs.blocks.styling import (
-    TextStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock,
-    HeaderStyleChoiceBlock
+    TextStyleChoiceBlock, TextAlignmentChoiceBlock
 ) 
 
 
-class PageInfoBlock(StructBlock):
-    """A block to show page details such as author, creation
+class PageInfoItemBlock(StructBlock):
+    """A block item to show page details such as author, creation
     date, etc. Rendered as a description list. Can be used in
     Sidebar."""
-    header = CardHeaderBlock()
-    style = CardStyleChoiceBlock(
-        required=False,
-        label=_('Block style'),
-    )
     show_user = BooleanBlock(
         required=False,
         label=_('Show the name of the page creator'),
@@ -146,3 +139,12 @@ class PageInfoBlock(StructBlock):
                       'page creator, created date, and last updated date.')
     
     
+class PageInfoBlock(WrapperBlock):
+    """Page info block."""
+    item = PageInfoItemBlock()
+        
+    class Meta:
+        icon = 'form'
+        label = _('Page info')
+        
+        

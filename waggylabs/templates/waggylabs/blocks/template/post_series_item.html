@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+
+
+{% if page.is_series %}
+
+{% for post in page.post_series %}
+<a href="{% pageurl post %}"
+    class="{% if 'link' in value.post_link_style %}nav-link{% endif %} {{ value.post_link_style }} {% if 'btn' in value.post_link_style %}mt-1{% endif %} {% if forloop.counter0 != 0 %}ms-3{% endif %} {% if post.pk == page.pk %}{{ value.current_post_style }}{% endif %}">
+    {{ post.title }}
+</a>{% if 'btn' in value.post_link_style %}<br />{% endif %}
+{% endfor %}
+
+{% endif %}
