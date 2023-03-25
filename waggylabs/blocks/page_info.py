@@ -74,7 +74,7 @@ class PageInfoItemBlock(StructBlock):
                     'displayed.'),
     )
     datetime_style = ChoiceBlock(
-        required=False,
+        required=True,
         choices=[
             ('date', _('Only date')),
             ('datetime', _('Date and time')),
@@ -84,7 +84,7 @@ class PageInfoItemBlock(StructBlock):
         label=_('Date style'),
     )
     time_format = ChoiceBlock(
-        required=False,
+        required=True,
         choices=[
             ('G:i', _('24-hour format')),
             ('g:i A', _('12-hour format')),
@@ -97,15 +97,12 @@ class PageInfoItemBlock(StructBlock):
         label=_('Time since text, e.g. ago'),
     )
     alignment = TextAlignmentChoiceBlock(
-        required=False,
         label=_('Text alignment'),
     )
-    header_style = TextStyleChoiceBlock(
-        required=True,
+    row_header_style = TextStyleChoiceBlock(
         label=_('Row header style'),
     )
-    data_style = TextStyleChoiceBlock(
-        required=True,
+    row_data_style = TextStyleChoiceBlock(
         label=_('Row style'),
     )
     

@@ -48,7 +48,6 @@ class LinkStyleChoiceBlock(ChoiceBlock):
         help_text=None,
         validators=(),
         **kwargs):
-        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
@@ -64,19 +63,19 @@ class TextStyleChoiceBlock(ChoiceBlock):
     def __init__(
         self,
         choices=[
-            ('', 'Default'),
-            ('fw-bold', 'Bold'),
-            ('fw-bolder', 'Bolder'),
-            ('fw-semibold', 'Semibold'),
-            ('fw-normal', 'Normal'),
-            ('fw-light', 'Light'),
-            ('fw-lighter', 'Lighter'),
-            ('fst-italic', 'Italic'),
-            ('fw-bold fst-italic', 'Bold italic'),
-            ('fw-bolder fst-italic', 'Bolder italic'),
-            ('fw-semibold fst-italic', 'Semibold italic'),
-            ('fw-light fst-italic', 'Light italic'),
-            ('fw-lighter fst-italic', 'Lighter italic'),
+            ('', _('Default')),
+            ('fw-bold', _('Bold')),
+            ('fw-bolder', _('Bolder')),
+            ('fw-semibold', _('Semibold')),
+            ('fw-normal', _('Normal')),
+            ('fw-light', _('Light')),
+            ('fw-lighter', _('Lighter')),
+            ('fst-italic', _('Italic')),
+            ('fw-bold fst-italic', _('Bold italic')),
+            ('fw-bolder fst-italic', _('Bolder italic')),
+            ('fw-semibold fst-italic', _('Semibold italic')),
+            ('fw-light fst-italic', _('Light italic')),
+            ('fw-lighter fst-italic', _('Lighter italic')),
             ('btn btn-primary', _('Button primary')),
             ('btn btn-secondary', _('Button secondary')),
             ('btn btn-success', _('Button success')),
@@ -96,7 +95,6 @@ class TextStyleChoiceBlock(ChoiceBlock):
         help_text=None,
         validators=(),
         **kwargs):
-        choices[0] = ('', label)
         super().__init__(
             choices,
             default,
@@ -336,7 +334,7 @@ class BadgeStyleChoiceBlock(ChoiceBlock):
         ],
         default='text-bg-primary',
         label=_('Badge style'),
-        required=True,
+        required=False,
         help_text=None,
         validators=(),
         **kwargs):

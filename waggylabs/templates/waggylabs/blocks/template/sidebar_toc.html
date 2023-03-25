@@ -1,8 +1,0 @@
-{% load wagtailcore_tags %}
-
-<div class="{% if not sidebar_tabs %}card {{ value.style }}{% endif %} mb-3">
-    {% include_block value.header %}
-    <div class="waggylabs-sidebar-toc {% if not sidebar_tabs %}card-body{% endif %}">
-        {# Page contents will be added here in browser by script #}
-    </div>
-</div>

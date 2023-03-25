@@ -8,7 +8,7 @@ from wagtail.blocks import (
 )
 
 from waggylabs.blocks.styling import (
-    LinkStyleChoiceBlock, ListItemStyleChoiceBlock, BadgeStyleChoiceBlock,
+    ListStyleChoiceBlock, ListItemStyleChoiceBlock, BadgeStyleChoiceBlock,
     BadgeLocationChoiceBlock
 )
 from waggylabs.blocks.wrapper import WrapperBlock
@@ -26,7 +26,7 @@ class PostCategoryListItemBlock(StructBlock):
                     'If left empty, the currently browsed post list page will '
                     'be used. Otherwise, no categories will be displayed.'),
     )
-    categories_style = LinkStyleChoiceBlock(
+    categories_style = ListStyleChoiceBlock(
         label=_('Categories style'),
     )
     categories_number = IntegerBlock(
@@ -68,6 +68,7 @@ class PostCategoryListItemBlock(StructBlock):
         # needed to avoid circular imports
         post_page_model = apps.get_model('waggylabs', 'PostPage')
         category_query =  None
+        
         if not value['post_list_page'] and \
             context['page'].specific_class.__name__ == 'PostListPage':
             value['post_list_page'] = context['page']

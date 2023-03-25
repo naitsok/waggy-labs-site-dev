@@ -2,7 +2,8 @@
 {% load waggylabs_filters %}
 
 <div class="{% if not sidebar_tabs %}card {{ value.block_style }}{% endif %} {{ value.block_alignment }} mb-3">
-    {% if value.header or value.header_icon and not sidebar_tabs %}
+    {% if value.header or value.header_icon %}
+    {% if not sidebar_tabs %}
     <div class="card-header">
         {% if value.header_icon_location == 'end' %}
         <p class="{{ value.header_style }}">
@@ -16,6 +17,7 @@
         </p>
         {% endif %}
     </div>
+    {% endif %}
     {% endif %}
     <div {% if not sidebar_tabs %}class="card-body"{% endif %}>
         {% include_block value.item %}

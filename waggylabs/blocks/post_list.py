@@ -92,7 +92,7 @@ class PostListBlock(StructBlock):
         label=_('Post title style'),
     )
     page_alignment = ChoiceBlock(
-        required=False,
+        required=True,
         choices=[
             ('justify-content-start', _('Left')),
             ('justify-content-center', _('Center')),
@@ -117,7 +117,7 @@ class PostListBlock(StructBlock):
         label=_('Posts per page'),
     )
     order_by = ChoiceBlock(
-        required=False,
+        required=True,
         choices=[
             ('created_at', _('Older first')),
             ('-created_at', _('Newer first')),
@@ -145,7 +145,7 @@ class PostListBlock(StructBlock):
         label=_('Date of page publication'),
     )
     datetime_style = ChoiceBlock(
-        required=False,
+        required=True,
         choices=[
             ('date', _('Only date')),
             ('datetime', _('Date and time')),
@@ -159,7 +159,7 @@ class PostListBlock(StructBlock):
         label=_('Show time in the date fields'),
     )
     time_format = ChoiceBlock(
-        required=False,
+        required=True,
         choices=[
             ('G:i', _('24-hour format')),
             ('g:i A', _('12-hour format')),

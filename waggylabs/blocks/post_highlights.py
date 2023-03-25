@@ -3,8 +3,8 @@ from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    ChoiceBlock, StructBlock, CharBlock, PageChooserBlock,
-    BooleanBlock, IntegerBlock
+    ChoiceBlock, StructBlock, PageChooserBlock,
+    IntegerBlock
 )
 
 from waggylabs.blocks.styling import (
@@ -96,7 +96,7 @@ class PostHighlightsBlock(WrapperBlock):
 class FooterPostHighlightsBlock(FooterWrapperBlock):
     """Block to list the selected number of posts based on the
     post list page in footer."""
-    item = PostHighlightsBlock()
+    item = PostHighlightsItemBlock()
     
     class Meta:
         icon = 'list-ul'

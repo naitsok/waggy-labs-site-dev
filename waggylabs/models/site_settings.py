@@ -5,11 +5,12 @@ from modelcluster.models import ClusterableModel
 
 from wagtail.fields import StreamField
 from wagtail.admin.panels import (
-    FieldPanel, HelpPanel, ObjectList, TabbedInterface, MultiFieldPanel)
+    FieldPanel, HelpPanel, ObjectList, TabbedInterface, MultiFieldPanel
+)
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 
-from waggylabs.blocks.footer import FooterPostHighlightsBlock
 from waggylabs.blocks.links import ExternalLinkBlock, InternalLinkBlock
+from waggylabs.blocks.post_highlights import FooterPostHighlightsBlock
 from waggylabs.widgets import IconInput, ColorInput
 
 
