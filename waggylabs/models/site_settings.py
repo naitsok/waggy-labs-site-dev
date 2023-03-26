@@ -9,6 +9,7 @@ from wagtail.admin.panels import (
 )
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 
+from waggylabs.blocks.link_list import FooterLinkListBlock
 from waggylabs.blocks.links import ExternalLinkBlock, InternalLinkBlock
 from waggylabs.blocks.post_highlights import FooterPostHighlightsBlock
 from waggylabs.widgets import IconInput, ColorInput
@@ -192,9 +193,11 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     footer = StreamField(
         [
             ('post_highlights', FooterPostHighlightsBlock()),
+            ('link_list', FooterLinkListBlock()),
         ],
         block_counts={
             'post_highlights': { 'max_num': 1 },
+            'link_list': { 'max_num': 1 },
         },
         blank=True,
         use_json_field=True,
