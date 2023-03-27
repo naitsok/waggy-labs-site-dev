@@ -20,6 +20,6 @@
     {% endif %}
     {% endif %}
     <div {% if not sidebar_tabs %}class="card-body"{% endif %}>
-        {% include_block value.item %}
+        {% include_block value.item with id=value.item.id %}
     </div>
 </div>
