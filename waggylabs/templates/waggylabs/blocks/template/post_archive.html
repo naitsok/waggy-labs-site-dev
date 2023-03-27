@@ -1,12 +1,13 @@
 {% load wagtailcore_tags %}
+{% load wagtailroutablepage_tags %}
 {% load waggylabs_filters %}
 
 {% if footer %}
     {# Post highligts are in footer #}
-    {% if value.posts.count > 0 %}
+    {% if value.archives.count > 0 %}
     <ul class="list-unstyled overflow-hidden {{ value.text_wrap }}">
-        {% for post in value.posts %}
-        <li class="mb-2"><a href="{% pageurl post %}" >{{ post.title }}</a></li>
+        {% for date in value.archives %}
+        <li class="mb-2"><a href="{% routablepageurl value.post_list_page 'posts_by_date' date|date:'Y' date|date:'b' date|date:'d' %}" >{{ date|date:'j E, Y' }}</a></li>
         {% endfor %}
     </ul>
     {% endif %}
