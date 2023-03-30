@@ -18,8 +18,13 @@ from waggylabs.blocks.document import DocumentBlock
 from waggylabs.blocks.embed import EmbedBlock
 from waggylabs.blocks.equation import EquationBlock
 from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.link_list import LinkListBlock
 from waggylabs.blocks.listing import ListingBlock
 from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.post_archive import PostArchiveBlock
+from waggylabs.blocks.post_category_list import PostCategoryListBlock
+from waggylabs.blocks.post_highlights import PostHighlightsBlock
+from waggylabs.blocks.post_tag_list import PostTagListBlock
 from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
@@ -34,7 +39,12 @@ class ColumnsContentBlock(StreamBlock):
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()
+    link_list = LinkListBlock()
     listing = ListingBlock()
+    post_archive = PostArchiveBlock()
+    post_category = PostCategoryListBlock()
+    post_highlights = PostHighlightsBlock()
+    post_tag_list = PostTagListBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
     text = MarkdownBlock(help_text='')
@@ -60,11 +70,7 @@ class ColumnsItemBlock(StructBlock):
         label_format = _('Column: {body}')
         
 
-DEFAULT_COLUMNS_MAX = (
-    settings.WAGGYLABS_COLUMNS_MAX if
-    hasattr(settings, 'WAGGYLABS_COLUMNS_MAX')
-    else 3
-)
+DEFAULT_COLUMNS_MAX = getattr(settings, 'WAGGYLABS_COLUMNS_MAX', 3)
 class ColumnsBlock(StructBlock):
     """Block to add multiple columns."""
     items = ListBlock(

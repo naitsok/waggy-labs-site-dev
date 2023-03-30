@@ -16,8 +16,14 @@ from waggylabs.blocks.citation import CitationBlock
 from waggylabs.blocks.embed import EmbedBlock
 from waggylabs.blocks.equation import EquationBlock
 from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.link_list import LinkListBlock
 from waggylabs.blocks.listing import ListingBlock
 from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.page_info import PageInfoBlock
+from waggylabs.blocks.post_archive import PostArchiveBlock
+from waggylabs.blocks.post_category_list import PostCategoryListBlock
+from waggylabs.blocks.post_highlights import PostHighlightsBlock
+from waggylabs.blocks.post_tag_list import PostTagListBlock
 from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
@@ -36,7 +42,13 @@ class BaseBodyBlock(StreamBlock):
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()
+    link_list = LinkListBlock()
     listing = ListingBlock()
+    page_info = PageInfoBlock()
+    post_archive = PostArchiveBlock()
+    post_category = PostCategoryListBlock()
+    post_highlights = PostHighlightsBlock()
+    post_tag_list = PostTagListBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
     text = MarkdownBlock()
@@ -76,15 +88,35 @@ class BaseBodyBlock(StreamBlock):
     def render(self, value, context):
         if type(value) is not dict:
             value = { 'body': value }
+            
         value['literature'] = BaseBodyBlock.blocks_by_types(
             value['body'],
             ['citation', 'document']
         )
+        
         if context['page'].show_sidebar:
             value['modals'] = BaseBodyBlock.blocks_by_types(
                 value['body'],
                 ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
             )
+            
+        # if post_meta and page_info blocks are at the end of body
+        # before them references must be rendered
+        page_body = []
+        info_meta = []
+        for idx, block in enumerate(value):
+            if (idx >= len(value) - 2) and \
+                (value.raw_data[-1]['type'] in ['post_meta', 'page_info']) and \
+                (block.block_type in ['post_meta', 'page_info']):
+                info_meta.append(block)
+            else:
+                page_body.append(block)
+                
+        value = {
+            'body': page_body,
+            'info_meta': info_meta,
+        }
+        
         if 'page_in_list' in context:
             # page is rendered in the list, e.g. after search
             # we need to display blocks in page.body only those that before cut

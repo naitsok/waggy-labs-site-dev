@@ -99,7 +99,7 @@ class PostArchiveItemBlock(StructBlock):
         form_template = 'waggylabs/blocks/form_template/post_archives.html'
         
         
-class PostArchivesBlock(WrapperBlock):
+class PostArchiveBlock(WrapperBlock):
     """Block to list the archive links to the posts published in the
     specified time interval."""
     item = PostArchiveItemBlock()
@@ -110,7 +110,7 @@ class PostArchivesBlock(WrapperBlock):
         help_text = _('Post archives shows links to lists of posts that were published '
                       'during specified time periods.')
         
-class FooterPostHighlightsBlock(FooterWrapperBlock):
+class FooterPostArchiveBlock(FooterWrapperBlock):
     """Block to list the archive links to the posts published in the
     specified time interval in footer."""
     item = PostArchiveItemBlock()

@@ -8,10 +8,10 @@ from wagtailmarkdown.blocks import render_markdown
 # list of pairs for code block; first value must indicate the valid
 # codemirror mode file (e.g., stex, clike, etc), https://codemirror.net/5/mode/;
 # second value is the display text
-CODEB_LANGS = (
-    settings.WAGGYLABS_CODE_LANGS if
-    hasattr(settings, 'WAGGYLABS_CODE_LANGS')
-    else [
+CODEB_LANGS = getattr(
+    settings, 
+    'WAGGYLABS_CODE_LANGS', 
+    [
         ('python', _('Python')),
         ('clike', _('C, C++, C#')),
         ('clike', _('Java')),

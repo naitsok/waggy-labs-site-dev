@@ -2,10 +2,8 @@
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import (
-    StreamBlock, StructBlock, CharBlock, StructValue, ChoiceBlock
+    StreamBlock, StructBlock, CharBlock, StructValue
 )
-
-from waggylabs.widgets import DisabledOptionSelect
 
 from waggylabs.blocks.blockquote import BlockQuoteBlock
 from waggylabs.blocks.carousel import ImageCarouselBlock
@@ -18,9 +16,14 @@ from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.styling import (
     LinkStyleChoiceBlock, CardStyleChoiceBlock, TextAlignmentChoiceBlock
 )
+from waggylabs.blocks.link_list import LinkListBlock
 from waggylabs.blocks.listing import ListingBlock
-from waggylabs.blocks.table import TableBlock, TableFigureBlock
 from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.post_archive import PostArchiveBlock
+from waggylabs.blocks.post_category_list import PostCategoryListBlock
+from waggylabs.blocks.post_highlights import PostHighlightsBlock
+from waggylabs.blocks.post_tag_list import PostTagListBlock
+from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
 class CollapseContentBlock(StreamBlock):
@@ -32,7 +35,12 @@ class CollapseContentBlock(StreamBlock):
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()
+    link_list = LinkListBlock()
     listing = ListingBlock()
+    post_archive = PostArchiveBlock()
+    post_category = PostCategoryListBlock()
+    post_highlights = PostHighlightsBlock()
+    post_tag_list = PostTagListBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
     text = MarkdownBlock(

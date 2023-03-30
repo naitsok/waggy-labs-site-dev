@@ -163,14 +163,15 @@ function prepareSidebarVisuals(element) {
  * @param {DOM element} element - element from where to take headers
  */
 function prepareSidebarContents(element) {
-    const toc = document.querySelector('.waggylabs-sidebar-toc');
+    // const toc = document.querySelector('.waggylabs-sidebar-toc');
     const headerTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
     const navbar = document.getElementById('navbar-header');
     var navbarHeight = '10px';
     if (navbar.classList.contains('sticky-top') || navbar.classList.contains('fixed-top')) {
         navbarHeight = String(navbar.offsetHeight + 10) + 'px';
     }
-    if (toc) {
+
+    document.querySelectorAll('.waggylabs-sidebar-toc').forEach((toc) => {
         element.childNodes.forEach((node, idx) => {
             if (headerTags.indexOf(node.tagName) >= 0) {
                 node.setAttribute('id', 'waggylabs-header-' + String(idx));
@@ -183,7 +184,22 @@ function prepareSidebarContents(element) {
                 toc.appendChild(tocLink);
             }
         });
-    }
+    });
+
+    /* if (toc) {
+        element.childNodes.forEach((node, idx) => {
+            if (headerTags.indexOf(node.tagName) >= 0) {
+                node.setAttribute('id', 'waggylabs-header-' + String(idx));
+                node.style.setProperty('scroll-margin-top', navbarHeight);
+                var header_num = Number(node.tagName.slice(-1));
+                var tocLink = document.createElement('a');
+                tocLink.setAttribute('href', '#' + 'waggylabs-header-' + String(idx));
+                tocLink.classList.add('nav-link', 'ms-2', 'ps-' + String(header_num - 1));
+                tocLink.innerHTML = node.innerHTML;
+                toc.appendChild(tocLink);
+            }
+        });
+    } */
 }
 
 /**
@@ -195,8 +211,19 @@ function prepareSidebarCitations(element) {
     // in case there is more than one on a post list page
     const literatureElems = element.querySelectorAll('.waggylabs-literature');
     const literatureElem = literatureElems[literatureElems.length - 1];
-    const literatureSidebarElem = document.querySelector('.waggylabs-sidebar-literature');
-    if (!literatureElem && literatureSidebarElem) {
+    // const literatureSidebarElem = document.querySelector('.waggylabs-sidebar-literature');
+    if (literatureElem) {
+        document.querySelectorAll('.waggylabs-sidebar-literature').forEach((sidebarElem) => {
+            for (let i = 0; i < literatureElem.children.length; i++) {
+                const citeClone = literatureElem.children[i].cloneNode(true);
+                citeClone.children[0].removeAttribute('id');
+                sidebarElem.appendChild(citeClone);
+                sidebarElem.appendChild(document.createElement('hr'));
+            }
+        });
+    }
+    
+    /* if (!literatureElem && literatureSidebarElem) {
         const noLiteratureElem = document.createElement('p');
         noLiteratureElem.innerHTML = 'No references found.';
         literatureSidebarElem.appendChild(noLiteratureElem);
@@ -208,7 +235,7 @@ function prepareSidebarCitations(element) {
             literatureSidebarElem.appendChild(citeClone);
             literatureSidebarElem.appendChild(document.createElement('hr'));
         }
-    }
+    } */
 }
 
 function prepareSidebar(element) {

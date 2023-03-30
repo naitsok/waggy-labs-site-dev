@@ -2,7 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 from wagtail.blocks import StreamBlock, StructBlock, ChoiceBlock
 
+from waggylabs.blocks.link_list import LinkListBlock
 from waggylabs.blocks.page_info import PageInfoBlock
+from waggylabs.blocks.post_archive import PostArchiveBlock
 from waggylabs.blocks.post_category_list import PostCategoryListBlock
 from waggylabs.blocks.post_highlights import PostHighlightsBlock
 from waggylabs.blocks.post_series import PostSeriesBlock
@@ -16,7 +18,9 @@ class SidebarItemsBlock(StreamBlock):
     """Block that contains different sidebar items."""
     text = TextBlock()
     citations = CitationsBlock()
+    link_list = LinkListBlock()
     page_info = PageInfoBlock()
+    post_archive = PostArchiveBlock()
     post_category_list = PostCategoryListBlock()
     post_highlights = PostHighlightsBlock()
     post_series = PostSeriesBlock()

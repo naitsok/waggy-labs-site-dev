@@ -7,16 +7,21 @@ from wagtail.blocks import (
 
 from waggylabs.widgets import DisabledOptionSelect
 
-from .blockquote import BlockQuoteBlock
-from .carousel import ImageCarouselBlock
-from .citation import CitationBlock
-from .document import DocumentBlock
-from .embed import EmbedBlock
-from .equation import EquationBlock
-from .figure import FigureBlock
-from .listing import ListingBlock
-from .markdown import MarkdownBlock
-from .table import TableBlock, TableFigureBlock
+from waggylabs.blocks.blockquote import BlockQuoteBlock
+from waggylabs.blocks.carousel import ImageCarouselBlock
+from waggylabs.blocks.citation import CitationBlock
+from waggylabs.blocks.document import DocumentBlock
+from waggylabs.blocks.embed import EmbedBlock
+from waggylabs.blocks.equation import EquationBlock
+from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.link_list import LinkListBlock
+from waggylabs.blocks.listing import ListingBlock
+from waggylabs.blocks.markdown import MarkdownBlock
+from waggylabs.blocks.post_archive import PostArchiveBlock
+from waggylabs.blocks.post_category_list import PostCategoryListBlock
+from waggylabs.blocks.post_highlights import PostHighlightsBlock
+from waggylabs.blocks.post_tag_list import PostTagListBlock
+from waggylabs.blocks.table import TableBlock, TableFigureBlock
 
 
 class AccordionContentBlock(StreamBlock):
@@ -28,7 +33,12 @@ class AccordionContentBlock(StreamBlock):
     embed = EmbedBlock()
     equation = EquationBlock()
     figure = FigureBlock()
+    link_list = LinkListBlock()
     listing = ListingBlock()
+    post_archive = PostArchiveBlock()
+    post_category = PostCategoryListBlock()
+    post_highlights = PostHighlightsBlock()
+    post_tag_list = PostTagListBlock()
     table = TableBlock()
     table_figure = TableFigureBlock()
     text = MarkdownBlock(
