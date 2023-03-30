@@ -29,6 +29,7 @@ class PostArchiveItemBlock(StructBlock):
     archives_number = IntegerBlock(
         required=True,
         min_value=0,
+        default=0,
         label=_('Number of archive links to show'),
         help_text=_('If zero, all links are shown.')
     )
@@ -80,13 +81,13 @@ class PostArchiveItemBlock(StructBlock):
             context['page'].specific_class.__name__ == 'PostListPage':
             value['post_list_page'] = context['page']
             
-        if 'post_page_list' in value and value['post_page_list']:
+        if 'post_list_page' in value and value['post_list_page']:
             archive_query = post_page_model.objects.descendant_of(value['post_list_page'])\
                 .live().dates('first_published_at', value['archive_period'], order=value['order_by'])
         
-            if archive_query.count() > value['archives_number']:
-                archive_query = archive_query[0:value['posts_number']]
-                more_archives_query = archive_query[value['posts_number']:]
+            if value['archives_number'] > 0 and archive_query.count() > value['archives_number']:
+                archive_query = archive_query[0:value['archives_number']]
+                more_archives_query = archive_query[value['archives_number']:]
             
         value['archives'] = archive_query
         value['more_archives'] = more_archives_query
@@ -95,8 +96,8 @@ class PostArchiveItemBlock(StructBlock):
     class Meta:
         icon = 'list-ul'
         label = _('Post archives')
-        template = 'waggylabs/blocks/template/post_archives.html'
-        form_template = 'waggylabs/blocks/form_template/post_archives.html'
+        template = 'waggylabs/blocks/template/post_archive.html'
+        form_template = 'waggylabs/blocks/form_template/post_archive.html'
         
         
 class PostArchiveBlock(WrapperBlock):

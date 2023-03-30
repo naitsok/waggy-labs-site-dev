@@ -89,6 +89,23 @@ class BaseBodyBlock(StreamBlock):
         if type(value) is not dict:
             value = { 'body': value }
             
+        # if post_meta and page_info blocks are at the end of body
+        # before them references must be rendered
+        page_body = []
+        info_meta = []
+        for idx, block in enumerate(value['body']):
+            if (idx >= len(value) - 2) and \
+                (value['body'].raw_data[-1]['type'] in ['post_meta', 'page_info']) and \
+                (block.block_type in ['post_meta', 'page_info']):
+                info_meta.append(block)
+            else:
+                page_body.append(block)
+                
+        value = {
+            'body': page_body,
+            'info_meta': info_meta,
+        }
+            
         value['literature'] = BaseBodyBlock.blocks_by_types(
             value['body'],
             ['citation', 'document']
@@ -99,23 +116,6 @@ class BaseBodyBlock(StreamBlock):
                 value['body'],
                 ['embed', 'equation', 'listing', 'figure', 'table', 'table_figure']
             )
-            
-        # if post_meta and page_info blocks are at the end of body
-        # before them references must be rendered
-        page_body = []
-        info_meta = []
-        for idx, block in enumerate(value):
-            if (idx >= len(value) - 2) and \
-                (value.raw_data[-1]['type'] in ['post_meta', 'page_info']) and \
-                (block.block_type in ['post_meta', 'page_info']):
-                info_meta.append(block)
-            else:
-                page_body.append(block)
-                
-        value = {
-            'body': page_body,
-            'info_meta': info_meta,
-        }
         
         if 'page_in_list' in context:
             # page is rendered in the list, e.g. after search

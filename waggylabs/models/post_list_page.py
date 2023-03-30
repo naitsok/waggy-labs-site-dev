@@ -106,7 +106,7 @@ class PostListPage(RoutablePageMixin, BasePage, MenuPageMixin):
     @re_path(r'^(\d{4})/(jan?|feb?|mar?|apr?|may?|jun?|jul?|aug?|sep?|oct?|nov?|dec?)/$')
     @re_path(r'^(\d{4})/(\d{2})/(\d{2})/$')
     @re_path(r'^(\d{4})/(jan?|feb?|mar?|apr?|may?|jun?|jul?|aug?|sep?|oct?|nov?|dec?)/(\d{2})/$')
-    def posts_by_date(self, request, year, month, day, *args, **kwargs):
+    def posts_by_date(self, request, year, month=None, day=None, *args, **kwargs):
         """The PostPages are listed by date. No pinned posts after date select."""
         self.pinned_posts = None
         self.posts = PostPage.objects.live().filter(first_published_at__year=year)

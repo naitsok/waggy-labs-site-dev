@@ -201,9 +201,6 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         ],
         block_counts={
             'footer_menu': { 'max_num': 1 },
-            'link_list': { 'max_num': 1 },
-            'post_archive': { 'max_num': 1 },
-            'post_highlights': { 'max_num': 1 },
         },
         blank=True,
         use_json_field=True,

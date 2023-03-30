@@ -49,6 +49,7 @@ class PostMetaBlock(StructBlock):
     post siblings, tags, categories. If it is las block in BodyBlock,
     then it is displayed after references."""
     header = CharBlock(
+        required=False,
         label=_('Header'),
     )
     header_style = HeaderStyleChoiceBlock(

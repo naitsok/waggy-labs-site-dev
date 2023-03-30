@@ -27,6 +27,7 @@
 li p { display: inline; margin-bottom: 0 !important; }
 a p { display: inline; margin-bottom: 0 !important; }
 button p { display: inline; margin-bottom: 0 !important; }
+.btn p { display: inline; margin-bottom: 0 !important; }
 /* Sidebar */
 /* .nav-tabs { border-bottom: 0; }
 .nav-tabs li.nav-item { border-bottom: 0; } */
