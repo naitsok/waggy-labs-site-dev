@@ -9,8 +9,10 @@ from wagtail.admin.panels import (
 )
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 
+from waggylabs.blocks.footer_menu import FooterMenuBlock
 from waggylabs.blocks.link_list import FooterLinkListBlock
 from waggylabs.blocks.links import ExternalLinkBlock, InternalLinkBlock
+from waggylabs.blocks.post_archive import FooterPostArchiveBlock
 from waggylabs.blocks.post_highlights import FooterPostHighlightsBlock
 from waggylabs.widgets import IconInput, ColorInput
 
@@ -192,12 +194,16 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     )
     footer = StreamField(
         [
-            ('post_highlights', FooterPostHighlightsBlock()),
+            ('footer_menu', FooterMenuBlock()),
             ('link_list', FooterLinkListBlock()),
+            ('post_archive', FooterPostArchiveBlock()),
+            ('post_highlights', FooterPostHighlightsBlock()),
         ],
         block_counts={
-            'post_highlights': { 'max_num': 1 },
+            'footer_menu': { 'max_num': 1 },
             'link_list': { 'max_num': 1 },
+            'post_archive': { 'max_num': 1 },
+            'post_highlights': { 'max_num': 1 },
         },
         blank=True,
         use_json_field=True,

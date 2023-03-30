@@ -34,11 +34,13 @@ class SidebarItemsBlock(StreamBlock):
         label = _('Items of the sidebar')
         block_counts = {
             'citations': { 'max_num': 1 },
+            'link_list': { 'max_num': 1 },
             'page_info': { 'max_num': 1 },
+            'post_archive': { 'max_num': 1 },
             'post_category_list': { 'max_num': 1 },
             'post_highlights': { 'max_num': 1 },
-            'post_tag_list': { 'max_num': 1 },
             'post_series': { 'max_num': 1 },
+            'post_tag_list': { 'max_num': 1 },
             'tabs': { 'max_num': 1 },
             'toc': { 'max_num': 1 },
             'visuals': { 'max_num': 1 },
