@@ -28,6 +28,15 @@ li p { display: inline; margin-bottom: 0 !important; }
 a p { display: inline; margin-bottom: 0 !important; }
 button p { display: inline; margin-bottom: 0 !important; }
 .btn p { display: inline; margin-bottom: 0 !important; }
+/* List group tweaks */
+.list-group-item-primary.active { color: var(--bs-white) !important; background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; }
+.list-group-item-secondary.active { color: var(--bs-white) !important; background-color: var(--bs-secondary) !important; border-color: var(--bs-secondary) !important; }
+.list-group-item-success.active { color: var(--bs-white) !important; background-color: var(--bs-success) !important; border-color: var(--bs-success) !important; }
+.list-group-item-danger.active { color: var(--bs-white) !important; background-color: var(--bs-danger) !important; border-color: var(--bs-danger) !important; }
+.list-group-item-dark.active { color: var(--bs-white) !important; background-color: var(--bs-dark) !important; border-color: var(--bs-dark) !important; }
+.list-group-item-warning.active { color: var(--bs-black) !important; background-color: var(--bs-warning) !important; border-color: var(--bs-warning) !important; }
+.list-group-item-info.active { color: var(--bs-black) !important; background-color: var(--bs-info) !important; border-color: var(--bs-info) !important; }
+.list-group-item-light.active { color: var(--bs-black) !important; background-color: var(--bs-light) !important; border-color: var(--bs-light) !important; }
 /* Sidebar */
 /* .nav-tabs { border-bottom: 0; }
 .nav-tabs li.nav-item { border-bottom: 0; } */
