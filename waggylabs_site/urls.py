@@ -8,11 +8,20 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
+
+DJANGO_ADMIN_BASE_URL =  getattr(settings, 'WAGGYLABS_DJANGO_ADMIN_BASE_URL', 'django-admin/')
+WAGTAIL_ADMIN_BASE_URL =  getattr(settings, 'WAGGYLABS_WAGTAIL_ADMIN_BASE_URL', 'admin/')
+WAGTAIL_DOCUMENTS_BASE_URL =  getattr(settings, 'WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL', 'documents/')
+CAPTCHA_BASE_URL = getattr(settings, 'WAGGYLABS_CAPTCHA_BASE_URL', 'captcha/')
+
+
 urlpatterns = [
-    path("django-admin/", admin.site.urls),
-    path("admin/", include(wagtailadmin_urls)),
-    path("documents/", include(wagtaildocs_urls)),
+    path(DJANGO_ADMIN_BASE_URL, admin.site.urls),
+    path(WAGTAIL_ADMIN_BASE_URL, include(wagtailadmin_urls)),
+    path(WAGTAIL_DOCUMENTS_BASE_URL, include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
+    # according to django-simple-captcha docs
+    path(CAPTCHA_BASE_URL, include('captcha.urls')),
 ]
 
 

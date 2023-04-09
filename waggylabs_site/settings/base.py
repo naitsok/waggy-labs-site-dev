@@ -174,7 +174,7 @@ MEDIA_URL = "/media/"
 
 
 # Wagtail settings
-
+WAGTAIL_APPEND_SLASH = True
 WAGTAIL_SITE_NAME = "Waggy Labs"
 
 # Search
@@ -188,6 +188,41 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = "http://example.com"
+# Search backed for development
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+    }
+}
+
+# Disable password reset since it is personal site and the user is created using command line
+WAGTAIL_PASSWORD_RESET_ENABLED = True
+
+# Passwords can be changed
+WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = True
+
+# Users do have passwords to log in
+WAGTAILUSERS_PASSWORD_ENABLED = True
+
+# Users must have paswords
+WAGTAILUSERS_PASSWORD_REQUIRED = True
+
+# See also embeds configuration at https://docs.wagtail.org/en/stable/reference/settings.html#wagtailembeds-responsive-html
+WAGTAILEMBEDS_RESPONSIVE_HTML = True
+
+# Custom admin login form based on email
+WAGTAILADMIN_USER_LOGIN_FORM = 'waggylabs.forms.CaptchaLoginForm'
+
+# Changes whether the Submit for Moderation button is displayed in the action menu
+WAGTAIL_MODERATION_ENABLED = True
+
+# To count usage of images and documents
+WAGTAIL_USAGE_COUNT_ENABLED = True
+
+# Date and time formats for admin
+# WAGTAIL_DATE_FORMAT = '%d.%m.%Y.'
+# WAGTAIL_DATETIME_FORMAT = '%d.%m.%Y. %H:%M'
+# WAGTAIL_TIME_FORMAT = '%H:%M'
 
 
 # Wagtail menus settings
@@ -222,6 +257,10 @@ EL_PAGINATION_PAGE_LIST_CALLABLE = 'el_pagination.utils.get_elastic_page_numbers
 TAGGIT_CASE_INSENSITIVE = True
 TAG_SPACES_ALLOWED = True
 
+# django-simple-captcha settings
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+# CAPTCHA_IMAGE_SIZE = (120, 60)
+CAPTCHA_FONT_SIZE = 30
 
 # Waggy Labs settings
 
@@ -236,6 +275,7 @@ WAGGYLABS_BASE_URL = ''
 WAGGYLABS_DJANGO_ADMIN_BASE_URL = 'django-admin/'
 WAGGYLABS_WAGTAIL_ADMIN_BASE_URL = 'admin/'
 WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL = 'documents/'
+WAGGYLABS_CAPTCHA_BASE_URL = 'super-captcha/'
 
 # WaggyLabs blocks configuraiton
 WAGGYLABS_CARD_GRID_COLUMNS = 3

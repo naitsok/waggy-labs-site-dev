@@ -5,6 +5,6 @@ django-simple-captcha>=0.5.17
 git+https://github.com/shtalinberg/django-el-pagination
 emoji>=2.2.0
 pygments>=2.14.0
-wagtail>=4.2.0
+wagtail>=4.2.2
 wagtail-markdown>=0.10.0
 wagtailmenus>=3.1.3
