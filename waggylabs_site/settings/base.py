@@ -211,6 +211,7 @@ WAGTAILUSERS_PASSWORD_REQUIRED = True
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 
 # Custom admin login form based on email
+# To have default login form, comment the line
 WAGTAILADMIN_USER_LOGIN_FORM = 'waggylabs.forms.CaptchaLoginForm'
 
 # Changes whether the Submit for Moderation button is displayed in the action menu
