@@ -2,7 +2,7 @@ from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import TextBlock
+from wagtail.blocks import TextBlock
 
 from wagtailmarkdown.blocks import render_markdown
 

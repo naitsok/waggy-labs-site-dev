@@ -15,7 +15,7 @@ class EquationBlock(StructBlock):
     equation = MarkdownBlock(
         required=True,
         help_text=_('Write or paste LaTeX style equation (equation, '
-                    'matrix, align, etc. environments are supported).'),
+                    'matrix, align, etc. environments are supported). '),
         easymde_min_height='150px',
         easymde_max_height='150px',
         easymde_combine='false',

@@ -1,1 +1,18 @@
-.CodeMirror { border: 1px solid rgb(206, 212, 218); border-radius: 4px; font-size: 13px; }
+.CodeMirror { 
+    background-color: var(--w-color-surface-field);
+    color: var(--w-color-text-context);
+    border: 1px solid var(--w-color-border-field-default);
+    border-radius: 4px;
+    font-size: 13px; 
+}
+
+.CodeMirror-selected {
+    background-color: var(--w-color-text-context);
+    border-right: 1px solid var(--w-color-border-field-default);
+    opacity: 0.6;
+}
+
+.CodeMirror-gutters {
+    background-color: var(--w-color-surface-field);
+    border-right-color: var(--w-color-border-field-default);
+}

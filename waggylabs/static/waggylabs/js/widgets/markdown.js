@@ -375,26 +375,11 @@ function removeListStyleWhenCheckbox(htmlText) {
  * @return {string} The modified HTML text.
 */
 function renderMarkdown(text, mde) {
+    // If the editor holds equation, \begin{equation} and \label{...} needs to be added if they are absent
+    text = updateTextIfEquation(text, mde);
+    
     var easymdeOptions = {};
     if (mde) { easymdeOptions = mde.options; }
-    // First check if the editor is in LaTeX or not, it means that we are in the Equation block.
-    // Then \begin{equation} and \label{...} needs to be added if they are absent
-    if (easymdeOptions && easymdeOptions.overlayMode && !easymdeOptions.overlayMode.combine) {
-        text = text.trim().replace(/^\$+|\$+$/, '');
-        // add \begin{equation}, \end{equation} if not present
-        if (text.search(/\\begin\{/i) === -1) {
-            text = "\\begin{equation}\n" + text + "\\end{equation}";
-        }
-        if (text.search(/\\label\{/i) === -1) {
-            // label not found, we have to add it from the neighbour Label block
-            const label = mde.element.closest(".struct-block").getElementsByTagName("input")[0];
-            if (label.value) {
-                const idx = text.search(/\\end\{/i);
-                text = text.slice(0, idx) + "\\label{" + label.value + "}\n" + text.slice(idx);
-            }
-        }
-    }
-
     /* Similar to EasyMDE markdown(text) function but with addtional makedjs extensions */
     if (marked) {
         // Initialize

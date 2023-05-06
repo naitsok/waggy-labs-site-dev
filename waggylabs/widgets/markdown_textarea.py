@@ -41,17 +41,18 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
         return forms.Media(
             css={
                 "all": (
-                    "waggylabs/css/widgets/easymde-tweaks.css",
+                    "waggylabs/css/widgets/easymde-darkmode.css",
                     "waggylabs/css/widgets/easymde-min.css",
+                    "waggylabs/css/widgets/easymde-tweaks.css",
                     "waggylabs/css/widgets/easymde-highlight.css",
                     "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css", # for code highlighting
                 )
             },
             js=(
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
-                "https://cdn.jsdelivr.net/npm/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js", # For latex highlighting
                 f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/stex/stex.min.js", # For latex highlighting
+                "waggylabs/js/widgets/marked-min.js", # for custom markdown to avoid parsing LaTex equations
                 "waggylabs/js/widgets/easymde-min.js",
                 "waggylabs/js/widgets/easymde-attach.js",
                 "waggylabs/js/widgets/markdown.js",

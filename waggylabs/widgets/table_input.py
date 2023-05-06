@@ -25,7 +25,7 @@ class TableInput(forms.HiddenInput):
                 versioned_static('table_block/js/vendor/handsontable-6.2.2.full.min.js'),
                 'waggylabs/js/widgets/table-input.js',
                 'waggylabs/js/widgets/markdown-emoji.js',
-                'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+                'waggylabs/js/widgets/marked-min.js',
             ]
         )
 

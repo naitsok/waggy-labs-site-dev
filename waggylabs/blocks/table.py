@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.blocks import StructBlock
+from wagtail.blocks import StructBlock
 from wagtail.contrib.table_block.blocks import TableBlock as WagtailTableBlock
 from wagtail.images.blocks import ImageChooserBlock
 

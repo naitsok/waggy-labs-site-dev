@@ -1,19 +1,19 @@
-.CodeMirror-line span.cm-keyword {color: #708;}
-.CodeMirror-line span.cm-atom {color: #219;}
+.CodeMirror-line span.cm-keyword {color: rgb(171, 0, 194);}
+.CodeMirror-line span.cm-atom {color: rgb(54, 27, 226);}
 .CodeMirror-line span.cm-number {color: #164;}
-.CodeMirror-line span.cm-def {color: #00f;}
-.CodeMirror-line span.cm-variable {color: black;}
-.CodeMirror-line span.cm-variable-2 {color: #05a;}
+.CodeMirror-line span.cm-def {color: rgb(44, 44, 252);}
+.CodeMirror-line span.cm-variable {color: var(--w-color-text-context);}
+.CodeMirror-line span.cm-variable-2 {color: rgb(22, 122, 223);}
 .CodeMirror-line span.cm-variable-3 {color: #085;}
-.CodeMirror-line span.cm-property {color: black;}
-.CodeMirror-line span.cm-operator {color: black;}
-.CodeMirror-line span.cm-string {color: #a11;}
+.CodeMirror-line span.cm-property {color: var(--w-color-text-context);}
+.CodeMirror-line span.cm-operator {color: var(--w-color-text-context);}
+.CodeMirror-line span.cm-string {color: rgb(201, 32, 32);}
 .CodeMirror-line span.cm-string-2 {color: #f50;}
 .CodeMirror-line span.cm-meta {color: #555;}
 .CodeMirror-line span.cm-error {color: #f00;}
 .CodeMirror-line span.cm-qualifier {color: #555;}
-.CodeMirror-line span.cm-builtin {color: #30a;}
+.CodeMirror-line span.cm-builtin {color: rgb(76, 0, 255);}
 .CodeMirror-line span.cm-bracket {color: #997;}
 .CodeMirror-line span.cm-tag {color: #170;}
-.CodeMirror-line span.cm-attribute {color: #00c;}
+.CodeMirror-line span.cm-attribute {color: rgb(34, 34, 201);}
 .CodeMirror-line span.cm-hr {color: #999;}

@@ -149,6 +149,17 @@ function createToolbar(toolbarConfig) {
                 default: true,
             });
             shortcuts[toolbarButtons[i]] = "F9";
+        } else if (toolbarButtons[i] === "fullscreen") {
+            toolbar.push({
+                name: "fullscreen",
+                action: toggleFullScreen,
+                className: "fa fa-arrows-alt",
+                noDisable: true,
+                noMobile: true,
+                title: "Toggle Fullscreen",
+                default: true,
+            });
+            shortcuts[toolbarButtons[i]] = "F11";
         } else {
             toolbar.push(toolbarButtons[i]);
         }
@@ -172,6 +183,35 @@ function createStatusBar(statusConfig){
 }
 
 /**
+ * Updates the text value of the EasyMDE if it is used for equation blocks. Updating
+ * is needed to add \begin{equation} and \label{...} commands if they are absent.
+ * @param {*} text - value of EasyMDE, i.e. EasyMDE.value()
+ * @param {*} mde - instance of EasyMDE Editor
+ * @returns - updated text with necessary commands
+ */
+function updateTextIfEquation(text, mde) {
+    // Check if the editor is in LaTeX or not, it means that we are in the Equation block.
+    // Then \begin{equation} and \label{...} needs to be added if they are absent
+    if (mde && mde.options && mde.options.overlayMode && !mde.options.overlayMode.combine) {
+        text = text.trim().replace(/^\$+|\$+$/, '');
+        // add \begin{equation}, \end{equation} if not present
+        if (text.search(/\\begin\{/i) === -1) {
+            text = "\\begin{equation}\n" + text + "\\end{equation}";
+        }
+        if (text.search(/\\label\{/i) === -1) {
+            // label not found, we have to add it from the neighbour Label block
+            const label = mde.element.closest(".struct-block").getElementsByTagName("input")[0];
+            if (label.value) {
+                const idx = text.search(/\\end\{/i);
+                text = text.slice(0, idx) + "\\label{" + label.value + "}\n" + text.slice(idx);
+            }
+        }
+    }
+
+    return text;
+}
+
+/**
  * Toggles side-by-side mode with correct handling of other EasyMDEs
  * on the page to correctly render MathJax equations.
  * @param {EaseMDE} editor - EasyMDE object
@@ -180,22 +220,45 @@ function toggleSideBySide(editor) {
     // We need to keep other editors in preview mode
     // in order to correctly render MathJax refs in the
     // side by side mode
-    if (!editor.isSideBySideActive() && !editor.isFullscreenActive()) {
-        togglePreviewAll(editor, true);
-        // EasyMDE.togglePreview(editor);
+    if (!editor.isSideBySideActive()) {
+        // Collects all the EasyMDE (except this one in side-by-side mode) data in order
+        // to re-render markdown content and re-typeset MathJax
+        // Needed to speed up typesetting and do not care about other content and EasyMDEs
+        // on the page
+        var wrapper = editor.codemirror.getWrapperElement();
+        window.allMarkdown = '';
+        var textAreas = document.getElementsByTagName("textarea");
+        for (let i in textAreas) {
+            if(textAreas[i].easyMDE && textAreas[i].easyMDE.element.id !== editor.element.id) {
+                // now check if the EasyMDE contain equation, i.e. it is in only in the TeX mode
+                window.allMarkdown = window.allMarkdown + updateTextIfEquation(textAreas[i].easyMDE.value(), textAreas[i].easyMDE);
+            }
+        }
+
+        var allMarkdownElem = wrapper.querySelector('.waggylabs-all-markdown');
+        if (!allMarkdownElem) {
+            allMarkdownElem = document.createElement('div');
+            allMarkdownElem.classList.add('waggylabs-all-markdown');
+            allMarkdownElem.style.display = 'none';
+            wrapper.insertBefore(allMarkdownElem, wrapper.lastChild);
+        }
+        allMarkdownElem.innerHTML = editor.options.previewRender(window.allMarkdown, editor);
+        // store the necesarry values for the interval check and update of markdown and MathJax
+        window.allMarkdownElem = allMarkdownElem;
+        window.easyMDE = editor;
+        window.mathJaxTimer = setInterval(resetMathJax, 1000);
     } else {
-        resetPreviewAll(editor);
+        clearInterval(window.mathJaxTimer);
     }
-    //EasyMDE.togglePreview(editor);
-    // Timeout is needed beacuse there is timeout in togglePreview functions.
-    // Without this timeout, toggleSideBySite will happen earlier than
-    // togglePreviewAll finishes.
-    setTimeout(() => {
-        EasyMDE.toggleSideBySide(editor);
-        setTimeout(() => {
-            resetPreviewAll(editor);
-        }, 10);
-    }, 50);
+    // Actually go to side-by-side mode
+    EasyMDE.toggleSideBySide(editor);
+}
+
+function toggleFullScreen(editor) {
+    if (window.mathJaxTimer) {
+        clearInterval(window.mathJaxTimer);
+    }
+    EasyMDE.toggleFullScreen(editor);
 }
 
 /**
@@ -277,6 +340,10 @@ function togglePreview(editor, isPreview) {
  * only after going into side-by-side mode.
  */
 function togglePreviewAll(editor, isPreview, skipMathJax) {
+    if (window.mathJaxTimer) {
+        clearInterval(window.mathJaxTimer);
+    }
+
     if (isPreview === undefined) {
         isPreview = !editor.isPreviewActive();
     }
@@ -287,27 +354,25 @@ function togglePreviewAll(editor, isPreview, skipMathJax) {
         }
     }
     if (isPreview && skipMathJax === undefined) {
+        // var preview = editor.codemirror.getWrapperElement().lastChild;
+        MathJax.typesetClear();
         MathJax.texReset();
-        MathJax.typesetClear([document.getElementById("main")]);
         MathJax.typeset([document.getElementById("main")]);
     }
 }
 
 /**
- * Resets all the other EasyMDEs on the page for correct MathJax processing
+ * Resets MathJax to correctly display equation numbers during side-by-side editing
  * @param {EasyMDE} editor - EasyMDE object
  */
-function resetPreviewAll(editor) {
-    var textAreas = document.getElementsByTagName("textarea");
-    for (let i in textAreas) {
-        if(textAreas[i].easyMDE && textAreas[i].easyMDE.element.id !== editor.element.id) {
-            var preview = textAreas[i].easyMDE.codemirror.getWrapperElement().lastChild;
-            preview.innerHTML = renderMarkdown(textAreas[i].easyMDE.value(), textAreas[i].easyMDE);
-        }
+function resetMathJax() {
+    if (window.allMarkdown && window.allMarkdownElem && window.easyMDE) {
+        window.allMarkdownElem.innerHTML = renderMarkdown(window.allMarkdown, window.easyMDE);
+        MathJax.typesetClear();
+        MathJax.texReset();
+        MathJax.typeset([window.allMarkdownElem, window.easyMDE.gui.sideBySide]);
     }
-    MathJax.texReset();
-    MathJax.typesetClear([document.getElementById("main")]);
-    MathJax.typeset([document.getElementById("main")]);
+    
 }
 
 function easymdeAttach(id) {
@@ -341,11 +406,11 @@ function easymdeAttach(id) {
     });
     
     mde.options.previewRender = (plainText, preview) => {
-        if (mde.isSideBySideActive()) {
-            setTimeout(() => {
-                resetPreviewAll(mde);
-            }, 500);
-        }
+        // if (mde.isSideBySideActive()) {
+        //     setTimeout(() => {
+        //         resetMathJax(mde);
+        //     }, 1000);
+        // }
         return renderMarkdown(plainText, mde);
     };
     mde.render();
