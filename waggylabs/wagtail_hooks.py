@@ -41,3 +41,25 @@ def global_editor_js():
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>\n"""
     )
     return mark_safe(mathjax_js)
+
+
+@hooks.register("insert_global_admin_js")
+def get_global_admin_js():
+    """Adds additional scripts to all admin pages."""
+    image_doc_title_js = """
+    <script>
+    window.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('wagtail:images-upload', function(event) {
+            var newTitle = (event.detail.data.title || '').replace(/[^a-zA-Z0-9\s-]/g, "");
+            event.detail.data.title = newTitle;
+        });
+    });
+    window.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('wagtail:documents-upload', function(event) {
+            var newTitle = (event.detail.data.title || '').replace(/[^a-zA-Z0-9\s-]/g, "");
+            event.detail.data.title = newTitle;
+        });
+    });
+    </script>
+    """
+    return mark_safe(image_doc_title_js)
