@@ -7,7 +7,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail import urls as wagtail_urls
 
 
-from search import views as search_views
+from waggylabs import views as search_views
 
 
 DJANGO_ADMIN_BASE_URL =  getattr(settings, 'WAGGYLABS_DJANGO_ADMIN_BASE_URL', 'django-admin/')

@@ -1,5 +1,7 @@
 import re
 
+from wagtail.search.query import PlainText
+
 
 RE_LABEL = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
 RE_REF = re.compile(r'\\ref\{(.*?)\}', re.IGNORECASE)
@@ -26,3 +28,25 @@ def pk_to_markdown(value, pk):
                     ),
                    value)
     return value
+
+
+def get_tokens_from_query(query):
+    """Gets the list of tokens from Wagtail.search.query.SearchQuery object."""
+    tokens = []
+    if hasattr(query, 'subquery'):
+        # it is Not, Boost SearchQuery subclass
+        tokens = tokens + get_tokens_from_query(query.subquery)
+    if hasattr(query, 'subqueries'):
+        # it is And, Or SearchQuery subclasses
+        for subquery in query.subqueries:
+            tokens = tokens + get_tokens_from_query(subquery)
+    if hasattr(query, 'query_string'):
+        # it is one of PlainText, Phrase, Fuzzy SearchQuery subclass
+        if isinstance(query, PlainText):
+            # any word in plain text matches the query
+            tokens = tokens + query.query_string.split()
+        else:
+            # any other case, only full string matches the query
+            tokens = tokens + [query.query_string]
+            
+    return tokens

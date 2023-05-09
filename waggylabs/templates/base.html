@@ -89,10 +89,10 @@
                                 </button>
                                 <form class="dropdown-menu dropdown-menu-end p-4" 
                                     style="--bs-dropdown-min-width: 20rem;"
-                                    role="search" method="get" action="" method="get">
+                                    role="search" method="get" action="{% url 'search' %}" method="get">
                                     {% csrf_token %}
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
+                                        <input type="text" name="query" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
                                     </div>
                                     <button class="btn btn-outline-primary" type="submit" id="button-search" {% if site_settings.navbar_color %}
                                     style="

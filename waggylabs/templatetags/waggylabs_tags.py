@@ -1,6 +1,8 @@
 import uuid
 
 from django import template
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -74,4 +76,11 @@ def sidebar_class(site_settings, page):
     if not page.show_sidebar:
         css_class = css_class + ' d-none'
     return css_class
+
+
+@register.simple_tag(takes_context=False)
+def search_results_title(title, tokens):
+    """Highlights parts of the title that match with tokens
+    to highlight search results."""
+    pass
    

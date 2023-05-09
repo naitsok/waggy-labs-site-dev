@@ -170,14 +170,6 @@ class BasePage(Page, HitCountMixin):
             ],
             heading=_('Sidebar settings'),
         ),
-        # MultiFieldPanel(
-        #     [
-        #         FieldPanel('show_search'),
-        #         FieldPanel('show_tag_cloud'),
-        #         FieldPanel('show_categories'),
-        #     ],
-        #     heading=_('Page settings')
-        # ),
         MultiFieldPanel(
             [
                 ReadOnlyPanel('created_at', heading='First created at'),

@@ -191,7 +191,7 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 # Search backed for development
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.search.backends.db',
+        'BACKEND': 'wagtail.search.backends.database',
     }
 }
 
