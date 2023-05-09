@@ -20,6 +20,7 @@
         {% endif %}
     </div>
     {% endif %}
+    {% if post_list_page %}
     <div class="card-body">
         <dl class="row mb-0">
             {% if value.show_categories and page.post_categories.count > 0 %}
@@ -46,6 +47,7 @@
             {% endif %}
         </dl>
     </div>
+    {% endif %}
 </div>
 {% endif %}
 {% if value.show_sibling_posts %}

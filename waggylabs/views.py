@@ -6,6 +6,8 @@ from wagtail.models import Page
 from wagtail.search.models import Query
 from wagtail.search.utils import parse_query_string
 
+from waggylabs.utils import get_tokens_from_query
+
 
 def search(request):
     # Get search query
@@ -16,7 +18,7 @@ def search(request):
     
     
     if query:
-        search_results = Page.objects.live().search(query)
+        search_results = Page.objects.live().specific().search(query)
 
         # Log the query so Wagtail can suggest promoted results
         Query.get(query_string).add_hit()
@@ -35,7 +37,8 @@ def search(request):
     #     search_results = paginator.page(paginator.num_pages)
 
     # Render template
-    return render(request, 'search_results.html', {
+    return render(request, 'waggylabs/search/search.html', {
         'search_query': query_string,
+        'search_tokens': get_tokens_from_query(query),
         'search_results': search_results,
     })

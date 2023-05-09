@@ -75,7 +75,8 @@ class MarkdownBlock(TextBlock):
         # replace all the encountered label with the label created by user 
         # plus page.pk, it is needed to avoid label conflicts when page
         # is rendered in a list, such as pagination or search results
-        value = pk_to_markdown(value, context['page'].pk)
+        if 'page' in context:
+            value = pk_to_markdown(value, context['page'].pk)
         return render_markdown(value, context)
     
     class Meta:

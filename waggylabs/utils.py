@@ -14,19 +14,23 @@ def pk_to_markdown(value, pk):
     pk = str(pk)
     value = re.sub(RE_LABEL,
                    lambda m: (r'\label{' + m.group(1) + '-' + pk + '}'),
-                   value)
+                   value,
+                   re.IGNORECASE)
     value = re.sub(RE_REF,
                    lambda m: (r'\ref{' + m.group(1) + '-' + pk + '}'),
-                   value)
+                   value,
+                   re.IGNORECASE)
     value = re.sub(RE_EQREF,
                    lambda m: (r'\eqref{' + m.group(1) + '-' + pk + '}'),
-                   value)
+                   value,
+                   re.IGNORECASE)
     value = re.sub(RE_CITE,
                    lambda m: (
                        r'\cite{' +
                        ','.join([cite + '-' + pk for cite in m.group(1).split(',')]) + '}'
                     ),
-                   value)
+                   value,
+                   re.IGNORECASE)
     return value
 
 

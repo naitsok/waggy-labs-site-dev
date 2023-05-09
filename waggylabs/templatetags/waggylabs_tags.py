@@ -1,3 +1,4 @@
+import re
 import uuid
 
 from django import template
@@ -48,7 +49,7 @@ def main_class(site_settings, page):
     """Generates CSS class for the <main> element 
     depending on the WaggyLabsSettings and page sidebar."""
     
-    if page.show_sidebar or site_settings.constant_content_width:
+    if site_settings.constant_content_width or (page is not None and page.show_sidebar):
         if site_settings.content_width == 'narrow':
             return 'col-md-5 offset-md-2' # and col-md-3 for sidebar
         if site_settings.content_width == 'medium':
@@ -73,14 +74,30 @@ def sidebar_class(site_settings, page):
         css_class = 'col-md-3' # and col-md-3 for sidebar
     else:
         css_class = 'col-md-4'
-    if not page.show_sidebar:
+    if page is None or not page.show_sidebar:
         css_class = css_class + ' d-none'
     return css_class
 
 
 @register.simple_tag(takes_context=False)
-def search_results_title(title, tokens):
+def search_results_title(page, tokens):
     """Highlights parts of the title that match with tokens
     to highlight search results."""
-    pass
+    title = escape(page.title)
+    for token in tokens:
+        title = re.sub(
+            token,
+            lambda m: '<mark>' + m.group(0) + '</mark>',
+            title,
+            flags=re.IGNORECASE
+        )
+    return mark_safe(title)
+
+
+@register.simple_tag(takes_context=False)
+def search_results_body(page, tokens):
+    """Highlights parts of the body that match with tokens
+    to highlight search results."""
+    body_rendered = page.body.stream_block.render_basic(page.body, context={'page': page})
+    return body_rendered
    

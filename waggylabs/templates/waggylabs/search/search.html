@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load waggylabs_tags %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    <form action="{% url 'search' %}" method="get">
+        {% csrf_token %}
+        <input type="text" name="query" value="{{ search_query }}">
+        <input type="submit" value="Search">
+    </form>
+
+    {% if search_results %}
+        {% for result_page in search_results %}
+            <h1><a href="{% pageurl result_page %}">{% search_results_title result_page search_tokens %}</a></h1>
+            <p>{% search_results_body result_page search_tokens %}</p>
+        {% endfor %}
+    {% elif search_query %}
+        No results found
+    {% else %}
+        Please type something into the search box
+    {% endif %}
+{% endblock %}
