@@ -7,30 +7,25 @@ RE_LABEL = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
 RE_REF = re.compile(r'\\ref\{(.*?)\}', re.IGNORECASE)
 RE_EQREF = re.compile(r'\\eqref\{(.*?)\}', re.IGNORECASE)
 RE_CITE = re.compile(r'\\cite\{(.*?)\}', re.IGNORECASE)
+RE_ALL = re.compile(
+    r'(\\label\{(?P<label>.*?)\}|\\ref\{(?P<ref>.*?)\}|\\eqref\{(?P<eqref>.*?)\}|\\cite\{(?P<cite>.*?)\})',
+    re.IGNORECASE
+)
 def pk_to_markdown(value, pk):
     """Modifies all label, ref, eqref, cite with page primary key
     to avoid collisions when multiple parts from different pages are rendered
     on one page (e.g. when pages are renedered in list)."""
     pk = str(pk)
-    value = re.sub(RE_LABEL,
-                   lambda m: (r'\label{' + m.group(1) + '-' + pk + '}'),
-                   value,
-                   re.IGNORECASE)
-    value = re.sub(RE_REF,
-                   lambda m: (r'\ref{' + m.group(1) + '-' + pk + '}'),
-                   value,
-                   re.IGNORECASE)
-    value = re.sub(RE_EQREF,
-                   lambda m: (r'\eqref{' + m.group(1) + '-' + pk + '}'),
-                   value,
-                   re.IGNORECASE)
-    value = re.sub(RE_CITE,
-                   lambda m: (
-                       r'\cite{' +
-                       ','.join([cite + '-' + pk for cite in m.group(1).split(',')]) + '}'
-                    ),
-                   value,
-                   re.IGNORECASE)
+    for regex in [RE_LABEL, RE_REF, RE_EQREF, RE_CITE]:
+        value = regex.sub(
+            lambda m: (
+                m.group(0).replace(
+                    m.group(1),
+                    ','.join([ref + '-' + pk for ref in m.group(1).split(',')])
+                )
+            ),
+            value
+        )
     return value
 
 
