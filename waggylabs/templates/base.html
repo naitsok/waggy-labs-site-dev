@@ -215,33 +215,6 @@
         {% if site_settings.theme_supports_color_mode %}
         <script src="{% static 'waggylabs/js/color-mode.js' %}"></script>
         {% endif %}
-        {# Page preparation scripts and MathJax typesetting #}
-        <script src="{% static 'waggylabs/js/prepare-page.js' %}"></script>
-        <script>
-            window.MathJax =   {
-                lastSectionNumber: 0,
-                currentEquationNumber: 0,
-                loader: {
-                    load: ['[tex]/autoload', '[tex]/tagformat'],
-                },
-                tex: {
-                    packages: {'[+]': ['autoload', 'tagformat']},
-                    tags: 'ams',
-                    tagformat: {
-                        number: (n) => {
-                            MathJax.config.currentEquationNumber = n;
-                            return (n - MathJax.config.lastSectionNumber) + '';
-                        },
-                    },
-                },
-                startup: {
-                    pageReady: () => {
-                        return mathJaxPageReady();
-                    },
-                },
-            };
-        </script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         {% block js %}
         {# Overwrite this in templates to add extra javascript #}
         {% endblock %}

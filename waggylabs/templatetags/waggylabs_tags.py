@@ -1,6 +1,7 @@
 import re
 import uuid
 
+from bs4 import BeautifulSoup
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -99,5 +100,30 @@ def search_results_body(page, tokens):
     """Highlights parts of the body that match with tokens
     to highlight search results."""
     body_rendered = page.body.stream_block.render_basic(page.body, context={'page': page})
-    return body_rendered
-   
+    bs = BeautifulSoup(body_rendered, features='html.parser')
+    body_text = bs.get_text()
+    text_chunks = []
+    for token in tokens:
+        for match in re.finditer(token, body_text, flags=re.IGNORECASE):
+            text_chunk = ''
+            (start, end) = match.span(0)
+            
+            if start - 200 < 0:
+                start = 0
+                text_chunk = '<p>'
+            else:
+                text_chunk = '<p>...'
+                
+            text_chunk = text_chunk + \
+                body_text[start:end + 200 + 11].replace(
+                    match.group(0),
+                    '<mark>' + match.group(0) + '</mark>'
+                )
+                
+            if end + 200 > len(body_text):
+                text_chunk = text_chunk + '</p>'
+            else:
+                text_chunk = text_chunk + '...</p>'
+
+        text_chunks.append(text_chunk)
+    return mark_safe(''.join(text_chunks))

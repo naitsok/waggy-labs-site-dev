@@ -14,7 +14,7 @@
     {% if search_results %}
         {% for result_page in search_results %}
             <h1><a href="{% pageurl result_page %}">{% search_results_title result_page search_tokens %}</a></h1>
-            <p>{% search_results_body result_page search_tokens %}</p>
+            {% search_results_body result_page search_tokens %}
         {% endfor %}
     {% elif search_query %}
         No results found

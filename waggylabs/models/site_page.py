@@ -27,7 +27,7 @@ class SitePage(Page, MenuPageMixin, HitCountMixin):
     page_description = _('A generic site page to contain content, '
                         'such as Home, About, Research, Publications, etc. '
                         'It can also list and filter posts if the site is used as a blog.')
-    template = 'waggylabs/pages/site_page.html'
+    template = 'waggylabs/pages/base_page.html'
 
     # Common fields
 

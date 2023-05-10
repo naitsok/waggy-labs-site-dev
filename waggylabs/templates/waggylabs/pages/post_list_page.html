@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'pages/base_page.html' %}
 
 {% load static %}
 {% load wagtailcore_tags %}
@@ -12,6 +12,7 @@
 
 
 {% block js %}
+{{ block.super }}
 <script src="{% static 'waggylabs/js/most-visible.js' %}"></script>
 <script src="{% static 'waggylabs/js/scroll-spy.js' %}"></script>
 {% endblock %}
