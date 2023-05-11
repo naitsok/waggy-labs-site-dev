@@ -7,14 +7,18 @@
 {% block content %}
     <form action="{% url 'search' %}" method="get">
         {% csrf_token %}
-        <input type="text" name="query" value="{{ search_query }}">
-        <input type="submit" value="Search">
+        <div class="input-group input-group-lg mb-3">
+            <input type="text" name="query" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="submit-query" value="{{ search_query }}">
+            <input type="submit" class="btn btn-outline-secondary" value="Search" id="submit-query">
+        </div>
     </form>
 
     {% if search_results %}
         {% for result_page in search_results %}
-            <h1><a href="{% pageurl result_page %}">{% search_results_title result_page search_tokens %}</a></h1>
+        <div class="mb-3">
+            <h2><a class="nav-link" href="{% pageurl result_page %}">{% search_results_title result_page search_tokens %}</a></h1>
             {% search_results_body result_page search_tokens %}
+        </div><hr />
         {% endfor %}
     {% elif search_query %}
         No results found

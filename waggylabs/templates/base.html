@@ -6,6 +6,9 @@
 {% load waggylabs_tags %}
 {% load waggylabs_filters %}
 
+
+{% wagtail_site as current_site %}
+{% with settings.waggylabs.WaggyLabsSettings as site_settings %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -29,9 +32,7 @@
         {# Overwrite this in templates to add extra stylesheets #}
         {% endblock %}
         {# browser tab icon #}
-        {% wagtail_site as current_site %}
-        {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
-        {% image settings.waggylabs.WaggyLabsSettings.site_icon max-40x40 as icon %}
+        {% image site_settings.site_icon max-40x40 as icon %}
         <link rel="icon" href="{{ icon.url }}">
         <title>
         {# Page title block. Overwrite in the page template if needed. #}
@@ -72,7 +73,6 @@
                     <div class="offcanvas-body p-4 pt-0 p-lg-0 mt-1">
                         <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'left' %}ms-md-auto{% endif %}">
                             {% main_menu template="waggylabs/menus/main_menu.html" %}
-                            <li class="nav-item"><a href="#" class="nav-link py-2 px-0 px-lg-2">Link</a></li>
                         </ul>
                         <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'right' %}ms-md-auto{% endif %}">
                             {% if site_settings.navbar_menu_alignment == 'right' %}
@@ -89,21 +89,20 @@
                                 </button>
                                 <form class="dropdown-menu dropdown-menu-end p-4" 
                                     style="--bs-dropdown-min-width: 20rem;"
-                                    role="search" method="get" action="{% url 'search' %}" method="get">
+                                    role="search" method="get" action="{% url 'search' %}">
                                     {% csrf_token %}
-                                    <div class="mb-3">
-                                        <input type="text" name="query" class="form-control" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
-                                    </div>
-                                    <button class="btn btn-outline-primary" type="submit" id="button-search" {% if site_settings.navbar_color %}
-                                    style="
-                                    --bs-btn-color:  {{ site_settings.navbar_color }};
-                                    --bs-btn-border-color: {{ site_settings.navbar_color }};
-                                    --bs-btn-hover-bg: {{ site_settings.navbar_color }};
-                                    --bs-btn-hover-border-color: {{ site_settings.navbar_color }};
-                                    --bs-btn-active-bg: {{ site_settings.navbar_color }};
-                                    --bs-btn-active-border-color: {{ site_settings.navbar_color }};
-                                    --bs-btn-disabled-color: {{ site_settings.navbar_color }};
-                                    --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %}>Search</button>                                 
+                                    <input type="text" name="query" class="form-control mb-3" placeholder="Search query" aria-label="Search query" aria-describedby="button-search">
+                                    <input class="btn btn-outline-primary" type="submit" id="button-search" value="Search"
+                                        {% if site_settings.navbar_color %}
+                                        style="
+                                        --bs-btn-color:  {{ site_settings.navbar_color }};
+                                        --bs-btn-border-color: {{ site_settings.navbar_color }};
+                                        --bs-btn-hover-bg: {{ site_settings.navbar_color }};
+                                        --bs-btn-hover-border-color: {{ site_settings.navbar_color }};
+                                        --bs-btn-active-bg: {{ site_settings.navbar_color }};
+                                        --bs-btn-active-border-color: {{ site_settings.navbar_color }};
+                                        --bs-btn-disabled-color: {{ site_settings.navbar_color }};
+                                        --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %}>
                                 </form>
                             </li>
                             {% for block in site_settings.navbar_links %}
@@ -209,6 +208,7 @@
             </div>
         </footer>
 
+        
         {# Bootstrap javascript files #}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
         {# Theme chooser #}
@@ -218,6 +218,6 @@
         {% block js %}
         {# Overwrite this in templates to add extra javascript #}
         {% endblock %}
-        {% endwith %}
     </body>
 </html>
+{% endwith %}

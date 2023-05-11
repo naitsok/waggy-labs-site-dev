@@ -105,12 +105,11 @@ def search_results_body(page, tokens):
     text_chunks = []
     for token in tokens:
         for match in re.finditer(token, body_text, flags=re.IGNORECASE):
-            text_chunk = ''
+            text_chunk = '<p>'
             (start, end) = match.span(0)
             
             if start - 200 < 0:
                 start = 0
-                text_chunk = '<p>'
             else:
                 text_chunk = '<p>...'
                 
@@ -125,5 +124,8 @@ def search_results_body(page, tokens):
             else:
                 text_chunk = text_chunk + '...</p>'
 
-        text_chunks.append(text_chunk)
-    return mark_safe(''.join(text_chunks))
+            text_chunks.append(text_chunk)
+        
+    if text_chunks:
+        return mark_safe(''.join(text_chunks))
+    return body_text[0:200] + '...'
