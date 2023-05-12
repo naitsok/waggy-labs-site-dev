@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
 from modelcluster.models import ClusterableModel
@@ -83,19 +84,19 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         AUTO = '', _('Auto')
         LIGHT = 'light', _('Light')
         DARK = 'dark', _('Dark')
-    navbar_theme = models.CharField(
-        max_length=25,
-        choices=NavbarTheme.choices,
-        default=NavbarTheme.AUTO,
-        blank=True,
-        help_text=_('Navigation bar color mode: auto, light or dark. '
-                    'Auto mode changes according to the global color mode '
-                    'selection. Light or dark mode keep the selected mode, '
-                    'which isespecially useful if CSS does not support color '
-                    'modes, or specific color for the navigation bar was selected. '
-                    'Ignored if the uploaded CSS does not support color modes.'),
-        verbose_name=_('Navigation bar color mode'),
-    )
+    # navbar_theme = models.CharField(
+    #     max_length=25,
+    #     choices=NavbarTheme.choices,
+    #     default=NavbarTheme.AUTO,
+    #     blank=True,
+    #     help_text=_('Navigation bar color mode: auto, light or dark. '
+    #                 'Auto mode changes according to the global color mode '
+    #                 'selection. Light or dark mode keep the selected mode, '
+    #                 'which isespecially useful if CSS does not support color '
+    #                 'modes, or specific color for the navigation bar was selected. '
+    #                 'Ignored if the uploaded CSS does not support color modes.'),
+    #     verbose_name=_('Navigation bar color mode'),
+    # )
     navbar_color = models.CharField(
         max_length=25,
         default='',
@@ -119,7 +120,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('Choose a specific color and opacity for the navigation bar active links. '
                     'If nothing chosen, navigation bar link color is be used if it was specified. '
                     'Otherwise the default theme color is used.'),
-        verbose_name=_('Navigation bar color'),
+        verbose_name=_('Navigation bar active link color'),
     )
     class NavbarPlacement(models.TextChoices):
         """Navbar placement choices from the Bootstrap documentation: 
@@ -221,6 +222,101 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         blank=True,
         use_json_field=True,
     )
+    
+    # Search settings
+    search_in_menu = models.BooleanField(
+        blank=True,
+        default=True,
+        verbose_name=_('Show search button in the menu'),
+    )
+    results_per_page = models.IntegerField(
+        blank=False,
+        default=5,
+        verbose_name=_('Number of search results per page'),
+        validators=[
+            MinValueValidator(
+                1,
+                message=_('Number of search results per page '
+                          'cannot be less than 1.')
+            ),
+        ],
+    )
+    class PaginatorAlignment(models.TextChoices):
+        """Width of the main content. Final width depends on the presence of
+        the sidebar. See waggylabs_tags.py for width calculation."""
+        LEFT = 'justify-content-start', _('Left')
+        CENTER = 'justify-content-center', _('Center')
+        RIGHT = 'justify-content-end', _('Right')
+    paginator_alignment = models.CharField(
+        max_length=25,
+        choices=PaginatorAlignment.choices,
+        default=PaginatorAlignment.CENTER,
+        blank=False,
+        help_text=_('Sets the paginator alignment on the page.'),
+        verbose_name=_('Paginator alignment'),
+    )
+    class PaginatorSize(models.TextChoices):
+        """Width of the main content. Final width depends on the presence of
+        the sidebar. See waggylabs_tags.py for width calculation."""
+        NORMAL = '', _('Normal')
+        SMALL = 'pagination-sm', _('Small')
+        LARGE = 'pagination-lg', _('Large')
+    paginator_size = models.CharField(
+        max_length=15,
+        blank=True,
+        choices=PaginatorSize.choices,
+        default=PaginatorSize.NORMAL,
+        help_text=_('Sets the paginator text and icon size.'),
+        verbose_name=_('Paginator size'),
+    )
+    first_page_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Text for the first button text'),
+        verbose_name=_('First page button text'),
+    )
+    first_page_icon = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Icon for the first button text'),
+        verbose_name=_('First page button icon'),
+    )
+    previous_page_text =  models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Text for the previous button text'),
+        verbose_name=_('Previous page button text'),
+    )
+    previous_page_icon = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Icon for the previous button text'),
+        verbose_name=_('Previous page button icon'),
+    )
+    next_page_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Text for the next button text'),
+        verbose_name=_('Next page button text'),
+    )
+    next_page_icon = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Icon for the next button text'),
+        verbose_name=_('Next page button icon'),
+    )
+    last_page_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Text for the last button text'),
+        verbose_name=_('Last page button text'),
+    )
+    last_page_icon = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_('Icon for the last button text'),
+        verbose_name=_('Last page button icon'),
+    )
 
     # Panels for the Wagtail admin
     site_name_panels = [
@@ -258,8 +354,10 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                             'navigation bar and the alignment of the menu links.'),
                   heading=_('Explanation of the settings'),
                   classname='title'),
-        FieldPanel('navbar_theme'),
+        # FieldPanel('navbar_theme'),
         FieldPanel('navbar_color', widget=ColorInput),
+        FieldPanel('navbar_link_color', widget=ColorInput),
+        FieldPanel('navbar_active_link_color', widget=ColorInput),
         FieldPanel('navbar_placement'),
         FieldPanel('navbar_menu_alignment'),
         FieldPanel('navbar_links'),
@@ -282,6 +380,29 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         FieldPanel('footer'),
     ]
     
+    search_panels = [
+        HelpPanel(content=_('Search settings govern the presence of the search '
+                            'button in the menu and the appearance of the search '
+                            'results on the page. Paginator settings determine the '
+                            'look of the navigation buttons on the page.'),
+                  heading=_('Explanation of the settings'),
+                  classname='title'),
+        FieldPanel('search_in_menu'),
+        FieldPanel('results_per_page'),
+        MultiFieldPanel([
+            FieldPanel('paginator_alignment'),
+            FieldPanel('paginator_size'),
+            FieldPanel('first_page_text'),
+            FieldPanel('first_page_icon', widget=IconInput),
+            FieldPanel('previous_page_text'),
+            FieldPanel('previous_page_icon', widget=IconInput),
+            FieldPanel('next_page_text'),
+            FieldPanel('next_page_icon', widget=IconInput),
+            FieldPanel('last_page_text'),
+            FieldPanel('last_page_icon', widget=IconInput),
+        ], heading=_('Paginator settings')),
+    ]
+    
     edit_handler = TabbedInterface([
         ObjectList(site_name_panels, heading=_('Site name settings')),
         ObjectList(content_panels, heading=_('Content settings')),
@@ -290,4 +411,4 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     ])
     
     class Meta:
-        verbose_name = _('Site Settings')
+        verbose_name = _('WaggyLabs Site Settings')

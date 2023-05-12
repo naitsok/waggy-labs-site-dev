@@ -53,35 +53,35 @@ class PostListBlock(StructBlock):
     )
     first_page_text = CharBlock(
         required=False,
-        label=_('First page text'),
+        label=_('First page button text'),
     )
     first_page_icon = IconBlock(
         required=False,
-        label=_('First page icon'),
+        label=_('First page button icon'),
     )
     previous_page_text = CharBlock(
         required=False,
-        label=_('Previous page text'),
+        label=_('Previous page button text'),
     )
     previous_page_icon = IconBlock(
         required=False,
-        label=_('Prev page icon'),
+        label=_('Previous page button icon'),
     )
     next_page_text = CharBlock(
         required=False,
-        label=_('Next page text'),
+        label=_('Next page button text'),
     )
     next_page_icon = IconBlock(
         required=False,
-        label=_('Next page icon'),
+        label=_('Next page button icon'),
     )
     last_page_text = CharBlock(
         required=False,
-        label=_('Last page text'),
+        label=_('Last page button text'),
     )
     last_page_icon = IconBlock(
         required=False,
-        label=_('Last page icon'),
+        label=_('Last page button icon'),
     )
     post_style = CardStyleChoiceBlock(
         required=False,
