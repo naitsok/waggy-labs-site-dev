@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load el_pagination_tags %}
+{% load waggylabs_filters %}
 {% load waggylabs_tags %}
+
+{% show_current_number as current_page_number %}
 
 {% block title %}Search{% endblock %}
 
@@ -20,6 +24,35 @@
             {% search_results_body result_page search_tokens %}
         </div><hr />
         {% endfor %}
+        <nav aria-label="Search navigation">
+            <ul class="paginator {{ site_settings.paginator_alignment }} {{ site_settings.paginator_size }}">
+                {% if site_settings.first_page_text or site_settings.first_page_icon %}
+                <li class="page-item">
+                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page=1"
+                        class="page-link">
+                        {% if site_settings.first_page_icon|is_icon %}<i class="{{ site_settings.first_page_icon|icon_class }}{% if site_settings.first_page_text %} me-1{% endif %}"></i>{% endif %}
+                        {{ site_settings.first_page_text }}
+                    </a>
+                </li>
+                {% endif %}
+                {% if search_results.has_previous %}
+                
+                {% endif %}
+
+                {% if search_results.has_previous %}
+                
+                {% endif %}
+
+                {% if site_settings.last_page_text or site_settings.last_page_icon %}
+                <li class="page-item">
+                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.num_pages }}"
+                        class="page-link">
+                        {% if site_settings.last_page_icon|is_icon %}<i class="{{ site_settings.last_page_icon|icon_class }}{% if site_settings.last_page_text %} me-1{% endif %}"></i>{% endif %}
+                        {{ site_settings.last_page_text }}
+                    </a>
+                </li>
+            </ul>
+        </nav>
     {% elif search_query %}
         No results found
     {% else %}

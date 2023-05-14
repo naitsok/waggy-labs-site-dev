@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
@@ -229,9 +230,9 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         default=True,
         verbose_name=_('Show search button in the menu'),
     )
-    results_per_page = models.IntegerField(
+    search_results_per_page = models.IntegerField(
         blank=False,
-        default=5,
+        default=getattr(settings, 'WAGGYLABS_SEARCH_RESULTS_PAGE_SIZE', 10),
         verbose_name=_('Number of search results per page'),
         validators=[
             MinValueValidator(
@@ -272,49 +273,49 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     first_page_text = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Text for the first button text'),
+        help_text=_('Text for the first button text.'),
         verbose_name=_('First page button text'),
     )
     first_page_icon = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Icon for the first button text'),
+        help_text=_('Icon for the first button text.'),
         verbose_name=_('First page button icon'),
     )
     previous_page_text =  models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Text for the previous button text'),
+        help_text=_('Text for the previous button text.'),
         verbose_name=_('Previous page button text'),
     )
     previous_page_icon = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Icon for the previous button text'),
+        help_text=_('Icon for the previous button text.'),
         verbose_name=_('Previous page button icon'),
     )
     next_page_text = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Text for the next button text'),
+        help_text=_('Text for the next button text.'),
         verbose_name=_('Next page button text'),
     )
     next_page_icon = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Icon for the next button text'),
+        help_text=_('Icon for the next button text.'),
         verbose_name=_('Next page button icon'),
     )
     last_page_text = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Text for the last button text'),
+        help_text=_('Text for the last button text.'),
         verbose_name=_('Last page button text'),
     )
     last_page_icon = models.CharField(
         max_length=255,
         blank=True,
-        help_text=_('Icon for the last button text'),
+        help_text=_('Icon for the last button text.'),
         verbose_name=_('Last page button icon'),
     )
 
@@ -388,7 +389,7 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                   heading=_('Explanation of the settings'),
                   classname='title'),
         FieldPanel('search_in_menu'),
-        FieldPanel('results_per_page'),
+        FieldPanel('search_results_per_page'),
         MultiFieldPanel([
             FieldPanel('paginator_alignment'),
             FieldPanel('paginator_size'),

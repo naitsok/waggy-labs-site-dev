@@ -6,6 +6,7 @@ from wagtail.models import Page
 from wagtail.search.models import Query
 from wagtail.search.utils import parse_query_string
 
+from waggylabs.models import WaggyLabsSettings
 from waggylabs.utils import get_tokens_from_query
 
 
@@ -27,18 +28,24 @@ def search(request):
         
     search_results = list(search_results)
         
-    # # Pagination
-    # paginator = Paginator(search_results, 10)
-    # try:
-    #     search_results = paginator.page(page)
-    # except PageNotAnInteger:
-    #     search_results = paginator.page(1)
-    # except EmptyPage:
-    #     search_results = paginator.page(paginator.num_pages)
+    # Pagination
+    # Because search_results is not a Queryset object
+    # django-el-pagination is of no use
+    page = request.GET.get('page', None)
+    settings = WaggyLabsSettings.for_request(request=request)
+    # request.get
+    paginator = Paginator(search_results, settings.search_results_per_page)
+    try:
+        search_results = paginator.page(page)
+    except PageNotAnInteger:
+        search_results = paginator.page(1)
+    except EmptyPage:
+        search_results = paginator.page(paginator.num_pages)
 
     # Render template
     return render(request, 'waggylabs/search/search.html', {
         'search_query': query_string,
         'search_tokens': get_tokens_from_query(query),
         'search_results': search_results,
+        'site_settings': settings,
     })
