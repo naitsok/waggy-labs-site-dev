@@ -228,7 +228,7 @@ WAGTAIL_USAGE_COUNT_ENABLED = True
 
 # Wagtail menus settings
 WAGTAILMENUS_ACTIVE_ANCESTOR_CLASS = "active"
-WAGTAILMENUS_SECTION_ROOT_DEPTH = 2
+WAGTAILMENUS_SECTION_ROOT_DEPTH = 3
 
 # Wagtail markdown settings
 WAGTAILMARKDOWN = {
@@ -278,7 +278,14 @@ WAGGYLABS_WAGTAIL_ADMIN_BASE_URL = 'admin/'
 WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL = 'documents/'
 WAGGYLABS_CAPTCHA_BASE_URL = 'super-captcha/'
 
-# WaggyLabs blocks configuraiton
+# Navigation bar configuration
+WAGGYLABS_MENU_MAX_LEVELS = 1
+WAGGYLABS_MENU_ALLOW_REPEATING_PARENTS = True
+
+# Search configuration
+WAGGYLABS_SEARCH_RESULTS_PAGE_SIZE = 10
+
+# Blocks configuraiton
 WAGGYLABS_CARD_GRID_COLUMNS = 3
 WAGGYLABS_CODEMIRROR_VERSION = '5.65.9'
 # the first element of tuple must be equal to one of the

@@ -52,7 +52,6 @@
         {% wagtailuserbar 'bottom-right' %}
         {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
         <header id="navbar-header" class="{% navbar_class site_settings %}" 
-            {% if site_settings.theme_supports_color_mode and site_settings.navbar_theme %}data-bs-theme="{{ site_settings.navbar_theme }}"{% endif %}
             {% if site_settings.navbar_color %} style="background: {{ site_settings.navbar_color }}"{% endif %}>
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
@@ -72,7 +71,7 @@
                     </div>
                     <div class="offcanvas-body p-4 pt-0 p-lg-0 mt-1">
                         <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'left' %}ms-md-auto{% endif %}">
-                            {% main_menu template="waggylabs/menus/main_menu.html" %}
+                            {% main_menu maxlevels=site_settings.menu_max_levels allow_repeating_parents=site_settings.menu_allow_repeating_parents template="waggylabs/menus/main_menu.html" %}
                         </ul>
                         <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'right' %}ms-md-auto{% endif %}">
                             {% if site_settings.navbar_menu_alignment == 'right' %}
@@ -81,6 +80,7 @@
                                 <hr class="d-lg-none my-2">
                             </li>
                             {% endif %}
+                            {% if site_settings.search_in_menu %}
                             <li class="nav-item dropdown">
                                 <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
                                     id="bd-search" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
@@ -105,6 +105,7 @@
                                         --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %}>
                                 </form>
                             </li>
+                            {% endif %}
                             {% for block in site_settings.navbar_links %}
                                 {% if forloop.counter0 == 0 %}
                                 <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">

@@ -79,6 +79,26 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         help_text=_('If the CSS theme file suppots Bootstrap dark and light modes.'),
         verbose_name=_('CSS theme supports dark and light modes'),
     )
+    menu_max_levels = models.IntegerField(
+        blank=False,
+        default=getattr(settings, 'WAGGYLABS_MENU_MAX_LEVELS', 1),
+        verbose_name=_('Maximum number of menu levels'),
+        help_text=_('Specifies how deep in the page hierarchy the menu '
+                    'must be rendered, i.e. what is the level of depth to '
+                    'render the dropdown submenus.'),
+        validators=[
+            MinValueValidator(
+                1,
+                message=_('Maximum number of menu levels '
+                          'cannot be less than 1.')
+            ),
+        ],
+    )
+    menu_allow_repeating_parents = models.BooleanField(
+        blank=True,
+        default=getattr(settings, 'WAGGYLABS_MENU_MAX_LEVELS', 1),
+        verbose_name=_('Repeat parent links in the dropdown submenus')
+    )
     class NavbarTheme(models.TextChoices):
         """Navigation bar theme: dark or light. Correct choice needs to be 
         selected based on the selected CSS Bootstrap theme."""
@@ -106,23 +126,51 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                     'If none specified, the default theme color is used.'),
         verbose_name=_('Navigation bar color'),
     )
+    class NavbarLinkWeight(models.TextChoices):
+        """Navigation bar link weight: specify text weights for menu links."""
+        DEFAULT = '', _('Default')
+        BOLD = 'fw-bold', _('Bold')
+        BOLDER = 'fw-bolder', _('Bolder')
+        SEMIBOLD = 'fw-semibold', _('Semibold')
+        MEDIUM = 'fw-medium', _('Medium')
+        NORMAL = 'fw-normal', _('Normal')
+        LIGHT = 'fw-light', _('Light')
+        LIGHTER = 'fw-lighter', _('Lighter')
+        
     navbar_link_color = models.CharField(
         max_length=25,
         default='',
         blank=True,
-        help_text=_('Choose a specific color and opacity for the navigation bar links. '
+        help_text=_('Specifies the color and opacity for the navigation bar links. '
                     'If none specified, the default theme color is used.'),
         verbose_name=_('Navigation bar link color'),
+    )
+    navbar_link_weight = models.CharField(
+        max_length=25,
+        choices=NavbarLinkWeight.choices,
+        default=NavbarLinkWeight.DEFAULT,
+        blank=True,
+        help_text=_('Specifies the font weigth for the navigation bar links.'),
+        verbose_name=_('Navigation bar link weight'),
     )
     navbar_active_link_color = models.CharField(
         max_length=25,
         default='',
         blank=True,
-        help_text=_('Choose a specific color and opacity for the navigation bar active links. '
-                    'If nothing chosen, navigation bar link color is be used if it was specified. '
+        help_text=_('Specifies the color and opacity for the navigation bar active links. '
+                    'If nothing chosen, navigation bar link color is used if it was specified. '
                     'Otherwise the default theme color is used.'),
         verbose_name=_('Navigation bar active link color'),
     )
+    navbar_active_link_weight = models.CharField(
+        max_length=25,
+        choices=NavbarLinkWeight.choices,
+        default=NavbarLinkWeight.DEFAULT,
+        blank=True,
+        help_text=_('Specifies the font weigth for the navigation bar active links.'),
+        verbose_name=_('Navigation bar active link weight'),
+    )
+    
     class NavbarPlacement(models.TextChoices):
         """Navbar placement choices from the Bootstrap documentation: 
         default, sticky-top or fixed-top."""
