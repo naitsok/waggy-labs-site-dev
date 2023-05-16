@@ -6,6 +6,7 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
+    <h1>Search</h1>
     <form action="{% url 'search' %}" method="get">
         {% csrf_token %}
         <div class="input-group input-group-lg mb-3">
@@ -22,7 +23,7 @@
         </div><hr />
         {% endfor %}
         <nav aria-label="Search navigation">
-            <ul class="paginator {{ site_settings.paginator_alignment }} {{ site_settings.paginator_size }}">
+            <ul class="pagination {{ site_settings.paginator_alignment }} {{ site_settings.paginator_size }}">
                 {% if site_settings.first_page_text or site_settings.first_page_icon %}
                 <li class="page-item">
                     <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page=1"
@@ -60,12 +61,13 @@
                 {% endif %}
                 {% if site_settings.last_page_text or site_settings.last_page_icon %}
                 <li class="page-item">
-                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.num_pages }}"
+                    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.paginator.num_pages }}"
                         class="page-link">
                         {% if site_settings.last_page_icon|is_icon %}<i class="{{ site_settings.last_page_icon|icon_class }}{% if site_settings.last_page_text %} me-1{% endif %}"></i>{% endif %}
                         {{ site_settings.last_page_text }}
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </nav>
     {% elif search_query %}

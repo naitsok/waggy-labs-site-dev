@@ -145,6 +145,14 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
                     'If none specified, the default theme color is used.'),
         verbose_name=_('Navigation bar link color'),
     )
+    navbar_hover_link_color = models.CharField(
+        max_length=25,
+        default='',
+        blank=True,
+        help_text=_('Specifies the color and opacity for the navigation bar links during hover. '
+                    'If none specified, the default theme color is used.'),
+        verbose_name=_('Navigation bar hover link color'),
+    )
     navbar_link_weight = models.CharField(
         max_length=25,
         choices=NavbarLinkWeight.choices,
@@ -406,7 +414,10 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
         # FieldPanel('navbar_theme'),
         FieldPanel('navbar_color', widget=ColorInput),
         FieldPanel('navbar_link_color', widget=ColorInput),
+        FieldPanel('navbar_hover_link_color', widget=ColorInput),
+        FieldPanel('navbar_link_weight'),
         FieldPanel('navbar_active_link_color', widget=ColorInput),
+        FieldPanel('navbar_active_link_weight'),
         FieldPanel('navbar_placement'),
         FieldPanel('navbar_menu_alignment'),
         FieldPanel('navbar_links'),
@@ -454,9 +465,10 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     
     edit_handler = TabbedInterface([
         ObjectList(site_name_panels, heading=_('Site name settings')),
-        ObjectList(content_panels, heading=_('Content settings')),
         ObjectList(navbar_panels, heading=_('Navigation bar settings')),
+        ObjectList(content_panels, heading=_('Content settings')),
         ObjectList(footer_panels, heading=_('Footer settings')),
+        ObjectList(search_panels, heading=_('Search settings')),
     ])
     
     class Meta:

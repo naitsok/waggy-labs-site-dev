@@ -10,7 +10,7 @@
 {% wagtail_site as current_site %}
 {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
 <!doctype html>
-<html lang="en">
+<html {% if not site_settings.site_theme or site_settings.theme_supports_color_mode %}data-bs-theme="dark"{% endif %}  lang="en">
     <head>
         {# Required Boostrap meta tags #}
         <meta charset="utf-8">
@@ -52,14 +52,17 @@
         {% wagtailuserbar 'bottom-right' %}
         {% with settings.waggylabs.WaggyLabsSettings as site_settings %}
         <header id="navbar-header" class="{% navbar_class site_settings %}" 
-            {% if site_settings.navbar_color %} style="background: {{ site_settings.navbar_color }}"{% endif %}>
+            style="{% if site_settings.navbar_color %}background: {{ site_settings.navbar_color }};{% endif %}">
             <nav class="container-xl flex-wrap flex-lg-nowrap" aria-label="Main navigation">
                 <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="{{ current_site.site_name }}">
                     {% image site_settings.site_icon max-40x40 class='d-inline-block align-text-top' %}
                 </a>
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="/"
+                    style="{% if site_settings.navbar_link_color %}--bs-navbar-color: {{ site_settings.navbar_link_color }};{% endif %}
+                           {% if site_settings.navbar_link_color %}--bs-navbar-brand-color: {{ site_settings.navbar_link_color }};{% endif %}
+                           {% if site_settings.navbar_hover_link_color %}--bs-navbar-brand-hover-color: {{ site_settings.navbar_hover_link_color }};{% endif %}">
                     {% if site_settings.show_site_name %}{{ current_site.site_name }}{% endif %}
-                    {% if site_settings.site_slogan %}<br /><span class="navbar-text fs-6 fst-italic px-4 py-0 my-0"><small>{{ site_settings.site_slogan }}</small></span>{% endif %}
+                    {% if site_settings.site_slogan %}<br /><span class="fs-6 fst-italic px-4 py-0 my-0"><small>{{ site_settings.site_slogan }}</small></span>{% endif %}
                 </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2 border-0 shadow-none fs-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-label="Toggle navigation">
                     <i class="bi bi-list"></i>
@@ -70,10 +73,16 @@
                         <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
                     <div class="offcanvas-body p-4 pt-0 p-lg-0 mt-1">
-                        <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'left' %}ms-md-auto{% endif %}">
+                        <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'left' %}ms-md-auto{% endif %}"
+                            style="{% if site_settings.navbar_link_color %}--bs-nav-link-color: {{ site_settings.navbar_link_color }};{% endif %}
+                                   {% if site_settings.navbar_active_link_color %}--bs-navbar-active-color: {{ site_settings.navbar_active_link_color }};{% endif %}
+                                   {% if site_settings.navbar_hover_link_color %}--bs-nav-link-hover-color: {{ site_settings.navbar_hover_link_color }};{% endif %}">
                             {% main_menu maxlevels=site_settings.menu_max_levels allow_repeating_parents=site_settings.menu_allow_repeating_parents template="waggylabs/menus/main_menu.html" %}
                         </ul>
-                        <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'right' %}ms-md-auto{% endif %}">
+                        <ul class="navbar-nav flex-row flex-wrap {% if site_settings.navbar_menu_alignment != 'right' %}ms-md-auto{% endif %}"
+                            style="{% if site_settings.navbar_link_color %}--bs-nav-link-color: {{ site_settings.navbar_link_color }};{% endif %}
+                                   {% if site_settings.navbar_active_link_color %}--bs-navbar-active-color: {{ site_settings.navbar_active_link_color }};{% endif %}
+                                   {% if site_settings.navbar_hover_link_color %}--bs-nav-link-hover-color: {{ site_settings.navbar_hover_link_color }};{% endif %}">
                             {% if site_settings.navbar_menu_alignment == 'right' %}
                             <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                 <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
@@ -95,7 +104,7 @@
                                     <input class="btn btn-outline-primary" type="submit" id="button-search" value="Search"
                                         {% if site_settings.navbar_color %}
                                         style="
-                                        --bs-btn-color:  {{ site_settings.navbar_color }};
+                                        --bs-btn-color: {{ site_settings.navbar_color }};
                                         --bs-btn-border-color: {{ site_settings.navbar_color }};
                                         --bs-btn-hover-bg: {{ site_settings.navbar_color }};
                                         --bs-btn-hover-border-color: {{ site_settings.navbar_color }};
@@ -117,7 +126,7 @@
                                     {% include_block block %}
                                 </li>
                             {% endfor %}
-                            {% if site_settings.theme_supports_color_mode %}
+                            {% if not site_settings.site_theme or  site_settings.theme_supports_color_mode %}
                             <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                 <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
                                 <hr class="d-lg-none my-2">
@@ -163,7 +172,6 @@
         <div class="container mt-5">
             <div class="row" role="main">
                 <main class="{% main_class site_settings page %}">
-                    <h1 class="{{ page.title_style }}">{{ page.title }}</h1>
                     {% block content %}
                     {# Overwrite this in the page template to display page content #}
                     {% endblock %}
@@ -213,7 +221,7 @@
         {# Bootstrap javascript files #}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
         {# Theme chooser #}
-        {% if site_settings.theme_supports_color_mode %}
+        {% if not site_settings.site_theme or site_settings.theme_supports_color_mode %}
         <script src="{% static 'waggylabs/js/color-mode.js' %}"></script>
         {% endif %}
         {% block js %}

@@ -72,6 +72,9 @@ span.reference a { text-decoration: none; }
 .MathJax_ref { font-family: 'Courier New', Courier !important; font-size: 88.4% !important; font-weight: bold !important; }
 .MJX-TEX mjx-mtd { scroll-margin-top: 80px; }
 
+/* Wagtail userbar tweaks */
+.w-dialog { z-index: 5050 !important; }
+
 /* WaggyLabs classes */
 /* Bold figure, table, embed, etc labels */
 .waggylabs-entity-label { font-weight: bold; }

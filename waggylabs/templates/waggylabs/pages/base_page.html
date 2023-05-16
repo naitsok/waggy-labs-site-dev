@@ -7,8 +7,10 @@
 {% load wagtailmarkdown %}
 {% load menu_tags %}
 
+
 {% block content %}
 
+<h1 class="{{ page.title_style }}">{{ page.title }}</h1>
 {% include_block page.body %}
 
 {% endblock content %}
