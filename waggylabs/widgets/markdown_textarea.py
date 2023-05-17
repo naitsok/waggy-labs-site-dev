@@ -45,6 +45,7 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
                     "waggylabs/css/widgets/easymde-min.css",
                     "waggylabs/css/widgets/easymde-tweaks.css",
                     "waggylabs/css/widgets/easymde-highlight.css",
+                    "waggylabs/css/widgets/show-hint.css",
                     "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css", # for code highlighting
                 )
             },
@@ -57,6 +58,8 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
                 "waggylabs/js/widgets/easymde-attach.js",
                 "waggylabs/js/widgets/markdown.js",
                 "waggylabs/js/widgets/markdown-emoji.js",
+                "waggylabs/js/widgets/show-hint.js",
+                "waggylabs/js/widgets/javascript-hint.js",
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/clike/clike.min.js", # For C++/C/C#/Java/Kotlin highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/css/css.min.js", # For CSS highlighting
                 # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/django/django.min.js", # For Django highlighting

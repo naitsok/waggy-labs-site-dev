@@ -472,4 +472,4 @@ class WaggyLabsSettings(BaseSiteSetting, ClusterableModel):
     ])
     
     class Meta:
-        verbose_name = _('WaggyLabs Site Settings')
+        verbose_name = _('WaggyLabs Settings')

@@ -417,6 +417,7 @@ function easymdeAttach(id) {
 
     // Save the codemirror instance on the original html element for later use.
     mde.element.codemirror = mde.codemirror;
+    mde.codemirror
 
     mde.codemirror.on("change", () => {
         document.getElementById(id).value = mde.value();
