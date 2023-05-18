@@ -6,8 +6,6 @@ from wagtail.widget_adapters import WidgetAdapter
 from wagtail.utils.widgets import WidgetWithScript
 
 
-CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
-
 class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
     """Replaces wagtail-markdown MarkdownTextarea with the one that is able to render MathJax."""
     def __init__(
@@ -41,36 +39,25 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
         return forms.Media(
             css={
                 "all": (
+                    "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css", # for code highlighting
+                    "waggylabs/vendor/codemirror/codemirror.min.css",
+                    "waggylabs/vendor/codemirror/addon/hint/show-hint.css",
+                    "waggylabs/vendor/easymde/easymde.min.css",
                     "waggylabs/css/widgets/easymde-darkmode.css",
-                    "waggylabs/css/widgets/easymde-min.css",
                     "waggylabs/css/widgets/easymde-tweaks.css",
                     "waggylabs/css/widgets/easymde-highlight.css",
-                    "waggylabs/css/widgets/show-hint.css",
-                    "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css", # for code highlighting
                 )
             },
             js=(
                 "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js", # for code highlighting
-                f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js", # For latex highlighting
-                f"https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/stex/stex.min.js", # For latex highlighting
-                "waggylabs/js/widgets/marked-min.js", # for custom markdown to avoid parsing LaTex equations
-                "waggylabs/js/widgets/easymde-min.js",
+                "waggylabs/vendor/marked/marked.min.js", # for custom markdown to avoid parsing LaTex equations
+                "waggylabs/vendor/codemirror/codemirror.min.js", # For latex highlighting
+                "waggylabs/vendor/codemirror/mode/stex/stex.js", # For latex highlighting
+                "waggylabs/vendor/codemirror/addon/hint/show-hint.js", # For hints
+                "waggylabs/vendor/easymde/easymde.min.js", # EasyMDE compiled with show-hint.js and stex.min.js
                 "waggylabs/js/widgets/easymde-attach.js",
                 "waggylabs/js/widgets/markdown.js",
                 "waggylabs/js/widgets/markdown-emoji.js",
-                "waggylabs/js/widgets/show-hint.js",
-                "waggylabs/js/widgets/javascript-hint.js",
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/clike/clike.min.js", # For C++/C/C#/Java/Kotlin highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/css/css.min.js", # For CSS highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/django/django.min.js", # For Django highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/javascript/javascript.min.js", # For Javascript highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/mathematica/mathematica.min.js", # For Mathematica highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/octave/octave.min.js", # For MATLAB/Octave highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/powershell/powershell.min.js", # For Powershell highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/python/python.min.js", # For Python highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/sql/sql.min.js", # For SQL highlighting
-                # "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.8/mode/swift/swift.min.js", # For Swift highlighting
-                
             ),
         )
         

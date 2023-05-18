@@ -5,15 +5,14 @@ from django.utils.functional import cached_property
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.telepath import register
 
-from waggylabs.blocks.code import CodeBlock, CODEB_LANGS
+from waggylabs.blocks.code import CodeBlock, CODEBLOCK_LANGS as CBL
 
 
-CODEMIRROR_VERSION = getattr(settings, 'WAGGYLABS_CODEMIRROR_VERSION', '5.65.9')
-CODEB_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', CODEB_LANGS)
-CODEB_LANGS = list(
+CODEBLOCK_LANGS = getattr(settings, 'WAGGYLABS_CODEBLOCK_LANGS', CBL)
+CODEBLOCK_LANGS = list(
     [
-        f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/mode/{mode[0]}/{mode[0]}.min.js' 
-        for mode in CODEB_LANGS
+        f'waggylabs/vendor/codemirror/mode/{CODEBLOCK_LANGS[key][0]}/{CODEBLOCK_LANGS[key][0]}.js' 
+        for key in CODEBLOCK_LANGS
     ]
 )
 
@@ -30,12 +29,12 @@ class CodeBlockAdapter(StructBlockAdapter):
         structblock_media = super().media
         return forms.Media(
             js = structblock_media._js + [
+                'waggylabs/vendor/codemirror/codemirror.min.js',
                 'waggylabs/js/blocks/code-adapter.js',
-                f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.js',
-                ] + CODEB_LANGS,
+                ] + CODEBLOCK_LANGS,
             css = {
                 "all": (
-                    f'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{CODEMIRROR_VERSION}/codemirror.min.css',
+                    'waggylabs/vendor/codemirror/codemirror.min.css',
                     'waggylabs/css/blocks/codemirror-tweaks.css',
                 )
             }

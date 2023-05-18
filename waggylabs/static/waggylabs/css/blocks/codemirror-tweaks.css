@@ -1,4 +1,4 @@
-.CodeMirror { 
+.w-field__input .CodeMirror { 
     background-color: var(--w-color-surface-field);
     color: var(--w-color-text-context);
     border: 1px solid var(--w-color-border-field-default);
@@ -6,13 +6,17 @@
     font-size: 13px; 
 }
 
-.CodeMirror-selected {
+.w-field__input .CodeMirror-selected {
     background-color: var(--w-color-text-context);
     border-right: 1px solid var(--w-color-border-field-default);
     opacity: 0.6;
 }
 
-.CodeMirror-gutters {
+.w-field__input .CodeMirror-gutters {
     background-color: var(--w-color-surface-field);
     border-right-color: var(--w-color-border-field-default);
+}
+
+.w-field__input .CodeMirror-cursor {
+    border-left-color: var(--w-color-text-context);
 }

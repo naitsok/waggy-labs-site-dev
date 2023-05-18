@@ -18,7 +18,7 @@
                 mode: modeField.value,
                 lineNumbers: true,
                 styleActiveLine: true,
-                matchBrackets: true
+                matchBrackets: true,
             });
             cm.on("change", function() {
                 cm.save();

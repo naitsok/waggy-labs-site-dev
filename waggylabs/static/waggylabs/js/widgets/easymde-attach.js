@@ -164,7 +164,65 @@ function createToolbar(toolbarConfig) {
             toolbar.push(toolbarButtons[i]);
         }
     }
+    // Finally add autocomplete hidden button
+    toolbar.push({
+        name: "autocomplete",
+        className: "d-none",
+        noDisable: true,
+        noMobile: true,
+        title: "Autocomplete",
+        default: true,
+        action: (editor) => CodeMirror.showHint(
+            editor.codemirror,
+            getHinter(),
+        ),
+    });
+    shortcuts["autocomplete"] = "Cmd-Space";
     return [toolbar, shortcuts];
+}
+
+function getHinter() {
+    const suggestionList = ['list1', 'list2', 'list3'];
+    return function hintFunction(cm) {
+        const cur = cm.getCursor();
+        const token = cm.getTokenAt(cur);
+        const { start, end } = token;
+
+        const from = CodeMirror.Pos(cur.line, start);
+        const to = CodeMirror.Pos(cur.line, end);
+
+        // const allResults = { from, to, list: suggestionList.map((s) => s.path) };
+
+        // const currentLine = cm.getRange({ line: from.line, ch: 0 }, to);
+
+        // const lastSeparatedWord = /\b(\w+)$/g;
+        // const allMatches = [...currentLine.matchAll(lastSeparatedWord)];
+
+        // if (!allMatches.length) {
+        //     return allResults;
+        // }
+
+        const matchedWord = suggestionList[0];
+        // const word = matchedWord[0];
+
+        // if (!word) {
+        //     return allResults;
+        // }
+
+        const suggestions = suggestionList;
+
+        return {
+            from: {
+                // Current line
+                line: from.line,
+
+                // Position of the matched
+                ch: from.ch, //matchedWord.index !== undefined ? matchedWord.index : 
+            },
+            to,
+            list: suggestions,
+        }
+    }
 }
 
 /**
@@ -417,7 +475,6 @@ function easymdeAttach(id) {
 
     // Save the codemirror instance on the original html element for later use.
     mde.element.codemirror = mde.codemirror;
-    mde.codemirror
 
     mde.codemirror.on("change", () => {
         document.getElementById(id).value = mde.value();
