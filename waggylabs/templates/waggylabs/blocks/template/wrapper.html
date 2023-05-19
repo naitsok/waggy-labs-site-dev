@@ -19,7 +19,7 @@
     </div>
     {% endif %}
     {% endif %}
-    <div {% if not sidebar_tabs %}class="card-body"{% endif %}>
+    <div class="{% if sidebar_tabs %}waggylabs-sidebar-tab-item{% else %}card-body{% endif %}">
         {% include_block value.item with id=value.item.id %}
     </div>
 </div>

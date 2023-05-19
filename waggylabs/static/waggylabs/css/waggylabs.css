@@ -73,7 +73,7 @@ span.reference a { text-decoration: none; }
 .MJX-TEX mjx-mtd { scroll-margin-top: 80px; }
 
 /* Wagtail userbar tweaks */
-.w-dialog { z-index: 5050 !important; }
+.w-dialog .w-dialog__box { z-index: 5050 !important; }
 
 /* WaggyLabs classes */
 /* Bold figure, table, embed, etc labels */

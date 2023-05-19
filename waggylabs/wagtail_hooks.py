@@ -3,6 +3,21 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from wagtail import hooks
+from wagtail.snippets.models import register_snippet
+
+from waggylabs.models import PostCategory, PostPage
+from waggylabs.models.post_tags import TagProxy
+from waggylabs.snippets import *
+
+
+register_snippet(PostPage, viewset=PostPageViewSet)
+register_snippet(PostCategory, viewset=PostCategoryViewSet)
+register_snippet(TagProxy, viewset=PostPageTagViewSet)
+
+
+@hooks.register("register_icons")
+def register_icons(icons):
+    return icons + ['waggylabs/icons/post-page.svg']
 
 
 @hooks.register('insert_global_admin_css')

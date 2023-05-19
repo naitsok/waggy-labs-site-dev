@@ -5,8 +5,6 @@ from modelcluster.fields import ParentalKey
 
 from taggit.models import Tag, TaggedItemBase
 
-from wagtail.snippets.models import register_snippet
-
 
 class PostPageTag(TaggedItemBase):
     """Class for post tags"""
@@ -18,7 +16,6 @@ class PostPageTag(TaggedItemBase):
     )
 
 
-@register_snippet
 class TagProxy(Tag):
     """Proxy for tags for Wagtail admin."""
 

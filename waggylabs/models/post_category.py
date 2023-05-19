@@ -5,14 +5,12 @@ from django.utils.safestring import mark_safe
 from modelcluster.fields import ParentalKey
 
 from wagtail.admin.panels import FieldPanel
-from wagtail.snippets.models import register_snippet
 
 from wagtailmarkdown.utils import render_markdown
 
 from waggylabs.fields import MarkdownField
 
 
-@register_snippet
 class PostCategory(models.Model):
     """Class for post categories."""
 

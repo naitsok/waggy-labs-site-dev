@@ -184,6 +184,9 @@ function prepareSidebarContents(element) {
                 toc.appendChild(tocLink);
             }
         });
+        if (!toc.parentNode.classList.contains('card-body') && !toc.parentNode.classList.contains('waggylabs-sidebar-tab-item')) {
+            toc.appendChild(document.createElement('hr'));
+        }
     });
 
     /* if (toc) {
@@ -213,12 +216,19 @@ function prepareSidebarCitations(element) {
     const literatureElem = literatureElems[literatureElems.length - 1];
     // const literatureSidebarElem = document.querySelector('.waggylabs-sidebar-literature');
     if (literatureElem) {
-        document.querySelectorAll('.waggylabs-sidebar-literature').forEach((sidebarElem) => {
+        document.querySelectorAll('.waggylabs-sidebar-literature').forEach((lit) => {
             for (let i = 0; i < literatureElem.children.length; i++) {
                 const citeClone = literatureElem.children[i].cloneNode(true);
                 citeClone.children[0].removeAttribute('id');
-                sidebarElem.appendChild(citeClone);
-                sidebarElem.appendChild(document.createElement('hr'));
+                lit.appendChild(citeClone);
+                if (i == literatureElem.children.length - 1) {
+                    if (!lit.parentNode.classList.contains('card-body') && !lit.parentNode.classList.contains('waggylabs-sidebar-tab-item')) {
+                        lit.appendChild(document.createElement('hr'));
+                    }
+                }
+                else {
+                    lit.appendChild(document.createElement('hr'));
+                }
             }
         });
     }

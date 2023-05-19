@@ -20,7 +20,7 @@ class TableOfContentsItemBlock(StructBlock):
     )
     
     def render_basic(self, value, context=None):
-        return mark_safe(f'<div class="waggylabs-sidebar-toc {value["text_wrap"]}"></div><hr>')
+        return mark_safe(f'<div class="waggylabs-sidebar-toc {value["text_wrap"]}"></div>')
 
 class TableOfContentsBlock(WrapperBlock):
     """Block to add table of contents in the sidebar."""

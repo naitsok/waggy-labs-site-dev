@@ -25,8 +25,10 @@ class PostPage(BasePage):
                         'within series of topic-related posts.')
     # template = 'waggylabs/pages/post_page.html'
     
-    # Database fields
+    # Common fields
+    show_in_menus_default = False
     
+    # Database fields
     body = StreamField(
         PostBodyBlock(),
         use_json_field=True,

@@ -24,6 +24,9 @@ class BasePage(Page, HitCountMixin):
 
     page_description = ''
     template = 'waggylabs/pages/base_page.html'
+    
+    # Common fields
+    show_in_menus_default = True
 
     # Database fields
     title_style = models.CharField(
