@@ -97,7 +97,7 @@ class SidebarTabsItemBlock(StructBlock):
     items = TabItemsBlock()
     
     class Meta:
-        icon = 'clipboard-list'
+        icon = 'sidebar-tabs'
         label = _('Sidebar tabs')
         template = 'waggylabs/blocks/template/sidebar_tabs.html'
         form_template = 'waggylabs/blocks/form_template/sidebar_tabs.html'
@@ -110,7 +110,7 @@ class SidebarTabsBlock(WrapperBlock):
     item = SidebarTabsItemBlock()
     
     class Meta:
-        icon = 'clipboard-list'
+        icon = 'sidebar-tabs'
         label = _('Sidebar tabs')
         help_text = _('Choose the style of the sidebar and which panels to use. '
                       'Note that some settings are incompartible. If tabs style is '

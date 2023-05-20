@@ -151,7 +151,7 @@ class InfoTextBlock(StructBlock):
         })
     
     class Meta:
-        icon = 'clipboard-list'
+        icon = 'info'
         label = _('Phone, address, etc.')
         form_template = 'waggylabs/blocks/form_template/info_text.html'
         template = 'waggylabs/blocks/template/info_text.html'

@@ -54,6 +54,6 @@ class SidebarBlock(StructBlock):
     items = SidebarItemsBlock()
     
     class Meta:
-        icon = 'clipboard-list'
+        icon = 'sidebar'
         label = _('Sidebar')
         template = 'waggylabs/blocks/template/sidebar.html'

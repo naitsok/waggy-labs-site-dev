@@ -5,11 +5,12 @@ from django.utils.safestring import mark_safe
 from wagtail import hooks
 from wagtail.snippets.models import register_snippet
 
-from waggylabs.models import PostCategory, PostPage
+from waggylabs.models import PostCategory, PostPage, PostListPage
 from waggylabs.models.post_tags import TagProxy
 from waggylabs.snippets import *
 
 
+register_snippet(PostListPage, viewset=PostListPageViewSet)
 register_snippet(PostPage, viewset=PostPageViewSet)
 register_snippet(PostCategory, viewset=PostCategoryViewSet)
 register_snippet(TagProxy, viewset=PostPageTagViewSet)
@@ -17,7 +18,32 @@ register_snippet(TagProxy, viewset=PostPageTagViewSet)
 
 @hooks.register("register_icons")
 def register_icons(icons):
-    return icons + ['waggylabs/icons/post-page.svg']
+    return icons + [
+        'wagtailadmin/icons/post-page.svg',
+        'wagtailadmin/icons/post-list-page.svg',
+        'wagtailadmin/icons/site-page.svg',
+        'wagtailadmin/icons/accordion.svg',
+        'wagtailadmin/icons/markdown.svg',
+        'wagtailadmin/icons/card-grid.svg',
+        'wagtailadmin/icons/carousel.svg',
+        'wagtailadmin/icons/citation.svg',
+        'wagtailadmin/icons/columns.svg',
+        'wagtailadmin/icons/cut.svg',
+        'wagtailadmin/icons/embed.svg',
+        'wagtailadmin/icons/equation.svg',
+        'wagtailadmin/icons/footer-menu.svg',
+        'wagtailadmin/icons/link-list.svg',
+        'wagtailadmin/icons/info.svg',
+        'wagtailadmin/icons/archive.svg',
+        'wagtailadmin/icons/categories.svg',
+        'wagtailadmin/icons/light-bulb.svg',
+        'wagtailadmin/icons/post-meta.svg',
+        'wagtailadmin/icons/post-series.svg',
+        'wagtailadmin/icons/tags.svg',
+        'wagtailadmin/icons/table-of-contents.svg',
+        'wagtailadmin/icons/sidebar-tabs.svg',
+        'wagtailadmin/icons/sidebar-tabs.svg',
+    ]
 
 
 @hooks.register('insert_global_admin_css')

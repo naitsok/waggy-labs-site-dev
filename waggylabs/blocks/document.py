@@ -16,7 +16,7 @@ class DocumentBlock(StructBlock):
     )
     
     class Meta:
-        icon = 'doc-full-inverse'
+        icon = 'doc-empty'
         label = _('Document')
         template = 'waggylabs/blocks/template/document.html'
         label_format = _('Document: {document}')

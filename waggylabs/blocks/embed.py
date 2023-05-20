@@ -31,7 +31,7 @@ class EmbedBlock(StructBlock):
     )
     
     class Meta:
-        icon = 'media'
+        icon = 'embed'
         template = 'waggylabs/blocks/template/embed.html'
         label = _('Embed')
         label_format = _('Embed: {embed}')

@@ -94,7 +94,7 @@ class PostCategoryListItemBlock(StructBlock):
         return super().render(value, context)
         
     class Meta:
-        icon = 'list-ul'
+        icon = 'categories'
         label = _('Categories for posts')
         template = 'waggylabs/blocks/template/post_category_list.html'
         form_template = 'waggylabs/blocks/form_template/post_category_list.html'
@@ -105,7 +105,7 @@ class PostCategoryListBlock(WrapperBlock):
     item = PostCategoryListItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'categories'
         label = _('Categories for posts')
         help_text = _('Post category list shows categories for posts that are childern of the specified post list page. '
                       'If post list page is not specified, the block must be located on a post list page.')

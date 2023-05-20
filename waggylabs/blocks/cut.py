@@ -33,7 +33,7 @@ class CutBlock(StructBlock):
         })
     
     class Meta:
-        icon = 'arrow-right'
+        icon = 'cut'
         label = _('Cut')
         label_format = _('Cut: {text}')
         template = 'waggylabs/blocks/template/cut.html'

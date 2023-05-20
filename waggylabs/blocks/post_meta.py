@@ -41,7 +41,7 @@ class SiblingPostBlock(StructBlock):
             })
 
     class Meta:
-        icon = 'list-ul'
+        icon = 'post-meta'
         form_template = 'waggylabs/blocks/form_template/sibling_post.html'
 
 class PostMetaBlock(StructBlock):
@@ -143,7 +143,7 @@ class PostMetaBlock(StructBlock):
     
     class Meta:
         label = _('Post metadata')
-        icon = 'doc-full-inverse'
+        icon = 'post-meta'
         template = 'waggylabs/blocks/template/post_meta.html'
         form_template = 'waggylabs/blocks/form_template/post_meta.html'
         help_text = _('Post metadata displays information '

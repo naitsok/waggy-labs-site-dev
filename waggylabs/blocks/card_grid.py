@@ -49,7 +49,7 @@ class CardBlock(StructBlock):
     links = LinksBlock(required=False)
     
     class Meta:
-        icon = 'form'
+        icon = 'card-grid'
         label = _('Item of the card grid')
         template = 'waggylabs/blocks/template/card.html'
         form_template = 'waggylabs/blocks/form_template/card.html'
@@ -100,7 +100,7 @@ class CardGridBlock(StructBlock):
     items = ListBlock(CardBlock())
     
     class Meta:
-        icon = 'form'
+        icon = 'card-grid'
         label = _('Card grid')
         template = 'waggylabs/blocks/template/card_grid.html'
         form_template = 'waggylabs/blocks/form_template/card_grid.html'

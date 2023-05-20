@@ -94,7 +94,7 @@ class PostArchiveItemBlock(StructBlock):
         return super().render(value, context)
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'archive'
         label = _('Post archives')
         template = 'waggylabs/blocks/template/post_archive.html'
         form_template = 'waggylabs/blocks/form_template/post_archive.html'
@@ -106,7 +106,7 @@ class PostArchiveBlock(WrapperBlock):
     item = PostArchiveItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'archive'
         label = _('Post archives')
         help_text = _('Post archives shows links to lists of posts that were published '
                       'during specified time periods.')
@@ -117,7 +117,7 @@ class FooterPostArchiveBlock(FooterWrapperBlock):
     item = PostArchiveItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'archive'
         label = _('Post archives')
         help_text = _('Post archives shows links to lists of posts that were published '
                       'during specified time periods.')

@@ -27,7 +27,7 @@ class TableOfContentsBlock(WrapperBlock):
     item = TableOfContentsItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'table-of-contents'
         label = _('Table of contents')
         help_text = _('Adds table of contents tab to the sidebar. All the '
                       'headers present on the text blocks of the page body '
@@ -51,7 +51,7 @@ class CitationsItemBlock(StructBlock):
         return mark_safe(f'<div class="waggylabs-sidebar-literature {value["text_wrap"]}"></div>')
     
     class Meta:
-        icon = 'list-ol'
+        icon = 'citation'
         label = _('References')
         
 
@@ -61,7 +61,7 @@ class CitationsBlock(WrapperBlock):
     item = CitationsItemBlock()
     
     class Meta:
-        icon = 'list-ol'
+        icon = 'citation'
         label = _('References')
         help_text = _('Adds references to the sidebar.')
         
@@ -82,7 +82,7 @@ class TextBlock(WrapperBlock):
     )
     
     class Meta:
-        icon = 'doc-full'
+        icon = 'markdown'
         label = _('Sidebar text')
         help_text = _('Adds text block the sidebar.')
         

@@ -51,7 +51,7 @@ class LinkListItemBlock(StructBlock):
     ], use_json_field=True)
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'link-list'
         label = _('List of links')
         template = 'waggylabs/blocks/template/link_list.html'
         form_template = 'waggylabs/blocks/form_template/link_list.html'
@@ -62,7 +62,7 @@ class LinkListBlock(WrapperBlock):
     item = LinkListItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'link-list'
         label = _('List of links')
         help_text = _('List of links shows list of custom link either to extrenal resource '
                       'or to any of the internal page.')
@@ -72,7 +72,7 @@ class FooterLinkListBlock(FooterWrapperBlock):
     item = LinkListItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'link-list'
         label = _('List of links')
         help_text = _('List of links shows list of custom link either to extrenal resource '
                       'or to any of the internal page.')

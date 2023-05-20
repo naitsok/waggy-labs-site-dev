@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.blocks import StructBlock, CharBlock, ChoiceBlock
+from wagtail.blocks import StructBlock, ChoiceBlock
 
 from waggylabs.blocks.styling import (
     TextStyleChoiceBlock, ListStyleChoiceBlock, ListItemStyleChoiceBlock
@@ -61,7 +61,7 @@ class PostSeriesItemBlock(StructBlock):
     
 
     class Meta:
-        icon = 'list-ul'
+        icon = 'post-series'
         label = _('Post series')
         form_template = 'waggylabs/blocks/form_template/post_series.html'
         template = 'waggylabs/blocks/template/post_series.html'
@@ -73,7 +73,7 @@ class PostSeriesBlock(WrapperBlock):
     item = PostSeriesItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'post-series'
         label = _('Post series')
         help_text = _('If the post is included into a series, '
                       'its title appears in this block. The currenlty '

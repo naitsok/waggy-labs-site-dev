@@ -80,5 +80,5 @@ class MarkdownBlock(TextBlock):
         return render_markdown(value, context)
     
     class Meta:
-        icon = 'doc-full'
+        icon = 'markdown'
         label_format = _('Text: {value}')

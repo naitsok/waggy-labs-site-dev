@@ -20,7 +20,7 @@ class FooterMenuItemBlock(StructBlock):
     )
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'footer-menu'
         label = _('Footer main menu')
         template = 'waggylabs/blocks/template/footer_menu.html'
 
@@ -30,6 +30,6 @@ class FooterMenuBlock(FooterWrapperBlock):
     item = FooterMenuItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'footer-menu'
         label = _('Footer main menu')
         help_text = _('Adds the main menu without submenus to the footer.')

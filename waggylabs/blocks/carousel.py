@@ -64,7 +64,7 @@ class CarouselItem(StructBlock):
     )
     
     class Meta:
-        icon = 'image'
+        icon = 'carousel'
         label = _('Item of the carousel')
         form_template = 'waggylabs/blocks/form_template/carousel_item.html'
         label_format = _('{image}')
@@ -97,7 +97,7 @@ class ImageCarouselBlock(StructBlock):
     items = ListBlock(CarouselItem(), min_num=1)
         
     class Meta:
-        icon = 'grip'
+        icon = 'carousel'
         label = _('Picture Carousel')
         template = 'waggylabs/blocks/template/carousel.html'
         form_template = 'waggylabs/blocks/form_template/carousel.html'

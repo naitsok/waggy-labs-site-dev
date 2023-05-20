@@ -30,7 +30,7 @@ class CitationBlock(StructBlock):
         })
     
     class Meta:
-        icon = 'link'
+        icon = 'citation'
         label = _('Citation')
         template = 'waggylabs/blocks/template/citation.html'
         form_template = 'waggylabs/blocks/form_template/citation.html'

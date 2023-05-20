@@ -204,7 +204,7 @@ class PostListBlock(StructBlock):
         return super().render(value, context)
     
     class Meta:
-        icon = 'clipboard-list'
+        icon = 'post-list-page'
         label = _('Post list')
         template = 'waggylabs/blocks/template/post_list.html'
         form_template = 'waggylabs/blocks/form_template/post_list.html'

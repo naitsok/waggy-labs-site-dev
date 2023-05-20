@@ -128,7 +128,7 @@ class PageInfoItemBlock(StructBlock):
         return super().render(value, context)
     
     class Meta:
-        icon = 'form'
+        icon = 'info'
         label = _('Page info')
         template = 'waggylabs/blocks/template/page_info.html'
         form_template = 'waggylabs/blocks/form_template/page_info.html'
@@ -139,7 +139,7 @@ class PageInfoBlock(WrapperBlock):
     item = PageInfoItemBlock()
         
     class Meta:
-        icon = 'form'
+        icon = 'info'
         label = _('Page info')
         help_text = _('Page info block displays the information about '
                       'page creator, created date, and last updated date.')

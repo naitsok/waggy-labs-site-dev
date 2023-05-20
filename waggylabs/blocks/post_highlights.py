@@ -75,7 +75,7 @@ class PostHighlightsItemBlock(StructBlock):
         return super().render(value, context)
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'light-bulb'
         label = _('Post highlights')
         template = 'waggylabs/blocks/template/post_highlights.html'
         form_template = 'waggylabs/blocks/form_template/post_highlights.html'
@@ -87,7 +87,7 @@ class PostHighlightsBlock(WrapperBlock):
     item = PostHighlightsItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'light-bulb'
         label = _('Post highlights')
         help_text = _('Post highlights shows list of post titles sorted according the selected ordering. '
                       'Block can be used, for example to display list of latest blog post '
@@ -99,7 +99,7 @@ class FooterPostHighlightsBlock(FooterWrapperBlock):
     item = PostHighlightsItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'light-bulb'
         label = _('Post highlights')
         help_text = _('Post highlights shows list of post titles sorted according the selected ordering. '
                       'Block can be used, for example to display list of latest blog post '

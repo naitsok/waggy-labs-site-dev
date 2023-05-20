@@ -14,6 +14,7 @@ from waggylabs.blocks.document import DocumentBlock
 from waggylabs.blocks.embed import EmbedBlock
 from waggylabs.blocks.equation import EquationBlock
 from waggylabs.blocks.figure import FigureBlock
+from waggylabs.blocks.icon import IconBlock, IconLocationBlock
 from waggylabs.blocks.link_list import LinkListBlock
 from waggylabs.blocks.listing import ListingBlock
 from waggylabs.blocks.markdown import MarkdownBlock
@@ -64,6 +65,14 @@ class AccordionItemBlock(StructBlock):
         label=_('Item heading'),
         classname='full subtitle'
     )
+    # header_icon = IconBlock(
+    #     required=False,
+    #     label=_('Header icon'),
+    # )
+    # header_icon_location = IconLocationBlock(
+    #     required=False,
+    #     label=_('Header icon location'),
+    # )
     is_open = BooleanBlock(
         required=False,
         label=_('Item is displayed expanded')
@@ -79,7 +88,7 @@ class AccordionItemBlock(StructBlock):
         })
     
     class Meta:
-        icon = 'doc-full'
+        icon = 'accordion'
         label = _('Item of the accordion')
         form_template = 'waggylabs/blocks/form_template/accordion_item.html'
         label_format = '{heading}'
@@ -113,7 +122,7 @@ class AccordionBlock(StructBlock):
         return blocks_by_types
 
     class Meta:
-        icon = 'list-ul'
+        icon = 'accordion'
         label = _('Accordion')
         template = 'waggylabs/blocks/template/accordion.html'
         form_template = 'waggylabs/blocks/form_template/accordion.html'

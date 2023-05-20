@@ -65,7 +65,7 @@ class ColumnsItemBlock(StructBlock):
     body = ColumnsContentBlock(required=True)
     
     class Meta:
-        icon = 'doc-full'
+        icon = 'columns'
         label = _('Column')
         label_format = _('Column: {body}')
         
@@ -97,7 +97,7 @@ class ColumnsBlock(StructBlock):
         return blocks_by_types
         
     class Meta:
-        icon = 'duplicate'
+        icon = 'columns'
         label = _('Multiple columns')
         template = 'waggylabs/blocks/template/columns.html'
         # form_template = 'waggylabs/blocks/form_template/columns.html'

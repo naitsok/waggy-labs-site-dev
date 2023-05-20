@@ -93,7 +93,7 @@ class PostTagListItemBlock(StructBlock):
         return super().render(value, context)
         
     class Meta:
-        icon = 'list-ul'
+        icon = 'tags'
         label = _('Tags for posts')
         template = 'waggylabs/blocks/template/post_tag_list.html'
         form_template = 'waggylabs/blocks/form_template/post_tag_list.html'
@@ -106,7 +106,7 @@ class PostTagListBlock(WrapperBlock):
     item = PostTagListItemBlock()
     
     class Meta:
-        icon = 'list-ul'
+        icon = 'tags'
         label = _('Tags for posts')
         help_text = _('Tag list shows tags for posts that are childern of the specified post list page. '
                       'If post list page is not specified, post list page will be automatically selected '
