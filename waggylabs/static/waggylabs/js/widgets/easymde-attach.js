@@ -187,6 +187,10 @@ function getHinter() {
         const cur = cm.getCursor();
         const token = cm.getTokenAt(cur);
         const { start, end } = token;
+        const tillCursor = cm.getRange({line: 0, ch: 0}, cur);
+        // Indicates if autocomplete is invoked inside of a TeX equation
+        const inMath = ((tillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (tillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
+            ((tillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0);
 
         const from = CodeMirror.Pos(cur.line, start);
         const to = CodeMirror.Pos(cur.line, end);
