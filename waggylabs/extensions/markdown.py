@@ -60,7 +60,7 @@ class MathJaxBlockProcessor(InlineProcessor):
         return el, m.start(0), m.end(0)
 
 
-RE_BEGIN = r'\\begin{(.*?)}([\s\S]*?)\\end{\1}'
+RE_BEGIN = r'\\begin{(.+?)}([\s\S]*?)\\end{\1}'
 class MathJaxBeginProcessor(InlineProcessor):
     """Processor for MathJax equations entered using \\begin{...}...\\end{...} pattern."""
     def handleMatch(self, m, data):

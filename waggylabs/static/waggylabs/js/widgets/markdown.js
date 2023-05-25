@@ -129,7 +129,7 @@ function beginMath() {
         level: 'block',
         start(src) {  return src.indexOf('\\begin{'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\begin{(.*?)}([\s\S]*?)\\end{\1}/);
+            const match = src.match(/^\\begin{(.+?)}([\s\S]*?)\\end{\1}/);
             if (match) {
                 return {
                     type: 'beginMath',
@@ -155,7 +155,7 @@ function refLabel() {
         level: 'inline',
         start(src) {return src.indexOf('\\ref{'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\ref{(.*?)}/);
+            const match = src.match(/^\\ref{(.+?)}/);
             if (match) {
                 return {
                     type: 'refLabel',
@@ -222,7 +222,7 @@ function citeLabel() {
         level: 'inline',
         start(src) { return src.indexOf('\\cite{'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\cite{(.*?)}/);
+            const match = src.match(/^\\cite{(.+?)}/);
             if (match) {
                 return {
                     type: 'citeLabel',
