@@ -187,10 +187,16 @@ function getHinter() {
         const cur = cm.getCursor();
         const token = cm.getTokenAt(cur);
         const { start, end } = token;
-        const tillCursor = cm.getRange({line: 0, ch: 0}, cur);
+        const allTillCursor = cm.getRange({line: 0, ch: 0}, cur);
+        const lineTillCursor = cm.getRange({line: cur.line, ch:0}, cur);
         // Indicates if autocomplete is invoked inside of a TeX equation
-        const inMath = ((tillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (tillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
-            ((tillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0);
+        const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
+            ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
+
+        const inRef = (lineTillCursor.match(/\\ref\{([^\}]*)$/g) || []).length > 0;
+        const inEqRef = (lineTillCursor.match(/\\eqref\{([^\}]*)$/g) || []).length > 0;
+        const inCite = (lineTillCursor.match(/\\cite\{([^\}]*)$/g) || []).length > 0;
+        const inEnv = (lineTillCursor.match(/\\begin\{([^\}]*)$/g) || []).length > 0;
 
         const from = CodeMirror.Pos(cur.line, start);
         const to = CodeMirror.Pos(cur.line, end);
@@ -199,7 +205,7 @@ function getHinter() {
 
         // const currentLine = cm.getRange({ line: from.line, ch: 0 }, to);
 
-        // const lastSeparatedWord = /\b(\w+)$/g;
+        const lastSeparatedWord = /\b(\w+)$/g;
         // const allMatches = [...currentLine.matchAll(lastSeparatedWord)];
 
         // if (!allMatches.length) {
