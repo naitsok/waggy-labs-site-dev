@@ -3,12 +3,12 @@ import re
 from wagtail.search.query import PlainText
 
 
-RE_LABEL = re.compile(r'\\label\{(.*?)\}', re.IGNORECASE)
-RE_REF = re.compile(r'\\ref\{(.*?)\}', re.IGNORECASE)
-RE_EQREF = re.compile(r'\\eqref\{(.*?)\}', re.IGNORECASE)
-RE_CITE = re.compile(r'\\cite\{(.*?)\}', re.IGNORECASE)
+RE_LABEL = re.compile(r'\\label\{(.+?)\}', re.IGNORECASE)
+RE_REF = re.compile(r'\\ref\{(.+?)\}', re.IGNORECASE)
+RE_EQREF = re.compile(r'\\eqref\{(.+?)\}', re.IGNORECASE)
+RE_CITE = re.compile(r'\\cite\{(.+?)\}', re.IGNORECASE)
 RE_ALL = re.compile(
-    r'(\\label\{(?P<label>.*?)\}|\\ref\{(?P<ref>.*?)\}|\\eqref\{(?P<eqref>.*?)\}|\\cite\{(?P<cite>.*?)\})',
+    r'(\\label\{(?P<label>.+?)\}|\\ref\{(?P<ref>.+?)\}|\\eqref\{(?P<eqref>.+?)\}|\\cite\{(?P<cite>.+?)\})',
     re.IGNORECASE
 )
 def pk_to_markdown(value, pk):

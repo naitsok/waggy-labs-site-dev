@@ -181,6 +181,58 @@ function createToolbar(toolbarConfig) {
     return [toolbar, shortcuts];
 }
 
+/**
+ * Collects the citation labels into a list
+ * @returns  - array of strings with citation labels
+ */
+function collectCites() {
+    const cites = [];
+    document.querySelectorAll('.waggylabs-label-cite').forEach((el) => {
+        if (el.value) { cites.push(el.value); }
+    });
+    return cites;
+}
+
+/**
+ * Collects the equation reference labels 
+ * @returns - list of strings with equation reference labels
+ */
+function collectEqRefs() {
+    const eqRefs = [];
+    // Equation reference from the equation blocks
+    document.querySelectorAll('.waggylabs-label-equation').forEach((el) => {
+        if (el.value) { eqRefs.push(el.value); }
+    });
+    // Equation references from EasyMDEs
+    const textAreas = document.getElementsByTagName("textarea");
+    for (let i in textAreas) {
+        if(textAreas[i].easyMDE) {
+            // now check if the EasyMDE contain equation, i.e. it is in only in the TeX mode
+            textAreas[i].easyMDE.value().match(/\\label\{(.+?)\}/g).forEach((m) => {
+                eqRefs.push(m.group(1));
+            });
+        }
+    }
+
+    return eqRefs;
+}
+
+/**
+ * Collects all the reference labels 
+ * @returns - list of strings with reference labels
+ */
+function collectRefs() {
+    const refs = collectEqRefs();
+    // collect figures, listings, embeds, tables
+    const refTypes = ['figure', 'table', 'listing', 'embed'];
+    refTypes.forEach((refType) => {
+        document.querySelectorAll('.waggylabs-label-' + refType).forEach((el) => {
+            if (el.value) { eqRefs.push(el.value); }
+        });
+    });
+    return refs;
+}
+
 function getHinter() {
     const suggestionList = ['list1', 'list2', 'list3'];
     return function hintFunction(cm) {
