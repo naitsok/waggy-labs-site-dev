@@ -197,6 +197,7 @@ function getHinter() {
         const inEqRef = (lineTillCursor.match(/\\eqref\{([^\}]*)$/g) || []).length > 0;
         const inCite = (lineTillCursor.match(/\\cite\{([^\}]*)$/g) || []).length > 0;
         const inEnv = (lineTillCursor.match(/\\begin\{([^\}]*)$/g) || []).length > 0;
+        const inCommand = lineTillCursor.match(/\\[\w]*$/g);
 
         const from = CodeMirror.Pos(cur.line, start);
         const to = CodeMirror.Pos(cur.line, end);
