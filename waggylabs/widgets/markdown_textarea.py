@@ -55,9 +55,10 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
                 "waggylabs/vendor/codemirror/mode/stex/stex.js", # For latex highlighting
                 "waggylabs/vendor/codemirror/addon/hint/show-hint.js", # For hints
                 "waggylabs/vendor/easymde/easymde.min.js", # EasyMDE compiled with show-hint.js and stex.min.js
-                "waggylabs/js/widgets/easymde-attach.js",
-                "waggylabs/js/widgets/markdown.js",
+                "waggylabs/js/widgets/markdown-mathjax.js",
                 "waggylabs/js/widgets/markdown-emoji.js",
+                "waggylabs/js/widgets/markdown.js",
+                "waggylabs/js/widgets/easymde-attach.js",
             ),
         )
         

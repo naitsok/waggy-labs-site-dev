@@ -1,4 +1,5 @@
-mathJaxMathCommands = [
+function getMathJaxMathCommands() {
+    return [
     "\\_", "\\,", "\\;", "\\:", "\\!", "\\{", "\\}", "\\\\", "\\&", "\\#", "\\%", "\\>", "\\|", "\\$", "\\above", "\\abovewithdelims", "\\Aboxed", "\\abs", "\\absolutevalue", 
     "\\acomm", "\\acos", "\\acosecant", "\\acosine", "\\acot", "\\acotangent", "\\acsc", "\\acute", "\\adjustlimits", "\\admat", "\\aleph", "\\alpha", "\\alwaysDashedLine", 
     "\\alwaysNoLine", "\\alwaysRootAtBottom", "\\alwaysRootAtTop", "\\alwaysSingleLine", "\\alwaysSolidLine", "\\amalg", "\\And", "\\angle", "\\anticommutator", 
@@ -104,16 +105,22 @@ mathJaxMathCommands = [
     "\\xleftharpoonup", "\\xleftrightarrow", "\\xLeftrightarrow", "\\xleftrightharpoons", "\\xLeftrightharpoons", "\\xlongequal", "\\xmapsto", "\\xmat", "\\xmathstrut", 
     "\\xmatrix", "\\xrightarrow", "\\xRightarrow", "\\xrightharpoondown", "\\xrightharpoonup", "\\xrightleftharpoons", "\\xRightleftharpoons", "\\xtofrom", 
     "\\xtwoheadleftarrow", "\\xtwoheadrightarrow", "\\yen", "\\zeromatrix", "\\zeta", "\\zmat",
-];
+    ];
+}
 
-mathJaxEnvs = [
+function getMathJaxEnvs() {
+    return [
     "align", "align*", "alignat", "alignat*", "aligned", "alignedat", "array", "bmatrix", "Bmatrix", "bmatrix*", "Bmatrix*", "bsmallmatrix", "Bsmallmatrix", "bsmallmatrix*", 
     "Bsmallmatrix*", "cases", "cases*", "CD", "crampedsubarray", "dcases", "dcases*", "drcases", "drcases*", "empheq", "eqnarray", "eqnarray*", "equation", "equation*", 
     "flalign", "flalign*", "gather", "gather*", "gathered", "lgathered", "matrix", "matrix*", "multline", "multline*", "multlined", "numcases", "pmatrix", "pmatrix*", 
     "prooftree", "psmallmatrix", "psmallmatrix*", "rcases", "rcases*", "rgathered", "smallmatrix", "smallmatrix*", "split", "spreadlines", "subarray", "subnumcases", 
     "vmatrix", "Vmatrix", "vmatrix*", "Vmatrix*", "vsmallmatrix", "Vsmallmatrix", "vsmallmatrix*", "Vsmallmatrix*", "xalignat", "xalignat*", "xxalignat",
-]
+    ];
+}
 
-mathJaxTextCommands = [
-    "\\begin", "\\end", "\\ref", "\\cite", "\\eqref", "\\label",
-]
+
+function getMathJaxTextCommands() {
+    return [
+    "\\begin", "\\end", "\\ref", "\\cite", "\\eqref",
+    ];
+}

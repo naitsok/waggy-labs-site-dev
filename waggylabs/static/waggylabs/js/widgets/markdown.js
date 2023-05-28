@@ -24,7 +24,7 @@ function inlineMath() {
         level: 'inline',
         start(src) { src.indexOf('\\\\('); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\\\\(+([^$\n]+?)\\\\\)+/);
+            const match = src.match(/^\\\\\(+([^$\n]+?)\\\\\)+/i);
             if (match) {
                 return {
                     type: 'inlineMath',
@@ -50,7 +50,7 @@ function inlineMath2() {
         level: 'inline',
         start(src) { return src.indexOf('$'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\$+([^$\n]+?)\$+/);
+            const match = src.match(/^\$+([^$\n]+?)\$+/i);
             if (match) {
                 return {
                     type: 'inlineMath2',
@@ -77,7 +77,7 @@ function blockMath() {
         level: 'block',
         start(src) { return src.indexOf('$$'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\$\$+([^$]+?)\$\$+/);
+            const match = src.match(/^\$\$+([^$]+?)\$\$+/i);
             if (match) {
                 return {
                     type: 'blockMath',
@@ -103,7 +103,7 @@ function blockMath2() {
         level: 'block',
         start(src) { return src.indexOf('\\\\['); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\\\\[([^$]+?)\\\\\]/);
+            const match = src.match(/^\\\\\[([^$]+?)\\\\\]/i);
             if (match) {
                 return {
                     type: 'blockMath',
@@ -129,7 +129,7 @@ function beginMath() {
         level: 'block',
         start(src) {  return src.indexOf('\\begin{'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\begin{(.+?)}([\s\S]*?)\\end{\1}/);
+            const match = src.match(/^\\begin{(.+?)}([\s\S]*?)\\end{\1}/i);
             if (match) {
                 return {
                     type: 'beginMath',
@@ -155,7 +155,7 @@ function refLabel() {
         level: 'inline',
         start(src) {return src.indexOf('\\ref{'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\ref{(.+?)}/);
+            const match = src.match(/^\\ref{(.+?)}/i);
             if (match) {
                 return {
                     type: 'refLabel',
@@ -222,7 +222,7 @@ function citeLabel() {
         level: 'inline',
         start(src) { return src.indexOf('\\cite{'); },
         tokenizer(src, tokens) {
-            const match = src.match(/^\\cite{(.+?)}/);
+            const match = src.match(/^\\cite{(.+?)}/i);
             if (match) {
                 return {
                     type: 'citeLabel',
@@ -289,7 +289,7 @@ function emoji() {
         level: 'inline',
         start(src) { return src.indexOf(':'); },
         tokenizer(src, tokens) {
-            const rule = /^:(.+?):/;
+            const rule = /^:(.+?):/i;
             const match = rule.exec(src);
             if (!match) {
                 return;
@@ -319,7 +319,7 @@ function emoji() {
     };
 }
 
-var anchorToExternalRegex = new RegExp(/(<a.*?https?:\/\/.*?[^a]>)+?/g);
+var anchorToExternalRegex = new RegExp(/(<a.*?https?:\/\/.*?[^a]>)+?/gi);
 
 /**
  * Modify HTML to add 'target="_blank"' to links so they open in new tabs by default. Same as in EasyMDE.

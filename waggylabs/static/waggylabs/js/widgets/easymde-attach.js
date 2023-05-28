@@ -186,9 +186,10 @@ function createToolbar(toolbarConfig) {
  * @returns  - array of strings with citation labels
  */
 function collectCites() {
-    const cites = [];
+    let cites = [];
     document.querySelectorAll('.waggylabs-label-cite').forEach((el) => {
-        if (el.value) { cites.push(el.value); }
+        const input = el.getElementsByTagName('input')[0];
+        if (input.value) { cites.push(input.value); }
     });
     return cites;
 }
@@ -201,16 +202,17 @@ function collectEqRefs() {
     const eqRefs = [];
     // Equation reference from the equation blocks
     document.querySelectorAll('.waggylabs-label-equation').forEach((el) => {
-        if (el.value) { eqRefs.push(el.value); }
+        const input = el.getElementsByTagName('input')[0];
+        if (input.value) { eqRefs.push(input.value); }
     });
     // Equation references from EasyMDEs
+    const re = new RegExp(/\\label\{(.+?)\}/gi);
     const textAreas = document.getElementsByTagName("textarea");
     for (let i in textAreas) {
         if(textAreas[i].easyMDE) {
-            // now check if the EasyMDE contain equation, i.e. it is in only in the TeX mode
-            textAreas[i].easyMDE.value().match(/\\label\{(.+?)\}/g).forEach((m) => {
-                eqRefs.push(m.group(1));
-            });
+            while ((match = re.exec(textAreas[i].easyMDE.value())) !== null) {
+                eqRefs.push(match[1]);
+            }
         }
     }
 
@@ -227,24 +229,82 @@ function collectRefs() {
     const refTypes = ['figure', 'table', 'listing', 'embed'];
     refTypes.forEach((refType) => {
         document.querySelectorAll('.waggylabs-label-' + refType).forEach((el) => {
-            if (el.value) { eqRefs.push(el.value); }
+            const input = el.getElementsByTagName('input')[0];
+            if (input.value) { refs.push(input.value); }
         });
     });
     return refs;
 }
 
 function getHinter() {
-    const suggestionList = ['list1', 'list2', 'list3'];
+    const mathJaxTextCommands = getMathJaxTextCommands();
+    const mathJaxMathCommands = getMathJaxMathCommands();
+    const mathJaxEnvs = getMathJaxEnvs();
+    const citeRegex = new RegExp(/\\cite\{([^\}]*)$/gi);
+    const eqRefRegex = new RegExp(/\\eqref\{([^\}]*)$/gi);
+    const refRegex = new RegExp(/\\ref\{([^\}]*)$/gi);
+
     return function hintFunction(cm) {
         const cur = cm.getCursor();
         const token = cm.getTokenAt(cur);
         const { start, end } = token;
+        
+        const lineTillCursor = cm.getRange({line: cur.line, ch: 0}, cur);
         const allTillCursor = cm.getRange({line: 0, ch: 0}, cur);
-        const lineTillCursor = cm.getRange({line: cur.line, ch:0}, cur);
+
+        const inCiteMatch = citeRegex.exec(lineTillCursor);
+        if (inCiteMatch) {
+            let match = inCiteMatch[1].split(',').slice(-1)[0];
+            let cites = collectCites();
+            if (match) {
+                let re = new RegExp(match, 'i');
+                cites = cites.filter((s) => { return re.test(s); });
+            }
+            return {
+                from: { line: cur.line, ch: cur.ch - match.length, },
+                to: { line: cur.line, ch: cur.ch, },
+                list: cites.sort(),
+            };
+        }
+
+        const eqRefMatch = eqRefRegex.exec(lineTillCursor);
+        if (eqRefMatch) {
+            let match = eqRefMatch[1];
+            let eqRefs = collectEqRefs();
+            if (match) {
+                let re = new RegExp(match, 'i');
+                eqRefs = eqRefs.filter((s) => { return re.test(s); });
+            }
+            return {
+                from: { line: cur.line, ch: cur.ch - match.length, },
+                to: { line: cur.line, ch: cur.ch, },
+                list: eqRefs.sort(),
+            };
+        }
+
+        const refMatch = refRegex.exec(lineTillCursor);
+        if (refMatch) {
+            let match = refMatch[1];
+            let refs = collectRefs();
+            if (match) {
+                let re = new RegExp(match, 'i');
+                refs = refs.filter((s) => { return re.test(s); });
+            }
+            return {
+                from: { line: cur.line, ch: cur.ch - match.length, },
+                to: { line: cur.line, ch: cur.ch, },
+                list: refs.sort(),
+            };
+        }
+
         // Indicates if autocomplete is invoked inside of a TeX equation
         const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
             ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
 
+        
+
+        
+        
         const inRef = (lineTillCursor.match(/\\ref\{([^\}]*)$/g) || []).length > 0;
         const inEqRef = (lineTillCursor.match(/\\eqref\{([^\}]*)$/g) || []).length > 0;
         const inCite = (lineTillCursor.match(/\\cite\{([^\}]*)$/g) || []).length > 0;
