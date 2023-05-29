@@ -240,9 +240,11 @@ function getHinter() {
     const mathJaxTextCommands = getMathJaxTextCommands();
     const mathJaxMathCommands = getMathJaxMathCommands();
     const mathJaxEnvs = getMathJaxEnvs();
-    const citeRegex = new RegExp(/\\cite\{([^\}]*)$/gi);
-    const eqRefRegex = new RegExp(/\\eqref\{([^\}]*)$/gi);
-    const refRegex = new RegExp(/\\ref\{([^\}]*)$/gi);
+    const citeRegex = new RegExp(/\\cite\{([^\}]*)$/i);
+    const eqRefRegex = new RegExp(/\\eqref\{([^\}]*)$/i);
+    const refRegex = new RegExp(/\\ref\{([^\}]*)$/i);
+    const envRegex = new RegExp(/\\begin\{([^\}]*)$/i);
+    const commandRegex = new RegExp(/\\[\w]*$/i);
 
     return function hintFunction(cm) {
         const cur = cm.getCursor();
@@ -254,10 +256,10 @@ function getHinter() {
 
         const inCiteMatch = citeRegex.exec(lineTillCursor);
         if (inCiteMatch) {
-            let match = inCiteMatch[1].split(',').slice(-1)[0];
+            const match = inCiteMatch[1].split(',').slice(-1)[0];
             let cites = collectCites();
             if (match) {
-                let re = new RegExp(match, 'i');
+                const re = new RegExp('^' + match, 'i');
                 cites = cites.filter((s) => { return re.test(s); });
             }
             return {
@@ -269,10 +271,10 @@ function getHinter() {
 
         const eqRefMatch = eqRefRegex.exec(lineTillCursor);
         if (eqRefMatch) {
-            let match = eqRefMatch[1];
+            const match = eqRefMatch[1];
             let eqRefs = collectEqRefs();
             if (match) {
-                let re = new RegExp(match, 'i');
+                const re = new RegExp('^' + match, 'i');
                 eqRefs = eqRefs.filter((s) => { return re.test(s); });
             }
             return {
@@ -284,10 +286,10 @@ function getHinter() {
 
         const refMatch = refRegex.exec(lineTillCursor);
         if (refMatch) {
-            let match = refMatch[1];
+            const match = refMatch[1];
             let refs = collectRefs();
             if (match) {
-                let re = new RegExp(match, 'i');
+                const re = new RegExp('^' + match, 'i');
                 refs = refs.filter((s) => { return re.test(s); });
             }
             return {
@@ -297,54 +299,46 @@ function getHinter() {
             };
         }
 
-        // Indicates if autocomplete is invoked inside of a TeX equation
-        const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
-            ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
-
-        
-
-        
-        
-        const inRef = (lineTillCursor.match(/\\ref\{([^\}]*)$/g) || []).length > 0;
-        const inEqRef = (lineTillCursor.match(/\\eqref\{([^\}]*)$/g) || []).length > 0;
-        const inCite = (lineTillCursor.match(/\\cite\{([^\}]*)$/g) || []).length > 0;
-        const inEnv = (lineTillCursor.match(/\\begin\{([^\}]*)$/g) || []).length > 0;
-        const inCommand = lineTillCursor.match(/\\[\w]*$/g);
-
-        const from = CodeMirror.Pos(cur.line, start);
-        const to = CodeMirror.Pos(cur.line, end);
-
-        // const allResults = { from, to, list: suggestionList.map((s) => s.path) };
-
-        // const currentLine = cm.getRange({ line: from.line, ch: 0 }, to);
-
-        const lastSeparatedWord = /\b(\w+)$/g;
-        // const allMatches = [...currentLine.matchAll(lastSeparatedWord)];
-
-        // if (!allMatches.length) {
-        //     return allResults;
-        // }
-
-        const matchedWord = suggestionList[0];
-        // const word = matchedWord[0];
-
-        // if (!word) {
-        //     return allResults;
-        // }
-
-        const suggestions = suggestionList;
-
-        return {
-            from: {
-                // Current line
-                line: from.line,
-
-                // Position of the matched
-                ch: from.ch, //matchedWord.index !== undefined ? matchedWord.index : 
-            },
-            to,
-            list: suggestions,
+        const envMatch = envRegex.exec(lineTillCursor);
+        if (envMatch) {
+            const match = envMatch[1];
+            if (match) {
+                const re = new RegExp('^' + match, 'i');
+                return {
+                    from: { line: cur.line, ch: cur.ch - match.length, },
+                    to: { line: cur.line, ch: cur.ch, },
+                    list: mathJaxEnvs.filter((s) => { return re.test(s); }),
+                };
+            }
+            return {
+                from: { line: cur.line, ch: cur.ch, },
+                to: { line: cur.line, ch: cur.ch, },
+                list: mathJaxEnvs,
+            };
         }
+
+        const commandMatch = commandRegex.exec(lineTillCursor);
+        if (commandMatch) {
+            const match = commandMatch[1];
+            const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
+                ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
+            const commands = inMath ? mathJaxMathCommands : mathJaxTextCommands;
+            if (match) {
+                const re = new RegExp('^' + match, 'i');
+                return {
+                    from: { line: cur.line, ch: cur.ch - match.length, },
+                    to: { line: cur.line, ch: cur.ch, },
+                    list: commands.filter((s) => { return re.test(s); }),
+                };
+            }
+            return {
+                from: { line: cur.line, ch: cur.ch, },
+                to: { line: cur.line, ch: cur.ch, },
+                list: commands,
+            };
+        }
+
+        return;
     }
 }
 

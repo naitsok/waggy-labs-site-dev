@@ -121,6 +121,6 @@ function getMathJaxEnvs() {
 
 function getMathJaxTextCommands() {
     return [
-    "\\begin", "\\end", "\\ref", "\\cite", "\\eqref",
+    "\\begin", "\\end", "\\cite", "\\eqref", "\\ref",  
     ];
 }
