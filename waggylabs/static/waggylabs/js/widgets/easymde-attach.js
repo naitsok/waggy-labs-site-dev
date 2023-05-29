@@ -263,7 +263,7 @@ function getHinter() {
                 cites = cites.filter((s) => { return re.test(s); });
             }
             return {
-                from: { line: cur.line, ch: cur.ch - match.length, },
+                from: { line: cur.line, ch: cur.ch - (match ? match.length : 0), },
                 to: { line: cur.line, ch: cur.ch, },
                 list: cites.sort(),
             };
@@ -278,7 +278,7 @@ function getHinter() {
                 eqRefs = eqRefs.filter((s) => { return re.test(s); });
             }
             return {
-                from: { line: cur.line, ch: cur.ch - match.length, },
+                from: { line: cur.line, ch: cur.ch - (match ? match.length : 0), },
                 to: { line: cur.line, ch: cur.ch, },
                 list: eqRefs.sort(),
             };
@@ -293,7 +293,7 @@ function getHinter() {
                 refs = refs.filter((s) => { return re.test(s); });
             }
             return {
-                from: { line: cur.line, ch: cur.ch - match.length, },
+                from: { line: cur.line, ch: cur.ch - (match ? match.length : 0), },
                 to: { line: cur.line, ch: cur.ch, },
                 list: refs.sort(),
             };
@@ -318,27 +318,22 @@ function getHinter() {
         }
 
         const commandMatch = commandRegex.exec(lineTillCursor);
+        const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
+            ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
+        const commands = inMath ? mathJaxMathCommands : mathJaxTextCommands;
         if (commandMatch) {
-            const match = commandMatch[1];
-            const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
-                ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
-            const commands = inMath ? mathJaxMathCommands : mathJaxTextCommands;
-            if (match) {
-                const re = new RegExp('^' + match, 'i');
-                return {
-                    from: { line: cur.line, ch: cur.ch - match.length, },
-                    to: { line: cur.line, ch: cur.ch, },
-                    list: commands.filter((s) => { return re.test(s); }),
-                };
-            }
+            const re = new RegExp('^\\' + commandMatch[0], 'i');
             return {
-                from: { line: cur.line, ch: cur.ch, },
+                from: { line: cur.line, ch: cur.ch - commandMatch[0].length, },
                 to: { line: cur.line, ch: cur.ch, },
-                list: commands,
+                list: commands.filter((s) => { return re.test(s); }),
             };
         }
-
-        return;
+        return {
+            from: { line: cur.line, ch: cur.ch, },
+            to: { line: cur.line, ch: cur.ch, },
+            list: commands,
+        };
     }
 }
 
@@ -347,7 +342,7 @@ function getHinter() {
  * list of comma separated values for custom toolbar
  * @returns - configuration of the status bar
  */
-function createStatusBar(statusConfig){
+function createStatusBar(statusConfig) {
     if (statusConfig === "false") {
         return false;
     }
