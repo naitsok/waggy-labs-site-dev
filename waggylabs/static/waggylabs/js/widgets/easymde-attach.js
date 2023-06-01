@@ -236,20 +236,27 @@ function collectRefs() {
     return refs;
 }
 
+/**
+ * Create hinter function for CodeMirror autocomplete addon
+ * @returns - function that is invoked when autocomplete event is triggered, this 
+ * function then provides the list of commands to complete. Commands are mainly LaTeX/
+ * MathJax commands used in math and text environments.
+ */
 function getHinter() {
     const mathJaxTextCommands = getMathJaxTextCommands();
     const mathJaxMathCommands = getMathJaxMathCommands();
     const mathJaxEnvs = getMathJaxEnvs();
+    const emojis = getEmojis(true);
     const citeRegex = new RegExp(/\\cite\{([^\}]*)$/i);
     const eqRefRegex = new RegExp(/\\eqref\{([^\}]*)$/i);
     const refRegex = new RegExp(/\\ref\{([^\}]*)$/i);
     const envRegex = new RegExp(/\\begin\{([^\}]*)$/i);
     const commandRegex = new RegExp(/\\[\w]*$/i);
+    // const emojiRegex = new RegExp(/\:[\w\'\(\)\_\.]*$/i);
+    const emojiRegex = new RegExp(/[^\w]+(:[\w\'\(\)\_\.]*)$/i);
 
     return function hintFunction(cm) {
         const cur = cm.getCursor();
-        const token = cm.getTokenAt(cur);
-        const { start, end } = token;
         
         const lineTillCursor = cm.getRange({line: cur.line, ch: 0}, cur);
         const allTillCursor = cm.getRange({line: 0, ch: 0}, cur);
@@ -317,6 +324,16 @@ function getHinter() {
             };
         }
 
+        const emojiMatch = emojiRegex.exec(lineTillCursor);
+        if (emojiMatch) {
+            const re = new RegExp('^' + emojiMatch[1], 'i');
+            return {
+                from: { line: cur.line, ch: cur.ch - emojiMatch[1].length, },
+                to: { line: cur.line, ch: cur.ch, },
+                list: emojis.filter((em) => { return re.test(em.text); }), 
+            }
+        }
+
         const commandMatch = commandRegex.exec(lineTillCursor);
         const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
             ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
@@ -329,11 +346,46 @@ function getHinter() {
                 list: commands.filter((s) => { return re.test(s); }),
             };
         }
-        return {
-            from: { line: cur.line, ch: cur.ch, },
-            to: { line: cur.line, ch: cur.ch, },
-            list: commands,
-        };
+
+        
+        // return { list: [] };
+        // return {
+        //     from: { line: cur.line, ch: cur.ch, },
+        //     to: { line: cur.line, ch: cur.ch, },
+        //     list: commands,
+        // };
+    }
+}
+
+function getEndCompletion() {
+    const beginRegex = new RegExp(/\\begin\{([^\}]+)$/i);
+    const textCommandsRegex = new RegExp(/\\begin$|\\end$|\\cite$|\\eqref$|\\ref$/i);
+    const labelCommandsRegex = new RegExp(/\\end\{[^\}]+$|\\cite\{[^\}]+$|\\eqref\{[^\}]+$|\\ref\{[^\}]+$/i);
+    
+    return function EndCompetionFunction(mde) {
+        const cur = mde.codemirror.getCursor();
+        const lineTillCursor = mde.codemirror.getRange({line: cur.line, ch: 0}, cur);
+
+        const beginMatch = beginRegex.exec(lineTillCursor)
+        if (beginMatch) {
+            mde.codemirror.replaceRange('}\n\n\\end{' + beginMatch[1] + '}\n', cur);
+            mde.codemirror.setCursor({line: cur.line + 1, ch: 0});
+            return false;
+        }
+
+        const textCommandsMatch = textCommandsRegex.exec(lineTillCursor);
+        if (textCommandsMatch) {
+            mde.codemirror.replaceRange('{', cur);
+            return true;
+        }
+
+        const labelCommandsMatch = labelCommandsRegex.exec(lineTillCursor);
+        if (labelCommandsMatch) {
+            mde.codemirror.replaceRange('}', cur);
+            return false;
+        }
+        
+        return false;
     }
 }
 
@@ -591,6 +643,14 @@ function easymdeAttach(id) {
     mde.codemirror.on("change", () => {
         document.getElementById(id).value = mde.value();
     });
+    // const completionFunction = getEndCompletion();
+    mde.codemirror.on("endCompletion", () => {
+        if (getEndCompletion()(mde)) {
+            // let event = document.createEvent()
+            // document.getElementById(id).dispatchEvent(new KeyboardEvent('keypress',{'key':'Ctrl+Space'}));
+            CodeMirror.showHint(mde.codemirror, getHinter());
+        }
+    })
 
     // Attach the mde object to the text area.
     // It is needed for the new togglePreview function,

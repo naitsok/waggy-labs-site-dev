@@ -30,7 +30,9 @@ class MarkdownBlock(TextBlock):
                              'correctly generated on the published page, which can be previewed '
                              'before publishing Wagtail button at the bottom of the current web page. '
                              'The links to the pages of this website are added using the specific '
-                             'syntax described at https://github.com/torchbox/wagtail-markdown#inline-links.'),
+                             'syntax described at https://github.com/torchbox/wagtail-markdown#inline-links. '
+                             'Finally use Ctrl+Space or Cmd+Space to invoke autocomplete for TeX commands '
+                             '(starting from "\\" symbol) and for emojis (starting from ":" symbol).'),
                  rows=1,
                  max_length=None,
                  min_length=None,

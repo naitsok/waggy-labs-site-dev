@@ -276,7 +276,7 @@ function processCite(cite) {
 function emoji() {
     // from https://github.com/UziTech/marked-emoji/blob/main/src/index.js
     options = {
-        emojis: get_emojis(),
+        emojis: getEmojis(),
         unicode: true,
     };
   
