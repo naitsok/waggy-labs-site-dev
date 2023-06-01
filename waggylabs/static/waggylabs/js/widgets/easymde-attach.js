@@ -253,7 +253,8 @@ function getHinter() {
     const envRegex = new RegExp(/\\begin\{([^\}]*)$/i);
     const commandRegex = new RegExp(/\\[\w]*$/i);
     // const emojiRegex = new RegExp(/\:[\w\'\(\)\_\.]*$/i);
-    const emojiRegex = new RegExp(/[^\w]+(:[\w\'\(\)\_\.]*)$/i);
+    const emojiRegex1 = new RegExp(/:[\w\_\(\)\'\.\!]*?$/i);
+    const emojiRegex2 = new RegExp(/:([\w\_\(\)\'\.\!]+?):$/i);
 
     return function hintFunction(cm) {
         const cur = cm.getCursor();
@@ -324,11 +325,13 @@ function getHinter() {
             };
         }
 
-        const emojiMatch = emojiRegex.exec(lineTillCursor);
-        if (emojiMatch) {
-            const re = new RegExp('^' + emojiMatch[1], 'i');
+        const emojiMatch = emojiRegex1.exec(lineTillCursor);
+        const skipEmojiMatch = emojiRegex2.exec(lineTillCursor);
+        if (emojiMatch && !skipEmojiMatch) {
+            emojiMatch[0] = emojiMatch[0].replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\./g, '\\.');
+            const re = new RegExp('^' + emojiMatch[0], 'i');
             return {
-                from: { line: cur.line, ch: cur.ch - emojiMatch[1].length, },
+                from: { line: cur.line, ch: cur.ch - emojiMatch[0].length, },
                 to: { line: cur.line, ch: cur.ch, },
                 list: emojis.filter((em) => { return re.test(em.text); }), 
             }
@@ -361,7 +364,8 @@ function getEndCompletion() {
     const beginRegex = new RegExp(/\\begin\{([^\}]+)$/i);
     const textCommandsRegex = new RegExp(/\\begin$|\\end$|\\cite$|\\eqref$|\\ref$/i);
     const labelCommandsRegex = new RegExp(/\\end\{[^\}]+$|\\cite\{[^\}]+$|\\eqref\{[^\}]+$|\\ref\{[^\}]+$/i);
-    
+    // const emojiRegex = new RegExp(/:([\w\_\(\)\'\.\!]+?):$/i);
+
     return function EndCompetionFunction(mde) {
         const cur = mde.codemirror.getCursor();
         const lineTillCursor = mde.codemirror.getRange({line: cur.line, ch: 0}, cur);
@@ -642,13 +646,14 @@ function easymdeAttach(id) {
 
     mde.codemirror.on("change", () => {
         document.getElementById(id).value = mde.value();
+        CodeMirror.showHint(mde.codemirror, getHinter(), {completeSingle: false});
     });
     // const completionFunction = getEndCompletion();
     mde.codemirror.on("endCompletion", () => {
         if (getEndCompletion()(mde)) {
             // let event = document.createEvent()
             // document.getElementById(id).dispatchEvent(new KeyboardEvent('keypress',{'key':'Ctrl+Space'}));
-            CodeMirror.showHint(mde.codemirror, getHinter());
+            CodeMirror.showHint(mde.codemirror, getHinter(), {completeSingle: false});
         }
     })
 

@@ -289,7 +289,7 @@ function emoji() {
         level: 'inline',
         start(src) { return src.indexOf(':'); },
         tokenizer(src, tokens) {
-            const rule = /^:(.+?):/i;
+            const rule = /^:([\w\_\(\)\'\.\!]+?):/i;
             const match = rule.exec(src);
             if (!match) {
                 return;
