@@ -250,13 +250,16 @@ function getHinter() {
     const citeRegex = new RegExp(/\\cite\{([^\}]*)$/i);
     const eqRefRegex = new RegExp(/\\eqref\{([^\}]*)$/i);
     const refRegex = new RegExp(/\\ref\{([^\}]*)$/i);
-    const envRegex = new RegExp(/\\begin\{([^\}]*)$/i);
+    const beginRegex = new RegExp(/\\begin\{([^\}]*)$/i);
+    const endRegex = new RegExp(/\\end\{([^\}]*)$/i);
     const commandRegex = new RegExp(/\\[\w]*$/i);
     // const emojiRegex = new RegExp(/\:[\w\'\(\)\_\.]*$/i);
     const emojiRegex1 = new RegExp(/:[\w\_\(\)\'\.\!]*?$/i);
     const emojiRegex2 = new RegExp(/:([\w\_\(\)\'\.\!]+?):$/i);
 
     return function hintFunction(cm) {
+        cm.noCompletion = true;
+
         const cur = cm.getCursor();
         
         const lineTillCursor = cm.getRange({line: cur.line, ch: 0}, cur);
@@ -270,6 +273,7 @@ function getHinter() {
                 const re = new RegExp('^' + match, 'i');
                 cites = cites.filter((s) => { return re.test(s); });
             }
+            cm.noCompletion = cites.length === 0;
             return {
                 from: { line: cur.line, ch: cur.ch - (match ? match.length : 0), },
                 to: { line: cur.line, ch: cur.ch, },
@@ -285,6 +289,7 @@ function getHinter() {
                 const re = new RegExp('^' + match, 'i');
                 eqRefs = eqRefs.filter((s) => { return re.test(s); });
             }
+            cm.noCompletion = eqRefs.length === 0;
             return {
                 from: { line: cur.line, ch: cur.ch - (match ? match.length : 0), },
                 to: { line: cur.line, ch: cur.ch, },
@@ -300,6 +305,7 @@ function getHinter() {
                 const re = new RegExp('^' + match, 'i');
                 refs = refs.filter((s) => { return re.test(s); });
             }
+            cm.noCompletion = refs.length === 0;
             return {
                 from: { line: cur.line, ch: cur.ch - (match ? match.length : 0), },
                 to: { line: cur.line, ch: cur.ch, },
@@ -307,17 +313,20 @@ function getHinter() {
             };
         }
 
-        const envMatch = envRegex.exec(lineTillCursor);
+        const envMatch = beginRegex.exec(lineTillCursor);
         if (envMatch) {
             const match = envMatch[1];
             if (match) {
                 const re = new RegExp('^' + match, 'i');
+                const mathJaxEnvCompletion = mathJaxEnvs.filter((s) => { return re.test(s); });
+                cm.noCompletion = mathJaxEnvCompletion.length === 0;
                 return {
                     from: { line: cur.line, ch: cur.ch - match.length, },
                     to: { line: cur.line, ch: cur.ch, },
-                    list: mathJaxEnvs.filter((s) => { return re.test(s); }),
+                    list: mathJaxEnvCompletion,
                 };
             }
+            cm.noCompletion = false;
             return {
                 from: { line: cur.line, ch: cur.ch, },
                 to: { line: cur.line, ch: cur.ch, },
@@ -340,16 +349,16 @@ function getHinter() {
         const commandMatch = commandRegex.exec(lineTillCursor);
         const inMath = ((allTillCursor.match(/\\begin\{[a-zA-Z\*]+\}/g) || []).length > (allTillCursor.match(/\\end\{[a-zA-Z\*]+\}/g) || []).length) ||
             ((allTillCursor.match(/^\\*\$|[^\\]\$/g) || []).length % 2 > 0) || ((allTillCursor.match(/^\\*\$\$|[^\\]\$\$/g) || []).length % 2 > 0);
-        const commands = inMath ? mathJaxMathCommands : mathJaxTextCommands;
+        let commands = inMath ? mathJaxMathCommands : mathJaxTextCommands;
         if (commandMatch) {
             const re = new RegExp('^\\' + commandMatch[0], 'i');
+            cm.noCompletion = inMath;
             return {
                 from: { line: cur.line, ch: cur.ch - commandMatch[0].length, },
                 to: { line: cur.line, ch: cur.ch, },
                 list: commands.filter((s) => { return re.test(s); }),
             };
         }
-
         
         // return { list: [] };
         // return {
@@ -364,13 +373,15 @@ function getEndCompletion() {
     const beginRegex = new RegExp(/\\begin\{([^\}]+)$/i);
     const textCommandsRegex = new RegExp(/\\begin$|\\end$|\\cite$|\\eqref$|\\ref$/i);
     const labelCommandsRegex = new RegExp(/\\end\{[^\}]+$|\\cite\{[^\}]+$|\\eqref\{[^\}]+$|\\ref\{[^\}]+$/i);
+    const closeBracketRegex = new RegExp(/^.*\}/i);
     // const emojiRegex = new RegExp(/:([\w\_\(\)\'\.\!]+?):$/i);
 
-    return function EndCompetionFunction(mde) {
+    return function endCompetionFunction(mde) {
         const cur = mde.codemirror.getCursor();
         const lineTillCursor = mde.codemirror.getRange({line: cur.line, ch: 0}, cur);
+        const lineAfterCursor = mde.codemirror.getLine(cur.line).slice(cur.ch);
 
-        const beginMatch = beginRegex.exec(lineTillCursor)
+        const beginMatch = beginRegex.exec(lineTillCursor);
         if (beginMatch) {
             mde.codemirror.replaceRange('}\n\n\\end{' + beginMatch[1] + '}\n', cur);
             mde.codemirror.setCursor({line: cur.line + 1, ch: 0});
@@ -384,7 +395,8 @@ function getEndCompletion() {
         }
 
         const labelCommandsMatch = labelCommandsRegex.exec(lineTillCursor);
-        if (labelCommandsMatch) {
+        const closeBracketMatch = closeBracketRegex.exec(lineAfterCursor);
+        if (labelCommandsMatch && !closeBracketMatch) {
             mde.codemirror.replaceRange('}', cur);
             return false;
         }
@@ -646,14 +658,21 @@ function easymdeAttach(id) {
 
     mde.codemirror.on("change", () => {
         document.getElementById(id).value = mde.value();
-        CodeMirror.showHint(mde.codemirror, getHinter(), {completeSingle: false});
+    });
+
+    mde.codemirror.on("keypress", (event) => {
+        if (event.key !== "Backspace") {
+            CodeMirror.showHint(mde.codemirror, getHinter(), {completeSingle: false});
+        }
     });
     // const completionFunction = getEndCompletion();
     mde.codemirror.on("endCompletion", () => {
-        if (getEndCompletion()(mde)) {
-            // let event = document.createEvent()
-            // document.getElementById(id).dispatchEvent(new KeyboardEvent('keypress',{'key':'Ctrl+Space'}));
-            CodeMirror.showHint(mde.codemirror, getHinter(), {completeSingle: false});
+        if (!mde.codemirror.noCompletion) {
+            if (getEndCompletion()(mde)) {
+                // let event = document.createEvent()
+                // document.getElementById(id).dispatchEvent(new KeyboardEvent('keypress',{'key':'Ctrl+Space'}));
+                CodeMirror.showHint(mde.codemirror, getHinter(), {completeSingle: false});
+            }
         }
     })
 
