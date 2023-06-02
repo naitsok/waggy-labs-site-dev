@@ -23,7 +23,7 @@ class PostPage(BasePage):
     page_description = ('Post page keeps posts content, such as blog posts or '
                         'news posts. It has series functionality to combine posts '
                         'within series of topic-related posts.')
-    # template = 'waggylabs/pages/post_page.html'
+    template = 'waggylabs/pages/base_page.html'
     
     # Common fields
     show_in_menus_default = False

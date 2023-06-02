@@ -1,4 +1,6 @@
 /* General tweaks for Bootstrap */
+/* Background */
+.bg-tertiary { background-color: var(--bs-tertiary-bg); }
 /* Font */
 .fs-7 { font-size: 0.75rem !important; }
 .fs-8 { font-size: 0.5rem !important; }
@@ -43,7 +45,7 @@ button p { display: inline; margin-bottom: 0 !important; }
 .waggylabs-sidebar-top { top: 6rem; } /* so that sticky-top does not go in front of the nevbar */
 .waggylabs-overflow-max-height { height: calc(100vh - 7rem); overflow-y: auto; scrollbar-color: transparent transparent; scrollbar-width: thin; }
 .waggylabs-overflow-max-height:hover { scrollbar-color: var(--bs-secondary-bg) transparent; }
-.waggylabs-sidebar-z-index { z-index: 220 !important; } /* needed to avoid collision with MathJax menu and preview */
+.waggylabs-sidebar-z-index { z-index: 120 !important; } /* needed to avoid collision with MathJax menu and preview */
 .waggylabs-sidebar-label { position: unset; top: unset; left: unset; width: unset; height: unset; }
 .waggylabs-sidebar-button { position: absolute; opacity: 0; top: 50%; left: 50%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); }
 .waggylabs-sidebar-button-container { position: relative; }
