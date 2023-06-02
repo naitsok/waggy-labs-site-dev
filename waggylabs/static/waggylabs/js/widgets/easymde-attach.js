@@ -313,7 +313,7 @@ function getHinter() {
             };
         }
 
-        const envMatch = beginRegex.exec(lineTillCursor);
+        const envMatch = beginRegex.exec(lineTillCursor) || endRegex.exec(lineTillCursor);
         if (envMatch) {
             const match = envMatch[1];
             if (match) {
