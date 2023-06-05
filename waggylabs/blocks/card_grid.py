@@ -7,8 +7,6 @@ from wagtail.blocks import (
 )
 from wagtail.images.blocks import ImageChooserBlock
 
-from waggylabs.widgets import DisabledOptionSelect
-
 
 from waggylabs.blocks.links import (
     ExternalLinkBlock, InternalLinkBlock, IconEmailBlock,

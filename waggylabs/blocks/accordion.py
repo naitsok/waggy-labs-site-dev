@@ -78,7 +78,7 @@ class AccordionItemBlock(StructBlock):
         label=_('Item is displayed expanded')
     )
     body = AccordionContentBlock(
-        required=True,
+        required=False,
     )
     
     def __init__(self, local_blocks=None, **kwargs):
@@ -100,12 +100,12 @@ class AccordionBlock(StructBlock):
     
     style = ChoiceBlock(
         choices=[
-            ('', _('Item collapse style')),
             ('collapsible', _('Items collapse')),
             ('stays_open', _('Items stay open')),
         ],
-        default='',
-        label=_('Collapse items when new items opens or keep them open'),
+        default='collapsible',
+        label=_('Item collapse style'),
+        help_text=_('Collapse items when new items opens or keep them open'),
         widget=DisabledOptionSelect
     )
     items = ListBlock(AccordionItemBlock())

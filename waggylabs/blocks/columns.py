@@ -62,7 +62,7 @@ class ColumnsItemBlock(StructBlock):
         label=_('Column content vertical alignment'),
         default='align-self-start',
     )
-    body = ColumnsContentBlock(required=True)
+    body = ColumnsContentBlock(required=False)
     
     class Meta:
         icon = 'columns'

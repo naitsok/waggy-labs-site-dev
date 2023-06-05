@@ -118,16 +118,14 @@
                                         --bs-btn-disabled-border-color: {{ site_settings.navbar_color }};"{% endif %}>
                                 </form>
                             </li>
+                            <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                                <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
+                                <hr class="d-lg-none my-2">
+                            </li>
                             {% endif %}
                             {% for block in site_settings.navbar_links %}
-                                {% if forloop.counter0 == 0 %}
-                                <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div class="vr d-none d-lg-flex h-100 mx-lg-2"></div>
-                                    <hr class="d-lg-none my-2">
-                                </li>
-                                {% endif %}
-                                <li class="nav-item" style="--bs-navbar-nav-link-padding-x: 0px;">
-                                    {% include_block block %}
+                                <li class="nav-item" {# style="--bs-navbar-nav-link-padding-x: 0px;" #}>
+                                    {% include_block block with navbar=True %}
                                 </li>
                             {% endfor %}
                             {% if not site_settings.site_theme or  site_settings.theme_supports_color_mode %}
