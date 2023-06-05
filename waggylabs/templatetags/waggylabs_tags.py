@@ -50,13 +50,14 @@ def main_class(site_settings, page):
     """Generates CSS class for the <main> element 
     depending on the WaggyLabsSettings and page sidebar."""
     
-    if site_settings.constant_content_width or (page is not None and page.show_sidebar):
-        if site_settings.content_width == 'narrow':
-            return 'col-md-5 offset-md-2' # and col-md-3 for sidebar
-        if site_settings.content_width == 'medium':
-            return 'col-md-6 offset-md-1' # and col-md-4 for sidebar
-        if site_settings.content_width == 'wide':
-            return 'col-md-8' # and col-md-4 for sidebar
+    if hasattr(page, 'show_sidebar'): # check needed when there is default HomePage
+        if site_settings.constant_content_width or (page is not None and page.show_sidebar):
+            if site_settings.content_width == 'narrow':
+                return 'col-md-5 offset-md-2' # and col-md-3 for sidebar
+            if site_settings.content_width == 'medium':
+                return 'col-md-6 offset-md-1' # and col-md-4 for sidebar
+            if site_settings.content_width == 'wide':
+                return 'col-md-8' # and col-md-4 for sidebar
     
     if site_settings.content_width == 'narrow':
         return 'col-md-8 offset-md-2'
