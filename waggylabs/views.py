@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.template.response import TemplateResponse
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
-from wagtail.models import Page
+from wagtail.models import Page, Site
 from wagtail.search.models import Query
 from wagtail.search.utils import parse_query_string
 
@@ -49,3 +50,16 @@ def search(request):
         'search_results': search_results,
         'site_settings': settings,
     })
+
+
+WAGTAIL_ADMIN_BASE_URL =  getattr(settings, 'WAGGYLABS_WAGTAIL_ADMIN_BASE_URL', 'admin/')
+class RobotsView(TemplateView):
+    content_type = 'text/plain'
+    template_name = 'robots.txt'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        request = context['view'].request
+        context['waggylabs_site'] = Site.find_for_request(request)
+        context['waggylabs_admin_url'] = WAGTAIL_ADMIN_BASE_URL
+        return context

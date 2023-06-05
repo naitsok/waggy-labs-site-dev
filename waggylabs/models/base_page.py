@@ -11,13 +11,15 @@ from wagtail.search import index
 from hitcount.models import HitCountMixin, HitCount
 from hitcount.views import HitCountMixin as ViewHitCountMixin
 
+from wagtailmetadata.models import MetadataPageMixin
+
 # from waggylabs.blocks.body import BaseBodyBlock
 from waggylabs.blocks.sidebar import SidebarBlock
 from waggylabs.panels import ReadOnlyPanel
 from waggylabs.widgets import DisabledOptionSelect
 
 
-class BasePage(Page, HitCountMixin):
+class BasePage(MetadataPageMixin, Page, HitCountMixin):
     """BasePage class for the all the specific pages of WaggyLabs.
     Specific pages are SitePage, PostPage, etc. BasePage instances
     cannot be added directly in the Wagtail admin interface."""

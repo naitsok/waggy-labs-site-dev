@@ -65,14 +65,14 @@ class AccordionItemBlock(StructBlock):
         label=_('Item heading'),
         classname='full subtitle'
     )
-    # header_icon = IconBlock(
-    #     required=False,
-    #     label=_('Header icon'),
-    # )
-    # header_icon_location = IconLocationBlock(
-    #     required=False,
-    #     label=_('Header icon location'),
-    # )
+    header_icon = IconBlock(
+        required=False,
+        label=_('Header icon'),
+    )
+    header_icon_location = IconLocationBlock(
+        required=False,
+        label=_('Header icon location'),
+    )
     is_open = BooleanBlock(
         required=False,
         label=_('Item is displayed expanded')

@@ -46,6 +46,10 @@
         {% endif %}
         {% endblock %}
         </title>
+        {% block meta_tag %}
+        {# block to add wagtail-metadata #}
+        <meta name="description" content="{{ page.search_description }}" />
+        {% endblock meta_tag %}
         {% endwith %}
     </head>
     <body>

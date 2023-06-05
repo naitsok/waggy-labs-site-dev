@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "el_pagination",
     "wagtailmenus",
     "wagtailmarkdown",
+    "wagtailmetadata",
     "hitcount",
     "captcha",
     
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
 ]
 
 MIDDLEWARE = [
@@ -277,6 +279,7 @@ WAGGYLABS_DJANGO_ADMIN_BASE_URL = 'django-admin/'
 WAGGYLABS_WAGTAIL_ADMIN_BASE_URL = 'admin/'
 WAGGYLABS_WAGTAIL_DOCUMENTS_BASE_URL = 'documents/'
 WAGGYLABS_CAPTCHA_BASE_URL = 'super-captcha/'
+WAGGYLABS_SEARCH_URL = 'search/'
 
 # Navigation bar configuration
 WAGGYLABS_MENU_MAX_LEVELS = 1

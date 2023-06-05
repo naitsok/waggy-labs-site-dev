@@ -5,8 +5,13 @@
 {% load wagtailimages_tags %}
 {% load wagtailuserbar %}
 {% load wagtailmarkdown %}
+{% load wagtailmetadata_tags %}
 {% load menu_tags %}
 
+
+{% block meta_tag %}
+    {% meta_tags %}
+{% endblock meta_tag %}
 
 {% block content %}
 

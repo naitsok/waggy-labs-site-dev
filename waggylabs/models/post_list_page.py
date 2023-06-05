@@ -1,18 +1,15 @@
 from datetime import date, datetime
 
 from django.contrib.auth.models import User
-from django.db import models
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.admin.panels import FieldPanel, HelpPanel, MultiFieldPanel
-from wagtail.contrib.routable_page.models import RoutablePageMixin, path, re_path
-from wagtail.models import Page
+from wagtail.admin.panels import FieldPanel
+from wagtail.contrib.routable_page.models import RoutablePageMixin, re_path
 from wagtail.fields import StreamField
 from wagtail.search import index
-from wagtail.search.models import Query
 
 from wagtailmenus.models import MenuPageMixin
 from wagtailmenus.panels import menupage_panel
