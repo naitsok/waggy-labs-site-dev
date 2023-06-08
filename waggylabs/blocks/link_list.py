@@ -59,7 +59,7 @@ class LinkListItemBlock(StructBlock):
         
 class LinkListBlock(WrapperBlock):
     """Block to list configurable links to external websites or internal pages."""
-    item = LinkListItemBlock()
+    item = LinkListItemBlock(label=_('List of links'))
     
     class Meta:
         icon = 'link-list'
@@ -69,7 +69,7 @@ class LinkListBlock(WrapperBlock):
         
 class FooterLinkListBlock(FooterWrapperBlock):
     """Block to list configurable links to external websites or internal pages in footer."""
-    item = LinkListItemBlock()
+    item = LinkListItemBlock(label=_('List of links'))
     
     class Meta:
         icon = 'link-list'
