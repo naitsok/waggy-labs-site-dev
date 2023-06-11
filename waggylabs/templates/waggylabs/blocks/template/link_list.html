@@ -9,19 +9,11 @@
         {% endfor %}
     </ul>
 {% else %}
-    {% if 'group' in value.link_list_style %}
-    <div class="{{ value.link_style }}">
-        {% for item in value.items %}
-        {% include_block item %}
-        {% endfor %}
-    </div>
-    {% else %}
     <{% if 'number' in value.link_list_style %}ol{% else %}ul{% endif %} class="{{ value.link_list_style }}">
         {% for item in value.items %}
-        <li>
+        <li class="{{ value.link_style }}">
             {% include_block item %}
         </li>
         {% endfor %}
     </{% if 'number' in value.link_list_style %}ol{% else %}ul{% endif %}>
-    {% endif %}
 {% endif %}
